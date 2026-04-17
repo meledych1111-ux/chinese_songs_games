@@ -1228,21 +1228,28 @@ function initCanvas() {
   canvas.addEventListener('touchstart',e=>{e.preventDefault();start(e);},{passive:false}); canvas.addEventListener('touchmove',e=>{e.preventDefault();draw(e);},{passive:false}); canvas.addEventListener('touchend',end); 
 }
 function clearCanvas() { if(ctx) { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); } }
-function flipCard() { 
-  const back = document.getElementById('cBack');
-  const frontPinyin = document.getElementById('cPinyin');
-  const frontEmoji = document.getElementById('cFrontEmoji');
+function updateUI() { 
+  document.getElementById('sChar').textContent = currentW.c; 
+  document.getElementById('sPinyin').innerHTML = colorP(currentW.p); 
+  document.getElementById('sMeaning').textContent = currentW.m; 
+  document.getElementById('sEmoji').textContent = currentW.e || '📖'; 
+  document.getElementById('sCat').textContent = CAT_NAMES[currentW.cat] || currentW.cat; 
   
-  if (back.style.display === 'none') {
-    back.style.display = 'block';
-    frontPinyin.style.display = 'none';
-    frontEmoji.style.display = 'none';
-  } else {
-    back.style.display = 'none';
-    frontPinyin.style.display = 'block';
-    frontEmoji.style.display = 'block';
-  }
+  document.getElementById('nChar').textContent = currentW.c; 
+  
+  // Карточки
+  document.getElementById('cChar').textContent = currentW.c; 
+  document.getElementById('cFrontEmoji').textContent = currentW.e || '📖';
+  document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
+  document.getElementById('cPinyin').style.display = 'block';
+  document.getElementById('cFrontEmoji').style.display = 'block';
+  document.getElementById('cMeaning').textContent = currentW.m; 
+  document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p); 
+  document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
+  document.getElementById('cBack').style.display = 'none'; 
+  document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...'; 
 }
+
 function flipCard() { 
   const back = document.getElementById('cBack');
   const frontPinyin = document.getElementById('cPinyin');
@@ -1278,7 +1285,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('dPrev').onclick=prevDia; document.getElementById('dNext').onclick=nextDia; document.getElementById('dListen').onclick=speakDia;
   document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
   document.getElementById('nListen').onclick=()=>speak(currentW.c); document.getElementById('nClear').onclick=clearCanvas; document.getElementById('nNext').onclick=nextWord;
-  document.getElementById('cFlip').onclick=flipCard; document.getElementById('cNext').onclick=nextCard; document.getElementById('cListen').onclick=()=>speak(currentW.c);
+  
+  // Карточки
+  document.getElementById('cFlip').onclick=flipCard; 
+  document.getElementById('cNext').onclick=nextCard; 
+  document.getElementById('cListen').onclick=()=>speak(currentW.c);
+  document.getElementById('cVoice').onclick = () => startVoice(currentW.p, document.getElementById('cFeedback'));
+  
   document.getElementById('cubeRoll').onclick=()=>{ const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent=w.c; speak(w.c); }; document.getElementById('cubeListen').onclick=()=>speak(document.getElementById('cubeRes').textContent);
   document.getElementById('gNew').onclick=newGame;
 });
