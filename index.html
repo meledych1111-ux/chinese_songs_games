@@ -1136,7 +1136,24 @@ function renderCols() {
   const g=document.getElementById('colorGrid'); g.innerHTML=''; 
   colors.forEach(c=>{ const d=document.createElement('div'); d.className='grid-item'; d.style.borderColor=c.color; d.innerHTML=`<div style="width:50px;height:50px;border-radius:12px;background:${c.color};margin:6px auto;border:${c==='#ffffff'?'2px solid #ccc':'none'}"></div><div class="ch" style="font-size:22px;">${c.char}</div><div class="info">${c.ru}</div>`; d.onclick=()=>speak(c.char); g.appendChild(d); }); 
 }
-function renderDia() { const b=document.getElementById('dialogBox'); const d=DIALOGS[currentDia]; b.innerHTML=`<div class="dialog-card"><div class="dialog-line q"><strong>❓</strong> ${d.q}<br><small style="color:#0d47a1">${d.qp}</small></div><div class="dialog-line a"><strong>✅</strong> ${d.a}<br><small style="color:#e65100">${d.ap}</small></div></div>`; }
+function renderDia() { 
+  const b = document.getElementById("dialogBox"); 
+  const d = DIALOGS[currentDia]; 
+  b.innerHTML = `
+    <div class="dialog-card">
+      <div class="dialog-line q">
+        <strong>❓ Китайский:</strong> ${d.q}<br>
+        <small>📖 Пиньинь: ${d.qp}</small><br>
+        <small>🇷🇺 Перевод: ${d.rq || "—"}</small>
+      </div>
+      <div class="dialog-line a">
+        <strong>✅ Ответ:</strong> ${d.a}<br>
+        <small>📖 Пиньинь: ${d.ap}</small><br>
+        <small>🇷🇺 Перевод: ${d.ra || "—"}</small>
+      </div>
+    </div>
+  `; 
+}
 function renderGram() { 
   document.getElementById('grammarBox').innerHTML=GRAMMAR.map(g=>`<div class="grammar-card"><div class="g-title">${g.title}</div><div class="g-rule">${g.rule}</div><div class="example">${g.ex.replace(/\n/g,'<br>')}</div></div>`).join(''); 
 }
