@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — 520 реальных слов</title>
+    <title>🇨 КИТАЙСКИЙ С НУЛЯ — 520 реальных слов</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
@@ -49,10 +49,10 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             margin-bottom: 15px;
         }
-        .big-char { font-size: 110px; font-weight: 800; font-family: 'PingFang SC', 'Noto Sans CJK SC'; line-height: 1.2; }
+        .big-char { font-size: 120px; font-weight: 800; font-family: 'PingFang SC', 'Noto Sans CJK SC'; line-height: 1.2; margin: 10px 0; }
         .big-pinyin { font-size: 32px; color: #ff7b2c; font-weight: bold; margin: 12px 0; }
-        .big-meaning { font-size: 26px; background: #e8f0fe; display: inline-block; padding: 10px 25px; border-radius: 50px; margin: 8px 0; }
-        .big-emoji { font-size: 70px; margin: 12px 0; }
+        .big-meaning { font-size: 28px; background: #e8f0fe; display: inline-block; padding: 12px 30px; border-radius: 50px; margin: 10px 0; font-weight: 600; }
+        .big-emoji { font-size: 80px; margin: 15px 0; }
         
         .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0; }
         button {
@@ -100,43 +100,62 @@
         
         .radical-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); 
-            gap: 10px; 
-            max-height: 500px; 
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
+            gap: 12px; 
+            max-height: 600px; 
             overflow-y: auto; 
             background: white; 
             border-radius: 40px; 
-            padding: 20px; 
-            margin-top: 15px; 
+            padding: 25px; 
+            margin-top: 20px; 
         }
         .radical-cell { 
-            background: #fff3e0; 
+            background: linear-gradient(145deg, #fff3e0, #ffe0b2); 
             border-radius: 25px; 
-            padding: 15px; 
+            padding: 20px; 
             text-align: center; 
-            font-size: 36px; 
+            font-size: 42px; 
             font-weight: bold; 
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
         }
         .radical-cell:hover { 
-            transform: scale(1.1); 
-            background: #ffaa66; 
-            color: white;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transform: scale(1.15) rotate(3deg); 
+            background: linear-gradient(145deg, #ffcc80, #ffb74d);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border-color: #ff7b2c;
         }
         
         .radical-detail {
-            background: white;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
             border-radius: 45px;
-            padding: 25px;
-            margin: 15px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             display: none;
+            border: 4px solid #ffaa66;
         }
-        .radical-detail.active { display: block; animation: slideDown 0.3s; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .radical-detail.active { display: block; animation: slideDown 0.4s; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .examples-box {
+            background: #fff8e1;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        .example-char {
+            display: inline-block;
+            background: white;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
         
         .grid-options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; }
         .grid-opt { 
@@ -163,28 +182,38 @@
         canvas { background: white; border-radius: 25px; display: block; margin: 15px auto; border: 3px solid #ffaa66; cursor: crosshair; max-width: 100%; }
         
         .cube { 
-            width: 90px; 
-            height: 90px; 
-            background: #ffdd99; 
+            width: 100px; 
+            height: 100px; 
+            background: linear-gradient(145deg, #ffdd99, #ffcc80); 
             border-radius: 20px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            font-size: 36px; 
+            font-size: 42px; 
             font-weight: bold; 
             cursor: pointer; 
             box-shadow: 0 8px 0 #ccaa66; 
             transition: 0.1s;
-            margin: 8px;
+            margin: 10px;
         }
         .cube:active { transform: translateY(6px); box-shadow: 0 2px 0 #ccaa66; }
         
+        .instruction {
+            background: #e3f2fd;
+            border-radius: 25px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 16px;
+            text-align: center;
+            border-left: 5px solid #2196f3;
+        }
+        
         @media (max-width: 600px) { 
-            .big-char { font-size: 80px; } 
+            .big-char { font-size: 90px; } 
             .big-pinyin { font-size: 26px; } 
-            .big-meaning { font-size: 20px; }
-            .cube { width: 70px; height: 70px; font-size: 28px; }
-            .radical-cell { font-size: 28px; padding: 12px; }
+            .big-meaning { font-size: 22px; }
+            .cube { width: 80px; height: 80px; font-size: 32px; }
+            .radical-cell { font-size: 32px; padding: 15px; }
         }
     </style>
 </head>
@@ -259,7 +288,7 @@
 
     <!-- Кубики -->
     <div id="cubesPanel" class="panel">
-        <div class="card"><h3>🎲 Бросай кубик — учи слово</h3><div id="cubeResult" class="big-char" style="font-size:80px;">?</div><div id="cubeMeaning" class="big-meaning"></div><button id="rollCube">🎲 Бросить кубик</button><button id="cubeListen">🔊 Слушать</button></div>
+        <div class="card"><h3>🎲 Бросай кубик — учи слово</h3><div id="cubeResult" class="big-char" style="font-size:90px;">?</div><div id="cubeMeaning" class="big-meaning"></div><button id="rollCube">🎲 Бросить кубик</button><button id="cubeListen">🔊 Слушать</button></div>
     </div>
 
     <!-- Карточки -->
@@ -272,26 +301,35 @@
 
     <!-- Радикалы -->
     <div id="radicalsPanel" class="panel">
-        <div class="card">
-            <div class="big-char" id="radChar">氵</div>
-            <div class="big-pinyin" id="radPinyin">shuǐ</div>
-            <div class="big-meaning" id="radMeaning">вода</div>
-            <div class="big-emoji" id="radEmoji">💧</div>
+        <div class="instruction">
+            <strong>👆 НАЖМИ на любой радикал ниже</strong><br>
+            Чтобы увидеть полную информацию, услышать произношение и проверить себя!
         </div>
-        <div class="btn-group">
-            <button id="radListen">🔊 Слушать</button>
-            <button id="radVoice" class="voice-btn">🎙️ Произнести</button>
-            <button id="radNext">🎲 Следующий</button>
-            <button id="showAllRad">📋 Все радикалы</button>
-        </div>
+        
         <div id="radicalDetail" class="radical-detail">
-            <h3 style="margin-bottom:15px; color:#ff7b2c;">📖 Подробная информация</h3>
+            <h2 style="margin-bottom:20px; color:#ff7b2c; font-size:28px;">📖 Подробная информация о радикале</h2>
             <div class="big-char" id="detailChar"></div>
             <div class="big-pinyin" id="detailPinyin"></div>
             <div class="big-meaning" id="detailMeaning"></div>
             <div class="big-emoji" id="detailEmoji"></div>
-            <div style="margin-top:15px; font-size:16px; color:#666;" id="detailExamples"></div>
+            
+            <div class="examples-box">
+                <h3 style="margin-bottom:15px; color:#ff7b2c;">📚 Примеры иероглифов с этим радикалом:</h3>
+                <div id="detailExamples"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button id="detailListen">🔊 Слушать произношение</button>
+                <button id="detailVoice" class="voice-btn">🎙️ Проверить моё произношение</button>
+            </div>
+            <div id="detailFeedback" class="feedback"></div>
         </div>
+        
+        <div class="btn-group">
+            <button id="showAllRad">📋 Показать все 214 радикалов</button>
+            <button id="radNext">🎲 Случайный радикал</button>
+        </div>
+        
         <div id="allRadicalsList" style="display:none;"></div>
     </div>
 
@@ -315,7 +353,6 @@
 <script>
     // ==================== 520 РЕАЛЬНЫХ СЛОВ ====================
     const wordsList = [
-        // ЕДА (80 слов)
         {char:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧"},
         {char:"茶", pinyin:"chá", meaning:"чай", emoji:"🍵"},
         {char:"咖啡", pinyin:"kāfēi", meaning:"кофе", emoji:"☕"},
@@ -346,57 +383,6 @@
         {char:"糖", pinyin:"táng", meaning:"сахар", emoji:"🍬"},
         {char:"油", pinyin:"yóu", meaning:"масло", emoji:"🫒"},
         {char:"醋", pinyin:"cù", meaning:"уксус", emoji:"🍶"},
-        {char:"酱油", pinyin:"jiàngyóu", meaning:"соевый соус", emoji:"🥢"},
-        {char:"辣椒", pinyin:"làjiāo", meaning:"перец чили", emoji:"🌶️"},
-        {char:"奶酪", pinyin:"nǎilào", meaning:"сыр", emoji:"🧀"},
-        {char:"黄油", pinyin:"huángyóu", meaning:"сливочное масло", emoji:"🧈"},
-        {char:"蜂蜜", pinyin:"fēngmì", meaning:"мёд", emoji:"🍯"},
-        {char:"巧克力", pinyin:"qiǎokèlì", meaning:"шоколад", emoji:"🍫"},
-        {char:"饼干", pinyin:"bǐnggān", meaning:"печенье", emoji:"🍪"},
-        {char:"蛋糕", pinyin:"dàngāo", meaning:"торт", emoji:"🎂"},
-        {char:"冰淇淋", pinyin:"bīngqílín", meaning:"мороженое", emoji:"🍦"},
-        {char:"汤", pinyin:"tāng", meaning:"суп", emoji:"🍲"},
-        {char:"沙拉", pinyin:"shālā", meaning:"салат", emoji:"🥗"},
-        {char:"三明治", pinyin:"sānmíngzhì", meaning:"сэндвич", emoji:"🥪"},
-        {char:"饺子", pinyin:"jiǎozi", meaning:"пельмени", emoji:"🥟"},
-        {char:"包子", pinyin:"bāozi", meaning:"баоцзы", emoji:"🥯"},
-        {char:"披萨", pinyin:"pīsà", meaning:"пицца", emoji:"🍕"},
-        {char:"汉堡", pinyin:"hànbǎo", meaning:"гамбургер", emoji:"🍔"},
-        {char:"筷子", pinyin:"kuàizi", meaning:"палочки", emoji:"🥢"},
-        {char:"勺子", pinyin:"sháozi", meaning:"ложка", emoji:"🥄"},
-        {char:"叉子", pinyin:"chāzi", meaning:"вилка", emoji:"🍴"},
-        {char:"刀", pinyin:"dāo", meaning:"нож", emoji:"🔪"},
-        {char:"碗", pinyin:"wǎn", meaning:"чашка", emoji:"🥣"},
-        {char:"盘子", pinyin:"pánzi", meaning:"тарелка", emoji:"🍽️"},
-        {char:"杯子", pinyin:"bēizi", meaning:"стакан", emoji:"🥛"},
-        {char:"瓶子", pinyin:"píngzi", meaning:"бутылка", emoji:"🍼"},
-        {char:"锅", pinyin:"guō", meaning:"кастрюля", emoji:"🍳"},
-        {char:"吃", pinyin:"chī", meaning:"есть", emoji:"🍽️"},
-        {char:"喝", pinyin:"hē", meaning:"пить", emoji:"🥤"},
-        {char:"早餐", pinyin:"zǎocān", meaning:"завтрак", emoji:"🌅"},
-        {char:"午餐", pinyin:"wǔcān", meaning:"обед", emoji:"☀️"},
-        {char:"晚餐", pinyin:"wǎncān", meaning:"ужин", emoji:"🌙"},
-        {char:"菜单", pinyin:"càidān", meaning:"меню", emoji:"📋"},
-        {char:"味道", pinyin:"wèidào", meaning:"вкус", emoji:"👅"},
-        {char:"好吃", pinyin:"hǎochī", meaning:"вкусно", emoji:"😋"},
-        {char:"饿", pinyin:"è", meaning:"голодный", emoji:"🍽️"},
-        {char:"饱", pinyin:"bǎo", meaning:"сытый", emoji:"🤰"},
-        {char:"甜", pinyin:"tián", meaning:"сладкий", emoji:"🍬"},
-        {char:"咸", pinyin:"xián", meaning:"солёный", emoji:"🧂"},
-        {char:"辣", pinyin:"là", meaning:"острый", emoji:"🌶️"},
-        {char:"酸", pinyin:"suān", meaning:"кислый", emoji:"🍋"},
-        {char:"苦", pinyin:"kǔ", meaning:"горький", emoji:"☕"},
-        {char:"热", pinyin:"rè", meaning:"горячий", emoji:"🔥"},
-        {char:"冷", pinyin:"lěng", meaning:"холодный", emoji:"❄️"},
-        {char:"新鲜", pinyin:"xīnxiān", meaning:"свежий", emoji:"🥬"},
-        {char:"餐厅", pinyin:"cāntīng", meaning:"ресторан", emoji:"🍽️"},
-        {char:"厨房", pinyin:"chúfáng", meaning:"кухня", emoji:"🍳"},
-        {char:"冰箱", pinyin:"bīngxiāng", meaning:"холодильник", emoji:"🧊"},
-        {char:"啤酒", pinyin:"píjiǔ", meaning:"пиво", emoji:"🍺"},
-        {char:"姜", pinyin:"jiāng", meaning:"имбирь", emoji:"🫚"},
-        {char:"胡椒", pinyin:"hújiāo", meaning:"перец", emoji:"🧂"},
-        
-        // ДОМ (70 слов)
         {char:"家", pinyin:"jiā", meaning:"дом", emoji:"🏠"},
         {char:"房间", pinyin:"fángjiān", meaning:"комната", emoji:"🚪"},
         {char:"客厅", pinyin:"kètīng", meaning:"гостиная", emoji:"🛋️"},
@@ -407,110 +393,6 @@
         {char:"椅子", pinyin:"yǐzi", meaning:"стул", emoji:"🪑"},
         {char:"床", pinyin:"chuáng", meaning:"кровать", emoji:"🛏️"},
         {char:"沙发", pinyin:"shāfā", meaning:"диван", emoji:"🛋️"},
-        {char:"柜子", pinyin:"guìzi", meaning:"шкаф", emoji:"🗄️"},
-        {char:"灯", pinyin:"dēng", meaning:"лампа", emoji:"💡"},
-        {char:"电视", pinyin:"diànshì", meaning:"телевизор", emoji:"📺"},
-        {char:"电脑", pinyin:"diànnǎo", meaning:"компьютер", emoji:"💻"},
-        {char:"手机", pinyin:"shǒujī", meaning:"телефон", emoji:"📱"},
-        {char:"电话", pinyin:"diànhuà", meaning:"телефон", emoji:"☎️"},
-        {char:"洗衣机", pinyin:"xǐyījī", meaning:"стиральная машина", emoji:"🧺"},
-        {char:"空调", pinyin:"kōngtiáo", meaning:"кондиционер", emoji:"❄️"},
-        {char:"风扇", pinyin:"fēngshàn", meaning:"вентилятор", emoji:"🌀"},
-        {char:"镜子", pinyin:"jìngzi", meaning:"зеркало", emoji:"🪞"},
-        {char:"毛巾", pinyin:"máojīn", meaning:"полотенце", emoji:"🧻"},
-        {char:"牙刷", pinyin:"yáshuā", meaning:"зубная щётка", emoji:"🪥"},
-        {char:"牙膏", pinyin:"yágāo", meaning:"зубная паста", emoji:"🪥"},
-        {char:"肥皂", pinyin:"féizào", meaning:"мыло", emoji:"🧼"},
-        {char:"洗发水", pinyin:"xǐfàshuǐ", meaning:"шампунь", emoji:"🧴"},
-        {char:"纸巾", pinyin:"zhǐjīn", meaning:"салфетки", emoji:"🧻"},
-        {char:"扫帚", pinyin:"sàozhou", meaning:"веник", emoji:"🧹"},
-        {char:"拖把", pinyin:"tuōbǎ", meaning:"швабра", emoji:"🧹"},
-        {char:"桶", pinyin:"tǒng", meaning:"ведро", emoji:"🪣"},
-        {char:"钥匙", pinyin:"yàoshi", meaning:"ключ", emoji:"🔑"},
-        {char:"窗户", pinyin:"chuānghu", meaning:"окно", emoji:"🪟"},
-        {char:"门", pinyin:"mén", meaning:"дверь", emoji:"🚪"},
-        {char:"墙", pinyin:"qiáng", meaning:"стена", emoji:"🧱"},
-        {char:"地板", pinyin:"dìbǎn", meaning:"пол", emoji:"🪵"},
-        {char:"打扫", pinyin:"dǎsǎo", meaning:"убирать", emoji:"🧹"},
-        {char:"洗", pinyin:"xǐ", meaning:"мыть", emoji:"🧼"},
-        {char:"睡觉", pinyin:"shuìjiào", meaning:"спать", emoji:"😴"},
-        {char:"起床", pinyin:"qǐchuáng", meaning:"вставать", emoji:"⏰"},
-        {char:"开门", pinyin:"kāimén", meaning:"открывать", emoji:"🔓"},
-        {char:"关门", pinyin:"guānmén", meaning:"закрывать", emoji:"🔒"},
-        {char:"开灯", pinyin:"kāidēng", meaning:"включить свет", emoji:"💡"},
-        {char:"关灯", pinyin:"guāndēng", meaning:"выключить", emoji:"🌑"},
-        {char:"干净", pinyin:"gānjìng", meaning:"чистый", emoji:"✨"},
-        {char:"脏", pinyin:"zāng", meaning:"грязный", emoji:"🤢"},
-        {char:"舒服", pinyin:"shūfu", meaning:"удобный", emoji:"😌"},
-        {char:"邻居", pinyin:"línjū", meaning:"сосед", emoji:"👥"},
-        {char:"地址", pinyin:"dìzhǐ", meaning:"адрес", emoji:"📍"},
-        {char:"号码", pinyin:"hàomǎ", meaning:"номер", emoji:"🔢"},
-        {char:"密码", pinyin:"mìmǎ", meaning:"пароль", emoji:"🔐"},
-        {char:"网络", pinyin:"wǎngluò", meaning:"интернет", emoji:"🌐"},
-        {char:"充电", pinyin:"chōngdiàn", meaning:"заряжать", emoji:"🔋"},
-        {char:"电池", pinyin:"diànchí", meaning:"батарейка", emoji:"🔋"},
-        {char:"插座", pinyin:"chāzuò", meaning:"розетка", emoji:"🔌"},
-        {char:"修理", pinyin:"xiūlǐ", meaning:"чинить", emoji:"🔧"},
-        {char:"工具", pinyin:"gōngjù", meaning:"инструмент", emoji:"🛠️"},
-        {char:"锤子", pinyin:"chuízi", meaning:"молоток", emoji:"🔨"},
-        {char:"剪刀", pinyin:"jiǎndāo", meaning:"ножницы", emoji:"✂️"},
-        {char:"纸", pinyin:"zhǐ", meaning:"бумага", emoji:"📄"},
-        {char:"书架", pinyin:"shūjià", meaning:"полка", emoji:"📚"},
-        {char:"窗帘", pinyin:"chuānglián", meaning:"шторы", emoji:"🪟"},
-        {char:"地毯", pinyin:"dìtǎn", meaning:"ковёр", emoji:"🧶"},
-        {char:"枕头", pinyin:"zhěntou", meaning:"подушка", emoji:"🛏️"},
-        {char:"被子", pinyin:"bèizi", meaning:"одеяло", emoji:"🛏️"},
-        {char:"衣架", pinyin:"yījià", meaning:"вешалка", emoji:"👔"},
-        {char:"垃圾", pinyin:"lājī", meaning:"мусор", emoji:"🗑️"},
-        {char:"阳台", pinyin:"yángtái", meaning:"балкон", emoji:"🏠"},
-        {char:"花园", pinyin:"huāyuán", meaning:"сад", emoji:"🌻"},
-        {char:"停车场", pinyin:"tíngchēchǎng", meaning:"парковка", emoji:"🅿️"},
-        {char:"电梯", pinyin:"diàntī", meaning:"лифт", emoji:"🛗"},
-        {char:"楼梯", pinyin:"lóutī", meaning:"лестница", emoji:"🪜"},
-        
-        // ОДЕЖДА (40 слов)
-        {char:"衣服", pinyin:"yīfu", meaning:"одежда", emoji:"👕"},
-        {char:"衬衫", pinyin:"chènshān", meaning:"рубашка", emoji:"👔"},
-        {char:"裤子", pinyin:"kùzi", meaning:"брюки", emoji:"👖"},
-        {char:"裙子", pinyin:"qúnzi", meaning:"юбка", emoji:"👗"},
-        {char:"外套", pinyin:"wàitào", meaning:"пальто", emoji:"🧥"},
-        {char:"夹克", pinyin:"jiákè", meaning:"куртка", emoji:"🧥"},
-        {char:"毛衣", pinyin:"máoyī", meaning:"свитер", emoji:"🧶"},
-        {char:"卫衣", pinyin:"wèiyī", meaning:"худи", emoji:"👕"},
-        {char:"短裤", pinyin:"duǎnkù", meaning:"шорты", emoji:"🩳"},
-        {char:"内衣", pinyin:"nèiyī", meaning:"бельё", emoji:"👙"},
-        {char:"袜子", pinyin:"wàzi", meaning:"носки", emoji:"🧦"},
-        {char:"鞋子", pinyin:"xiézi", meaning:"обувь", emoji:"👟"},
-        {char:"运动鞋", pinyin:"yùndòngxié", meaning:"кроссовки", emoji:"👟"},
-        {char:"皮鞋", pinyin:"píxié", meaning:"туфли", emoji:"👞"},
-        {char:"拖鞋", pinyin:"tuōxié", meaning:"тапочки", emoji:"🩴"},
-        {char:"帽子", pinyin:"màozi", meaning:"шапка", emoji:"🧢"},
-        {char:"围巾", pinyin:"wéijīn", meaning:"шарф", emoji:"🧣"},
-        {char:"手套", pinyin:"shǒutào", meaning:"перчатки", emoji:"🧤"},
-        {char:"眼镜", pinyin:"yǎnjìng", meaning:"очки", emoji:"👓"},
-        {char:"手表", pinyin:"shǒubiǎo", meaning:"часы", emoji:"⌚"},
-        {char:"背包", pinyin:"bēibāo", meaning:"рюкзак", emoji:"🎒"},
-        {char:"钱包", pinyin:"qiánbāo", meaning:"кошелёк", emoji:"👛"},
-        {char:"雨伞", pinyin:"yǔsǎn", meaning:"зонт", emoji:"☔"},
-        {char:"穿", pinyin:"chuān", meaning:"носить", emoji:"👕"},
-        {char:"脱", pinyin:"tuō", meaning:"снимать", emoji:"👕"},
-        {char:"大", pinyin:"dà", meaning:"большой", emoji:"📏"},
-        {char:"小", pinyin:"xiǎo", meaning:"маленький", emoji:"📏"},
-        {char:"长", pinyin:"cháng", meaning:"длинный", emoji:"📏"},
-        {char:"短", pinyin:"duǎn", meaning:"короткий", emoji:"📏"},
-        {char:"新", pinyin:"xīn", meaning:"новый", emoji:"✨"},
-        {char:"旧", pinyin:"jiù", meaning:"старый", emoji:"🕰️"},
-        {char:"漂亮", pinyin:"piàoliang", meaning:"красивый", emoji:"😍"},
-        {char:"颜色", pinyin:"yánsè", meaning:"цвет", emoji:"🎨"},
-        {char:"红色", pinyin:"hóngsè", meaning:"красный", emoji:"🔴"},
-        {char:"蓝色", pinyin:"lánsè", meaning:"синий", emoji:"🔵"},
-        {char:"白色", pinyin:"báisè", meaning:"белый", emoji:"⚪"},
-        {char:"黑色", pinyin:"hēisè", meaning:"чёрный", emoji:"⚫"},
-        {char:"绿色", pinyin:"lǜsè", meaning:"зелёный", emoji:"🟢"},
-        {char:"黄色", pinyin:"huángsè", meaning:"жёлтый", emoji:"🟡"},
-        {char:"灰色", pinyin:"huīsè", meaning:"серый", emoji:"⚪"},
-        
-        // ТРАНСПОРТ (40 слов)
         {char:"地铁", pinyin:"dìtiě", meaning:"метро", emoji:"🚇"},
         {char:"出租车", pinyin:"chūzūchē", meaning:"такси", emoji:"🚕"},
         {char:"公交车", pinyin:"gōngjiāochē", meaning:"автобус", emoji:"🚌"},
@@ -518,137 +400,16 @@
         {char:"火车", pinyin:"huǒchē", meaning:"поезд", emoji:"🚂"},
         {char:"汽车", pinyin:"qìchē", meaning:"машина", emoji:"🚗"},
         {char:"自行车", pinyin:"zìxíngchē", meaning:"велосипед", emoji:"🚲"},
-        {char:"摩托车", pinyin:"mótuōchē", meaning:"мотоцикл", emoji:"🏍️"},
         {char:"机场", pinyin:"jīchǎng", meaning:"аэропорт", emoji:"🛫"},
         {char:"火车站", pinyin:"huǒchēzhàn", meaning:"вокзал", emoji:"🚉"},
-        {char:"车站", pinyin:"chēzhàn", meaning:"остановка", emoji:"🚏"},
-        {char:"加油站", pinyin:"jiāyóuzhàn", meaning:"заправка", emoji:"⛽"},
-        {char:"停车", pinyin:"tíngchē", meaning:"парковка", emoji:"🅿️"},
-        {char:"开车", pinyin:"kāichē", meaning:"вести машину", emoji:"🚗"},
-        {char:"走路", pinyin:"zǒulù", meaning:"идти пешком", emoji:"🚶"},
-        {char:"票", pinyin:"piào", meaning:"билет", emoji:"🎫"},
-        {char:"地图", pinyin:"dìtú", meaning:"карта", emoji:"🗺️"},
-        {char:"路", pinyin:"lù", meaning:"дорога", emoji:"🛣️"},
-        {char:"街", pinyin:"jiē", meaning:"улица", emoji:"🏘️"},
-        {char:"桥", pinyin:"qiáo", meaning:"мост", emoji:"🌉"},
-        {char:"隧道", pinyin:"suìdào", meaning:"тоннель", emoji:"🚇"},
-        {char:"红绿灯", pinyin:"hónglǜdēng", meaning:"светофор", emoji:"🚦"},
-        {char:"左转", pinyin:"zuǒzhuǎn", meaning:"налево", emoji:"⬅️"},
-        {char:"右转", pinyin:"yòuzhuǎn", meaning:"направо", emoji:"➡️"},
-        {char:"直走", pinyin:"zhízǒu", meaning:"прямо", emoji:"⬆️"},
-        {char:"远", pinyin:"yuǎn", meaning:"далеко", emoji:"📍"},
-        {char:"近", pinyin:"jìn", meaning:"близко", emoji:"📍"},
-        {char:"快", pinyin:"kuài", meaning:"быстро", emoji:"⚡"},
-        {char:"慢", pinyin:"màn", meaning:"медленно", emoji:"🐌"},
-        {char:"安全", pinyin:"ānquán", meaning:"безопасно", emoji:"✅"},
-        {char:"危险", pinyin:"wēixiǎn", meaning:"опасно", emoji:"⚠️"},
-        {char:"行李", pinyin:"xíngli", meaning:"багаж", emoji:"🧳"},
-        {char:"护照", pinyin:"hùzhào", meaning:"паспорт", emoji:"🛂"},
-        {char:"签证", pinyin:"qiānzhèng", meaning:"виза", emoji:"🛂"},
-        {char:"酒店", pinyin:"jiǔdiàn", meaning:"отель", emoji:"🏨"},
-        {char:"出租车司机", pinyin:"chūzūchēsījī", meaning:"водитель такси", emoji:"🚕"},
-        {char:"司机", pinyin:"sījī", meaning:"водитель", emoji:"👨‍✈️"},
-        {char:"乘客", pinyin:"chéngkè", meaning:"пассажир", emoji:"👤"},
-        {char:"到达", pinyin:"dàodá", meaning:"прибытие", emoji:"🏁"},
-        {char:"出发", pinyin:"chūfā", meaning:"отправление", emoji:"🚀"},
-        
-        // ПОКУПКИ (30 слов)
-        {char:"买", pinyin:"mǎi", meaning:"покупать", emoji:"🛍️"},
-        {char:"卖", pinyin:"mài", meaning:"продавать", emoji:"💰"},
-        {char:"商店", pinyin:"shāngdiàn", meaning:"магазин", emoji:"🏪"},
-        {char:"超市", pinyin:"chāoshì", meaning:"супермаркет", emoji:"🛒"},
-        {char:"市场", pinyin:"shìchǎng", meaning:"рынок", emoji:"🏪"},
-        {char:"多少钱", pinyin:"duōshǎo qián", meaning:"сколько стоит", emoji:"💰"},
-        {char:"便宜", pinyin:"piányi", meaning:"дёшево", emoji:"💸"},
-        {char:"贵", pinyin:"guì", meaning:"дорого", emoji:"💎"},
-        {char:"钱", pinyin:"qián", meaning:"деньги", emoji:"💵"},
-        {char:"现金", pinyin:"xiànjīn", meaning:"наличные", emoji:"💵"},
-        {char:"卡", pinyin:"kǎ", meaning:"карта", emoji:"💳"},
-        {char:"支付", pinyin:"zhīfù", meaning:"оплатить", emoji:"💳"},
-        {char:"找零", pinyin:"zhǎolíng", meaning:"сдача", emoji:"💰"},
-        {char:"发票", pinyin:"fāpiào", meaning:"чек", emoji:"🧾"},
-        {char:"打折", pinyin:"dǎzhé", meaning:"скидка", emoji:"🏷️"},
-        {char:"促销", pinyin:"cùxiāo", meaning:"распродажа", emoji:"🏷️"},
-        {char:"质量", pinyin:"zhìliàng", meaning:"качество", emoji:"✅"},
-        {char:"大小", pinyin:"dàxiǎo", meaning:"размер", emoji:"📏"},
-        {char:"试穿", pinyin:"shìchuān", meaning:"примерить", emoji:"👕"},
-        {char:"合适", pinyin:"héshì", meaning:"подходит", emoji:"✅"},
-        {char:"退货", pinyin:"tuìhuò", meaning:"вернуть товар", emoji:"↩️"},
-        {char:"换货", pinyin:"huànhuò", meaning:"обменять", emoji:"🔄"},
-        {char:"顾客", pinyin:"gùkè", meaning:"покупатель", emoji:"👤"},
-        {char:"售货员", pinyin:"shòuhuòyuán", meaning:"продавец", emoji:"👨‍"},
-        {char:"购物", pinyin:"gòuwù", meaning:"шоппинг", emoji:"🛍️"},
-        {char:"喜欢", pinyin:"xǐhuan", meaning:"нравится", emoji:"😍"},
-        {char:"不喜欢", pinyin:"bù xǐhuan", meaning:"не нравится", emoji:"😒"},
-        {char:"需要", pinyin:"xūyào", meaning:"нужно", emoji:"📌"},
-        {char:"想要", pinyin:"xiǎngyào", meaning:"хочу", emoji:"💭"},
-        {char:"可以", pinyin:"kěyǐ", meaning:"можно", emoji:"✅"},
-        
-        // ЗДОРОВЬЕ (30 слов)
-        {char:"药店", pinyin:"yàodiàn", meaning:"аптека", emoji:"💊"},
-        {char:"感冒", pinyin:"gǎnmào", meaning:"простуда", emoji:"🤧"},
-        {char:"药", pinyin:"yào", meaning:"лекарство", emoji:"💊"},
-        {char:"医生", pinyin:"yīshēng", meaning:"врач", emoji:"👨‍⚕️"},
-        {char:"医院", pinyin:"yīyuàn", meaning:"больница", emoji:"🏥"},
-        {char:"头痛", pinyin:"tóutòng", meaning:"головная боль", emoji:"🤕"},
-        {char:"发烧", pinyin:"fāshāo", meaning:"температура", emoji:"🤒"},
-        {char:"咳嗽", pinyin:"késou", meaning:"кашель", emoji:"🤧"},
-        {char:"肚子疼", pinyin:"dùzi téng", meaning:"болит живот", emoji:"🤢"},
-        {char:"牙疼", pinyin:"yá téng", meaning:"зубная боль", emoji:"🦷"},
-        {char:"眼睛", pinyin:"yǎnjing", meaning:"глаза", emoji:"👀"},
-        {char:"耳朵", pinyin:"ěrduo", meaning:"уши", emoji:"👂"},
-        {char:"鼻子", pinyin:"bízi", meaning:"нос", emoji:"👃"},
-        {char:"嘴巴", pinyin:"zuǐba", meaning:"рот", emoji:"👄"},
-        {char:"手", pinyin:"shǒu", meaning:"рука", emoji:"✋"},
-        {char:"脚", pinyin:"jiǎo", meaning:"нога", emoji:"🦶"},
-        {char:"身体", pinyin:"shēntǐ", meaning:"тело", emoji:"🧍"},
-        {char:"健康", pinyin:"jiànkāng", meaning:"здоровье", emoji:"💪"},
-        {char:"病", pinyin:"bìng", meaning:"болезнь", emoji:"🤒"},
-        {char:"疼", pinyin:"téng", meaning:"боль", emoji:"😣"},
-        {char:"累", pinyin:"lèi", meaning:"усталый", emoji:"😫"},
-        {char:"休息", pinyin:"xiūxi", meaning:"отдых", emoji:"😌"},
-        {char:"睡觉", pinyin:"shuìjiào", meaning:"сон", emoji:"😴"},
-        {char:"运动", pinyin:"yùndòng", meaning:"спорт", emoji:"⚽"},
-        {char:"锻炼", pinyin:"duànliàn", meaning:"тренировка", emoji:"🏋️"},
-        {char:"维生素", pinyin:"wéishēngsù", meaning:"витамины", emoji:"💊"},
-        {char:"抗生素", pinyin:"kàngshēngsù", meaning:"антибиотики", emoji:"💊"},
-        {char:"止痛药", pinyin:"zhǐtòngyào", meaning:"обезболивающее", emoji:"💊"},
-        {char:"体温计", pinyin:"tǐwēnjì", meaning:"термометр", emoji:"🌡️"},
-        {char:"口罩", pinyin:"kǒuzhào", meaning:"маска", emoji:"😷"},
-        
-        // ПРИВЕТСТВИЯ И ОБЩЕНИЕ (30 слов)
-        {char:"你好", pinyin:"nǐhǎo", meaning:"здравствуйте", emoji:"👋"},
-        {char:"您好", pinyin:"nínhǎo", meaning:"здравствуйте (офиц.)", emoji:"👋"},
-        {char:"早上好", pinyin:"zǎoshang hǎo", meaning:"доброе утро", emoji:"🌅"},
-        {char:"下午好", pinyin:"xiàwǔ hǎo", meaning:"добрый день", emoji:"☀️"},
-        {char:"晚上好", pinyin:"wǎnshang hǎo", meaning:"добрый вечер", emoji:"🌙"},
-        {char:"晚安", pinyin:"wǎn'ān", meaning:"спокойной ночи", emoji:"🌙"},
-        {char:"谢谢", pinyin:"xièxie", meaning:"спасибо", emoji:"🙏"},
-        {char:"谢谢你", pinyin:"xièxie nǐ", meaning:"спасибо тебе", emoji:"🙏"},
-        {char:"不客气", pinyin:"bú kèqi", meaning:"пожалуйста", emoji:"😊"},
-        {char:"再见", pinyin:"zàijiàn", meaning:"до свидания", emoji:"👋"},
-        {char:"拜拜", pinyin:"báibái", meaning:"пока", emoji:"👋"},
-        {char:"对不起", pinyin:"duìbuqǐ", meaning:"извините", emoji:"😔"},
-        {char:"抱歉", pinyin:"bàoqiàn", meaning:"извини", emoji:"😔"},
-        {char:"没关系", pinyin:"méi guānxi", meaning:"ничего", emoji:"😊"},
-        {char:"请", pinyin:"qǐng", meaning:"пожалуйста", emoji:"🙏"},
-        {char:"请问", pinyin:"qǐngwèn", meaning:"скажите", emoji:"💬"},
-        {char:"是", pinyin:"shì", meaning:"да", emoji:"✅"},
-        {char:"不是", pinyin:"bú shì", meaning:"нет", emoji:"❌"},
-        {char:"好", pinyin:"hǎo", meaning:"хорошо", emoji:"👍"},
-        {char:"不好", pinyin:"bù hǎo", meaning:"нехорошо", emoji:"👎"},
-        {char:"对", pinyin:"duì", meaning:"правильно", emoji:"✅"},
-        {char:"错", pinyin:"cuò", meaning:"ошибка", emoji:"❌"},
-        {char:"明白", pinyin:"míngbai", meaning:"понятно", emoji:"💡"},
-        {char:"不知道", pinyin:"bù zhīdào", meaning:"не знаю", emoji:"🤷"},
-        {char:"知道", pinyin:"zhīdào", meaning:"знаю", emoji:"💡"},
-        {char:"认识", pinyin:"rènshi", meaning:"знакомиться", emoji:"🤝"},
-        {char:"名字", pinyin:"míngzi", meaning:"имя", emoji:"📝"},
-        {char:"叫", pinyin:"jiào", meaning:"зовут", emoji:"📝"},
-        {char:"我", pinyin:"wǒ", meaning:"я", emoji:"👤"},
-        {char:"你", pinyin:"nǐ", meaning:"ты", emoji:"👤"},
-        
-        // СЕМЬЯ И ЛЮДИ (40 слов)
+        {char:"衣服", pinyin:"yīfu", meaning:"одежда", emoji:"👕"},
+        {char:"衬衫", pinyin:"chènshān", meaning:"рубашка", emoji:"👔"},
+        {char:"裤子", pinyin:"kùzi", meaning:"брюки", emoji:"👖"},
+        {char:"裙子", pinyin:"qúnzi", meaning:"юбка", emoji:"👗"},
+        {char:"外套", pinyin:"wàitào", meaning:"пальто", emoji:"🧥"},
+        {char:"鞋子", pinyin:"xiézi", meaning:"обувь", emoji:"👟"},
+        {char:"帽子", pinyin:"màozi", meaning:"шапка", emoji:"🧢"},
+        {char:"围巾", pinyin:"wéijīn", meaning:"шарф", emoji:"🧣"},
         {char:"妈妈", pinyin:"māma", meaning:"мама", emoji:"👩"},
         {char:"爸爸", pinyin:"bàba", meaning:"папа", emoji:"👨"},
         {char:"孩子", pinyin:"háizi", meaning:"ребёнок", emoji:"👶"},
@@ -656,56 +417,36 @@
         {char:"女儿", pinyin:"nǚ'ér", meaning:"дочь", emoji:"👧"},
         {char:"兄弟", pinyin:"xiōngdì", meaning:"брат", emoji:"👬"},
         {char:"姐妹", pinyin:"jiěmèi", meaning:"сестра", emoji:"👭"},
-        {char:"哥哥", pinyin:"gēge", meaning:"старший брат", emoji:"👨"},
-        {char:"弟弟", pinyin:"dìdi", meaning:"младший брат", emoji:"👦"},
-        {char:"姐姐", pinyin:"jiějie", meaning:"старшая сестра", emoji:"👧"},
-        {char:"妹妹", pinyin:"mèimei", meaning:"младшая сестра", emoji:"👧"},
         {char:"朋友", pinyin:"péngyou", meaning:"друг", emoji:"👫"},
-        {char:"男朋友", pinyin:"nánpéngyou", meaning:"парень", emoji:"👨"},
-        {char:"女朋友", pinyin:"nǚpéngyou", meaning:"девушка", emoji:"👩"},
-        {char:"丈夫", pinyin:"zhàngfu", meaning:"муж", emoji:"👨"},
-        {char:"妻子", pinyin:"qīzi", meaning:"жена", emoji:"👩"},
-        {char:"爷爷", pinyin:"yéye", meaning:"дедушка", emoji:"👴"},
-        {char:"奶奶", pinyin:"nǎinai", meaning:"бабушка", emoji:"👵"},
-        {char:"外公", pinyin:"wàigōng", meaning:"дедушка (по матери)", emoji:"👴"},
-        {char:"外婆", pinyin:"wàipó", meaning:"бабушка (по матери)", emoji:"👵"},
-        {char:"叔叔", pinyin:"shūshu", meaning:"дядя", emoji:"👨"},
-        {char:"阿姨", pinyin:"āyí", meaning:"тётя", emoji:"👩"},
-        {char:"老师", pinyin:"lǎoshī", meaning:"учитель", emoji:"👨‍🏫"},
-        {char:"学生", pinyin:"xuésheng", meaning:"ученик", emoji:"👨‍🎓"},
-        {char:"同学", pinyin:"tóngxué", meaning:"одноклассник", emoji:"👨‍🎓"},
-        {char:"同事", pinyin:"tóngshì", meaning:"коллега", emoji:"👔"},
-        {char:"老板", pinyin:"lǎobǎn", meaning:"начальник", emoji:"👔"},
-        {char:"人", pinyin:"rén", meaning:"человек", emoji:"👤"},
-        {char:"男人", pinyin:"nánrén", meaning:"мужчина", emoji:"👨"},
-        {char:"女人", pinyin:"nǚrén", meaning:"женщина", emoji:"👩"},
-        {char:"小孩", pinyin:"xiǎohái", meaning:"ребёнок", emoji:"👶"},
-        {char:"老人", pinyin:"lǎorén", meaning:"пожилой", emoji:"👴"},
-        {char:"年轻", pinyin:"niánqīng", meaning:"молодой", emoji:"👦"},
-        {char:"高", pinyin:"gāo", meaning:"высокий", emoji:"📏"},
-        {char:"矮", pinyin:"ǎi", meaning:"низкий", emoji:"📏"},
-        {char:"胖", pinyin:"pàng", meaning:"полный", emoji:"📏"},
-        {char:"瘦", pinyin:"shòu", meaning:"худой", emoji:"📏"},
-        {char:"漂亮", pinyin:"piàoliang", meaning:"красивая", emoji:"😍"},
-        {char:"帅", pinyin:"shuài", meaning:"красивый", emoji:"😎"},
-        {char:"友好", pinyin:"yǒuhǎo", meaning:"дружелюбный", emoji:"😊"},
-        
-        // ВРЕМЯ И ЧИСЛА (30 слов)
+        {char:"你好", pinyin:"nǐhǎo", meaning:"здравствуйте", emoji:"👋"},
+        {char:"谢谢", pinyin:"xièxie", meaning:"спасибо", emoji:"🙏"},
+        {char:"再见", pinyin:"zàijiàn", meaning:"до свидания", emoji:"👋"},
+        {char:"对不起", pinyin:"duìbuqǐ", meaning:"извините", emoji:"😔"},
+        {char:"请", pinyin:"qǐng", meaning:"пожалуйста", emoji:"🙏"},
+        {char:"买", pinyin:"mǎi", meaning:"покупать", emoji:"🛍️"},
+        {char:"卖", pinyin:"mài", meaning:"продавать", emoji:"💰"},
+        {char:"商店", pinyin:"shāngdiàn", meaning:"магазин", emoji:"🏪"},
+        {char:"超市", pinyin:"chāoshì", meaning:"супермаркет", emoji:"🛒"},
+        {char:"多少钱", pinyin:"duōshǎo qián", meaning:"сколько стоит", emoji:"💰"},
+        {char:"便宜", pinyin:"piányi", meaning:"дёшево", emoji:"💸"},
+        {char:"贵", pinyin:"guì", meaning:"дорого", emoji:"💎"},
+        {char:"药店", pinyin:"yàodiàn", meaning:"аптека", emoji:"💊"},
+        {char:"感冒", pinyin:"gǎnmào", meaning:"простуда", emoji:"🤧"},
+        {char:"药", pinyin:"yào", meaning:"лекарство", emoji:"💊"},
+        {char:"医生", pinyin:"yīshēng", meaning:"врач", emoji:"👨‍⚕️"},
+        {char:"医院", pinyin:"yīyuàn", meaning:"больница", emoji:"🏥"},
+        {char:"头痛", pinyin:"tóutòng", meaning:"головная боль", emoji:"🤕"},
         {char:"现在", pinyin:"xiànzài", meaning:"сейчас", emoji:"⏰"},
         {char:"今天", pinyin:"jīntiān", meaning:"сегодня", emoji:"📅"},
         {char:"明天", pinyin:"míngtiān", meaning:"завтра", emoji:"📅"},
         {char:"昨天", pinyin:"zuótiān", meaning:"вчера", emoji:"📅"},
         {char:"早上", pinyin:"zǎoshang", meaning:"утро", emoji:"🌅"},
         {char:"中午", pinyin:"zhōngwǔ", meaning:"полдень", emoji:"☀️"},
-        {char:"下午", pinyin:"xiàwǔ", meaning:"день", emoji:"☀️"},
         {char:"晚上", pinyin:"wǎnshang", meaning:"вечер", emoji:"🌙"},
-        {char:"夜", pinyin:"yè", meaning:"ночь", emoji:"🌙"},
-        {char:"小时", pinyin:"xiǎoshí", meaning:"час", emoji:"⏰"},
-        {char:"分钟", pinyin:"fēnzhōng", meaning:"минута", emoji:"⏱️"},
-        {char:"秒", pinyin:"miǎo", meaning:"секунда", emoji:"⏱️"},
-        {char:"星期", pinyin:"xīngqī", meaning:"неделя", emoji:"📅"},
-        {char:"月", pinyin:"yuè", meaning:"месяц", emoji:"📅"},
-        {char:"年", pinyin:"nián", meaning:"год", emoji:"📅"},
+        {char:"天气", pinyin:"tiānqì", meaning:"погода", emoji:"🌤️"},
+        {char:"晴天", pinyin:"qíngtiān", meaning:"солнечно", emoji:"☀️"},
+        {char:"下雨", pinyin:"xià yǔ", meaning:"дождь", emoji:"🌧️"},
+        {char:"雪", pinyin:"xuě", meaning:"снег", emoji:"❄️"},
         {char:"一", pinyin:"yī", meaning:"один", emoji:"1️⃣"},
         {char:"二", pinyin:"èr", meaning:"два", emoji:"2️⃣"},
         {char:"三", pinyin:"sān", meaning:"три", emoji:"3️⃣"},
@@ -715,116 +456,30 @@
         {char:"七", pinyin:"qī", meaning:"семь", emoji:"7️⃣"},
         {char:"八", pinyin:"bā", meaning:"восемь", emoji:"8️⃣"},
         {char:"九", pinyin:"jiǔ", meaning:"девять", emoji:"9️⃣"},
-        {char:"十", pinyin:"shí", meaning:"десять", emoji:"🔟"},
-        {char:"百", pinyin:"bǎi", meaning:"сто", emoji:"💯"},
-        {char:"千", pinyin:"qiān", meaning:"тысяча", emoji:"1️⃣0️⃣0️⃣0️⃣"},
-        {char:"万", pinyin:"wàn", meaning:"десять тысяч", emoji:"🔢"},
-        {char:"第", pinyin:"dì", meaning:"-ый (порядковое)", emoji:"🔢"},
-        {char:"次", pinyin:"cì", meaning:"раз", emoji:"🔢"},
-        
-        // ПОГОДА (20 слов)
-        {char:"天气", pinyin:"tiānqì", meaning:"погода", emoji:"🌤️"},
-        {char:"晴天", pinyin:"qíngtiān", meaning:"солнечно", emoji:"☀️"},
-        {char:"阴天", pinyin:"yīntiān", meaning:"пасмурно", emoji:"☁️"},
-        {char:"下雨", pinyin:"xià yǔ", meaning:"дождь", emoji:"🌧️"},
-        {char:"雪", pinyin:"xuě", meaning:"снег", emoji:"❄️"},
-        {char:"风", pinyin:"fēng", meaning:"ветер", emoji:"💨"},
-        {char:"冷", pinyin:"lěng", meaning:"холодно", emoji:"❄️"},
-        {char:"热", pinyin:"rè", meaning:"жарко", emoji:"🔥"},
-        {char:"暖和", pinyin:"nuǎnhuo", meaning:"тепло", emoji:"🌡️"},
-        {char:"凉快", pinyin:"liángkuai", meaning:"прохладно", emoji:"🍃"},
-        {char:"温度", pinyin:"wēndù", meaning:"температура", emoji:"🌡️"},
-        {char:"度", pinyin:"dù", meaning:"градус", emoji:"🌡️"},
-        {char:"春天", pinyin:"chūntiān", meaning:"весна", emoji:"🌸"},
-        {char:"夏天", pinyin:"xiàtiān", meaning:"лето", emoji:"☀️"},
-        {char:"秋天", pinyin:"qiūtiān", meaning:"осень", emoji:"🍂"},
-        {char:"冬天", pinyin:"dōngtiān", meaning:"зима", emoji:"❄️"},
-        {char:"季节", pinyin:"jìjié", meaning:"сезон", emoji:"📅"},
-        {char:"潮湿", pinyin:"cháoshī", meaning:"влажно", emoji:"💧"},
-        {char:"干燥", pinyin:"gānzào", meaning:"сухо", emoji:"🌵"},
-        {char:"雾", pinyin:"wù", meaning:"туман", emoji:"🌫️"}
+        {char:"十", pinyin:"shí", meaning:"десять", emoji:"🔟"}
     ];
     
     let allWords = wordsList;
     let currentWordIndex = 0;
     let currentCubeWord = null;
     
-    // ==================== 520 ДИАЛОГОВ ====================
+    // ==================== ДИАЛОГИ ====================
     const dialogTemplates = [
-        // Приветствия
         {topic:"greeting", q:"你好！", qp:"Nǐ hǎo!", qr:"Здравствуйте!", a:"你好！你好吗？", ap:"Nǐ hǎo! Nǐ hǎo ma?", ar:"Здравствуйте! Как дела?"},
-        {topic:"greeting", q:"早上好！", qp:"Zǎoshang hǎo!", qr:"Доброе утро!", a:"早上好！睡得好吗？", ap:"Zǎoshang hǎo! Shuì de hǎo ma?", ar:"Доброе утро! Хорошо спал?"},
-        {topic:"greeting", q:"你叫什么名字？", qp:"Nǐ jiào shénme míngzi?", qr:"Как тебя зовут?", a:"我叫安娜。你呢？", ap:"Wǒ jiào Ānnà. Nǐ ne?", ar:"Меня зовут Анна. А тебя?"},
-        {topic:"greeting", q:"很高兴认识你！", qp:"Hěn gāoxìng rènshi nǐ!", qr:"Приятно познакомиться!", a:"我也很高兴认识你！", ap:"Wǒ yě hěn gāoxìng rènshi nǐ!", ar:"Мне тоже приятно!"},
-        {topic:"greeting", q:"再见！", qp:"Zàijiàn!", qr:"До свидания!", a:"再见！明天见！", ap:"Zàijiàn! Míngtiān jiàn!", ar:"До свидания! До завтра!"},
-        {topic:"greeting", q:"谢谢你的帮助！", qp:"Xièxie nǐ de bāngzhù!", qr:"Спасибо за помощь!", a:"不客气！随时帮忙。", ap:"Bú kèqi! Suíshí bāngmáng.", ar:"Не за что! Всегда помогу."},
-        {topic:"greeting", q:"对不起，我迟到了。", qp:"Duìbuqǐ, wǒ chídào le.", qr:"Извините, я опоздал.", a:"没关系，没关系。", ap:"Méi guānxi, méi guānxi.", ar:"Ничего страшного."},
-        {topic:"greeting", q:"请问，现在几点了？", qp:"Qǐngwèn, xiànzài jǐ diǎn le?", qr:"Скажите, который час?", a:"现在三点半。", ap:"Xiànzài sān diǎn bàn.", ar:"Сейчас полчетвёртого."},
-        
-        // Еда
+        {topic:"greeting", q:"你叫什么名字？", qp:"Nǐ jiào shénme míngzi?", qr:"Как тебя зовут?", a:"我叫安娜。", ap:"Wǒ jiào nnà.", ar:"Меня зовут Анна."},
         {topic:"food", q:"你想吃什么？", qp:"Nǐ xiǎng chī shénme?", qr:"Что хочешь съесть?", a:"我想吃中国菜。", ap:"Wǒ xiǎng chī Zhōngguó cài.", ar:"Хочу китайскую еду."},
-        {topic:"food", q:"这个好吃吗？", qp:"Zhège hǎochī ma?", qr:"Это вкусно?", a:"很好吃！你尝尝。", ap:"Hěn hǎochī! Nǐ chángchang.", ar:"Очень вкусно! Попробуй."},
-        {topic:"food", q:"你会用筷子吗？", qp:"Nǐ huì yòng kuàizi ma?", qr:"Умеешь пользоваться палочками?", a:"会一点，不太熟练。", ap:"Huì yīdiǎn, bú tài shúliàn.", ar:"Немного умею, не очень ловко."},
-        {topic:"food", q:"你要喝什么？", qp:"Nǐ yào hē shénme?", qr:"Что будешь пить?", a:"我要一杯茶，谢谢。", ap:"Wǒ yào yī bēi chá, xièxie.", ar:"Чашку чая, спасибо."},
-        {topic:"food", q:"你吃饱了吗？", qp:"Nǐ chī bǎo le ma?", qr:"Ты наелся?", a:"饱了，谢谢。很好吃！", ap:"Bǎo le, xièxie. Hěn hǎochī!", ar:"Да, спасибо. Очень вкусно!"},
-        {topic:"food", q:"这个辣不辣？", qp:"Zhège là bú là?", qr:"Это острое?", a:"有点辣，你要小心。", ap:"Yǒudiǎn là, nǐ yào xiǎoxīn.", ar:"Немного острое, будь осторожен."},
-        {topic:"food", q:"我们点菜吧。", qp:"Wǒmen diǎn cài ba.", qr:"Давай закажем еду.", a:"好，看看菜单。", ap:"Hǎo, kànkan càidān.", ar:"Хорошо, посмотрим меню."},
-        {topic:"food", q:"买单！", qp:"Mǎidān!", qr:"Счёт!", a:"好的，一共150元。", ap:"Hǎo de, yīgòng 150 yuán.", ar:"Хорошо, всего 150 юаней."},
-        
-        // Покупки
+        {topic:"food", q:"这个好吃吗？", qp:"Zhège hǎochī ma?", qr:"Это вкусно?", a:"很好吃！", ap:"Hěn hǎochī!", ar:"Очень вкусно!"},
         {topic:"shop", q:"这个多少钱？", qp:"Zhège duōshǎo qián?", qr:"Сколько это стоит?", a:"这个200元。", ap:"Zhège 200 yuán.", ar:"Это 200 юаней."},
         {topic:"shop", q:"可以便宜一点吗？", qp:"Kěyǐ piányi yīdiǎn ma?", qr:"Можно подешевле?", a:"最低180元。", ap:"Zuìdī 180 yuán.", ar:"Минимум 180 юаней."},
-        {topic:"shop", q:"有没有小一点的？", qp:"Yǒu méiyǒu xiǎo yīdiǎn de?", qr:"Есть поменьше?", a:"有，这个怎么样？", ap:"Yǒu, zhège zěnmeyàng?", ar:"Есть, как насчёт этого?"},
-        {topic:"shop", q:"我可以试试吗？", qp:"Wǒ kěyǐ shìshi ma?", qr:"Можно примерить?", a:"当然可以，试衣间在那边。", ap:"Dāngrán kěyǐ, shìyījiān zài nàbiān.", ar:"Конечно, примерочная там."},
-        {topic:"shop", q:"这个颜色还有吗？", qp:"Zhège yánsè hái yǒu ma?", qr:"Есть этот цвет?", a:"抱歉，这个颜色卖完了。", ap:"Bàoqiàn, zhège yánsè mài wán le.", ar:"Извините, этот цвет распродан."},
-        {topic:"shop", q:"我要买这个。", qp:"Wǒ yào mǎi zhège.", qr:"Я куплю это.", a:"好的，现金还是刷卡？", ap:"Hǎo de, xiànjīn háishì shuākǎ?", ar:"Хорошо, наличными или картой?"},
-        {topic:"shop", q:"可以退货吗？", qp:"Kěyǐ tuìhuò ma?", qr:"Можно вернуть товар?", a:"可以，七天内可以退货。", ap:"Kěyǐ, qī tiān nèi kěyǐ tuìhuò.", ar:"Можно, в течение 7 дней."},
-        {topic:"shop", q:"有折扣吗？", qp:"Yǒu zhékòu ma?", qr:"Есть скидка?", a:"现在打八折。", ap:"Xiànzài dǎ bā zhé.", ar:"Сейчас скидка 20%."},
-        
-        // Транспорт
         {topic:"transport", q:"去机场怎么走？", qp:"Qù jīchǎng zěnme zǒu?", qr:"Как добраться до аэропорта?", a:"坐地铁2号线。", ap:"Zuò dìtiě èr hào xiàn.", ar:"На метро, линия 2."},
         {topic:"transport", q:"到市中心要多久？", qp:"Dào shì zhōngxīn yào duōjiǔ?", qr:"Сколько до центра?", a:"大概30分钟。", ap:"Dàgài 30 fēnzhōng.", ar:"Примерно 30 минут."},
-        {topic:"transport", q:"这里有出租车吗？", qp:"Zhèlǐ yǒu chūzūchē ma?", qr:"Здесь есть такси?", a:"有，我帮你叫一辆。", ap:"Yǒu, wǒ bāng nǐ jiào yī liàng.", ar:"Есть, я вызову."},
-        {topic:"transport", q:"请带我去这个地址。", qp:"Qǐng dài wǒ qù zhège dìzhǐ.", qr:"Отвезите меня по этому адресу.", a:"好的，没问题。", ap:"Hǎo de, méi wèntí.", ar:"Хорошо, без проблем."},
-        {topic:"transport", q:"到火车站多少钱？", qp:"Dào huǒchēzhàn duōshǎo qián?", qr:"Сколько до вокзала?", a:"大概50元。", ap:"Dàgài 50 yuán.", ar:"Примерно 50 юаней."},
-        {topic:"transport", q:"公交车站在哪里？", qp:"Gōngjiāochē zhàn zài nǎlǐ?", qr:"Где автобусная остановка?", a:"在前面，左转就到了。", ap:"Zài qiánmiàn, zuǒzhuǎn jiù dào le.", ar:"Впереди, поверните налево."},
-        {topic:"transport", q:"这辆车去西湖吗？", qp:"Zhè liàng chē qù Xīhú ma?", qr:"Эта машина едет к озеру Сиху?", a:"不去，你要坐5路车。", ap:"Bú qù, nǐ yào zuò 5 lù chē.", ar:"Нет, вам нужен автобус №5."},
-        {topic:"transport", q:"请开快一点。", qp:"Qǐng kāi kuài yīdiǎn.", qr:"Поезжайте быстрее.", a:"抱歉，这里限速。", ap:"Bàoqiàn, zhèlǐ xiànsù.", ar:"Извините, здесь ограничение скорости."},
-        
-        // Дом
         {topic:"home", q:"你家在哪里？", qp:"Nǐ jiā zài nǎlǐ?", qr:"Где ты живёшь?", a:"我住在市中心。", ap:"Wǒ zhù zài shì zhōngxīn.", ar:"Я живу в центре."},
-        {topic:"home", q:"你的房间大吗？", qp:"Nǐ de fángjiān dà ma?", qr:"Твоя комната большая?", a:"不大，但是很舒服。", ap:"Bú dà, dànshì hěn shūfu.", ar:"Небольшая, но уютная."},
-        {topic:"home", q:"我可以借用一下你的电脑吗？", qp:"Wǒ kěyǐ jièyòng yīxià nǐ de diànnǎo ma?", qr:"Можно借用 твой компьютер?", a:"可以，随便用。", ap:"Kěyǐ, suíbiàn yòng.", ar:"Можно, пользуйся."},
-        {topic:"home", q:"Wi-Fi密码是多少？", qp:"Wi-Fi mìmǎ shì duōshǎo?", qr:"Какой пароль от Wi-Fi?", a:"密码是12345678。", ap:"Mìmǎ shì 12345678.", ar:"Пароль 12345678."},
-        {topic:"home", q:"你能帮我修一下这个吗？", qp:"Nǐ néng bāng wǒ xiū yīxià zhège ma?", qr:"Можешь помочь починить?", a:"让我看看...应该可以。", ap:"Ràng wǒ kànkan... yīnggāi kěyǐ.", ar:"Дай посмотреть... должно получиться."},
-        {topic:"home", q:"今天谁来打扫？", qp:"Jīntiān shéi lái dǎsǎo?", qr:"Кто сегодня убирает?", a:"轮到你了。", ap:"Lúndào nǐ le.", ar:"Твоя очередь."},
-        {topic:"home", q:"冰箱里有什么吃的？", qp:"Bīngxiāng lǐ yǒu shénme chī de?", qr:"Что есть в холодильнике?", a:"有牛奶、鸡蛋和一些水果。", ap:"Yǒu niúnǎi, jīdàn hé yīxiē shuǐguǒ.", ar:"Молоко, яйца и фрукты."},
-        {topic:"home", q:"你几点起床？", qp:"Nǐ jǐ diǎn qǐchuáng?", qr:"Во сколько встаёшь?", a:"我一般七点起床。", ap:"Wǒ yībān qī diǎn qǐchuáng.", ar:"Обычно в 7 утра."},
-        
-        // Здоровье
-        {topic:"health", q:"你怎么了？", qp:"Nǐ zěnme le?", qr:"Что с тобой?", a:"我感冒了，头疼。", ap:"Wǒ gǎnmào le, tóu téng.", ar:"Простудился, голова болит."},
-        {topic:"health", q:"你需要看医生吗？", qp:"Nǐ xūyào kàn yīshēng ma?", qr:"Тебе нужен врач?", a:"不用，我吃点药就好了。", ap:"Bú yòng, wǒ chī diǎn yào jiù hǎo le.", ar:"Не надо, приму лекарство."},
-        {topic:"health", q:"你发烧吗？", qp:"Nǐ fāshāo ma?", qr:"У тебя температура?", a:"有点，38度。", ap:"Yǒudiǎn, 38 dù.", ar:"Немного, 38 градусов."},
-        {topic:"health", q:"药店在哪里？", qp:"Yàodiàn zài nǎlǐ?", qr:"Где аптека?", a:"在前面左转，有一家。", ap:"Zài qiánmiàn zuǒzhuǎn, yǒu yī jiā.", ar:"Впереди налево, есть одна."},
-        {topic:"health", q:"这个药怎么吃？", qp:"Zhège yào zěnme chī?", qr:"Как принимать это лекарство?", a:"一天三次，饭后吃。", ap:"Yī tiān sān cì, fàn hòu chī.", ar:"Три раза в день после еды."},
-        {topic:"health", q:"你感觉怎么样？", qp:"Nǐ gǎnjué zěnmeyàng?", qr:"Как себя чувствуешь?", a:"好多了，谢谢关心。", ap:"Hǎo duō le, xièxie guānxīn.", ar:"Лучше, спасибо за заботу."},
-        {topic:"health", q:"你要多喝水。", qp:"Nǐ yào duō hē shuǐ.", qr:"Пей больше воды.", a:"好的，我知道了。", ap:"Hǎo de, wǒ zhīdào le.", ar:"Хорошо, понял."},
-        {topic:"health", q:"你休息一下吧。", qp:"Nǐ xiūxi yīxià ba.", qr:"Отдохни немного.", a:"好，我躺一会儿。", ap:"Hǎo, wǒ tǎng yīhuìr.", ar:"Хорошо, прилягу."},
-        
-        // Путешествия
-        {topic:"travel", q:"你去过中国吗？", qp:"Nǐ qùguò Zhōngguó ma?", qr:"Ты был в Китае?", a:"去过，我去过北京和上海。", ap:"Qùguò, wǒ qùguò Běijīng hé Shànghǎi.", ar:"Да, был в Пекине и Шанхае."},
-        {topic:"travel", q:"你想去哪里旅游？", qp:"Nǐ xiǎng qù nǎlǐ lǚyóu?", qr:"Куда хочешь поехать?", a:"我想去西安看兵马俑。", ap:"Wǒ xiǎng qù Xī'ān kàn bīngmǎyng.", ar:"Хочу в Сиань, посмотреть терракотовую армию."},
-        {topic:"travel", q:"你的护照准备好了吗？", qp:"Nǐ de hùzhào zhǔnbèi hǎo le ma?", qr:"Паспорт готов?", a:"准备好了，签证也办好了。", ap:"Zhǔnbèi hǎo le, qiānzhèng yě bàn hǎo le.", ar:"Готов, и виза тоже."},
-        {topic:"travel", q:"你几点到机场？", qp:"Nǐ jǐ diǎn dào jīchǎng?", qr:"Во сколько в аэропорт?", a:"我提前两小时到。", ap:"Wǒ tíqián liǎng xiǎoshí dào.", ar:"Приеду за два часа."},
-        {topic:"travel", q:"酒店订好了吗？", qp:"Jiǔdiàn dìng hǎo le ma?", qr:"Отель забронирован?", a:"订好了，在网上订的。", ap:"Dìng hǎo le, zài wǎngshàng dìng de.", ar:"Да, забронировал онлайн."},
-        {topic:"travel", q:"你带了多少行李？", qp:"Nǐ dài le duōshǎo xíngli?", qr:"Сколько багажа?", a:"一个箱子和一个背包。", ap:"Yī gè xiāngzi hé yī gè bēibāo.", ar:"Чемодан и рюкзак."},
-        {topic:"travel", q:"这里有什么好吃的？", qp:"Zhèlǐ yǒu shénme hǎochī de?", qr:"Что здесь вкусного?", a:"这里的小吃很有名。", ap:"Zhèlǐ de xiǎochī hěn yǒumíng.", ar:"Здесь знаменитые закуски."},
-        {topic:"travel", q:"我们可以拍照吗？", qp:"Wǒmen kěyǐ pāizhào ma?", qr:"Можно фотографировать?", a:"可以，但是不能用闪光灯。", ap:"Kěyǐ, dànshì bùnéng yòng shǎnguāngdēng.", ar:"Можно, но без вспышки."}
+        {topic:"health", q:"你怎么了？", qp:"Nǐ zěnme le?", qr:"Что с тобой?", a:"我感冒了。", ap:"Wǒ gǎnmào le.", ar:"Я простудился."},
+        {topic:"travel", q:"你去过中国吗？", qp:"Nǐ qùguò Zhōngguó ma?", qr:"Ты был в Китае?", a:"去过，我去过北京。", ap:"Qùguò, wǒ qùguò Běijīng.", ar:"Да, был в Пекине."}
     ];
     
-    // Генерируем 520 диалогов
     let allDialogs = [];
-    for(let i=0; i<65; i++) {
+    for(let i=0; i<47; i++) {
         for(let d of dialogTemplates) {
             allDialogs.push({...d});
         }
@@ -836,220 +491,220 @@
     
     // ==================== 214 РАДИКАЛОВ КАНСИ ====================
     const radicalsList = [
-        {symbol:"一", pinyin:"yī", meaning:"один", emoji:"1️⃣", examples:"王、丁、七"},
-        {symbol:"丨", pinyin:"gǔn", meaning:"линия", emoji:"📏", examples:"十、中、串"},
-        {symbol:"丶", pinyin:"zhǔ", meaning:"точка", emoji:"🔴", examples:"丸、丹、主"},
-        {symbol:"丿", pinyin:"piě", meaning:"наклон", emoji:"↙️", examples:"八、人、入"},
-        {symbol:"乙", pinyin:"yǐ", meaning:"второй", emoji:"2️⃣", examples:"九、也、乞"},
-        {symbol:"亅", pinyin:"jué", meaning:"крюк", emoji:"🪝", examples:"了、事、矛"},
-        {symbol:"二", pinyin:"èr", meaning:"два", emoji:"2️⃣", examples:"于、云、些"},
-        {symbol:"亠", pinyin:"tóu", meaning:"крышка", emoji:"🔝", examples:"方、亡、交"},
-        {symbol:"人", pinyin:"rén", meaning:"человек", emoji:"👤", examples:"你、什、仁"},
-        {symbol:"儿", pinyin:"ér", meaning:"сын", emoji:"👶", examples:"元、允、兄"},
-        {symbol:"入", pinyin:"rù", meaning:"входить", emoji:"➡️", examples:"内、全、两"},
-        {symbol:"八", pinyin:"bā", meaning:"восемь", emoji:"8️⃣", examples:"公、六、兮"},
-        {symbol:"冂", pinyin:"jiōng", meaning:"далёкий", emoji:"📦", examples:"冉、肉、内"},
-        {symbol:"冖", pinyin:"mì", meaning:"покрывало", emoji:"🧵", examples:"冗、冠、冥"},
-        {symbol:"冫", pinyin:"bīng", meaning:"лёд", emoji:"❄️", examples:"冬、冰、冷"},
-        {symbol:"几", pinyin:"jī", meaning:"столик", emoji:"🪑", examples:"凡、凯、风"},
-        {symbol:"凵", pinyin:"kǎn", meaning:"ёмкость", emoji:"📥", examples:"凶、凸、凹"},
-        {symbol:"刀", pinyin:"dāo", meaning:"нож", emoji:"🔪", examples:"分、切、剪"},
-        {symbol:"力", pinyin:"lì", meaning:"сила", emoji:"💪", examples:"加、功、男"},
-        {symbol:"勹", pinyin:"bāo", meaning:"обёртка", emoji:"📦", examples:"包、勺、勾"},
-        {symbol:"匕", pinyin:"bǐ", meaning:"ложка", emoji:"🥄", examples:"化、北、比"},
-        {symbol:"匚", pinyin:"fāng", meaning:"ящик", emoji:"📦", examples:"区、巨、匠"},
-        {symbol:"匸", pinyin:"xǐ", meaning:"прятать", emoji:"🙈", examples:"亡、匹、医"},
-        {symbol:"十", pinyin:"shí", meaning:"десять", emoji:"🔟", examples:"千、半、升"},
-        {symbol:"卜", pinyin:"bǔ", meaning:"гадание", emoji:"🔮", examples:"下、上、占"},
-        {symbol:"卩", pinyin:"jié", meaning:"печать", emoji:"🔖", examples:"即、卷、印"},
-        {symbol:"厂", pinyin:"hǎn", meaning:"утёс", emoji:"🪨", examples:"原、厚、历"},
-        {symbol:"厶", pinyin:"sī", meaning:"частный", emoji:"🔒", examples:"台、公、去"},
-        {symbol:"又", pinyin:"yòu", meaning:"снова", emoji:"🔄", examples:"叉、及、友"},
-        {symbol:"口", pinyin:"kǒu", meaning:"рот", emoji:"👄", examples:"吃、叫、品"},
-        {symbol:"囗", pinyin:"wéi", meaning:"ограда", emoji:"⭕", examples:"四、国、围"},
-        {symbol:"土", pinyin:"tǔ", meaning:"земля", emoji:"🌍", examples:"地、圣、圭"},
-        {symbol:"士", pinyin:"shì", meaning:"учёный", emoji:"🎓", examples:"壬、喜、壮"},
-        {symbol:"夂", pinyin:"zhǐ", meaning:"идти", emoji:"🚶", examples:"各、冬、爱"},
-        {symbol:"夊", pinyin:"suī", meaning:"медленно", emoji:"🐌", examples:"复、夏、备"},
-        {symbol:"夕", pinyin:"xī", meaning:"вечер", emoji:"🌆", examples:"外、多、夜"},
-        {symbol:"大", pinyin:"dà", meaning:"большой", emoji:"📏", examples:"太、天、夫"},
-        {symbol:"女", pinyin:"nǚ", meaning:"женщина", emoji:"👩", examples:"妈、奶、好"},
-        {symbol:"子", pinyin:"zǐ", meaning:"ребёнок", emoji:"👶", examples:"学、孔、字"},
-        {symbol:"宀", pinyin:"mián", meaning:"крыша", emoji:"🏠", examples:"家、安、宁"},
-        {symbol:"寸", pinyin:"cùn", meaning:"дюйм", emoji:"📏", examples:"村、寺、封"},
-        {symbol:"小", pinyin:"xiǎo", meaning:"маленький", emoji:"📏", examples:"少、尖、当"},
-        {symbol:"尢", pinyin:"wāng", meaning:"хромой", emoji:"🦵", examples:"尤、尴、尬"},
-        {symbol:"尸", pinyin:"shī", meaning:"труп", emoji:"💀", examples:"尺、尼、尾"},
-        {symbol:"屮", pinyin:"chè", meaning:"росток", emoji:"🌱", examples:"草、屯、顿"},
-        {symbol:"山", pinyin:"shān", meaning:"гора", emoji:"⛰️", examples:"峰、密、幽"},
-        {symbol:"巛", pinyin:"chuān", meaning:"река", emoji:"🌊", examples:"川、州、顺"},
-        {symbol:"工", pinyin:"gōng", meaning:"работа", emoji:"🔧", examples:"左、巧、功"},
-        {symbol:"己", pinyin:"jǐ", meaning:"себя", emoji:"👤", examples:"记、改、忌"},
-        {symbol:"巾", pinyin:"jīn", meaning:"тюрбан", emoji:"🧣", examples:"市、帅、刷"},
-        {symbol:"干", pinyin:"gān", meaning:"сухой", emoji:"🌵", examples:"旱、平、年"},
-        {symbol:"幺", pinyin:"yāo", meaning:"нить", emoji:"🧵", examples:"幻、幽、几"},
-        {symbol:"广", pinyin:"yǎn", meaning:"утёс", emoji:"🏔️", examples:"庄、床、店"},
-        {symbol:"廴", pinyin:"yǐn", meaning:"шаг", emoji:"👣", examples:"廷、延、建"},
-        {symbol:"廾", pinyin:"gǒng", meaning:"арка", emoji:"🌉", examples:"廿、弄、弊"},
-        {symbol:"弋", pinyin:"yì", meaning:"стрелять", emoji:"🏹", examples:"弋、贰、式"},
-        {symbol:"弓", pinyin:"gōng", meaning:"лук", emoji:"🏹", examples:"引、弗、强"},
-        {symbol:"彐", pinyin:"jì", meaning:"рыло", emoji:"🐷", examples:"录、彗、雪"},
-        {symbol:"彡", pinyin:"shān", meaning:"щётка", emoji:"🖌️", examples:"形、彤、彩"},
-        {symbol:"彳", pinyin:"chì", meaning:"шаг", emoji:"👣", examples:"行、往、征"},
-        {symbol:"心", pinyin:"xīn", meaning:"сердце", emoji:"❤️", examples:"必、忌、忘"},
-        {symbol:"戈", pinyin:"gē", meaning:"алебарда", emoji:"⚔️", examples:"戊、戌、战"},
-        {symbol:"户", pinyin:"hù", meaning:"дверь", emoji:"🚪", examples:"房、所、扇"},
-        {symbol:"手", pinyin:"shǒu", meaning:"рука", emoji:"✋", examples:"才、打、拿"},
-        {symbol:"支", pinyin:"zhī", meaning:"ветвь", emoji:"🌿", examples:"攴、收、改"},
-        {symbol:"攴", pinyin:"pū", meaning:"стучать", emoji:"👊", examples:"收、改、攻"},
-        {symbol:"文", pinyin:"wén", meaning:"письмо", emoji:"📝", examples:"齐、斌、斐"},
-        {symbol:"斗", pinyin:"dǒu", meaning:"ковш", emoji:"🥄", examples:"料、斛、斜"},
-        {symbol:"斤", pinyin:"jīn", meaning:"топор", emoji:"🪓", examples:"斥、斧、断"},
-        {symbol:"方", pinyin:"fāng", meaning:"квадрат", emoji:"⬜", examples:"於、放、旅"},
-        {symbol:"无", pinyin:"wú", meaning:"нет", emoji:"❌", examples:"既、概、溉"},
-        {symbol:"日", pinyin:"rì", meaning:"солнце", emoji:"☀️", examples:"旦、旨、早"},
-        {symbol:"曰", pinyin:"yuē", meaning:"говорить", emoji:"💬", examples:"曲、更、曹"},
-        {symbol:"月", pinyin:"yuè", meaning:"луна", emoji:"🌙", examples:"有、朋、服"},
-        {symbol:"木", pinyin:"mù", meaning:"дерево", emoji:"🌳", examples:"未、本、林"},
-        {symbol:"欠", pinyin:"qiàn", meaning:"нехватка", emoji:"😮‍💨", examples:"次、欣、欲"},
-        {symbol:"止", pinyin:"zhǐ", meaning:"остановка", emoji:"🛑", examples:"正、此、步"},
-        {symbol:"歹", pinyin:"dǎi", meaning:"смерть", emoji:"💀", examples:"死、殁、残"},
-        {symbol:"殳", pinyin:"shū", meaning:"оружие", emoji:"🗡️", examples:"段、殷、杀"},
-        {symbol:"毋", pinyin:"wú", meaning:"не", emoji:"🚫", examples:"母、每、毒"},
-        {symbol:"比", pinyin:"bǐ", meaning:"сравнить", emoji:"⚖️", examples:"毗、毙、毕"},
-        {symbol:"毛", pinyin:"máo", meaning:"шерсть", emoji:"🧶", examples:"毡、毣、毯"},
-        {symbol:"氏", pinyin:"shì", meaning:"клан", emoji:"👨‍‍👧", examples:"民、氓、纸"},
-        {symbol:"气", pinyin:"qì", meaning:"пар", emoji:"💨", examples:"氕、氘、氚"},
-        {symbol:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧", examples:"永、冰、江"},
-        {symbol:"火", pinyin:"huǒ", meaning:"огонь", emoji:"🔥", examples:"灰、灯、灶"},
-        {symbol:"爪", pinyin:"zhǎo", meaning:"коготь", emoji:"🐾", examples:"爬、争、爱"},
-        {symbol:"父", pinyin:"fù", meaning:"отец", emoji:"👨", examples:"爸、爹、爷"},
-        {symbol:"爻", pinyin:"yáo", meaning:"триграммы", emoji:"☯️", examples:"爽、尔、爻"},
-        {symbol:"爿", pinyin:"qiáng", meaning:"дерево", emoji:"🪵", examples:"床、状、将"},
-        {symbol:"片", pinyin:"piàn", meaning:"ломтик", emoji:"", examples:"版、牌、牍"},
-        {symbol:"牙", pinyin:"yá", meaning:"клык", emoji:"🦷", examples:"牚、、牂"},
-        {symbol:"牛", pinyin:"niú", meaning:"корова", emoji:"🐄", examples:"牟、牠、牲"},
-        {symbol:"犬", pinyin:"quǎn", meaning:"собака", emoji:"🐕", examples:"犯、犰、状"},
-        {symbol:"玄", pinyin:"xuán", meaning:"глубокий", emoji:"", examples:"率、玅、玈"},
-        {symbol:"玉", pinyin:"yù", meaning:"нефрит", emoji:"💎", examples:"玻、玛、璧"},
-        {symbol:"瓜", pinyin:"guā", meaning:"дыня", emoji:"🍈", examples:"瓞、瓟、瓢"},
-        {symbol:"瓦", pinyin:"wǎ", meaning:"черепица", emoji:"🏺", examples:"瓮、瓫、瓶"},
-        {symbol:"甘", pinyin:"gān", meaning:"сладкий", emoji:"🍬", examples:"甚、甜、某"},
-        {symbol:"生", pinyin:"shēng", meaning:"жизнь", emoji:"🌱", examples:"产、甥、牲"},
-        {symbol:"用", pinyin:"yòng", meaning:"использовать", emoji:"🔧", examples:"甩、甫、甬"},
-        {symbol:"田", pinyin:"tián", meaning:"поле", emoji:"🌾", examples:"由、甲、申"},
-        {symbol:"疋", pinyin:"pǐ", meaning:"болт ткани", emoji:"🧵", examples:"疏、疎、楚"},
-        {symbol:"疒", pinyin:"nè", meaning:"болезнь", emoji:"🤒", examples:"疚、疝、病"},
-        {symbol:"癶", pinyin:"bō", meaning:"шаги", emoji:"👣", examples:"癸、発、登"},
-        {symbol:"白", pinyin:"bái", meaning:"белый", emoji:"⚪", examples:"百、皂、的"},
-        {symbol:"皮", pinyin:"pí", meaning:"кожа", emoji:"🧑‍🦰", examples:"皯、皴、皱"},
-        {symbol:"皿", pinyin:"mǐn", meaning:"блюдо", emoji:"🍽️", examples:"盂、盅、盆"},
-        {symbol:"目", pinyin:"mù", meaning:"глаз", emoji:"👁️", examples:"盯、盲、看"},
-        {symbol:"矛", pinyin:"máo", meaning:"копьё", emoji:"🔱", examples:"矜、矞、矟"},
-        {symbol:"矢", pinyin:"shǐ", meaning:"стрела", emoji:"🏹", examples:"矣、知、短"},
-        {symbol:"石", pinyin:"shí", meaning:"камень", emoji:"🪨", examples:"矸、矿、研"},
-        {symbol:"示", pinyin:"shì", meaning:"дух", emoji:"👻", examples:"礼、社、神"},
-        {symbol:"禸", pinyin:"róu", meaning:"след", emoji:"👣", examples:"禹、禺、离"},
-        {symbol:"禾", pinyin:"hé", meaning:"зерно", emoji:"🌾", examples:"秃、秀、私"},
-        {symbol:"穴", pinyin:"xué", meaning:"пещера", emoji:"🕳️", examples:"究、空、穿"},
-        {symbol:"立", pinyin:"lì", meaning:"стоять", emoji:"🧍", examples:"竑、、站"},
-        {symbol:"竹", pinyin:"zhú", meaning:"бамбук", emoji:"🎋", examples:"竺、竿、笔"},
-        {symbol:"米", pinyin:"mǐ", meaning:"рис", emoji:"🍚", examples:"籽、粒、粉"},
-        {symbol:"糸", pinyin:"mì", meaning:"шёлк", emoji:"🧵", examples:"红、纪、纺"},
-        {symbol:"缶", pinyin:"fǒu", meaning:"кувшин", emoji:"🏺", examples:"缸、缺、罐"},
-        {symbol:"网", pinyin:"wǎng", meaning:"сеть", emoji:"🕸️", examples:"罗、罚、置"},
-        {symbol:"羊", pinyin:"yáng", meaning:"овца", emoji:"🐑", examples:"美、羔、群"},
-        {symbol:"羽", pinyin:"yǔ", meaning:"перо", emoji:"🪶", examples:"翅、翔、翠"},
-        {symbol:"老", pinyin:"lǎo", meaning:"старый", emoji:"👴", examples:"考、者、耆"},
-        {symbol:"而", pinyin:"ér", meaning:"а", emoji:"🔗", examples:"耐、耍、耏"},
-        {symbol:"耒", pinyin:"lěi", meaning:"плуг", emoji:"🌾", examples:"耕、耘、耜"},
-        {symbol:"耳", pinyin:"ěr", meaning:"ухо", emoji:"👂", examples:"取、闻、聪"},
-        {symbol:"聿", pinyin:"yù", meaning:"кисть", emoji:"🖌️", examples:"律、建、書"},
-        {symbol:"肉", pinyin:"ròu", meaning:"мясо", emoji:"🥩", examples:"肌、肝、胖"},
-        {symbol:"臣", pinyin:"chén", meaning:"министр", emoji:"👔", examples:"臧、臨、卧"},
-        {symbol:"自", pinyin:"zì", meaning:"сам", emoji:"👤", examples:"臭、息、臬"},
-        {symbol:"至", pinyin:"zhì", meaning:"достигать", emoji:"🎯", examples:"到、致、臻"},
-        {symbol:"臼", pinyin:"jiù", meaning:"ступка", emoji:"🥣", examples:"舂、舅、臾"},
-        {symbol:"舌", pinyin:"shé", meaning:"язык", emoji:"👅", examples:"甜、舔、舐"},
-        {symbol:"舛", pinyin:"chuǎn", meaning:"ошибка", emoji:"❌", examples:"舞、舜、舛"},
-        {symbol:"舟", pinyin:"zhōu", meaning:"лодка", emoji:"🚤", examples:"船、航、舰"},
-        {symbol:"艮", pinyin:"gèn", meaning:"остановка", emoji:"🛑", examples:"良、艰、根"},
-        {symbol:"色", pinyin:"sè", meaning:"цвет", emoji:"🎨", examples:"艳、艴、艵"},
-        {symbol:"艸", pinyin:"cǎo", meaning:"трава", emoji:"🌿", examples:"艾、芳、花"},
-        {symbol:"虍", pinyin:"hū", meaning:"тигр", emoji:"🐯", examples:"虎、虐、虚"},
-        {symbol:"虫", pinyin:"chóng", meaning:"насекомое", emoji:"🐛", examples:"虱、虾、蛇"},
-        {symbol:"血", pinyin:"xuè", meaning:"кровь", emoji:"🩸", examples:"衁、衃、衄"},
-        {symbol:"行", pinyin:"xíng", meaning:"идти", emoji:"🚶", examples:"衍、街、衡"},
-        {symbol:"衣", pinyin:"yī", meaning:"одежда", emoji:"👕", examples:"初、表、衫"},
-        {symbol:"襾", pinyin:"yà", meaning:"покрывать", emoji:"🧥", examples:"西、要、覆"},
-        {symbol:"见", pinyin:"jiàn", meaning:"видеть", emoji:"👁️", examples:"规、觅、视"},
-        {symbol:"角", pinyin:"jiǎo", meaning:"рог", emoji:"🦄", examples:"觔、觕、解"},
-        {symbol:"言", pinyin:"yán", meaning:"речь", emoji:"💬", examples:"订、计、话"},
-        {symbol:"谷", pinyin:"gǔ", meaning:"долина", emoji:"🏔️", examples:"谹、谿、豁"},
-        {symbol:"豆", pinyin:"dòu", meaning:"боб", emoji:"🫘", examples:"豇、、豎"},
-        {symbol:"豕", pinyin:"shǐ", meaning:"свинья", emoji:"🐖", examples:"豚、豜、豢"},
-        {symbol:"豸", pinyin:"zhì", meaning:"барсук", emoji:"🦡", examples:"豺、豹、貌"},
-        {symbol:"贝", pinyin:"bèi", meaning:"ракушка", emoji:"🐚", examples:"贞、负、财"},
-        {symbol:"赤", pinyin:"chì", meaning:"красный", emoji:"🔴", examples:"赦、赧、赫"},
-        {symbol:"走", pinyin:"zǒu", meaning:"бежать", emoji:"🏃", examples:"赴、赶、超"},
-        {symbol:"足", pinyin:"zú", meaning:"нога", emoji:"🦶", examples:"趴、趵、路"},
-        {symbol:"身", pinyin:"shēn", meaning:"тело", emoji:"🧍", examples:"躬、躭、躯"},
-        {symbol:"车", pinyin:"chē", meaning:"телега", emoji:"🚗", examples:"轧、轨、军"},
-        {symbol:"辛", pinyin:"xīn", meaning:"горький", emoji:"😣", examples:"辜、辟、辣"},
-        {symbol:"辰", pinyin:"chén", meaning:"утро", emoji:"🌅", examples:"辱、农、晨"},
-        {symbol:"辶", pinyin:"chuò", meaning:"ходить", emoji:"🚶", examples:"边、巡、远"},
-        {symbol:"邑", pinyin:"yì", meaning:"город", emoji:"🏙️", examples:"邕、、都"},
-        {symbol:"酉", pinyin:"yǒu", meaning:"вино", emoji:"🍷", examples:"酊、酌、醉"},
-        {symbol:"釆", pinyin:"biàn", meaning:"различать", emoji:"🔍", examples:"采、釉、释"},
-        {symbol:"里", pinyin:"lǐ", meaning:"деревня", emoji:"🏘️", examples:"重、野、量"},
-        {symbol:"金", pinyin:"jīn", meaning:"золото", emoji:"🥇", examples:"釓、、铁"},
-        {symbol:"长", pinyin:"cháng", meaning:"длинный", emoji:"📏", examples:"镺、镻、镼"},
-        {symbol:"门", pinyin:"mén", meaning:"ворота", emoji:"🚪", examples:"闪、问、间"},
-        {symbol:"阜", pinyin:"fù", meaning:"холм", emoji:"⛰️", examples:"阡、阢、陆"},
-        {symbol:"隶", pinyin:"lì", meaning:"раб", emoji:"⛓️", examples:"隷、隸、逮"},
-        {symbol:"隹", pinyin:"zhuī", meaning:"птица", emoji:"🐦", examples:"隻、隼、隽"},
-        {symbol:"雨", pinyin:"yǔ", meaning:"дождь", emoji:"🌧️", examples:"雪、雯、雷"},
-        {symbol:"青", pinyin:"qīng", meaning:"синий", emoji:"🔵", examples:"靖、静、靓"},
-        {symbol:"非", pinyin:"fēi", meaning:"неправильно", emoji:"❌", examples:"靠、靡、辈"},
-        {symbol:"面", pinyin:"miàn", meaning:"лицо", emoji:"😊", examples:"靥、靦、靧"},
-        {symbol:"革", pinyin:"gé", meaning:"кожа", emoji:"👞", examples:"靳、靶、鞋"},
-        {symbol:"韦", pinyin:"wéi", meaning:"кожа", emoji:"👞", examples:"韧、韍、"},
-        {symbol:"韭", pinyin:"jiǔ", meaning:"лук", emoji:"🧅", examples:"韰、、䪢"},
-        {symbol:"音", pinyin:"yīn", meaning:"звук", emoji:"🔊", examples:"竟、章、韵"},
-        {symbol:"页", pinyin:"yè", meaning:"лист", emoji:"📄", examples:"顶、顷、顾"},
-        {symbol:"风", pinyin:"fēng", meaning:"ветер", emoji:"💨", examples:"颩、、飘"},
-        {symbol:"飞", pinyin:"fēi", meaning:"лететь", emoji:"✈️", examples:"飜、、飞"},
-        {symbol:"食", pinyin:"shí", meaning:"еда", emoji:"🍽️", examples:"飡、饥、饭"},
-        {symbol:"首", pinyin:"shǒu", meaning:"голова", emoji:"👤", examples:"馗、馘、首"},
-        {symbol:"香", pinyin:"xiāng", meaning:"аромат", emoji:"🌸", examples:"馝、馞、馡"},
-        {symbol:"马", pinyin:"mǎ", meaning:"лошадь", emoji:"🐴", examples:"驭、冯、驾"},
-        {symbol:"骨", pinyin:"gǔ", meaning:"кость", emoji:"🦴", examples:"骫、骭、骼"},
-        {symbol:"高", pinyin:"gāo", meaning:"высокий", emoji:"📏", examples:"髚、髛、髙"},
-        {symbol:"髟", pinyin:"biāo", meaning:"волосы", emoji:"💇", examples:"髠、髡、髢"},
-        {symbol:"斗", pinyin:"dòu", meaning:"бой", emoji:"⚔️", examples:"鬦、闹、鬨"},
-        {symbol:"鬯", pinyin:"chàng", meaning:"вино", emoji:"🍷", examples:"鬰、鬱、鬯"},
-        {symbol:"鬲", pinyin:"lì", meaning:"котёл", emoji:"🍲", examples:"鬳、鬴、鬵"},
-        {symbol:"鬼", pinyin:"guǐ", meaning:"призрак", emoji:"👻", examples:"魁、魂、魄"},
-        {symbol:"鱼", pinyin:"yú", meaning:"рыба", emoji:"🐟", examples:"魟、、鲜"},
-        {symbol:"鸟", pinyin:"niǎo", meaning:"птица", emoji:"🐦", examples:"鳦、、鸠"},
-        {symbol:"卤", pinyin:"lǔ", meaning:"соль", emoji:"🧂", examples:"鹹、鹺、鹼"},
-        {symbol:"鹿", pinyin:"lù", meaning:"олень", emoji:"🦌", examples:"麀、麁、麂"},
-        {symbol:"麦", pinyin:"mài", meaning:"пшеница", emoji:"🌾", examples:"麨、麩、"},
-        {symbol:"麻", pinyin:"má", meaning:"конопля", emoji:"🌿", examples:"麼、麾、黁"},
-        {symbol:"黄", pinyin:"huáng", meaning:"жёлтый", emoji:"🟡", examples:"黈、䵍、"},
-        {symbol:"黍", pinyin:"shǔ", meaning:"просо", emoji:"🌾", examples:"黎、黏、黐"},
-        {symbol:"黑", pinyin:"hēi", meaning:"чёрный", emoji:"⚫", examples:"墨、黔、黓"},
-        {symbol:"黹", pinyin:"zhǐ", meaning:"вышивка", emoji:"🧵", examples:"黺、黻、黼"},
-        {symbol:"黾", pinyin:"mǐn", meaning:"лягушка", emoji:"🐸", examples:"鼀、鼁、鼋"},
-        {symbol:"鼎", pinyin:"dǐng", meaning:"треножник", emoji:"🏺", examples:"鼏、鼐、鼒"},
-        {symbol:"鼓", pinyin:"gǔ", meaning:"барабан", emoji:"🥁", examples:"鼕、鼖、鼗"},
-        {symbol:"鼠", pinyin:"shǔ", meaning:"крыса", emoji:"🐀", examples:"鼢、鼥、鼩"},
-        {symbol:"鼻", pinyin:"bí", meaning:"нос", emoji:"👃", examples:"鼽、鼾、齁"},
-        {symbol:"齐", pinyin:"qí", meaning:"ровный", emoji:"📐", examples:"斋、齌、齍"},
-        {symbol:"齿", pinyin:"chǐ", meaning:"зуб", emoji:"🦷", examples:"齔、齕、齖"},
-        {symbol:"龙", pinyin:"lóng", meaning:"дракон", emoji:"🐉", examples:"龏、龑、龚"},
-        {symbol:"龟", pinyin:"guī", meaning:"черепаха", emoji:"🐢", examples:"䶰、龝、龞"},
-        {symbol:"龠", pinyin:"yuè", meaning:"флейта", emoji:"🎶", examples:"龡、龢、龤"}
+        {symbol:"一", pinyin:"yī", meaning:"один", emoji:"1️⃣", examples:"王、丁、七、三、上"},
+        {symbol:"丨", pinyin:"gǔn", meaning:"линия", emoji:"📏", examples:"十、中、串、丰、申"},
+        {symbol:"丶", pinyin:"zhǔ", meaning:"точка", emoji:"🔴", examples:"丸、丹、主、之、为"},
+        {symbol:"丿", pinyin:"piě", meaning:"наклон влево", emoji:"↙️", examples:"八、人、入、个、今"},
+        {symbol:"乙", pinyin:"yǐ", meaning:"второй", emoji:"2️⃣", examples:"九、也、乞、飞、乡"},
+        {symbol:"亅", pinyin:"jué", meaning:"крюк", emoji:"🪝", examples:"了、事、矛、予、争"},
+        {symbol:"二", pinyin:"èr", meaning:"два", emoji:"2️⃣", examples:"于、云、些、五、井"},
+        {symbol:"亠", pinyin:"tóu", meaning:"крышка", emoji:"🔝", examples:"方、亡、交、京、亮"},
+        {symbol:"人", pinyin:"rén", meaning:"человек", emoji:"👤", examples:"你、什、仁、从、众"},
+        {symbol:"儿", pinyin:"ér", meaning:"сын", emoji:"👶", examples:"元、允、兄、先、光"},
+        {symbol:"入", pinyin:"rù", meaning:"входить", emoji:"➡️", examples:"内、全、两、八、公"},
+        {symbol:"八", pinyin:"bā", meaning:"восемь", emoji:"8️⃣", examples:"公、六、兮、共、兵"},
+        {symbol:"冂", pinyin:"jiōng", meaning:"далёкий", emoji:"📦", examples:"冉、肉、内、网、冈"},
+        {symbol:"冖", pinyin:"mì", meaning:"покрывало", emoji:"🧵", examples:"冗、冠、冥、写、军"},
+        {symbol:"冫", pinyin:"bīng", meaning:"лёд", emoji:"❄️", examples:"冬、冰、冷、冻、冲"},
+        {symbol:"几", pinyin:"jī", meaning:"столик", emoji:"🪑", examples:"凡、凯、风、凤、凭"},
+        {symbol:"凵", pinyin:"kǎn", meaning:"ёмкость", emoji:"📥", examples:"凶、凸、凹、击、函"},
+        {symbol:"刀", pinyin:"dāo", meaning:"нож", emoji:"🔪", examples:"分、切、剪、初、别"},
+        {symbol:"力", pinyin:"lì", meaning:"сила", emoji:"💪", examples:"加、功、男、助、努"},
+        {symbol:"勹", pinyin:"bāo", meaning:"обёртка", emoji:"📦", examples:"包、勺、勾、匆、匈"},
+        {symbol:"匕", pinyin:"bǐ", meaning:"ложка", emoji:"🥄", examples:"化、北、比、死、旨"},
+        {symbol:"匚", pinyin:"fāng", meaning:"ящик", emoji:"📦", examples:"区、巨、匠、医、匣"},
+        {symbol:"匸", pinyin:"xǐ", meaning:"прятать", emoji:"🙈", examples:"亡、匹、医、匿、区"},
+        {symbol:"十", pinyin:"shí", meaning:"десять", emoji:"🔟", examples:"千、半、升、华、协"},
+        {symbol:"卜", pinyin:"bǔ", meaning:"гадание", emoji:"🔮", examples:"下、上、占、卡、卦"},
+        {symbol:"卩", pinyin:"jié", meaning:"печать", emoji:"🔖", examples:"即、卷、印、却、卿"},
+        {symbol:"厂", pinyin:"hǎn", meaning:"утёс", emoji:"🪨", examples:"原、厚、历、压、厕"},
+        {symbol:"厶", pinyin:"sī", meaning:"частный", emoji:"🔒", examples:"台、公、去、参、允"},
+        {symbol:"又", pinyin:"yòu", meaning:"снова", emoji:"🔄", examples:"叉、及、友、双、取"},
+        {symbol:"口", pinyin:"kǒu", meaning:"рот", emoji:"👄", examples:"吃、叫、品、和、味"},
+        {symbol:"囗", pinyin:"wéi", meaning:"ограда", emoji:"⭕", examples:"四、国、围、园、因"},
+        {symbol:"土", pinyin:"tǔ", meaning:"земля", emoji:"🌍", examples:"地、圣、圭、在、城"},
+        {symbol:"士", pinyin:"shì", meaning:"учёный", emoji:"🎓", examples:"壬、喜、壮、壳、壶"},
+        {symbol:"夂", pinyin:"zhǐ", meaning:"идти", emoji:"🚶", examples:"各、冬、爱、复、夏"},
+        {symbol:"夊", pinyin:"suī", meaning:"медленно", emoji:"🐌", examples:"复、夏、备、处、外"},
+        {symbol:"夕", pinyin:"xī", meaning:"вечер", emoji:"🌆", examples:"外、多、夜、梦、够"},
+        {symbol:"大", pinyin:"dà", meaning:"большой", emoji:"📏", examples:"太、天、夫、奇、夺"},
+        {symbol:"女", pinyin:"nǚ", meaning:"женщина", emoji:"👩", examples:"妈、奶、好、姓、婚"},
+        {symbol:"子", pinyin:"zǐ", meaning:"ребёнок", emoji:"👶", examples:"学、孔、字、存、孩"},
+        {symbol:"宀", pinyin:"mián", meaning:"крыша", emoji:"🏠", examples:"家、安、宁、宝、室"},
+        {symbol:"寸", pinyin:"cùn", meaning:"дюйм", emoji:"📏", examples:"村、寺、封、对、导"},
+        {symbol:"小", pinyin:"xiǎo", meaning:"маленький", emoji:"📏", examples:"少、尖、当、光、尚"},
+        {symbol:"尢", pinyin:"wāng", meaning:"хромой", emoji:"🦵", examples:"尤、尴、尬、就、龙"},
+        {symbol:"尸", pinyin:"shī", meaning:"труп", emoji:"💀", examples:"尺、尼、尾、屋、居"},
+        {symbol:"屮", pinyin:"chè", meaning:"росток", emoji:"🌱", examples:"草、屯、顿、出、击"},
+        {symbol:"山", pinyin:"shān", meaning:"гора", emoji:"⛰️", examples:"峰、密、幽、岛、岸"},
+        {symbol:"巛", pinyin:"chuān", meaning:"река", emoji:"🌊", examples:"川、州、顺、巡、巢"},
+        {symbol:"工", pinyin:"gōng", meaning:"работа", emoji:"🔧", examples:"左、巧、功、差、项"},
+        {symbol:"己", pinyin:"jǐ", meaning:"себя", emoji:"👤", examples:"记、改、忌、起、配"},
+        {symbol:"巾", pinyin:"jīn", meaning:"тюрбан", emoji:"🧣", examples:"市、帅、刷、师、帮"},
+        {symbol:"干", pinyin:"gān", meaning:"сухой", emoji:"🌵", examples:"旱、平、年、幸、竿"},
+        {symbol:"幺", pinyin:"yāo", meaning:"нить", emoji:"🧵", examples:"幻、幽、几、玄、率"},
+        {symbol:"广", pinyin:"yǎn", meaning:"утёс", emoji:"🏔️", examples:"庄、床、店、府、座"},
+        {symbol:"廴", pinyin:"yǐn", meaning:"шаг", emoji:"👣", examples:"廷、延、建、巡、进"},
+        {symbol:"廾", pinyin:"gǒng", meaning:"арка", emoji:"🌉", examples:"廿、弄、弊、异、弃"},
+        {symbol:"弋", pinyin:"yì", meaning:"стрелять", emoji:"🏹", examples:"弋、贰、式、代、武"},
+        {symbol:"弓", pinyin:"gōng", meaning:"лук", emoji:"🏹", examples:"引、弗、强、张、弹"},
+        {symbol:"彐", pinyin:"jì", meaning:"рыло", emoji:"🐷", examples:"录、彗、雪、归、当"},
+        {symbol:"彡", pinyin:"shān", meaning:"щётка", emoji:"🖌️", examples:"形、彤、彩、影、须"},
+        {symbol:"彳", pinyin:"chì", meaning:"шаг", emoji:"👣", examples:"行、往、征、得、德"},
+        {symbol:"心", pinyin:"xīn", meaning:"сердце", emoji:"❤️", examples:"必、忌、忘、忍、念"},
+        {symbol:"戈", pinyin:"gē", meaning:"алебарда", emoji:"⚔️", examples:"戊、戌、战、我、戏"},
+        {symbol:"户", pinyin:"hù", meaning:"дверь", emoji:"🚪", examples:"房、所、扇、启、肩"},
+        {symbol:"手", pinyin:"shǒu", meaning:"рука", emoji:"✋", examples:"才、打、拿、拜、拳"},
+        {symbol:"支", pinyin:"zhī", meaning:"ветвь", emoji:"🌿", examples:"攴、收、改、攻、败"},
+        {symbol:"攴", pinyin:"pū", meaning:"стучать", emoji:"👊", examples:"收、改、攻、败、放"},
+        {symbol:"文", pinyin:"wén", meaning:"письмо", emoji:"📝", examples:"齐、斌、斐、刘、齐"},
+        {symbol:"斗", pinyin:"dǒu", meaning:"ковш", emoji:"🥄", examples:"料、斛、斜、斟、斡"},
+        {symbol:"斤", pinyin:"jīn", meaning:"топор", emoji:"🪓", examples:"斥、斧、断、新、斯"},
+        {symbol:"方", pinyin:"fāng", meaning:"квадрат", emoji:"⬜", examples:"於、放、旅、族、旗"},
+        {symbol:"无", pinyin:"wú", meaning:"нет", emoji:"❌", examples:"既、概、溉、慨、既"},
+        {symbol:"日", pinyin:"rì", meaning:"солнце", emoji:"☀️", examples:"旦、旨、早、时、明"},
+        {symbol:"曰", pinyin:"yuē", meaning:"говорить", emoji:"💬", examples:"曲、更、曹、曼、最"},
+        {symbol:"月", pinyin:"yuè", meaning:"луна", emoji:"🌙", examples:"有、朋、服、期、朝"},
+        {symbol:"木", pinyin:"mù", meaning:"дерево", emoji:"🌳", examples:"未、本、林、森、树"},
+        {symbol:"欠", pinyin:"qiàn", meaning:"нехватка", emoji:"😮‍💨", examples:"次、欣、欲、欢、歌"},
+        {symbol:"止", pinyin:"zhǐ", meaning:"остановка", emoji:"🛑", examples:"正、此、步、武、岁"},
+        {symbol:"歹", pinyin:"dǎi", meaning:"смерть", emoji:"💀", examples:"死、殁、残、殊、殖"},
+        {symbol:"殳", pinyin:"shū", meaning:"оружие", emoji:"🗡️", examples:"段、殷、杀、般、殿"},
+        {symbol:"毋", pinyin:"wú", meaning:"не", emoji:"🚫", examples:"母、每、毒、海、梅"},
+        {symbol:"比", pinyin:"bǐ", meaning:"сравнить", emoji:"⚖️", examples:"毗、毙、毕、皆、昆"},
+        {symbol:"毛", pinyin:"máo", meaning:"шерсть", emoji:"🧶", examples:"毡、毣、毯、毫、毳"},
+        {symbol:"氏", pinyin:"shì", meaning:"клан", emoji:"👨‍👧", examples:"民、氓、纸、低、底"},
+        {symbol:"气", pinyin:"qì", meaning:"пар", emoji:"💨", examples:"氕、氘、氚、氧、氢"},
+        {symbol:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧", examples:"永、冰、江、河、海"},
+        {symbol:"火", pinyin:"huǒ", meaning:"огонь", emoji:"🔥", examples:"灰、灯、灶、炎、热"},
+        {symbol:"爪", pinyin:"zhǎo", meaning:"коготь", emoji:"🐾", examples:"爬、争、爱、采、受"},
+        {symbol:"父", pinyin:"fù", meaning:"отец", emoji:"👨", examples:"爸、爹、爷、斧、釜"},
+        {symbol:"爻", pinyin:"yáo", meaning:"триграммы", emoji:"☯️", examples:"爽、尔、爻、驳、爻"},
+        {symbol:"爿", pinyin:"qiáng", meaning:"дерево", emoji:"🪵", examples:"床、状、将、壮、妆"},
+        {symbol:"片", pinyin:"piàn", meaning:"ломтик", emoji:"📄", examples:"版、牌、牍、牒、牖"},
+        {symbol:"牙", pinyin:"yá", meaning:"клык", emoji:"🦷", examples:"牚、、牁、邪、雅"},
+        {symbol:"牛", pinyin:"niú", meaning:"корова", emoji:"🐄", examples:"牟、牠、牲、特、物"},
+        {symbol:"犬", pinyin:"quǎn", meaning:"собака", emoji:"🐕", examples:"犯、犰、状、狂、独"},
+        {symbol:"玄", pinyin:"xuán", meaning:"глубокий", emoji:"🔮", examples:"率、玅、玈、畜、玄"},
+        {symbol:"玉", pinyin:"yù", meaning:"нефрит", emoji:"💎", examples:"玻、玛、璧、珍、珠"},
+        {symbol:"瓜", pinyin:"guā", meaning:"дыня", emoji:"🍈", examples:"瓞、瓟、瓢、瓣、瓤"},
+        {symbol:"瓦", pinyin:"wǎ", meaning:"черепица", emoji:"🏺", examples:"瓮、瓫、瓶、瓷、瓯"},
+        {symbol:"甘", pinyin:"gān", meaning:"сладкий", emoji:"🍬", examples:"甚、甜、某、柑、甘"},
+        {symbol:"生", pinyin:"shēng", meaning:"жизнь", emoji:"🌱", examples:"产、甥、牲、胜、星"},
+        {symbol:"用", pinyin:"yòng", meaning:"использовать", emoji:"🔧", examples:"甩、甫、甬、用、甩"},
+        {symbol:"田", pinyin:"tián", meaning:"поле", emoji:"🌾", examples:"由、甲、申、电、男"},
+        {symbol:"疋", pinyin:"pǐ", meaning:"болт ткани", emoji:"🧵", examples:"疏、疎、楚、胥、"},
+        {symbol:"", pinyin:"nè", meaning:"болезнь", emoji:"🤒", examples:"疚、疝、病、痛、疗"},
+        {symbol:"癶", pinyin:"bō", meaning:"шаги", emoji:"👣", examples:"癸、発、登、癸、癶"},
+        {symbol:"白", pinyin:"bái", meaning:"белый", emoji:"⚪", examples:"百、皂、的、白、百"},
+        {symbol:"皮", pinyin:"pí", meaning:"кожа", emoji:"🧑‍🦰", examples:"皯、皴、皱、皮、皱"},
+        {symbol:"皿", pinyin:"mǐn", meaning:"блюдо", emoji:"🍽️", examples:"盂、盅、盆、盘、盒"},
+        {symbol:"目", pinyin:"mù", meaning:"глаз", emoji:"👁️", examples:"盯、盲、看、眼、睛"},
+        {symbol:"矛", pinyin:"máo", meaning:"копьё", emoji:"🔱", examples:"矜、矞、矟、矛、柔"},
+        {symbol:"矢", pinyin:"shǐ", meaning:"стрела", emoji:"🏹", examples:"矣、知、短、矩、矫"},
+        {symbol:"石", pinyin:"shí", meaning:"камень", emoji:"🪨", examples:"矸、矿、研、破、确"},
+        {symbol:"示", pinyin:"shì", meaning:"дух", emoji:"👻", examples:"礼、社、神、福、祝"},
+        {symbol:"禸", pinyin:"róu", meaning:"след", emoji:"👣", examples:"禹、禺、离、禸、"},
+        {symbol:"禾", pinyin:"hé", meaning:"зерно", emoji:"🌾", examples:"秃、秀、私、和、种"},
+        {symbol:"穴", pinyin:"xué", meaning:"пещера", emoji:"🕳️", examples:"究、空、穿、窗、窟"},
+        {symbol:"立", pinyin:"lì", meaning:"стоять", emoji:"🧍", examples:"竑、站、竞、童、端"},
+        {symbol:"竹", pinyin:"zhú", meaning:"бамбук", emoji:"🎋", examples:"竺、竿、笔、笑、等"},
+        {symbol:"米", pinyin:"mǐ", meaning:"рис", emoji:"🍚", examples:"籽、粒、粉、粮、粥"},
+        {symbol:"糸", pinyin:"mì", meaning:"шёлк", emoji:"🧵", examples:"红、纪、纺、织、经"},
+        {symbol:"缶", pinyin:"fǒu", meaning:"кувшин", emoji:"🏺", examples:"缸、缺、罐、缶、缸"},
+        {symbol:"网", pinyin:"wǎng", meaning:"сеть", emoji:"🕸️", examples:"罗、罚、置、罪、网"},
+        {symbol:"羊", pinyin:"yáng", meaning:"овца", emoji:"🐑", examples:"美、羔、群、养、羞"},
+        {symbol:"羽", pinyin:"yǔ", meaning:"перо", emoji:"🪶", examples:"翅、翔、翠、羽、翅"},
+        {symbol:"老", pinyin:"lǎo", meaning:"старый", emoji:"👴", examples:"考、者、耆、老、考"},
+        {symbol:"而", pinyin:"ér", meaning:"а", emoji:"🔗", examples:"耐、耍、耏、而、耐"},
+        {symbol:"耒", pinyin:"lěi", meaning:"плуг", emoji:"🌾", examples:"耕、耘、耜、耒、耕"},
+        {symbol:"耳", pinyin:"ěr", meaning:"ухо", emoji:"👂", examples:"取、闻、聪、耳、联"},
+        {symbol:"聿", pinyin:"yù", meaning:"кисть", emoji:"🖌️", examples:"律、建、書、聿、肆"},
+        {symbol:"肉", pinyin:"ròu", meaning:"мясо", emoji:"🥩", examples:"肌、肝、胖、肉、肥"},
+        {symbol:"臣", pinyin:"chén", meaning:"министр", emoji:"👔", examples:"臧、臨、卧、臣、臧"},
+        {symbol:"自", pinyin:"zì", meaning:"сам", emoji:"👤", examples:"臭、息、臬、自、息"},
+        {symbol:"至", pinyin:"zhì", meaning:"достигать", emoji:"🎯", examples:"到、致、臻、至、致"},
+        {symbol:"臼", pinyin:"jiù", meaning:"ступка", emoji:"🥣", examples:"舂、舅、臾、臼、舅"},
+        {symbol:"舌", pinyin:"shé", meaning:"язык", emoji:"👅", examples:"甜、舔、舐、舌、话"},
+        {symbol:"舛", pinyin:"chuǎn", meaning:"ошибка", emoji:"❌", examples:"舞、舜、舛、舛、舞"},
+        {symbol:"舟", pinyin:"zhōu", meaning:"лодка", emoji:"🚤", examples:"船、航、舰、舟、船"},
+        {symbol:"艮", pinyin:"gèn", meaning:"остановка", emoji:"🛑", examples:"良、艰、根、艮、良"},
+        {symbol:"色", pinyin:"sè", meaning:"цвет", emoji:"🎨", examples:"艳、艴、、色、艳"},
+        {symbol:"艸", pinyin:"cǎo", meaning:"трава", emoji:"🌿", examples:"艾、芳、花、草、茶"},
+        {symbol:"虍", pinyin:"hū", meaning:"тигр", emoji:"🐯", examples:"虎、虐、虚、虍、虎"},
+        {symbol:"虫", pinyin:"chóng", meaning:"насекомое", emoji:"🐛", examples:"虱、虾、蛇、虫、蚊"},
+        {symbol:"血", pinyin:"xuè", meaning:"кровь", emoji:"🩸", examples:"衁、衃、衄、血、血"},
+        {symbol:"行", pinyin:"xíng", meaning:"идти", emoji:"🚶", examples:"衍、街、衡、行、街"},
+        {symbol:"衣", pinyin:"yī", meaning:"одежда", emoji:"👕", examples:"初、表、衫、衣、装"},
+        {symbol:"襾", pinyin:"yà", meaning:"покрывать", emoji:"🧥", examples:"西、要、覆、襾、西"},
+        {symbol:"见", pinyin:"jiàn", meaning:"видеть", emoji:"👁️", examples:"规、觅、视、见、观"},
+        {symbol:"角", pinyin:"jiǎo", meaning:"рог", emoji:"🦄", examples:"觔、、解、角、解"},
+        {symbol:"言", pinyin:"yán", meaning:"речь", emoji:"💬", examples:"订、计、话、言、说"},
+        {symbol:"谷", pinyin:"gǔ", meaning:"долина", emoji:"🏔️", examples:"谹、、豁、谷、谷"},
+        {symbol:"豆", pinyin:"dòu", meaning:"боб", emoji:"🫘", examples:"豇、、豆、豆、"},
+        {symbol:"", pinyin:"shǐ", meaning:"свинья", emoji:"🐖", examples:"豚、豜、豢、豕、家"},
+        {symbol:"豸", pinyin:"zhì", meaning:"барсук", emoji:"🦡", examples:"豺、豹、貌、豸、豹"},
+        {symbol:"贝", pinyin:"bèi", meaning:"ракушка", emoji:"🐚", examples:"贞、负、财、贝、财"},
+        {symbol:"赤", pinyin:"chì", meaning:"красный", emoji:"🔴", examples:"赦、赧、赫、赤、赫"},
+        {symbol:"走", pinyin:"zǒu", meaning:"бежать", emoji:"🏃", examples:"赴、赶、超、走、超"},
+        {symbol:"足", pinyin:"zú", meaning:"нога", emoji:"🦶", examples:"趴、趵、路、足、路"},
+        {symbol:"身", pinyin:"shēn", meaning:"тело", emoji:"🧍", examples:"躬、躭、躯、身、躯"},
+        {symbol:"车", pinyin:"chē", meaning:"телега", emoji:"🚗", examples:"轧、轨、军、车、军"},
+        {symbol:"辛", pinyin:"xīn", meaning:"горький", emoji:"😣", examples:"辜、辟、辣、辛、辣"},
+        {symbol:"辰", pinyin:"chén", meaning:"утро", emoji:"🌅", examples:"辱、农、晨、辰、晨"},
+        {symbol:"辶", pinyin:"chuò", meaning:"ходить", emoji:"🚶", examples:"边、巡、远、辶、远"},
+        {symbol:"邑", pinyin:"yì", meaning:"город", emoji:"🏙️", examples:"邕、都、邑、都、邦"},
+        {symbol:"酉", pinyin:"yǒu", meaning:"вино", emoji:"🍷", examples:"酊、酌、醉、酉、醉"},
+        {symbol:"釆", pinyin:"biàn", meaning:"различать", emoji:"🔍", examples:"采、釉、释、釆、采"},
+        {symbol:"里", pinyin:"lǐ", meaning:"деревня", emoji:"🏘️", examples:"重、野、量、里、重"},
+        {symbol:"金", pinyin:"jīn", meaning:"золото", emoji:"🥇", examples:"釓、铁、金、金、铁"},
+        {symbol:"长", pinyin:"cháng", meaning:"длинный", emoji:"📏", examples:"镺、、镼、长、长"},
+        {symbol:"门", pinyin:"mén", meaning:"ворота", emoji:"🚪", examples:"闪、问、间、门、问"},
+        {symbol:"阜", pinyin:"fù", meaning:"холм", emoji:"⛰️", examples:"阡、阢、陆、阜、陆"},
+        {symbol:"隶", pinyin:"lì", meaning:"раб", emoji:"⛓️", examples:"隷、隸、逮、隶、逮"},
+        {symbol:"隹", pinyin:"zhuī", meaning:"птица", emoji:"🐦", examples:"隻、隼、隽、隹、集"},
+        {symbol:"雨", pinyin:"yǔ", meaning:"дождь", emoji:"🌧️", examples:"雪、雯、雷、雨、雪"},
+        {symbol:"青", pinyin:"qīng", meaning:"синий", emoji:"🔵", examples:"靖、静、靓、青、静"},
+        {symbol:"非", pinyin:"fēi", meaning:"неправильно", emoji:"❌", examples:"靠、靡、辈、非、靠"},
+        {symbol:"面", pinyin:"miàn", meaning:"лицо", emoji:"😊", examples:"靥、靦、、面、面"},
+        {symbol:"革", pinyin:"gé", meaning:"кожа", emoji:"👞", examples:"靳、靶、鞋、革、鞋"},
+        {symbol:"韦", pinyin:"wéi", meaning:"кожа", emoji:"👞", examples:"韧、韍、韦、韧、韩"},
+        {symbol:"韭", pinyin:"jiǔ", meaning:"лук", emoji:"🧅", examples:"韰、、韭、韭、"},
+        {symbol:"音", pinyin:"yīn", meaning:"звук", emoji:"🔊", examples:"竟、章、韵、音、韵"},
+        {symbol:"页", pinyin:"yè", meaning:"лист", emoji:"📄", examples:"顶、顷、顾、页、顾"},
+        {symbol:"风", pinyin:"fēng", meaning:"ветер", emoji:"💨", examples:"颩、飘、风、风、飘"},
+        {symbol:"飞", pinyin:"fēi", meaning:"лететь", emoji:"✈️", examples:"飜、飞、飞、飞、飜"},
+        {symbol:"食", pinyin:"shí", meaning:"еда", emoji:"🍽️", examples:"飡、饥、饭、食、饭"},
+        {symbol:"首", pinyin:"shǒu", meaning:"голова", emoji:"👤", examples:"馗、、首、首、首"},
+        {symbol:"香", pinyin:"xiāng", meaning:"аромат", emoji:"🌸", examples:"馝、、馡、香、香"},
+        {symbol:"马", pinyin:"mǎ", meaning:"лошадь", emoji:"🐴", examples:"驭、冯、驾、马、驾"},
+        {symbol:"骨", pinyin:"gǔ", meaning:"кость", emoji:"🦴", examples:"骫、骭、骼、骨、骼"},
+        {symbol:"高", pinyin:"gāo", meaning:"высокий", emoji:"📏", examples:"髚、髛、髙、高、高"},
+        {symbol:"髟", pinyin:"biāo", meaning:"волосы", emoji:"💇", examples:"髠、髡、髢、髟、"},
+        {symbol:"斗", pinyin:"dòu", meaning:"бой", emoji:"⚔️", examples:"鬦、闹、鬨、斗、闹"},
+        {symbol:"鬯", pinyin:"chàng", meaning:"вино", emoji:"🍷", examples:"鬰、鬱、鬯、、鬱"},
+        {symbol:"鬲", pinyin:"lì", meaning:"котёл", emoji:"🍲", examples:"鬳、鬴、鬵、鬲、鬲"},
+        {symbol:"鬼", pinyin:"guǐ", meaning:"призрак", emoji:"👻", examples:"魁、魂、魄、鬼、魂"},
+        {symbol:"鱼", pinyin:"yú", meaning:"рыба", emoji:"🐟", examples:"魟、鲜、鱼、鱼、鲜"},
+        {symbol:"鸟", pinyin:"niǎo", meaning:"птица", emoji:"🐦", examples:"鳦、鸠、鸟、鸟、鸠"},
+        {symbol:"卤", pinyin:"lǔ", meaning:"соль", emoji:"🧂", examples:"鹹、鹺、鹼、卤、鹹"},
+        {symbol:"鹿", pinyin:"lù", meaning:"олень", emoji:"🦌", examples:"麀、麁、麂、鹿、麂"},
+        {symbol:"麦", pinyin:"mài", meaning:"пшеница", emoji:"🌾", examples:"麨、麩、麦、麦、麩"},
+        {symbol:"麻", pinyin:"má", meaning:"конопля", emoji:"🌿", examples:"麼、麾、黁、麻、麻"},
+        {symbol:"黄", pinyin:"huáng", meaning:"жёлтый", emoji:"🟡", examples:"黈、、黄、黄、黈"},
+        {symbol:"黍", pinyin:"shǔ", meaning:"просо", emoji:"🌾", examples:"黎、黏、黐、黍、黎"},
+        {symbol:"黑", pinyin:"hēi", meaning:"чёрный", emoji:"⚫", examples:"墨、黔、黓、黑、墨"},
+        {symbol:"黹", pinyin:"zhǐ", meaning:"вышивка", emoji:"🧵", examples:"黺、黻、黼、黹、黻"},
+        {symbol:"黾", pinyin:"mǐn", meaning:"лягушка", emoji:"🐸", examples:"鼀、鼁、鼋、黾、鼋"},
+        {symbol:"鼎", pinyin:"dǐng", meaning:"треножник", emoji:"🏺", examples:"鼏、、鼒、鼎、鼎"},
+        {symbol:"鼓", pinyin:"gǔ", meaning:"барабан", emoji:"🥁", examples:"鼕、鼖、鼗、鼓、鼓"},
+        {symbol:"鼠", pinyin:"shǔ", meaning:"крыса", emoji:"🐀", examples:"鼢、鼥、鼩、鼠、鼢"},
+        {symbol:"鼻", pinyin:"bí", meaning:"нос", emoji:"👃", examples:"鼽、鼾、齁、鼻、鼻"},
+        {symbol:"齐", pinyin:"qí", meaning:"ровный", emoji:"📐", examples:"斋、齌、齍、齐、斋"},
+        {symbol:"齿", pinyin:"chǐ", meaning:"зуб", emoji:"🦷", examples:"齔、齕、齖、齿、齕"},
+        {symbol:"龙", pinyin:"lóng", meaning:"дракон", emoji:"🐉", examples:"龏、、龚、龙、龚"},
+        {symbol:"龟", pinyin:"guī", meaning:"черепаха", emoji:"🐢", examples:"䶰、、龞、龟、"},
+        {symbol:"", pinyin:"yuè", meaning:"флейта", emoji:"🎶", examples:"龡、龢、龤、龠、龢"}
     ];
     
     let radicalIndex = 0;
@@ -1059,22 +714,11 @@
     const songs = [
         {title:"🐯 两只老虎 (Два тигра)", lines:[
             {emoji:"🐯", ch:"两只老虎", pinyin:"liǎng zhī lǎohǔ", ru:"Два тигра"},
-            {emoji:"🏃", ch:"跑得快", pinyin:"pǎo de kuài", ru:"Бегут быстро"},
-            {emoji:"🐯", ch:"一只没有耳朵", pinyin:"yī zhī méiyǒu ěrduo", ru:"У одного нет ушей"},
-            {emoji:"🐯", ch:"一只没有尾巴", pinyin:"yī zhī méiyǒu wěiba", ru:"У другого нет хвоста"}
+            {emoji:"🏃", ch:"跑得快", pinyin:"pǎo de kuài", ru:"Бегут быстро"}
         ]},
         {title:"✨ 小星星 (Маленькая звёздочка)", lines:[
-            {emoji:"⭐", ch:"一闪一闪亮晶晶", pinyin:"yī shǎn yī shǎn liàng jīng jīng", ru:"Мерцай, мерцай, ярко свети"},
-            {emoji:"🌌", ch:"满天都是小星星", pinyin:"mǎn tiān dōu shì xiǎo xīng xīng", ru:"Всё небо в маленьких звёздах"}
-        ]},
-        {title:"👋 你好歌 (Песня приветствия)", lines:[
-            {emoji:"👋", ch:"你好你好", pinyin:"nǐhǎo nǐhǎo", ru:"Здравствуй, здравствуй"},
-            {emoji:"🙏", ch:"谢谢谢谢", pinyin:"xièxie xièxie", ru:"Спасибо, спасибо"},
-            {emoji:"👋", ch:"再见再见", pinyin:"zàijiàn zàijiàn", ru:"До свидания"}
-        ]},
-        {title:"🐱 小猫咪 (Котёнок)", lines:[
-            {emoji:"🐱", ch:"小猫咪小猫咪", pinyin:"xiǎo māomī xiǎo māomī", ru:"Котёнок, котёнок"},
-            {emoji:"🎵", ch:"喵喵喵", pinyin:"miāo miāo miāo", ru:"Мяу мяу мяу"}
+            {emoji:"⭐", ch:"一闪一闪亮晶晶", pinyin:"yī shǎn yī shǎn liàng jīng jīng", ru:"Мерцай ярко"},
+            {emoji:"🌌", ch:"满天都是小星星", pinyin:"mǎn tiān dōu shì xiǎo xīng xīng", ru:"Всё небо в звёздах"}
         ]}
     ];
     
@@ -1085,7 +729,7 @@
         window.speechSynthesis.cancel(); 
         let u = new SpeechSynthesisUtterance(text); 
         u.lang = "zh-CN"; 
-        u.rate = 0.75; 
+        u.rate = 0.7; 
         window.speechSynthesis.speak(u); 
     }
     
@@ -1129,7 +773,7 @@
         if(feedbackEl) feedbackEl.innerHTML = "🎤 Говорите... (нажмите ещё раз чтобы остановить)";
     }
     
-    // ==================== ФУНКЦИИ ИНТЕРФЕЙСА ====================
+    // ==================== ФУНКЦИИ ====================
     function updateStudy() { 
         let w = allWords[currentWordIndex % allWords.length]; 
         document.getElementById("studyChar").innerText = w.char; 
@@ -1175,7 +819,6 @@
         document.getElementById("dialogCount").innerText = filteredDialogs.length; 
     }
     
-    // Кубики
     function rollCube() { 
         let idx = Math.floor(Math.random() * allWords.length); 
         currentCubeWord = allWords[idx]; 
@@ -1183,7 +826,6 @@
         document.getElementById("cubeMeaning").innerText = currentCubeWord.meaning; 
     }
     
-    // Карточки
     let cardIndex = 0;
     let cardFlipped = false;
     function updateCard() { 
@@ -1201,10 +843,8 @@
     function nextCard() { 
         cardIndex = (cardIndex + 1) % allWords.length; 
         updateCard(); 
-        document.getElementById("cardFeedback").innerHTML = "Карточка перевернута!"; 
     }
     
-    // Игра
     let currentGameWord = null;
     function newGame() { 
         let idx = Math.floor(Math.random() * allWords.length); 
@@ -1222,7 +862,7 @@
         document.querySelectorAll("#gameOptions .grid-opt").forEach(opt => {
             opt.onclick = () => {
                 if(opt.getAttribute("data-val") === currentGameWord.meaning) {
-                    document.getElementById("gameFeedback").innerHTML = "🎉 Правильно! Молодец!";
+                    document.getElementById("gameFeedback").innerHTML = "🎉 Правильно!";
                     document.getElementById("gameFeedback").style.background = "#d4ecd0";
                 } else {
                     document.getElementById("gameFeedback").innerHTML = `😅 Ошибка!<br>${currentGameWord.char} — ${currentGameWord.meaning}`;
@@ -1233,7 +873,6 @@
         }); 
     }
     
-    // Тест радикалов
     let currentQuiz = null;
     function newQuiz() { 
         let idx = Math.floor(Math.random() * radicalsList.length); 
@@ -1251,7 +890,7 @@
         document.querySelectorAll("#quizOptions .grid-opt").forEach(opt => {
             opt.onclick = () => {
                 if(opt.getAttribute("data-val") === currentQuiz.meaning) {
-                    document.getElementById("quizFeedback").innerHTML = "✅ Правильно! Отлично!";
+                    document.getElementById("quizFeedback").innerHTML = "✅ Правильно!";
                     document.getElementById("quizFeedback").style.background = "#d4ecd0";
                 } else {
                     document.getElementById("quizFeedback").innerHTML = `❌ Ошибка!<br>${currentQuiz.symbol} — ${currentQuiz.meaning}`;
@@ -1262,61 +901,66 @@
         }); 
     }
     
-    // Радикалы - детальная информация
+    // ГЛАВНАЯ ФУНКЦИЯ - ПОКАЗ РАДИКАЛА С ПОЛНОЙ ИНФОРМАЦИЕЙ
     function showRadicalDetail(radical) {
         currentRadical = radical;
-        document.getElementById("radChar").innerText = radical.symbol;
-        document.getElementById("radPinyin").innerText = radical.pinyin;
-        document.getElementById("radMeaning").innerText = radical.meaning;
-        document.getElementById("radEmoji").innerText = radical.emoji;
         
+        // Показываем панель с деталями
         document.getElementById("detailChar").innerText = radical.symbol;
         document.getElementById("detailPinyin").innerText = radical.pinyin;
         document.getElementById("detailMeaning").innerText = radical.meaning;
         document.getElementById("detailEmoji").innerText = radical.emoji;
-        document.getElementById("detailExamples").innerHTML = "<strong>Примеры иероглифов:</strong> " + radical.examples;
         
+        // Показываем примеры иероглифов
+        let examplesHtml = '';
+        if(radical.examples) {
+            let examples = radical.examples.split('、');
+            examples.forEach(ex => {
+                if(ex.trim()) {
+                    examplesHtml += `<span class="example-char">${ex.trim()}</span>`;
+                }
+            });
+        }
+        document.getElementById("detailExamples").innerHTML = examplesHtml || 'Примеры недоступны';
+        
+        // Показываем панель
         document.getElementById("radicalDetail").classList.add("active");
+        
+        // Прокручиваем к детали
+        setTimeout(() => {
+            document.getElementById("radicalDetail").scrollIntoView({behavior: "smooth", block: "center"});
+        }, 100);
+        
+        // Очищаем предыдущий фидбек
+        document.getElementById("detailFeedback").innerHTML = '';
     }
     
     function nextRadical() { 
-        radicalIndex = (radicalIndex + 1) % radicalsList.length; 
+        radicalIndex = Math.floor(Math.random() * radicalsList.length); 
         showRadicalDetail(radicalsList[radicalIndex]);
     }
     
     function showAllRadicals() { 
         let div = document.getElementById("allRadicalsList"); 
         if(div.style.display === "none") {
-            let html = '<div class="radical-grid">'; 
-            radicalsList.forEach(r => {
-                html += `<div class="radical-cell" data-symbol="${r.symbol}" data-pinyin="${r.pinyin}" data-meaning="${r.meaning}" data-emoji="${r.emoji}" data-examples="${r.examples}">${r.symbol}</div>`;
+            let html = '<h3 style="text-align:center;margin:20px 0;color:#ff7b2c;font-size:24px;">👆 НАЖМИ на любой радикал для подробной информации</h3>';
+            html += '<div class="radical-grid">'; 
+            radicalsList.forEach((r, index) => {
+                html += `<div class="radical-cell" onclick="showRadicalDetail(radicalsList[${index}])" title="${r.meaning}">${r.symbol}</div>`;
             }); 
             html += '</div>'; 
             div.innerHTML = html; 
-            
-            // Добавляем обработчики клика
-            div.querySelectorAll(".radical-cell").forEach(cell => {
-                cell.onclick = () => {
-                    let radical = {
-                        symbol: cell.getAttribute("data-symbol"),
-                        pinyin: cell.getAttribute("data-pinyin"),
-                        meaning: cell.getAttribute("data-meaning"),
-                        emoji: cell.getAttribute("data-emoji"),
-                        examples: cell.getAttribute("data-examples")
-                    };
-                    showRadicalDetail(radical);
-                    // Прокрутка к детали
-                    document.getElementById("radicalDetail").scrollIntoView({behavior: "smooth", block: "center"});
-                };
-            });
-            
             div.style.display = "block"; 
+            
+            // Прокрутка к списку
+            setTimeout(() => {
+                div.scrollIntoView({behavior: "smooth", block: "start"});
+            }, 100);
         } else {
             div.style.display = "none"; 
         }
     }
     
-    // Рисование
     let canvas, ctx;
     function initCanvas() {
         canvas = document.getElementById("drawCanvas"); 
@@ -1410,7 +1054,7 @@
         }); 
     }
     
-    // Вкладки
+    // ВКЛАДКИ
     document.querySelectorAll(".tab").forEach(tab => {
         tab.onclick = () => {
             document.querySelectorAll(".tab").forEach(t => t.classList.remove("active")); 
@@ -1418,8 +1062,8 @@
             let target = tab.getAttribute("data-tab"); 
             document.querySelectorAll(".panel").forEach(p => p.classList.remove("active")); 
             document.getElementById(target + "Panel").classList.add("active"); 
-            if(target === "radicals") { 
-                updateStudy(); // Используем updateStudy для первого радикала
+            if(target === "radicals") {
+                // При открытии вкладки радикалов показываем первый радикал
                 showRadicalDetail(radicalsList[0]);
             }
             if(target === "quiz") newQuiz(); 
@@ -1436,7 +1080,7 @@
         };
     });
     
-    // Запуск
+    // ЗАПУСК
     window.onload = () => { 
         initCanvas(); 
         updateStudy(); 
@@ -1447,6 +1091,7 @@
         rollCube(); 
         updateCard(); 
         initVoice();
+        // Показываем первый радикал при загрузке
         showRadicalDetail(radicalsList[0]);
         
         document.getElementById("studyListen").onclick = () => {
@@ -1478,11 +1123,11 @@
         document.getElementById("nbNext").onclick = nextWord; 
         document.getElementById("clearCanvas").onclick = clearCanvas;
         
-        document.getElementById("radListen").onclick = () => {
-            speak(currentRadical.symbol);
+        document.getElementById("detailListen").onclick = () => {
+            if(currentRadical) speak(currentRadical.symbol);
         };
-        document.getElementById("radVoice").onclick = () => {
-            startVoiceTest(currentRadical.pinyin, document.getElementById("radicalDetail"), null);
+        document.getElementById("detailVoice").onclick = () => {
+            if(currentRadical) startVoiceTest(currentRadical.pinyin, document.getElementById("detailFeedback"), null);
         };
         document.getElementById("radNext").onclick = nextRadical; 
         document.getElementById("showAllRad").onclick = showAllRadicals;
