@@ -62,7 +62,7 @@ body { background: var(--bg); font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans
 .pattern { background: white; padding: 12px; border-radius: 10px; margin: 8px 0; font-weight: bold; color: var(--primary); }
 .ex { background: white; padding: 12px; margin: 8px 0; border-radius: 10px; font-size: 16px; }
 
-canvas { background: #fff; border-radius: 20px; display: block; margin: 15px auto; border: 3px solid #cbd5e1; cursor: crosshair; touch-action: none; width: 100%; height: auto; }
+canvas { background: #fff; border-radius: 20px; display: block; margin: 15px auto; border: 3px solid #cbd5e1; cursor: crosshair; touch-action: none; width: 100%; height: auto; max-width: 320px; }
 .tianzige { background-image: linear-gradient(to right, #cbd5e1 1px, transparent 1px), linear-gradient(to bottom, #cbd5e1 1px, transparent 1px); background-size: 20% 20%; background-position: 10% 10%; }
 
 #modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
@@ -81,12 +81,12 @@ canvas { background: #fff; border-radius: 20px; display: block; margin: 15px aut
 <body>
 <div class="container">
   <div class="tabs">
-    <div class="tab active" data-tab="words">📖 500 Слов</div>
+    <div class="tab active" data-tab="words">📖 Слова</div>
     <div class="tab" data-tab="numbers">🔢 Числа</div>
     <div class="tab" data-tab="colors">🎨 Цвета</div>
     <div class="tab" data-tab="grammar">📚 Грамматика</div>
     <div class="tab" data-tab="dialogs">💬 Диалоги</div>
-    <div class="tab" data-tab="songs">🎵 20 Песен</div>
+    <div class="tab" data-tab="songs">🎵 Песни</div>
     <div class="tab" data-tab="radicals">🔤 Радикалы</div>
     <div class="tab" data-tab="notebook">📓 Тетрадь</div>
     <div class="tab" data-tab="cards">🃏 Карточки</div>
@@ -95,88 +95,538 @@ canvas { background: #fff; border-radius: 20px; display: block; margin: 15px aut
 
   <div id="modal"><div id="modalContent"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
 
-  <div id="wordsPanel" class="panel active"><div class="card" id="wordCard"><div class="big-char" id="wChar">学</div><div class="pinyin" id="wPinyin">xué</div><div class="meaning" id="wMean">учиться</div><div class="emoji" id="wEmoji">🎓</div><div class="btn-group"><button class="btn" onclick="speak(currentW.c)">🔊 Слушать</button><button class="btn btn-green" id="wVoiceBtn">🎙️ Проверить</button><button class="btn" onclick="nextWord()">🎲 Далее</button></div><div id="wFeed" style="margin-top:10px; font-size:15px;"></div></div><div class="filter-row" id="wFilters"></div><div class="grid" id="wGrid"></div></div>
+  <div id="wordsPanel" class="panel active">
+    <div class="card" id="wordCard">
+      <div class="big-char" id="wChar">学</div>
+      <div class="pinyin" id="wPinyin">xué</div>
+      <div class="meaning" id="wMean">учиться</div>
+      <div class="emoji" id="wEmoji">🎓</div>
+      <div class="btn-group">
+        <button class="btn" onclick="speak(currentW.c)">🔊 Слушать</button>
+        <button class="btn btn-green" id="wVoiceBtn">🎙️ Проверить</button>
+        <button class="btn" onclick="nextWord()">🎲 Далее</button>
+      </div>
+      <div id="wFeed" style="margin-top:10px; font-size:15px;"></div>
+    </div>
+    <div class="filter-row" id="wFilters"></div>
+    <div class="grid" id="wGrid"></div>
+  </div>
+
   <div id="numbersPanel" class="panel"><div class="card"><h2>🔢 Числа 1-10</h2><div id="numGrid" class="grid"></div></div></div>
   <div id="colorsPanel" class="panel"><div class="card"><h2>🎨 Основные цвета</h2><div id="colGrid" class="grid"></div></div></div>
   <div id="grammarPanel" class="panel"><div class="card" id="gramBox"></div></div>
   <div id="dialogsPanel" class="panel"><div class="card" id="diaBox"></div><div class="btn-group"><button class="btn" onclick="prevDia()">◀ Назад</button><button class="btn" onclick="speakDia()">🔊 Озвучить</button><button class="btn" onclick="nextDia()">Вперёд ▶</button></div></div>
   <div id="songsPanel" class="panel"><div id="songBox"></div></div>
   <div id="radicalsPanel" class="panel"><div class="card" id="radCard"></div><div id="radGrid" class="grid"></div></div>
-  <div id="notebookPanel" class="panel"><div class="card"><h2>📝 Тетрадь Тяньцзигэ</h2><canvas id="drawCanvas" width="320" height="320" class="tianzige" style="width:100%; height:auto; max-width:320px"></canvas><div class="btn-group"><button class="btn" onclick="speak(currentW.c)">🔊 Слово</button><button class="btn btn-green" id="nVoiceBtn">🎙️ Проверить</button><button class="btn" onclick="clearCanvas()">🧽 Стереть</button><button class="btn" onclick="nextWord()">🎲 Следующее</button></div><div class="assoc" id="nAssoc"></div></div></div>
+  <div id="notebookPanel" class="panel"><div class="card"><h2>📝 Тетрадь Тяньцзигэ</h2><canvas id="drawCanvas" width="320" height="320" class="tianzige"></canvas><div class="btn-group"><button class="btn" onclick="speak(currentW.c)">🔊 Слово</button><button class="btn btn-green" id="nVoiceBtn">🎙️ Проверить</button><button class="btn" onclick="clearCanvas()">🧽 Стереть</button><button class="btn" onclick="nextWord()">🎲 Следующее</button></div><div class="assoc" id="nAssoc"></div></div></div>
   <div id="cardsPanel" class="panel"><div class="card"><div class="big-char" id="cChar">学</div><div class="pinyin" id="cPinyin">?</div><div class="btn-group"><button class="btn" onclick="flipCard()">🔄 Переворот</button><button class="btn" onclick="nextCard()">➡️ Далее</button></div><div id="cMean" class="meaning" style="display:none;"></div></div></div>
   <div id="gamePanel" class="panel"><div class="card"><h3>🎮 Выбери перевод</h3><div class="big-char" id="gChar">?</div><div id="gOpts" class="grid"></div><div id="gFeed"></div><button class="btn" onclick="newGame()">🔄 Новое</button></div></div>
 </div>
 
 <script>
-// ---------- ТОНОВЫЙ ПИНЬИНЬ ----------
-const TONE_COLORS = ['','t1','t2','t3','t4','t5'];
-function colorPinyin(p) { return p.split(' ').map(w => { let t=0; if(/[āēīōūǖ]/.test(w)) t=1; else if(/[áéíóúǘ]/.test(w)) t=2; else if(/[ǎěǐǒǔǚ]/.test(w)) t=3; else if(/[àèìòùǜ]/.test(w)) t=4; else if(/[aeiouü]+$/.test(w)) t=5; return `<span class="${TONE_COLORS[t]}">${w}</span>`; }).join(' '); }
+// Функция для цветного пиньиня
+function colorPinyin(p) {
+  if (!p) return '';
+  return p.split(' ').map(w => {
+    let tone = 0;
+    if (/[āēīōūǖ]/.test(w)) tone = 1;
+    else if (/[áéíóúǘ]/.test(w)) tone = 2;
+    else if (/[ǎěǐǒǔǚ]/.test(w)) tone = 3;
+    else if (/[àèìòùǜ]/.test(w)) tone = 4;
+    else if (/[aeiouü]+$/i.test(w)) tone = 5;
+    return `<span class="t${tone}">${w}</span>`;
+  }).join(' ');
+}
 
-// ---------- БОЛЬШАЯ БАЗА СЛОВ (500+) ----------
+// БАЗА СЛОВ
 const WORDS = [
-  {c:"一",p:"yī",m:"один",e:"1️⃣",cat:"numbers",a:"Одна черта — цифра 1"}, {c:"二",p:"èr",m:"два",e:"2️⃣",cat:"numbers",a:"Две линии"}, {c:"三",p:"sān",m:"три",e:"3️⃣",cat:"numbers",a:"Три черты"}, {c:"四",p:"sì",m:"четыре",e:"4️⃣",cat:"numbers",a:"Квадрат с дверцей"}, {c:"五",p:"wǔ",m:"пять",e:"5️⃣",cat:"numbers",a:"Часы со стрелками"}, {c:"六",p:"liù",m:"шесть",e:"6️⃣",cat:"numbers",a:"Крыша и точки"}, {c:"七",p:"qī",m:"семь",e:"7️⃣",cat:"numbers",a:"Перевёрнутая семёрка"}, {c:"八",p:"bā",m:"восемь",e:"8️⃣",cat:"numbers",a:"Расходящиеся линии"}, {c:"九",p:"jiǔ",m:"девять",e:"9️⃣",cat:"numbers",a:"Крюк с хвостом"}, {c:"十",p:"shí",m:"десять",e:"🔟",cat:"numbers",a:"Перекрестье"},
-  {c:"红",p:"hóng",m:"красный",e:"🔴",cat:"colors",a:"Шёлк + работа"}, {c:"蓝",p:"lán",m:"синий",e:"🔵",cat:"colors",a:"Трава + наблюдать"}, {c:"绿",p:"lǜ",m:"зелёный",e:"🟢",cat:"colors",a:"Нить + вода"}, {c:"黄",p:"huáng",m:"жёлтый",e:"🟡",cat:"colors",a:"Центр + поле"}, {c:"白",p:"bái",m:"белый",e:"⚪",cat:"colors",a:"Лучик солнца"}, {c:"黑",p:"hēi",m:"чёрный",e:"⚫",cat:"colors",a:"Окно + огонь"},
-  {c:"人",p:"rén",m:"человек",e:"👤",cat:"hsk1",a:"Шагающая фигура"}, {c:"口",p:"kǒu",m:"рот",e:"👄",cat:"hsk1",a:"Открытый рот"}, {c:"水",p:"shuǐ",m:"вода",e:"💧",cat:"hsk1",a:"Капли"}, {c:"火",p:"huǒ",m:"огонь",e:"🔥",cat:"hsk1",a:"Пламя"}, {c:"吃",p:"chī",m:"есть",e:"🍽️",cat:"food",a:"Рот + подача"}, {c:"喝",p:"hē",m:"пить",e:"🥤",cat:"food",a:"Рот + солнце"}, {c:"茶",p:"chá",m:"чай",e:"🍵",cat:"food",a:"Трава над деревом"}, {c:"苹果",p:"píngguǒ",m:"яблоко",e:"🍎",cat:"food",a:"Плод на дереве"}, {c:"猫",p:"māo",m:"кошка",e:"🐱",cat:"animals",a:"Зверь + росток"}, {c:"狗",p:"gǒu",m:"собака",e:"🐶",cat:"animals",a:"Зверь + предложение"}, {c:"家",p:"jiā",m:"дом",e:"🏠",cat:"home",a:"Крыша + свинья"}, {c:"手机",p:"shǒujī",m:"телефон",e:"📱",cat:"home",a:"Рука + машина"}, {c:"你好",p:"nǐhǎo",m:"здравствуй",e:"👋",cat:"hsk1",a:"Ты хорошо"}, {c:"谢谢",p:"xièxie",m:"спасибо",e:"🙏",cat:"hsk1",a:"Слово + тело"}, {c:"老师",p:"lǎoshī",m:"учитель",e:"👨‍🏫",cat:"hsk1",a:"Старый мастер"}, {c:"学生",p:"xuésheng",m:"ученик",e:"👨‍🎓",cat:"hsk1",a:"Учиться рождаться"}, {c:"学习",p:"xuéxí",m:"учиться",e:"🎓",cat:"hsk1",a:"Учиться повторять"}, {c:"中国",p:"zhōngguó",m:"Китай",e:"🇨🇳",cat:"hsk1",a:"Центр + страна"}, {c:"北京",p:"běijīng",m:"Пекин",e:"🏯",cat:"hsk1",a:"Север + столица"}, {c:"爱",p:"ài",m:"любить",e:"❤️",cat:"hsk1",a:"Сердце под крышей"}, {c:"想",p:"xiǎng",m:"думать",e:"💭",cat:"hsk1",a:"Дерево + сердце"}, {c:"可以",p:"kěyǐ",m:"можно",e:"✅",cat:"hsk1",a:"Можно + уже"}, {c:"漂亮",p:"piàoliang",m:"красивый",e:"💐",cat:"hsk1",a:"Дух + свет"}, {c:"高兴",p:"gāoxìng",m:"радостный",e:"😊",cat:"hsk1",a:"Высокий + интерес"},
+  {c:"一",p:"yī",m:"один",e:"1️⃣",cat:"numbers",a:"Одна горизонтальная черта"},
+  {c:"二",p:"èr",m:"два",e:"2️⃣",cat:"numbers",a:"Две параллельные линии"},
+  {c:"三",p:"sān",m:"три",e:"3️⃣",cat:"numbers",a:"Три черты"},
+  {c:"四",p:"sì",m:"четыре",e:"4️⃣",cat:"numbers",a:"Квадрат с внутренними чертами"},
+  {c:"五",p:"wǔ",m:"пять",e:"5️⃣",cat:"numbers",a:"Как часы со стрелками"},
+  {c:"六",p:"liù",m:"шесть",e:"6️⃣",cat:"numbers",a:"Крыша и точки"},
+  {c:"七",p:"qī",m:"семь",e:"7️⃣",cat:"numbers",a:"Палка с крюком"},
+  {c:"八",p:"bā",m:"восемь",e:"8️⃣",cat:"numbers",a:"Две расходящиеся линии"},
+  {c:"九",p:"jiǔ",m:"девять",e:"9️⃣",cat:"numbers",a:"Изгиб как цифра 9"},
+  {c:"十",p:"shí",m:"десять",e:"🔟",cat:"numbers",a:"Перекрёсток"},
+  {c:"红",p:"hóng",m:"красный",e:"🔴",cat:"colors",a:"Шёлк + работа"},
+  {c:"蓝",p:"lán",m:"синий",e:"🔵",cat:"colors",a:"Трава + наблюдать"},
+  {c:"绿",p:"lǜ",m:"зелёный",e:"🟢",cat:"colors",a:"Нить + вода"},
+  {c:"黄",p:"huáng",m:"жёлтый",e:"🟡",cat:"colors",a:"Центр + поле"},
+  {c:"白",p:"bái",m:"белый",e:"⚪",cat:"colors",a:"Лучик солнца"},
+  {c:"黑",p:"hēi",m:"чёрный",e:"⚫",cat:"colors",a:"Окно + огонь"},
+  {c:"人",p:"rén",m:"человек",e:"👤",cat:"hsk1",a:"Шагающая фигура"},
+  {c:"口",p:"kǒu",m:"рот",e:"👄",cat:"hsk1",a:"Открытый рот"},
+  {c:"水",p:"shuǐ",m:"вода",e:"💧",cat:"hsk1",a:"Капли стекают"},
+  {c:"火",p:"huǒ",m:"огонь",e:"🔥",cat:"hsk1",a:"Пламя"},
+  {c:"吃",p:"chī",m:"есть",e:"🍽️",cat:"food",a:"Рот + подача"},
+  {c:"喝",p:"hē",m:"пить",e:"🥤",cat:"food",a:"Рот + солнце"},
+  {c:"茶",p:"chá",m:"чай",e:"🍵",cat:"food",a:"Трава над деревом"},
+  {c:"猫",p:"māo",m:"кошка",e:"🐱",cat:"animals",a:"Зверь + росток"},
+  {c:"狗",p:"gǒu",m:"собака",e:"🐶",cat:"animals",a:"Зверь + предложение"},
+  {c:"家",p:"jiā",m:"дом",e:"🏠",cat:"home",a:"Крыша + свинья"},
+  {c:"你好",p:"nǐhǎo",m:"здравствуй",e:"👋",cat:"hsk1",a:"Ты + хорошо"},
+  {c:"谢谢",p:"xièxie",m:"спасибо",e:"🙏",cat:"hsk1",a:"Речь + тело"},
+  {c:"老师",p:"lǎoshī",m:"учитель",e:"👨‍🏫",cat:"hsk1",a:"Старый мастер"},
+  {c:"学生",p:"xuésheng",m:"ученик",e:"👨‍🎓",cat:"hsk1",a:"Учиться + рождаться"},
+  {c:"学习",p:"xuéxí",m:"учиться",e:"🎓",cat:"hsk1",a:"Учиться + повторять"},
+  {c:"爱",p:"ài",m:"любить",e:"❤️",cat:"hsk1",a:"Сердце под крышей"},
+  {c:"想",p:"xiǎng",m:"думать/хотеть",e:"💭",cat:"hsk1",a:"Дерево + сердце"},
+  {c:"可以",p:"kěyǐ",m:"можно",e:"✅",cat:"hsk1",a:"Можно + уже"},
+  {c:"漂亮",p:"piàoliang",m:"красивый",e:"💐",cat:"hsk1",a:"Дух + свет"},
+  {c:"高兴",p:"gāoxìng",m:"радостный",e:"😊",cat:"hsk1",a:"Высокий + интерес"}
 ];
-// добавим до 500+ через цикл генерации (чтобы не перегружать, но оставим расширяемым)
-for(let i=WORDS.length; i<520; i++) WORDS.push({c:"学",p:"xué",m:"учиться",e:"📚",cat:"hsk1",a:"Мнемоника: крылья над ребёнком"});
 
-const NUMBERS = [{c:"一",p:"yī",m:1},{c:"二",p:"èr",m:2},{c:"三",p:"sān",m:3},{c:"四",p:"sì",m:4},{c:"五",p:"wǔ",m:5},{c:"六",p:"liù",m:6},{c:"七",p:"qī",m:7},{c:"八",p:"bā",m:8},{c:"九",p:"jiǔ",m:9},{c:"十",p:"shí",m:10}];
-const COLORS = [{c:"红",p:"hóng",m:"красный"},{c:"蓝",p:"lán",m:"синий"},{c:"绿",p:"lǜ",m:"зелёный"},{c:"黄",p:"huáng",m:"жёлтый"},{c:"白",p:"bái",m:"белый"},{c:"黑",p:"hēi",m:"чёрный"}];
+// ЧИСЛА
+const NUMBERS = [
+  {c:"一",p:"yī",m:"1"}, {c:"二",p:"èr",m:"2"}, {c:"三",p:"sān",m:"3"},
+  {c:"四",p:"sì",m:"4"}, {c:"五",p:"wǔ",m:"5"}, {c:"六",p:"liù",m:"6"},
+  {c:"七",p:"qī",m:"7"}, {c:"八",p:"bā",m:"8"}, {c:"九",p:"jiǔ",m:"9"}, {c:"十",p:"shí",m:"10"}
+];
 
-const RADICALS = [{c:"亻",m:"человек (стоящий)"},{c:"口",m:"рот"},{c:"氵",m:"вода"},{c:"火",m:"огонь"},{c:"艹",m:"трава"},{c:"木",m:"дерево"},{c:"扌",m:"рука"},{c:"心",m:"сердце"},{c:"女",m:"женщина"},{c:"纟",m:"шёлк"}];
-for(let i=1;i<=214;i++) RADICALS.push({c:"部",m:`радикал ${i}`});
+// ЦВЕТА
+const COLORS = [
+  {c:"红",p:"hóng",m:"красный"}, {c:"蓝",p:"lán",m:"синий"},
+  {c:"绿",p:"lǜ",m:"зелёный"}, {c:"黄",p:"huáng",m:"жёлтый"},
+  {c:"白",p:"bái",m:"белый"}, {c:"黑",p:"hēi",m:"чёрный"}
+];
 
+// РАДИКАЛЫ
+const RADICALS = [
+  {c:"亻",m:"человек (стоящий)"}, {c:"口",m:"рот"}, {c:"氵",m:"вода"},
+  {c:"火",m:"огонь"}, {c:"艹",m:"трава"}, {c:"木",m:"дерево"},
+  {c:"扌",m:"рука"}, {c:"心",m:"сердце"}, {c:"女",m:"женщина"},
+  {c:"纟",m:"шёлк"}, {c:"日",m:"солнце"}, {c:"月",m:"луна"},
+  {c:"山",m:"гора"}, {c:"川",m:"река"}, {c:"雨",m:"дождь"}
+];
+
+// ДИАЛОГИ
 const DIALOGS = [
-  {q:"你好！",qpy:"nǐ hǎo",a:"Привет!",apy:"",ru:"Приветствие"},{q:"你好吗？",qpy:"nǐ hǎo ma",a:"Как дела?",apy:"",ru:"Вопрос"},{q:"我很好，谢谢。",qpy:"wǒ hěn hǎo, xièxie",a:"У меня всё отлично, спасибо.",apy:"",ru:"Ответ"},{q:"你叫什么名字？",qpy:"nǐ jiào shénme míngzi",a:"Как тебя зовут?",apy:"",ru:"Имя"},{q:"我叫安娜。",qpy:"wǒ jiào ānnà",a:"Меня зовут Анна.",apy:"",ru:"Представление"},{q:"再见！",qpy:"zàijiàn",a:"До свидания!",apy:"",ru:"Прощание"}
+  {q:"你好！",qpy:"nǐ hǎo",a:"Привет!",apy:"",ru:"Приветствие"},
+  {q:"你好吗？",qpy:"nǐ hǎo ma",a:"Как дела?",apy:"",ru:"Вопрос о состоянии"},
+  {q:"我很好，谢谢。",qpy:"wǒ hěn hǎo, xièxie",a:"У меня всё отлично, спасибо.",apy:"",ru:"Положительный ответ"},
+  {q:"你叫什么名字？",qpy:"nǐ jiào shénme míngzi",a:"Как тебя зовут?",apy:"",ru:"Вопрос об имени"},
+  {q:"我叫安娜。",qpy:"wǒ jiào ānnà",a:"Меня зовут Анна.",apy:"",ru:"Представление"},
+  {q:"再见！",qpy:"zàijiàn",a:"До свидания!",apy:"",ru:"Прощание"}
 ];
 
-const SONGS = ["月亮代表我的心","茉莉花","小星星","两只老虎","生日快乐","朋友","童话","简单爱","青花瓷","稻香","十年","海阔天空","勇气","遇见","小幸运","东风破","千里之外","隐形的翅膀","追梦赤子心","平凡之路"];
-for(let s of SONGS) SONGS.push({title:s, lyrics:[{cn:s, py:"...", ru:"..."}]});
+// ПЕСНИ
+const SONGS = [
+  "月亮代表我的心", "茉莉花", "小星星", "两只老虎", "生日快乐",
+  "朋友", "童话", "简单爱", "青花瓷", "稻香",
+  "十年", "海阔天空", "勇气", "遇见", "小幸运",
+  "东风破", "千里之外", "隐形的翅膀", "追梦赤子心", "平凡之路"
+];
 
-const GRAMMAR = [{title:"1. Порядок слов: SVO", pattern:"Субъект + Глагол + Объект", ex:"我 爱 你 (wǒ ài nǐ) — Я люблю тебя"},{title:"2. Отрицание 不 (bù)", pattern:"不 + глагол", ex:"我 不 吃 (wǒ bù chī) — Я не ем"},{title:"3. Вопрос с 吗", pattern:"утверждение + 吗", ex:"你好吗？(nǐ hǎo ma)"},{title:"4. Частица 了 (le)", pattern:"изменение состояния", ex:"我 吃 了 (wǒ chī le) — Я поел"},{title:"5. Конструкция 是...的", pattern:"подчеркивание", ex:"我是昨天来的 (wǒ shì zuótiān lái de)"}];
+// ГРАММАТИКА
+const GRAMMAR = [
+  {title:"1. Порядок слов: SVO", pattern:"Субъект + Глагол + Объект", ex:"我 爱 你 (wǒ ài nǐ) — Я люблю тебя"},
+  {title:"2. Отрицание 不 (bù)", pattern:"不 + глагол", ex:"我 不 吃 (wǒ bù chī) — Я не ем"},
+  {title:"3. Вопрос с 吗 (ma)", pattern:"Утверждение + 吗", ex:"你好吗？(nǐ hǎo ma) — Ты в порядке?"},
+  {title:"4. Частица 了 (le)", pattern:"Изменение состояния / завершение", ex:"我 吃 了 (wǒ chī le) — Я поел"},
+  {title:"5. Конструкция 是...的 (shì...de)", pattern:"Подчёркивание обстоятельства", ex:"我是昨天来的 (wǒ shì zuótiān lái de) — Я пришёл вчера"}
+];
 
-let currentW = WORDS[0], cardIndex=0, flipped=false, gameWord=null, gameOpts=[], currentDia=0, synth = window.speechSynthesis;
+// Глобальные переменные
+let currentW = WORDS[0];
+let cardIndex = 0;
+let flipped = false;
+let gameWord = null;
+let gameOpts = [];
+let currentDia = 0;
+let synth = window.speechSynthesis;
 
-function speak(text) { let u = new SpeechSynthesisUtterance(text); u.lang='zh-CN'; synth.cancel(); synth.speak(u); }
-function speakDia() { speak(DIALOGS[currentDia].q + " " + DIALOGS[currentDia].a); }
-function nextWord() { let idx = Math.floor(Math.random()*WORDS.length); currentW=WORDS[idx]; updateWordCard(); if(document.getElementById('notebookPanel').classList.contains('active')) document.getElementById('nAssoc').innerHTML = `<strong>🧠 Мнемотехника:</strong> ${currentW.a||'Запомни образ!'}`; }
-function updateWordCard() { document.getElementById('wChar').innerText=currentW.c; document.getElementById('wPinyin').innerHTML=colorPinyin(currentW.p); document.getElementById('wMean').innerText=currentW.m; document.getElementById('wEmoji').innerText=currentW.e||'📚'; }
-function flipCard() { let meanDiv=document.getElementById('cMean'); if(flipped) meanDiv.style.display='none'; else { meanDiv.style.display='inline-block'; meanDiv.innerText=currentW.m; } flipped=!flipped; }
-function nextCard() { nextWord(); document.getElementById('cChar').innerText=currentW.c; document.getElementById('cPinyin').innerHTML=colorPinyin(currentW.p); document.getElementById('cMean').style.display='none'; flipped=false; }
-function newGame() { let candidates = WORDS.filter(w=>w.c && w.m).slice(0,200); gameWord = candidates[Math.floor(Math.random()*candidates.length)]; let wrongs = candidates.filter(w=>w!==gameWord).sort(()=>0.5-Math.random()).slice(0,3); gameOpts = [gameWord, ...wrongs].sort(()=>0.5-Math.random()); document.getElementById('gChar').innerText=gameWord.c; let optsDiv=document.getElementById('gOpts'); optsDiv.innerHTML=''; gameOpts.forEach(opt=>{ let btn=document.createElement('div'); btn.className='item'; btn.innerHTML=`<div class="info">${opt.m}</div>`; btn.onclick=()=>{ if(opt===gameWord) document.getElementById('gFeed').innerHTML='✅ Верно!'; else document.getElementById('gFeed').innerHTML=`❌ Ошибка! Правильно: ${gameWord.m}`; }; optsDiv.appendChild(btn); }); }
-function prevDia() { currentDia = (currentDia-1+DIALOGS.length)%DIALOGS.length; renderDia(); }
-function nextDia() { currentDia = (currentDia+1)%DIALOGS.length; renderDia(); }
-function renderDia() { let d=DIALOGS[currentDia]; document.getElementById('diaBox').innerHTML=`<div class="dialog-row"><div class="q">🗣️ ${d.q}<br><span style="font-size:14px">${d.qpy}</span></div><div class="a">💬 ${d.a}<br><span style="font-size:14px">${d.apy}</span></div><div class="assoc">📖 ${d.ru}</div></div>`; }
-function renderGrammar() { let html=''; GRAMMAR.forEach(g=>{ html+=`<div class="grammar-card"><div class="g-title">${g.title}</div><div class="pattern">📌 ${g.pattern}</div><div class="ex">✨ ${g.ex}</div></div>`; }); document.getElementById('gramBox').innerHTML=html; }
-function renderSongs() { let html=''; for(let i=0;i<20;i++){ let title=SONGS[i]?.title||`Песня ${i+1}`; html+=`<div class="song-card"><div class="song-cn">🎵 ${title}</div><div class="song-py">[популярная китайская песня]</div><div class="song-ru">Рекомендуем послушать для интонации</div></div>`; } document.getElementById('songBox').innerHTML=html; }
-function renderRadicals() { let html='<div class="grid">'; RADICALS.slice(0,50).forEach(r=>{ html+=`<div class="item" onclick="showRadModal('${r.c}','${r.m}')"><div class="ch" style="font-size:32px">${r.c}</div><div class="info">${r.m}</div></div>`; }); html+='</div>'; document.getElementById('radGrid').innerHTML=html; document.getElementById('radCard').innerHTML='<h3>🔤 214 ключей (первые 50)</h3><p>Нажми на радикал → значение</p>'; }
-window.showRadModal=(c,m)=>{ document.getElementById('modalBody').innerHTML=`<h2>${c}</h2><p>Значение: ${m}</p><p>Этот ключ встречается во многих иероглифах.</p>`; document.getElementById('modal').classList.add('active'); };
-function closeModal(){ document.getElementById('modal').classList.remove('active'); }
-function renderWordGrid(filter='all'){ let filtered = WORDS.filter(w=>filter==='all'||w.cat===filter).slice(0,100); let html=''; filtered.forEach(w=>{ html+=`<div class="item" onclick="selectWord('${w.c.replace(/'/g,"\\'")}')"><div class="ch">${w.c}</div><div class="info">${w.m}</div></div>`; }); document.getElementById('wGrid').innerHTML=html; }
-window.selectWord=(c)=>{ let w=WORDS.find(w=>w.c===c); if(w){ currentW=w; updateWordCard(); } }
-function initFilters(){ let cats={all:"Все",hsk1:"HSK1",food:"🍜 Еда",home:"🏠 Дом",numbers:"🔢 Числа",colors:"🎨 Цвета",animals:"🐕 Животные"}; let fdiv=document.getElementById('wFilters'); fdiv.innerHTML=''; for(let [k,v] of Object.entries(cats)){ let btn=document.createElement('div'); btn.className='fbtn'; btn.innerText=v; btn.onclick=()=>{ document.querySelectorAll('#wFilters .fbtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderWordGrid(k); }; fdiv.appendChild(btn); } renderWordGrid('all'); }
+// Озвучка
+function speak(text) {
+  if (!text) return;
+  try {
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'zh-CN';
+    utterance.rate = 0.9;
+    synth.cancel();
+    synth.speak(utterance);
+  } catch(e) { console.log("Speech error:", e); }
+}
 
-// ТЕТРАДЬ (рисование)
-let canvas=document.getElementById('drawCanvas'), ctx=canvas.getContext('2d'), drawing=false;
-function resizeCanvas(){ let size=Math.min(320, window.innerWidth-60); canvas.width=size; canvas.height=size; ctx.fillStyle='white'; ctx.fillRect(0,0,size,size); ctx.strokeStyle='#cbd5e1'; for(let i=0;i<4;i++){ ctx.beginPath(); ctx.moveTo(i*size/4,0); ctx.lineTo(i*size/4,size); ctx.stroke(); ctx.moveTo(0,i*size/4); ctx.lineTo(size,i*size/4); ctx.stroke(); } ctx.lineWidth=3; ctx.strokeStyle='#333'; }
-canvas.addEventListener('touchstart',(e)=>{ e.preventDefault(); drawing=true; let rect=canvas.getBoundingClientRect(), scale=canvas.width/rect.width; let x=(e.touches[0].clientX-rect.left)*scale, y=(e.touches[0].clientY-rect.top)*scale; ctx.beginPath(); ctx.moveTo(x,y); });
-canvas.addEventListener('touchmove',(e)=>{ e.preventDefault(); if(!drawing)return; let rect=canvas.getBoundingClientRect(), scale=canvas.width/rect.width; let x=(e.touches[0].clientX-rect.left)*scale, y=(e.touches[0].clientY-rect.top)*scale; ctx.lineTo(x,y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x,y); });
-canvas.addEventListener('touchend',()=>{ drawing=false; });
-canvas.addEventListener('mousedown',(e)=>{ drawing=true; let rect=canvas.getBoundingClientRect(), scale=canvas.width/rect.width; let x=(e.clientX-rect.left)*scale, y=(e.clientY-rect.top)*scale; ctx.beginPath(); ctx.moveTo(x,y); });
-canvas.addEventListener('mousemove',(e)=>{ if(!drawing)return; let rect=canvas.getBoundingClientRect(), scale=canvas.width/rect.width; let x=(e.clientX-rect.left)*scale, y=(e.clientY-rect.top)*scale; ctx.lineTo(x,y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x,y); });
-canvas.addEventListener('mouseup',()=>{ drawing=false; });
-window.clearCanvas=()=>{ resizeCanvas(); };
-function checkSpeechRecognition(btnId){ if(!('webkitSpeechRecognition' in window)){ alert('Ваш браузер не поддерживает голосовой ввод'); return; } let recog = new webkitSpeechRecognition(); recog.lang='zh-CN'; recog.interimResults=false; recog.onresult=(e)=>{ let spoken=e.results[0][0].transcript; let expected=currentW.c; if(spoken.includes(expected) || expected.includes(spoken)) alert('✅ Отлично! Произношение близко!'); else alert(`❌ Распознано: "${spoken}". Попробуйте ещё раз: ${expected}`); }; recog.start(); }
-document.getElementById('wVoiceBtn')?.addEventListener('click',()=>checkSpeechRecognition('wVoiceBtn'));
-document.getElementById('nVoiceBtn')?.addEventListener('click',()=>checkSpeechRecognition('nVoiceBtn'));
+function speakDia() {
+  let d = DIALOGS[currentDia];
+  speak(d.q + " " + d.a);
+}
+
+// Следующее слово
+function nextWord() {
+  let idx = Math.floor(Math.random() * WORDS.length);
+  currentW = WORDS[idx];
+  updateWordCard();
+  let nAssoc = document.getElementById('nAssoc');
+  if (nAssoc) nAssoc.innerHTML = `<strong>🧠 Мнемотехника:</strong> ${currentW.a || 'Представь образ иероглифа!'}`;
+}
+
+function updateWordCard() {
+  let wChar = document.getElementById('wChar');
+  let wPinyin = document.getElementById('wPinyin');
+  let wMean = document.getElementById('wMean');
+  let wEmoji = document.getElementById('wEmoji');
+  if (wChar) wChar.innerText = currentW.c;
+  if (wPinyin) wPinyin.innerHTML = colorPinyin(currentW.p);
+  if (wMean) wMean.innerText = currentW.m;
+  if (wEmoji) wEmoji.innerText = currentW.e || '📚';
+}
+
+// Карточки
+function flipCard() {
+  let meanDiv = document.getElementById('cMean');
+  if (flipped) {
+    meanDiv.style.display = 'none';
+  } else {
+    meanDiv.style.display = 'inline-block';
+    meanDiv.innerText = currentW.m;
+  }
+  flipped = !flipped;
+}
+
+function nextCard() {
+  nextWord();
+  let cChar = document.getElementById('cChar');
+  let cPinyin = document.getElementById('cPinyin');
+  if (cChar) cChar.innerText = currentW.c;
+  if (cPinyin) cPinyin.innerHTML = colorPinyin(currentW.p);
+  let meanDiv = document.getElementById('cMean');
+  if (meanDiv) meanDiv.style.display = 'none';
+  flipped = false;
+}
+
+// Игра
+function newGame() {
+  let candidates = WORDS.filter(w => w.c && w.m).slice(0, 100);
+  if (candidates.length === 0) candidates = WORDS;
+  gameWord = candidates[Math.floor(Math.random() * candidates.length)];
+  let wrongs = candidates.filter(w => w !== gameWord).sort(() => 0.5 - Math.random()).slice(0, 3);
+  gameOpts = [gameWord, ...wrongs].sort(() => 0.5 - Math.random());
+  let gChar = document.getElementById('gChar');
+  if (gChar) gChar.innerText = gameWord.c;
+  let optsDiv = document.getElementById('gOpts');
+  if (optsDiv) {
+    optsDiv.innerHTML = '';
+    gameOpts.forEach(opt => {
+      let btn = document.createElement('div');
+      btn.className = 'item';
+      btn.innerHTML = `<div class="info">${opt.m}</div>`;
+      btn.onclick = () => {
+        let feed = document.getElementById('gFeed');
+        if (opt === gameWord) {
+          if (feed) feed.innerHTML = '✅ Верно! Молодец!';
+        } else {
+          if (feed) feed.innerHTML = `❌ Ошибка! Правильно: ${gameWord.m}`;
+        }
+      };
+      optsDiv.appendChild(btn);
+    });
+  }
+}
+
+// Диалоги
+function prevDia() {
+  currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length;
+  renderDia();
+}
+
+function nextDia() {
+  currentDia = (currentDia + 1) % DIALOGS.length;
+  renderDia();
+}
+
+function renderDia() {
+  let d = DIALOGS[currentDia];
+  let diaBox = document.getElementById('diaBox');
+  if (diaBox) {
+    diaBox.innerHTML = `
+      <div class="dialog-row">
+        <div class="q">🗣️ ${d.q}<br><span style="font-size:14px">${d.qpy}</span></div>
+        <div class="a">💬 ${d.a}<br><span style="font-size:14px">${d.apy}</span></div>
+        <div class="assoc">📖 ${d.ru}</div>
+      </div>`;
+  }
+}
+
+// Грамматика
+function renderGrammar() {
+  let gramBox = document.getElementById('gramBox');
+  if (gramBox) {
+    let html = '';
+    GRAMMAR.forEach(g => {
+      html += `
+        <div class="grammar-card">
+          <div class="g-title">${g.title}</div>
+          <div class="pattern">📌 ${g.pattern}</div>
+          <div class="ex">✨ ${g.ex}</div>
+        </div>`;
+    });
+    gramBox.innerHTML = html;
+  }
+}
+
+// Песни
+function renderSongs() {
+  let songBox = document.getElementById('songBox');
+  if (songBox) {
+    let html = '';
+    for (let i = 0; i < SONGS.length; i++) {
+      html += `
+        <div class="song-card">
+          <div class="song-cn">🎵 ${SONGS[i]}</div>
+          <div class="song-py">[популярная китайская песня]</div>
+          <div class="song-ru">Рекомендуем послушать для тренировки интонации</div>
+        </div>`;
+    }
+    songBox.innerHTML = html;
+  }
+}
+
+// Радикалы
+function renderRadicals() {
+  let radGrid = document.getElementById('radGrid');
+  let radCard = document.getElementById('radCard');
+  if (radGrid) {
+    let html = '<div class="grid">';
+    RADICALS.forEach(r => {
+      html += `<div class="item" onclick="showRadModal('${r.c}','${r.m}')"><div class="ch" style="font-size:32px">${r.c}</div><div class="info">${r.m}</div></div>`;
+    });
+    html += '</div>';
+    radGrid.innerHTML = html;
+  }
+  if (radCard) radCard.innerHTML = '<h3>🔤 214 ключей (первые 15)</h3><p>Нажми на радикал → значение и примеры</p>';
+}
+
+window.showRadModal = function(c, m) {
+  let modalBody = document.getElementById('modalBody');
+  if (modalBody) {
+    modalBody.innerHTML = `<h2>${c}</h2><p><strong>Значение:</strong> ${m}</p><p>Этот ключ встречается во многих иероглифах.</p>`;
+  }
+  let modal = document.getElementById('modal');
+  if (modal) modal.classList.add('active');
+};
+
+function closeModal() {
+  let modal = document.getElementById('modal');
+  if (modal) modal.classList.remove('active');
+}
+
+// Сетка слов с фильтрацией
+function renderWordGrid(filter = 'all') {
+  let filtered = WORDS.filter(w => filter === 'all' || w.cat === filter);
+  let wGrid = document.getElementById('wGrid');
+  if (wGrid) {
+    let html = '';
+    filtered.forEach(w => {
+      let safeC = w.c.replace(/'/g, "\\'");
+      html += `<div class="item" onclick="selectWord('${safeC}')"><div class="ch">${w.c}</div><div class="info">${w.m}</div></div>`;
+    });
+    wGrid.innerHTML = html;
+  }
+}
+
+window.selectWord = function(c) {
+  let w = WORDS.find(w => w.c === c);
+  if (w) {
+    currentW = w;
+    updateWordCard();
+  }
+};
+
+function initFilters() {
+  let cats = {
+    all: "Все",
+    hsk1: "HSK 1",
+    numbers: "🔢 Числа",
+    colors: "🎨 Цвета",
+    food: "🍜 Еда",
+    home: "🏠 Дом",
+    animals: "🐕 Животные"
+  };
+  let fdiv = document.getElementById('wFilters');
+  if (fdiv) {
+    fdiv.innerHTML = '';
+    for (let [k, v] of Object.entries(cats)) {
+      let btn = document.createElement('div');
+      btn.className = 'fbtn';
+      btn.innerText = v;
+      btn.onclick = () => {
+        document.querySelectorAll('#wFilters .fbtn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderWordGrid(k);
+      };
+      fdiv.appendChild(btn);
+    }
+    renderWordGrid('all');
+  }
+}
+
+// Тетрадь для рисования
+let canvas = document.getElementById('drawCanvas');
+let ctx = null;
+let drawing = false;
+
+function initCanvas() {
+  if (!canvas) return;
+  canvas.width = 320;
+  canvas.height = 320;
+  ctx = canvas.getContext('2d');
+  clearCanvas();
+  
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    drawing = true;
+    let rect = canvas.getBoundingClientRect();
+    let scale = canvas.width / rect.width;
+    let x = (e.touches[0].clientX - rect.left) * scale;
+    let y = (e.touches[0].clientY - rect.top) * scale;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  });
+  
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!drawing) return;
+    let rect = canvas.getBoundingClientRect();
+    let scale = canvas.width / rect.width;
+    let x = (e.touches[0].clientX - rect.left) * scale;
+    let y = (e.touches[0].clientY - rect.top) * scale;
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  });
+  
+  canvas.addEventListener('touchend', () => { drawing = false; });
+  
+  canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    let rect = canvas.getBoundingClientRect();
+    let scale = canvas.width / rect.width;
+    let x = (e.clientX - rect.left) * scale;
+    let y = (e.clientY - rect.top) * scale;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  });
+  
+  canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+    let rect = canvas.getBoundingClientRect();
+    let scale = canvas.width / rect.width;
+    let x = (e.clientX - rect.left) * scale;
+    let y = (e.clientY - rect.top) * scale;
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  });
+  
+  canvas.addEventListener('mouseup', () => { drawing = false; });
+}
+
+function clearCanvas() {
+  if (!ctx) return;
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#cbd5e1';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    ctx.beginPath();
+    ctx.moveTo(i * canvas.width / 4, 0);
+    ctx.lineTo(i * canvas.width / 4, canvas.height);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, i * canvas.height / 4);
+    ctx.lineTo(canvas.width, i * canvas.height / 4);
+    ctx.stroke();
+  }
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = '#333';
+}
+
+// Голосовая проверка
+function checkSpeechRecognition(btnId) {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Ваш браузер не поддерживает голосовой ввод. Используйте Edge или Chrome.');
+    return;
+  }
+  const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+  let recog = new SpeechRecognition();
+  recog.lang = 'zh-CN';
+  recog.interimResults = false;
+  recog.onresult = (e) => {
+    let spoken = e.results[0][0].transcript;
+    let expected = currentW.c;
+    if (spoken.includes(expected) || expected.includes(spoken) || spoken === expected) {
+      alert('✅ Отлично! Произношение близко к правильному!');
+    } else {
+      alert(`❌ Распознано: "${spoken}". Попробуйте ещё раз: ${expected}`);
+    }
+  };
+  recog.onerror = () => { alert('Ошибка распознавания. Проверьте микрофон.'); };
+  recog.start();
+}
 
 // Табы
-document.querySelectorAll('.tab').forEach(tab=>{ tab.addEventListener('click',()=>{ let target=tab.dataset.tab; document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active')); document.getElementById(`${target}Panel`).classList.add('active'); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); tab.classList.add('active'); if(target==='numbers'){ let grid=document.getElementById('numGrid'); grid.innerHTML=NUMBERS.map(n=>`<div class="item"><div class="ch">${n.c}</div><div class="pinyin">${colorPinyin(n.p)}</div><div class="info">${n.m}</div></div>`).join(''); } if(target==='colors'){ document.getElementById('colGrid').innerHTML=COLORS.map(c=>`<div class="item"><div class="ch">${c.c}</div><div class="pinyin">${colorPinyin(c.p)}</div><div class="info">${c.m}</div></div>`).join(''); } if(target==='grammar') renderGrammar(); if(target==='dialogs') renderDia(); if(target==='songs') renderSongs(); if(target==='radicals') renderRadicals(); if(target==='cards'){ document.getElementById('cChar').innerText=currentW.c; document.getElementById('cPinyin').innerHTML=colorPinyin(currentW.p); flipped=false; document.getElementById('cMean').style.display='none'; } if(target==='game') newGame(); if(target==='notebook'){ resizeCanvas(); document.getElementById('nAssoc').innerHTML=`<strong>🧠 Мнемотехника:</strong> ${currentW.a||'Представь образ иероглифа!'}`; } }); });
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    let target = tab.dataset.tab;
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    let targetPanel = document.getElementById(`${target}Panel`);
+    if (targetPanel) targetPanel.classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    
+    if (target === 'numbers') {
+      let numGrid = document.getElementById('numGrid');
+      if (numGrid) {
+        numGrid.innerHTML = NUMBERS.map(n => `<div class="item"><div class="ch">${n.c}</div><div class="pinyin">${colorPinyin(n.p)}</div><div class="info">${n.m}</div></div>`).join('');
+      }
+    }
+    if (target === 'colors') {
+      let colGrid = document.getElementById('colGrid');
+      if (colGrid) {
+        colGrid.innerHTML = COLORS.map(c => `<div class="item"><div class="ch">${c.c}</div><div class="pinyin">${colorPinyin(c.p)}</div><div class="info">${c.m}</div></div>`).join('');
+      }
+    }
+    if (target === 'grammar') renderGrammar();
+    if (target === 'dialogs') renderDia();
+    if (target === 'songs') renderSongs();
+    if (target === 'radicals') renderRadicals();
+    if (target === 'cards') {
+      let cChar = document.getElementById('cChar');
+      let cPinyin = document.getElementById('cPinyin');
+      if (cChar) cChar.innerText = currentW.c;
+      if (cPinyin) cPinyin.innerHTML = colorPinyin(currentW.p);
+      flipped = false;
+      let cMean = document.getElementById('cMean');
+      if (cMean) cMean.style.display = 'none';
+    }
+    if (target === 'game') newGame();
+    if (target === 'notebook') {
+      let nAssoc = document.getElementById('nAssoc');
+      if (nAssoc) nAssoc.innerHTML = `<strong>🧠 Мнемотехника:</strong> ${currentW.a || 'Представь образ иероглифа!'}`;
+    }
+  });
+});
 
-// Инициализация
-updateWordCard(); initFilters(); renderGrammar(); renderDia(); renderSongs(); renderRadicals(); resizeCanvas(); newGame();
-window.addEventListener('resize',()=>{ if(document.getElementById('notebookPanel').classList.contains('active')) resizeCanvas(); });
+// Кнопки голосовой проверки
+let wVoiceBtn = document.getElementById('wVoiceBtn');
+if (wVoiceBtn) wVoiceBtn.addEventListener('click', () => checkSpeechRecognition('wVoiceBtn'));
+let nVoiceBtn = document.getElementById('nVoiceBtn');
+if (nVoiceBtn) nVoiceBtn.addEventListener('click', () => checkSpeechRecognition('nVoiceBtn'));
+
+// Запуск
+updateWordCard();
+initFilters();
+renderGrammar();
+renderDia();
+renderSongs();
+renderRadicals();
+newGame();
+initCanvas();
 </script>
 </body>
 </html>
