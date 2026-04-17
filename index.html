@@ -1249,7 +1249,10 @@ function renderSongs() {
 
 function renderRads() { 
   const g=document.getElementById('radGrid'); g.innerHTML=''; 
-  RADICALS.forEach(r=>{ const d=document.createElement('div'); d.className='grid-item'; d.innerHTML=`<div class="ch">${r.s}</div><div class="info">${r.m}</div>`; d.onclick=()=>{ speak(r.s); document.getElementById('radicalDetail').style.display='block'; document.getElementById('radicalDetail').innerHTML=`<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e||''}<br><br><em>Примеры:</em> ${r.ex}`; document.getElementById('rChar').textContent=r.s; document.getElementById('rPinyin').innerHTML=colorP(r.p); document.getElementById('rMeaning').textContent=r.m; }; g.appendChild(d); }); 
+  RADICALS.forEach(r=>{ const d=document.createElement('div'); d.className='grid-item'; d.innerHTML=`<div class="ch">${r.s}</div><div class="info">${r.m}</div>`; d.onclick=()=>{ speak(r.s); document.getElementById('radicalDetail').style.display='block'; document.getElementById('radicalDetail').innerHTML=`<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e||''}<br><br><em>Примеры:</em> ${r.ex}`;                 document.getElementById('rChar').textContent = r.s;
+                document.getElementById('rPinyin').innerHTML = colorP(r.p);
+                document.getElementById('rMeaning').textContent = r.m;
+                document.getElementById('radicalDetail').innerHTML = `<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e || ''}<br><br><em>Примеры:</em> ${r.ex}`; }; g.appendChild(d); }); 
 }
 
 function newGame() { 
@@ -1362,7 +1365,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('sListen').onclick=()=>speak(currentW.c);
   document.getElementById('sNext').onclick=nextWord;
   document.getElementById('dPrev').onclick=prevDia; document.getElementById('dNext').onclick=nextDia; document.getElementById('dListen').onclick=speakDia;
-  document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
+  document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.s, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
   document.getElementById('nListen').onclick=()=>speak(currentW.c); document.getElementById('nClear').onclick=clearCanvas; document.getElementById('nNext').onclick=nextWord;
   document.getElementById('nGridBtn').onclick = toggleGrid;
   document.getElementById('nExample').onclick = showExample;
