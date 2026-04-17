@@ -1117,6 +1117,12 @@ function speakDia() { speak(DIALOGS[currentDia].q+' '+DIALOGS[currentDia].a); }
 function nextCard() { currentW=WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); updateRadUI(); }
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+function updateRadUI() { 
+  if(!currentRad) return;
+  document.getElementById('rChar').textContent = currentRad.s; 
+  document.getElementById('rPinyin').innerHTML = colorP(currentRad.p); 
+  document.getElementById('rMeaning').textContent = currentRad.m; 
+}
 document.addEventListener('DOMContentLoaded', ()=>{
   initCanvas(); initVoice(); updateUI(); updateRadUI(); renderGrid();
   document.getElementById('sVoice').onclick=()=>startVoice(currentW.p, document.getElementById('sFeedback'));
