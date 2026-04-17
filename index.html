@@ -1135,7 +1135,7 @@ function initVoice() { const SR=window.SpeechRecognition||window.webkitSpeechRec
 
 function startVoice(py, feed) { 
   if(!recognition && !initVoice()) { 
-    if(feed) feed.innerHTML="❌ Голос не поддерживается"; 
+    if(feed) feed.innerHTML = "❌ Голос не поддерживается"; 
     return; 
   } 
   if(isRec) { 
@@ -1144,26 +1144,31 @@ function startVoice(py, feed) {
   }
   
   recognition.lang = "zh-CN";
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
   
-  recognition.onresult = function(e) { 
-    var said = e.results[0][0].transcript.trim();
-    var targetChar = currentW.c;
-    var targetPinyin = py;
+  recognition.onresult = function(event) { 
+    var said = event.results[0][0].transcript.trim();
+    var currentChar = currentW.c;        // Иероглиф на карточке
+    var currentPinyin = py;               // Пиньинь для подсказки
     
-    console.log("Распознано:", said);
-    console.log("Ожидаемый иероглиф:", targetChar);
+    console.log("=== РАСПОЗНАВАНИЕ ===");
+    console.log("Вы сказали:", said);
+    console.log("На карточке:", currentChar);
+    console.log("Пиньинь:", currentPinyin);
     
-    var correct = (said === targetChar);
+    // Сравниваем то, что сказали, с тем, что на карточке
+    var correct = (said === currentChar);
     
     if(feed) {
       if(correct) {
-        feed.innerHTML = "✅ Правильно! Молодец!";
+        feed.innerHTML = "✅ Правильно! Молодец! 🎉";
       } else {
-        feed.innerHTML = "❌ Неправильно! Нужно: " + targetChar + " (" + targetPinyin + ")<br>Вы сказали: " + said;
+        feed.innerHTML = "❌ Неправильно!<br>📖 Нужно: " + currentChar + " (" + currentPinyin + ")<br>🗣️ Вы сказали: " + said;
       }
       setTimeout(function() { 
         if(feed) feed.innerHTML = ""; 
-      }, 3000);
+      }, 3500);
     }
     
     isRec = false;
@@ -1181,14 +1186,15 @@ function startVoice(py, feed) {
     }
   }; 
   
-  recognition.onerror = function(e) { 
-    if(feed) feed.innerHTML = "❌ Ошибка: " + e.error; 
+  recognition.onerror = function(event) { 
+    console.log("Ошибка:", event.error);
+    if(feed) feed.innerHTML = "❌ Ошибка: " + event.error; 
     isRec = false; 
   }; 
   
   recognition.start(); 
   isRec = true; 
-  if(feed) feed.innerHTML = "🎤 Слушаю... Говорите по-китайски!"; 
+  if(feed) feed.innerHTML = "🎤 Слушаю... Произнесите иероглиф!"; 
 }
 function openModal(w) { 
   const c=document.getElementById('modalContent'); 
