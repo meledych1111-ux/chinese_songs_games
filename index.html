@@ -209,13 +209,20 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
   <div id="notebookPanel" class="panel">
     <div class="card">
       <div class="big-char" id="nChar">水</div>
-      <canvas id="drawCanvas" width="340" height="340" class="tzg"></canvas>
-      <div class="btn-group">
-        <button id="nListen">🔊 Образец</button>
-        <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
-        <button id="nClear">🧽 Стереть</button>
-        <button id="nNext">🎲 Следующее</button>
-      </div>
+      <canvas id="drawCanvas" width="400" height="400" style="background:#fff; border:3px solid #8B4513; border-radius:8px; touch-action:none; cursor:crosshair;"></canvas>
+<div style="margin-top:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+  <button id="nClear" style="background:#f44336;">🧽 Очистить</button>
+  <button id="nGridBtn" style="background:#4caf50;">📐 Показать сетку</button>
+  <button id="nExample" style="background:#2196f3;">✍️ Образец</button>
+</div>
+<div id="strokeGuide" style="margin-top:15px; padding:12px; background:#f5f5f5; border-radius:12px;">
+  <strong>📖 Как писать:</strong> <span id="strokeInfo">Нажмите "Образец"</span>
+</div>
+<div class="btn-group">
+  <button id="nListen">🔊 Образец</button>
+  <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
+  <button id="nNext">🎲 Следующее</button>
+</div>
       <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
       <div class="assoc" id="nAssoc" style="margin-top:10px;"></div>
     </div>
@@ -1136,7 +1143,24 @@ function renderCols() {
   const g=document.getElementById('colorGrid'); g.innerHTML=''; 
   colors.forEach(c=>{ const d=document.createElement('div'); d.className='grid-item'; d.style.borderColor=c.color; d.innerHTML=`<div style="width:50px;height:50px;border-radius:12px;background:${c.color};margin:6px auto;border:${c==='#ffffff'?'2px solid #ccc':'none'}"></div><div class="ch" style="font-size:22px;">${c.char}</div><div class="info">${c.ru}</div>`; d.onclick=()=>speak(c.char); g.appendChild(d); }); 
 }
-function renderDia() { const b=document.getElementById('dialogBox'); const d=DIALOGS[currentDia]; b.innerHTML=`<div class="dialog-card"><div class="dialog-line q"><strong>❓</strong> ${d.q}<br><small style="color:#0d47a1">${d.qp}</small></div><div class="dialog-line a"><strong>✅</strong> ${d.a}<br><small style="color:#e65100">${d.ap}</small></div></div>`; }
+function renderDia() { 
+  const b = document.getElementById("dialogBox"); 
+  const d = DIALOGS[currentDia]; 
+  b.innerHTML = `
+    <div class="dialog-card">
+      <div class="dialog-line q">
+        <strong>❓ Китайский:</strong> ${d.q}<br>
+        <small>📖 Пиньинь: ${d.qp}</small><br>
+        <small>🇷🇺 Перевод: ${d.rq || "—"}</small>
+      </div>
+      <div class="dialog-line a">
+        <strong>✅ Ответ:</strong> ${d.a}<br>
+        <small>📖 Пиньинь: ${d.ap}</small><br>
+        <small>🇷🇺 Перевод: ${d.ra || "—"}</small>
+      </div>
+    </div>
+  `; 
+}
 function renderGram() { 
   document.getElementById('grammarBox').innerHTML=GRAMMAR.map(g=>`<div class="grammar-card"><div class="g-title">${g.title}</div><div class="g-rule">${g.rule}</div><div class="example">${g.ex.replace(/\n/g,'<br>')}</div></div>`).join(''); 
 }
@@ -1167,23 +1191,8 @@ function initCanvas() {
 }
 function clearCanvas() { if(ctx) { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); } }
 function updateUI() { 
-  document.getElementById('sChar').textContent = currentW.c; 
-  document.getElementById('sPinyin').innerHTML = colorP(currentW.p); 
-  document.getElementById('sMeaning').textContent = currentW.m; 
-  document.getElementById('sEmoji').textContent = currentW.e || '📖'; 
-  document.getElementById('sCat').textContent = CAT_NAMES[currentW.cat] || currentW.cat; 
-  
-  document.getElementById('nChar').textContent = currentW.c; 
-  document.getElementById('cChar').textContent = currentW.c; 
-  document.getElementById('cEmoji').textContent = currentW.e || '📖';
-  document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
-  document.getElementById('cPinyin').style.display = 'block';
-  document.getElementById('cEmoji').style.display = 'block';
-  document.getElementById('cMeaning').textContent = currentW.m; 
-  document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p); 
-  document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
-  document.getElementById('cBack').style.display = 'none'; 
-  document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...'; 
+  document.getElementById('sChar').textContent=currentW.c; document.getElementById('sPinyin').innerHTML=colorP(currentW.p); document.getElementById('sMeaning').textContent=currentW.m; document.getElementById('sEmoji').textContent=currentW.e||'📖'; document.getElementById('sCat').textContent=CAT_NAMES[currentW.cat]||currentW.cat; 
+  document.getElementById('nChar').textContent=currentW.c; document.getElementById('cChar').textContent=currentW.c; document.getElementById('cPinyin').innerHTML=colorP(currentW.p); document.getElementById('cMeaning').textContent=currentW.m; document.getElementById('cPinyinBack').innerHTML=colorP(currentW.p); document.getElementById('cBack').style.display='none'; document.getElementById('nAssoc').innerHTML=currentW.a||'Ассоциация появится здесь...'; 
 }
 function flipCard() { document.getElementById('cBack').style.display=document.getElementById('cBack').style.display==='none'?'block':'none'; }
 function nextWord() { currentW=WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); }
@@ -1205,6 +1214,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('sNext').onclick=nextWord;
   document.getElementById('dPrev').onclick=prevDia; document.getElementById('dNext').onclick=nextDia; document.getElementById('dListen').onclick=speakDia;
   document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
+  
+  // Кнопки тетради (сетка)
+  document.getElementById('nGridBtn').onclick = toggleGrid;
+  document.getElementById('nExample').onclick = showExample;
+  
   document.getElementById('nListen').onclick=()=>speak(currentW.c); document.getElementById('nClear').onclick=clearCanvas; document.getElementById('nNext').onclick=nextWord;
   document.getElementById('cFlip').onclick=flipCard; document.getElementById('cNext').onclick=nextCard; document.getElementById('cListen').onclick=()=>speak(currentW.c);
   document.getElementById('cubeRoll').onclick=()=>{ const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent=w.c; speak(w.c); }; document.getElementById('cubeListen').onclick=()=>speak(document.getElementById('cubeRes').textContent);
