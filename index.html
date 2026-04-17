@@ -1117,10 +1117,63 @@ function initVoice() { const SR=window.SpeechRecognition||window.webkitSpeechRec
 function startVoice(py, feed) { 
   if(!recognition && !initVoice()) { if(feed) feed.innerHTML="❌ Голос не поддерживается"; return; } 
   if(isRec) { recognition.stop(); return; } 
-  recognition.onresult=e=>{ const s=e.results[0][0].transcript.toLowerCase().replace(/[^a-z]/g,''); const t=py.toLowerCase().replace(/[^a-z]/g,''); const ok=s.includes(t)||t.includes(s)||(s.length>3&&t.includes(s.slice(0,3))); if(feed) feed.innerHTML=ok?"✅ Отлично! Молодец!":"❌ Нужно: <strong>"+py+"</strong><br>Вы сказали: <em>"+e.results[0][0].transcript+"</em>"; isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec')); }; 
-  recognition.onend=()=>{ isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec')); }; 
-  recognition.onerror=e=>{ if(feed) feed.innerHTML="❌ Ошибка: "+e.error; isRec=false; }; 
-  recognition.start(); isRec=true; if(feed) feed.innerHTML="🎤 Слушаю... Говорите!"; 
+  
+  recognition.onresult = e => { 
+    const said = e.results[0][0].transcript.toLowerCase().trim().replace(/\s+/g, ' ');
+    const target = py.toLowerCase().trim().replace(/\s+/g, ' ');
+    
+    // Убираем тоны
+    const removeTones = (str) => {
+      return str.replace(/[āáǎà]/g, 'a')
+                .replace(/[ēéěè]/g, 'e')
+                .replace(/[īíǐì]/g, 'i')
+                .replace(/[ōóǒò]/g, 'o')
+                .replace(/[ūúǔù]/g, 'u')
+                .replace(/[ǖǘǚǜ]/g, 'ü');
+    };
+    
+    const saidClean = removeTones(said);
+    const targetClean = removeTones(target);
+    
+    // ТОЧНОЕ сравнение
+    let correct = false;
+    if (saidClean === targetClean) {
+      correct = true;
+    }
+    // Сравнение по словам
+    else if (saidClean.split(' ').length === targetClean.split(' ').length) {
+      const saidWords = saidClean.split(' ');
+      const targetWords = targetClean.split(' ');
+      let allMatch = true;
+      for (let i = 0; i < saidWords.length; i++) {
+        if (saidWords[i] !== targetWords[i]) {
+          allMatch = false;
+          break;
+        }
+      }
+      if (allMatch) correct = true;
+    }
+    
+    const message = correct ? "✅ Правильно! Отлично!" : "❌ Неправильно. Нужно: " + py;
+    if(feed) feed.innerHTML = message;
+    
+    isRec = false;
+    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec'));
+  }; 
+  
+  recognition.onend = () => { 
+    isRec = false; 
+    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec')); 
+  }; 
+  
+  recognition.onerror = e => { 
+    if(feed) feed.innerHTML = "❌ Ошибка: " + e.error; 
+    isRec = false; 
+  }; 
+  
+  recognition.start(); 
+  isRec = true; 
+  if(feed) feed.innerHTML = "🎤 Слушаю... Говорите!"; 
 }
 function openModal(w) { 
   const c=document.getElementById('modalContent'); 
