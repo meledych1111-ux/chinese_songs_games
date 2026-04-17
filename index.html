@@ -1075,7 +1075,7 @@ function renderDia() {
       </div>
     </div>
   `; 
-}</small></div><div class="dialog-line a"><strong>✅</strong> ${d.a}<br><small style="color:#e65100">${d.ap}</small></div></div>`; }
+}
 function renderGram() { 
   document.getElementById('grammarBox').innerHTML=GRAMMAR.map(g=>`<div class="grammar-card"><div class="g-title">${g.title}</div><div class="g-rule">${g.rule}</div><div class="example">${g.ex.replace(/\n/g,'<br>')}</div></div>`).join(''); 
 }
@@ -1110,15 +1110,15 @@ function updateUI() {
   document.getElementById('nChar').textContent=currentW.c; document.getElementById('cChar').textContent=currentW.c; document.getElementById('cPinyin').innerHTML=colorP(currentW.p); document.getElementById('cMeaning').textContent=currentW.m; document.getElementById('cPinyinBack').innerHTML=colorP(currentW.p); document.getElementById('cBack').style.display='none'; document.getElementById('nAssoc').innerHTML=currentW.a||'Ассоциация появится здесь...'; 
 }
 function flipCard() { document.getElementById('cBack').style.display=document.getElementById('cBack').style.display==='none'?'block':'none'; }
-function nextWord() { currentW=WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); updateRadUI(); updateRadUI(); }
+function nextWord() { currentW=WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); updateRadUI(); }
 function prevDia() { currentDia=(currentDia-1+DIALOGS.length)%DIALOGS.length; renderDia(); }
 function nextDia() { currentDia=(currentDia+1)%DIALOGS.length; renderDia(); }
 function speakDia() { speak(DIALOGS[currentDia].q+' '+DIALOGS[currentDia].a); }
-function nextCard() { currentW=WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); updateRadUI(); updateRadUI(); }
+function nextCard() { currentW=WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); updateRadUI(); }
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 document.addEventListener('DOMContentLoaded', ()=>{
-  initCanvas(); initVoice(); updateUI(); updateRadUI(); updateRadUI(); renderGrid();
+  initCanvas(); initVoice(); updateUI(); updateRadUI(); renderGrid();
   document.getElementById('sVoice').onclick=()=>startVoice(currentW.p, document.getElementById('sFeedback'));
   document.getElementById('nVoice').onclick=()=>startVoice(currentW.p, document.getElementById('nFeedback'));
   document.querySelectorAll('.tab').forEach(tab=>{ tab.onclick=()=>{ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); tab.classList.add('active'); const p=tab.dataset.tab; document.querySelectorAll('.panel').forEach(panel=>panel.classList.remove('active')); document.getElementById(p+'Panel').classList.add('active'); if(p==='numbers') renderNums(); if(p==='colors') renderCols(); if(p==='dialogs') renderDia(); if(p==='grammar') renderGram(); if(p==='songs') renderSongs(); if(p==='radicals') renderRads(); if(p==='game') newGame(); }; });
@@ -1128,7 +1128,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('sListen').onclick=()=>speak(currentW.c);
   document.getElementById('sNext').onclick=nextWord;
   document.getElementById('dPrev').onclick=prevDia; document.getElementById('dNext').onclick=nextDia; document.getElementById('dListen').onclick=speakDia;
-  document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); updateRadUI(); updateRadUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
+  document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); updateRadUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
   document.getElementById('nListen').onclick=()=>speak(currentW.c); document.getElementById('nClear').onclick=clearCanvas; document.getElementById('nNext').onclick=nextWord;
   document.getElementById('cFlip').onclick=flipCard; document.getElementById('cNext').onclick=nextCard; document.getElementById('cListen').onclick=()=>speak(currentW.c);
   document.getElementById('cubeRoll').onclick=()=>{ const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent=w.c; speak(w.c); }; document.getElementById('cubeListen').onclick=()=>speak(document.getElementById('cubeRes').textContent);
