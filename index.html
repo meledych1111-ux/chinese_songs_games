@@ -155,11 +155,6 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
       <span class="fbtn" data-cat="medicine">💊 Медицина</span>
       <span class="fbtn" data-cat="family">👨‍👩‍👧 Семья</span>
       <span class="fbtn" data-cat="transport">🚗 Транспорт</span>
-      <span class="fbtn" data-cat="numbers">🔢 Числа</span>
-      <span class="fbtn" data-cat="colors">🎨 Цвета</span>
-      <span class="fbtn" data-cat="animals">🐕 Животные</span>
-      <span class="fbtn" data-cat="places">🏛️ Места</span>
-      <span class="fbtn" data-cat="time">⏰ Время</span>
     </div>
     <div class="grid" id="wordGrid"></div>
   </div>
@@ -226,25 +221,21 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     </div>
   </div>
 
-<div id="cardsPanel" class="panel">
-  <div class="card">
-    <div class="big-char" id="cChar">水</div>
-    <div class="emoji" id="cFrontEmoji" style="font-size:55px; margin:10px 0;">💧</div>
-    <div class="pinyin" id="cPinyin">shuǐ</div>
-    <div id="cBack" style="display:none;">
-      <div class="pinyin" id="cPinyinBack"></div>
-      <div class="meaning" id="cMeaning"></div>
-      <div class="emoji" id="cBackEmoji" style="font-size:55px; margin:10px 0;"></div>
+  <div id="cardsPanel" class="panel">
+    <div class="card">
+      <div class="big-char" id="cChar">水</div>
+      <div class="pinyin" id="cPinyin">?</div>
+      <div id="cBack" style="display:none;">
+        <div class="pinyin" id="cPinyinBack"></div>
+        <div class="meaning" id="cMeaning">вода</div>
+      </div>
+      <div class="btn-group">
+        <button id="cFlip">🔄 Перевернуть</button>
+        <button id="cNext">🎲 Следующая</button>
+        <button id="cListen">🔊 Слушать</button>
+      </div>
     </div>
-    <div class="btn-group">
-      <button id="cListen">🔊 Слушать</button>
-      <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
-      <button id="cFlip">🔄 Перевернуть</button>
-      <button id="cNext">🎲 Следующая</button>
-    </div>
-    <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
   </div>
-</div>
 
   <div id="cubesPanel" class="panel">
     <div class="card">
@@ -1121,63 +1112,10 @@ function initVoice() { const SR=window.SpeechRecognition||window.webkitSpeechRec
 function startVoice(py, feed) { 
   if(!recognition && !initVoice()) { if(feed) feed.innerHTML="❌ Голос не поддерживается"; return; } 
   if(isRec) { recognition.stop(); return; } 
-  
-  recognition.onresult = e => { 
-    const said = e.results[0][0].transcript.toLowerCase().trim().replace(/\s+/g, ' ');
-    const target = py.toLowerCase().trim().replace(/\s+/g, ' ');
-    
-    // Убираем тоны
-    const removeTones = (str) => {
-      return str.replace(/[āáǎà]/g, 'a')
-                .replace(/[ēéěè]/g, 'e')
-                .replace(/[īíǐì]/g, 'i')
-                .replace(/[ōóǒò]/g, 'o')
-                .replace(/[ūúǔù]/g, 'u')
-                .replace(/[ǖǘǚǜ]/g, 'ü');
-    };
-    
-    const saidClean = removeTones(said);
-    const targetClean = removeTones(target);
-    
-    // ТОЧНОЕ сравнение
-    let correct = false;
-    if (saidClean === targetClean) {
-      correct = true;
-    }
-    // Сравнение по словам
-    else if (saidClean.split(' ').length === targetClean.split(' ').length) {
-      const saidWords = saidClean.split(' ');
-      const targetWords = targetClean.split(' ');
-      let allMatch = true;
-      for (let i = 0; i < saidWords.length; i++) {
-        if (saidWords[i] !== targetWords[i]) {
-          allMatch = false;
-          break;
-        }
-      }
-      if (allMatch) correct = true;
-    }
-    
-    const message = correct ? "✅ Правильно! Отлично!" : "❌ Неправильно. Нужно: " + py;
-    if(feed) feed.innerHTML = message;
-    
-    isRec = false;
-    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec'));
-  }; 
-  
-  recognition.onend = () => { 
-    isRec = false; 
-    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec')); 
-  }; 
-  
-  recognition.onerror = e => { 
-    if(feed) feed.innerHTML = "❌ Ошибка: " + e.error; 
-    isRec = false; 
-  }; 
-  
-  recognition.start(); 
-  isRec = true; 
-  if(feed) feed.innerHTML = "🎤 Слушаю... Говорите!"; 
+  recognition.onresult=e=>{ const s=e.results[0][0].transcript.toLowerCase().replace(/[^a-z]/g,''); const t=py.toLowerCase().replace(/[^a-z]/g,''); const ok=s.includes(t)||t.includes(s)||(s.length>3&&t.includes(s.slice(0,3))); if(feed) feed.innerHTML=ok?"✅ Отлично! Молодец!":"❌ Нужно: <strong>"+py+"</strong><br>Вы сказали: <em>"+e.results[0][0].transcript+"</em>"; isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec')); }; 
+  recognition.onend=()=>{ isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec')); }; 
+  recognition.onerror=e=>{ if(feed) feed.innerHTML="❌ Ошибка: "+e.error; isRec=false; }; 
+  recognition.start(); isRec=true; if(feed) feed.innerHTML="🎤 Слушаю... Говорите!"; 
 }
 function openModal(w) { 
   const c=document.getElementById('modalContent'); 
@@ -1229,42 +1167,10 @@ function initCanvas() {
 }
 function clearCanvas() { if(ctx) { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); } }
 function updateUI() { 
-  document.getElementById('sChar').textContent = currentW.c; 
-  document.getElementById('sPinyin').innerHTML = colorP(currentW.p); 
-  document.getElementById('sMeaning').textContent = currentW.m; 
-  document.getElementById('sEmoji').textContent = currentW.e || '📖'; 
-  document.getElementById('sCat').textContent = CAT_NAMES[currentW.cat] || currentW.cat; 
-  
-  document.getElementById('nChar').textContent = currentW.c; 
-  
-  // Карточки
-  document.getElementById('cChar').textContent = currentW.c; 
-  document.getElementById('cFrontEmoji').textContent = currentW.e || '📖';
-  document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
-  document.getElementById('cPinyin').style.display = 'block';
-  document.getElementById('cFrontEmoji').style.display = 'block';
-  document.getElementById('cMeaning').textContent = currentW.m; 
-  document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p); 
-  document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
-  document.getElementById('cBack').style.display = 'none'; 
-  document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...'; 
+  document.getElementById('sChar').textContent=currentW.c; document.getElementById('sPinyin').innerHTML=colorP(currentW.p); document.getElementById('sMeaning').textContent=currentW.m; document.getElementById('sEmoji').textContent=currentW.e||'📖'; document.getElementById('sCat').textContent=CAT_NAMES[currentW.cat]||currentW.cat; 
+  document.getElementById('nChar').textContent=currentW.c; document.getElementById('cChar').textContent=currentW.c; document.getElementById('cPinyin').innerHTML=colorP(currentW.p); document.getElementById('cMeaning').textContent=currentW.m; document.getElementById('cPinyinBack').innerHTML=colorP(currentW.p); document.getElementById('cBack').style.display='none'; document.getElementById('nAssoc').innerHTML=currentW.a||'Ассоциация появится здесь...'; 
 }
-
-function flipCard() { 
-  const back = document.getElementById('cBack');
-  const frontPinyin = document.getElementById('cPinyin');
-  const frontEmoji = document.getElementById('cFrontEmoji');
-  
-  if (back.style.display === 'none') {
-    back.style.display = 'block';
-    frontPinyin.style.display = 'none';
-    frontEmoji.style.display = 'none';
-  } else {
-    back.style.display = 'none';
-    frontPinyin.style.display = 'block';
-    frontEmoji.style.display = 'block';
-  }
-}
+function flipCard() { document.getElementById('cBack').style.display=document.getElementById('cBack').style.display==='none'?'block':'none'; }
 function nextWord() { currentW=WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); }
 function prevDia() { currentDia=(currentDia-1+DIALOGS.length)%DIALOGS.length; renderDia(); }
 function nextDia() { currentDia=(currentDia+1)%DIALOGS.length; renderDia(); }
@@ -1285,17 +1191,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('dPrev').onclick=prevDia; document.getElementById('dNext').onclick=nextDia; document.getElementById('dListen').onclick=speakDia;
   document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
   document.getElementById('nListen').onclick=()=>speak(currentW.c); document.getElementById('nClear').onclick=clearCanvas; document.getElementById('nNext').onclick=nextWord;
-  
-  // Карточки
-  document.getElementById('cFlip').onclick=flipCard; 
-  document.getElementById('cNext').onclick=nextCard; 
-  document.getElementById('cListen').onclick=()=>speak(currentW.c);
-  document.getElementById('cVoice').onclick = () => startVoice(currentW.p, document.getElementById('cFeedback'));
-  
+  document.getElementById('cFlip').onclick=flipCard; document.getElementById('cNext').onclick=nextCard; document.getElementById('cListen').onclick=()=>speak(currentW.c);
   document.getElementById('cubeRoll').onclick=()=>{ const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent=w.c; speak(w.c); }; document.getElementById('cubeListen').onclick=()=>speak(document.getElementById('cubeRes').textContent);
   document.getElementById('gNew').onclick=newGame;
 });
 </script>
 </body>
 </html>
-<!-- force update -->
