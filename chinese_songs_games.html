@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>🎵 Китайский с песнями, играми и голосом</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: linear-gradient(145deg, #bdd4e7 0%, #fce4c2 100%);
+            font-family: -apple-system, 'Comic Neue', 'Segoe UI', 'PingFang SC', system-ui;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* вкладки */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: rgba(255,245,220,0.9);
+            border-radius: 60px;
+            padding: 8px;
+            justify-content: center;
+        }
+        .tab {
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 16px;
+            background: #f0e0c0;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .tab.active {
+            background: #ff914d;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .panel {
+            display: none;
+        }
+        .panel.active {
+            display: block;
+        }
+        /* карточка обучения */
+        .word-card {
+            background: rgba(255,255,250,0.95);
+            border-radius: 70px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+        .big-hanzi {
+            font-size: 120px;
+            font-weight: 800;
+            font-family: 'Noto Sans CJK SC', 'PingFang SC', 'STHeiti';
+            line-height: 1.2;
+        }
+        .pinyin-big {
+            font-size: 34px;
+            color: #ff6b2c;
+            font-weight: bold;
+        }
+        .meaning-big {
+            font-size: 26px;
+            background: #eef4ff;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 50px;
+        }
+        .emoji-big {
+            font-size: 60px;
+        }
+        button {
+            background: #ffaa66;
+            border: none;
+            padding: 12px 18px;
+            font-size: 17px;
+            font-weight: bold;
+            border-radius: 50px;
+            color: white;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .voice-btn {
+            background: #44aa77;
+        }
+        .voice-btn.recording {
+            background: #d9534f;
+            animation: pulse 0.9s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1);}
+            50% { transform: scale(1.02);}
+        }
+        /* песни */
+        .song-card {
+            background: white;
+            border-radius: 60px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .song-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            color: #ff6b2c;
+        }
+        .song-line {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff9ef;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 40px;
+            font-size: 18px;
+        }
+        .song-emoji {
+            font-size: 42px;
+            min-width: 65px;
+            text-align: center;
+        }
+        .song-chinese {
+            font-size: 22px;
+            font-weight: 500;
+            flex: 2;
+        }
+        .song-pinyin {
+            font-size: 16px;
+            color: #777;
+            flex: 2;
+        }
+        .song-russian {
+            font-size: 16px;
+            color: #2c7da0;
+            flex: 2;
+        }
+        .game-question {
+            font-size: 70px;
+            text-align: center;
+            background: white;
+            border-radius: 60px;
+            padding: 25px;
+        }
+        .game-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .game-option {
+            background: #ffdd99;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            flex: 1 0 40%;
+            cursor: pointer;
+        }
+        .feedback {
+            background: #fff0cc;
+            border-radius: 50px;
+            padding: 12px;
+            text-align: center;
+            margin: 12px 0;
+            font-size: 20px;
+        }
+        @media (max-width: 550px) {
+            .big-hanzi { font-size: 90px; }
+            .song-line { flex-wrap: wrap; }
+            .song-emoji { font-size: 35px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <div class="tab active" data-tab="study">📖 Учить слова</div>
+        <div class="tab" data-tab="songs">🎵 Песенки</div>
+        <div class="tab" data-tab="game">🎴 Игра «Правда/ложь»</div>
+    </div>
+
+    <!-- ПАНЕЛЬ ОБУЧЕНИЯ -->
+    <div id="studyPanel" class="panel active">
+        <div class="word-card">
+            <div class="emoji-big" id="studyEmoji">🐼</div>
+            <div class="big-hanzi" id="studyHanzi">猫</div>
+            <div class="pinyin-big" id="studyPinyin">māo</div>
+            <div class="meaning-big" id="studyMeaning">кошка</div>
+        </div>
+        <div style="text-align:center;">
+            <button id="listenStudy">🔊 Слушать</button>
+            <button id="voiceStudy" class="voice-btn">🎙️ Сказать</button>
+            <button id="nextStudy">🎲 Дальше</button>
+        </div>
+        <div id="studyFeedback" class="feedback">🎤 Нажми микрофон и скажи слово</div>
+        <div id="studyStats" style="background:#e0f0e0; border-radius:40px; padding:10px; text-align:center;">📊</div>
+    </div>
+
+    <!-- ПАНЕЛЬ ПЕСЕН -->
+    <div id="songsPanel" class="panel">
+        <div class="song-card" id="song1">
+            <div class="song-title">🐯 两隻老虎 (Два тигра)</div>
+            <div id="songLines1"></div>
+            <button class="playSongBtn" data-song="liangzhilaohu">🎵 Споём вместе</button>
+        </div>
+        <div class="song-card" id="song2">
+            <div class="song-title">✨ 一闪一闪亮晶晶 (Звёздочка)</div>
+            <div id="songLines2"></div>
+            <button class="playSongBtn" data-song="xingxing">🎵 Споём вместе</button>
+        </div>
+        <div class="song-card" id="song3">
+            <div class="song-title">🙏 你好谢谢再见 (Привет, спасибо, пока)</div>
+            <div id="songLines3"></div>
+            <button class="playSongBtn" data-song="hello">🎵 Споём вместе</button>
+        </div>
+        <div class="feedback" id="songFeedback">🎶 Нажми на песню, слушай и подпевай!</div>
+    </div>
+
+    <!-- ИГРА ПРАВДА/ЛОЖЬ -->
+    <div id="gamePanel" class="panel">
+        <div class="game-question" id="gameQuestion">🐱</div>
+        <div id="gameOptions" class="game-options"></div>
+        <div id="gameFeedback" class="feedback">⭐ Правда или ложь?</div>
+        <button id="nextGame">🔄 Следующий вопрос</button>
+    </div>
+</div>
+
+<script>
+    // ------------------- БОЛЬШАЯ БАЗА СЛОВ (путешествия, самолёт, аптека, юрист, Севастополь, Керчь, диалоги) -------------------
+    const wordsDB = [
+        { id:0, hanzi:"猫", pinyin:"māo", meaning:"кошка", emoji:"🐱", radical:"犭", example:"小猫很可爱" },
+        { id:1, hanzi:"狗", pinyin:"gǒu", meaning:"собака", emoji:"🐶", radical:"犭", example:"小狗" },
+        { id:2, hanzi:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧", radical:"氵", example:"喝水" },
+        { id:3, hanzi:"吃", pinyin:"chī", meaning:"есть", emoji:"🍚", radical:"口", example:"吃饭" },
+        { id:4, hanzi:"买", pinyin:"mǎi", meaning:"покупать", emoji:"🛍️", radical:"贝", example:"买衣服" },
+        { id:5, hanzi:"衣服", pinyin:"yīfu", meaning:"одежда", emoji:"👗", radical:"衣", example:"新衣服" },
+        { id:6, hanzi:"手机", pinyin:"shǒujī", meaning:"телефон", emoji:"📱", radical:"手", example:"看手机" },
+        { id:7, hanzi:"家", pinyin:"jiā", meaning:"дом", emoji:"🏠", radical:"宀", example:"回家" },
+        { id:8, hanzi:"妈妈", pinyin:"māma", meaning:"мама", emoji:"👩‍👧", radical:"女", example:"妈妈好" },
+        { id:9, hanzi:"爸爸", pinyin:"bàba", meaning:"папа", emoji:"👨", radical:"父", example:"爸爸工作" },
+        { id:10, hanzi:"律师", pinyin:"lǜshī", meaning:"юрист", emoji:"⚖️", radical:"彳", example:"我是律师" },
+        { id:11, hanzi:"法院", pinyin:"fǎyuàn", meaning:"суд", emoji:"🏛️", radical:"氵阝", example:"去法院" },
+        { id:12, hanzi:"塞瓦斯托波尔", pinyin:"Sàiwǎsītuōbō'ěr", meaning:"Севастополь", emoji:"⚓", radical:"土", example:"我爱塞瓦斯托波尔" },
+        { id:13, hanzi:"刻赤", pinyin:"Kèchì", meaning:"Керчь", emoji:"🌉", radical:"刂", example:"刻赤大桥" },
+        { id:14, hanzi:"地铁", pinyin:"dìtiě", meaning:"метро", emoji:"🚇", radical:"土金", example:"坐地铁" },
+        { id:15, hanzi:"飞机", pinyin:"fēijī", meaning:"самолёт", emoji:"✈️", radical:"飞", example:"坐飞机去北京" },
+        { id:16, hanzi:"机场", pinyin:"jīchǎng", meaning:"аэропорт", emoji:"🛫", radical:"土", example:"去机场" },
+        { id:17, hanzi:"护照", pinyin:"hùzhào", meaning:"паспорт", emoji:"📘", radical:"扌", example:"我的护照" },
+        { id:18, hanzi:"酒店", pinyin:"jiǔdiàn", meaning:"отель", emoji:"🏨", radical:"酉", example:"住酒店" },
+        { id:19, hanzi:"餐厅", pinyin:"cāntīng", meaning:"ресторан", emoji:"🍽️", radical:"食", example:"在餐厅吃饭" },
+        { id:20, hanzi:"菜单", pinyin:"càidān", meaning:"меню", emoji:"📋", radical:"艹", example:"看菜单" },
+        { id:21, hanzi:"药店", pinyin:"yàodiàn", meaning:"аптека", emoji:"💊", radical:"艹", example:"去药店买药" },
+        { id:22, hanzi:"感冒", pinyin:"gǎnmào", meaning:"простуда", emoji:"🤧", radical:"忄", example:"我感冒了" },
+        { id:23, hanzi:"药", pinyin:"yào", meaning:"лекарство", emoji:"💊", radical:"艹", example:"吃药" },
+        { id:24, hanzi:"多少钱", pinyin:"duōshǎo qián", meaning:"сколько стоит", emoji:"💰", radical:"钅", example:"这个多少钱" },
+        { id:25, hanzi:"你好", pinyin:"nǐhǎo", meaning:"здравствуйте", emoji:"👋", radical:"亻", example:"你好吗" },
+        { id:26, hanzi:"谢谢", pinyin:"xièxie", meaning:"спасибо", emoji:"🙏", radical:"言", example:"非常感谢" },
+        { id:27, hanzi:"再见", pinyin:"zàijiàn", meaning:"до свидания", emoji:"👋", radical:"见", example:"明天见" },
+        { id:28, hanzi:"对不起", pinyin:"duìbuqǐ", meaning:"извините", emoji:"😔", radical:"寸", example:"对不起" },
+        { id:29, hanzi:"卫生间", pinyin:"wèishēngjiān", meaning:"туалет", emoji:"🚻", radical:"氵", example:"卫生间在哪里" },
+        { id:30, hanzi:"火车站", pinyin:"huǒchēzhàn", meaning:"вокзал", emoji:"🚉", radical:"火", example:"去火车站" },
+        { id:31, hanzi:"出租车", pinyin:"chūzūchē", meaning:"такси", emoji:"🚕", radical:"车", example:"打出租车" }
+    ];
+
+    // ------------------- ПЕСНИ -------------------
+    const songs = {
+        liangzhilaohu: {
+            title: "两隻老虎",
+            lines: [
+                { emoji:"🐯", chinese:"两隻老虎，两隻老虎", pinyin:"liǎng zhī lǎohǔ, liǎng zhī lǎohǔ", russian:"Два тигра, два тигра" },
+                { emoji:"🏃", chinese:"跑得快，跑得快", pinyin:"pǎo de kuài, pǎo de kuài", russian:"Бегут быстро, бегут быстро" },
+                { emoji:"🐘", chinese:"一隻没有耳朵，一隻没有尾巴", pinyin:"yī zhī méiyǒu ěrduo, yī zhī méiyǒu wěiba", russian:"У одного нет ушей, у другого нет хвоста" },
+                { emoji:"🤔", chinese:"真奇怪，真奇怪", pinyin:"zhēn qíguài, zhēn qíguài", russian:"Очень странно, очень странно" }
+            ]
+        },
+        xingxing: {
+            title: "一闪一闪亮晶晶",
+            lines: [
+                { emoji:"✨", chinese:"一闪一闪亮晶晶", pinyin:"yī shǎn yī shǎn liàng jīng jīng", russian:"Мерцай, мерцай, яркая звёздочка" },
+                { emoji:"⭐", chinese:"满天都是小星星", pinyin:"mǎn tiān dōu shì xiǎo xīng xīng", russian:"Небо полно маленьких звёзд" },
+                { emoji:"🌙", chinese:"挂在天上放光明", pinyin:"guà zài tiān shàng fàng guāng míng", russian:"Висят в небе, излучают свет" },
+                { emoji:"👀", chinese:"好像许多小眼睛", pinyin:"hǎoxiàng xǔduō xiǎo yǎnjīng", russian:"Словно много маленьких глазок" }
+            ]
+        },
+        hello: {
+            title: "你好谢谢再见",
+            lines: [
+                { emoji:"👋", chinese:"你好，你好", pinyin:"nǐhǎo, nǐhǎo", russian:"Здравствуй, здравствуй" },
+                { emoji:"🙏", chinese:"谢谢，谢谢", pinyin:"xièxie, xièxie", russian:"Спасибо, спасибо" },
+                { emoji:"👋", chinese:"再见，再见", pinyin:"zàijiàn, zàijiàn", russian:"До свидания, до свидания" },
+                { emoji:"😊", chinese:"我们是好朋友", pinyin:"wǒmen shì hǎo péngyou", russian:"Мы хорошие друзья" }
+            ]
+        }
+    };
+
+    // Статистика обучения
+    let userStats = {};
+    let currentIndex = 0;
+    let recognition = null;
+    let isRecording = false;
+
+    function loadStats() {
+        let saved = localStorage.getItem("chineseStatsSongs");
+        if(saved) userStats = JSON.parse(saved);
+        else { wordsDB.forEach(w => { userStats[w.id] = { level:1, lastReview:null }; }); }
+        updateStatsUI();
+    }
+    function saveStats() { localStorage.setItem("chineseStatsSongs", JSON.stringify(userStats)); updateStatsUI(); }
+    function updateStatsUI() {
+        let avg = Object.values(userStats).reduce((s,st)=>s+st.level,0)/wordsDB.length;
+        document.getElementById("studyStats").innerHTML = `📊 Уровень: ${avg.toFixed(1)}/5  |  Слов: ${wordsDB.length}`;
+    }
+    function markWord(id, remembered) {
+        let st = userStats[id];
+        if(remembered) st.level = Math.min(st.level+1,5);
+        else st.level = Math.max(1, st.level-1);
+        st.lastReview = new Date().toISOString();
+        saveStats();
+    }
+
+    function showStudyWord(index) {
+        let w = wordsDB[index % wordsDB.length];
+        document.getElementById("studyEmoji").innerHTML = w.emoji;
+        document.getElementById("studyHanzi").innerHTML = w.hanzi;
+        document.getElementById("studyPinyin").innerHTML = w.pinyin;
+        document.getElementById("studyMeaning").innerHTML = w.meaning;
+    }
+
+    function speakChinese(text) {
+        let u = new SpeechSynthesisUtterance(text);
+        u.lang = "zh-CN";
+        u.rate = 0.7;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(u);
+    }
+
+    function initVoice() {
+        let SpeechRecog = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if(!SpeechRecog) { document.getElementById("studyFeedback").innerHTML = "❌ Голос не поддерживается"; return false; }
+        recognition = new SpeechRecog();
+        recognition.lang = "zh-CN";
+        recognition.onresult = (e) => {
+            let spoken = e.results[0][0].transcript;
+            let w = wordsDB[currentIndex % wordsDB.length];
+            let correct = w.pinyin.toLowerCase().replace(/[^a-z]/g, '');
+            let spokenNorm = spoken.toLowerCase().replace(/[^a-z]/g, '');
+            let ok = spokenNorm.includes(correct) || correct.includes(spokenNorm);
+            if(ok) {
+                document.getElementById("studyFeedback").innerHTML = "✅ Верно! " + spoken;
+                markWord(w.id, true);
+            } else {
+                document.getElementById("studyFeedback").innerHTML = `❌ Нужно: ${w.pinyin}. Вы: ${spoken}`;
+                markWord(w.id, false);
+            }
+            isRecording=false; document.getElementById("voiceStudy").classList.remove("recording");
+        };
+        recognition.onend = () => { if(isRecording){ isRecording=false; document.getElementById("voiceStudy").classList.remove("recording"); } };
+        return true;
+    }
+    function startVoice() {
+        if(!recognition && !initVoice()) return;
+        if(isRecording) return;
+        recognition.start();
+        isRecording=true;
+        document.getElementById("voiceStudy").classList.add("recording");
+        document.getElementById("studyFeedback").innerHTML = "🎤 Слушаю... скажите слово";
+    }
+
+    function renderSong(songId, containerId) {
+        let song = songs[songId];
+        if(!song) return;
+        let html = '';
+        song.lines.forEach(line => {
+            html += `<div class="song-line">
+                        <div class="song-emoji">${line.emoji}</div>
+                        <div class="song-chinese">${line.chinese}</div>
+                        <div class="song-pinyin">${line.pinyin}</div>
+                        <div class="song-russian">${line.russian}</div>
+                    </div>`;
+        });
+        document.getElementById(containerId).innerHTML = html;
+    }
+
+    // игра правда/ложь
+    let currentGameWord = null;
+    let currentGameCorrect = true;
+    function newGameQuestion() {
+        let idx = Math.floor(Math.random() * wordsDB.length);
+        currentGameWord = wordsDB[idx];
+        let wrongMeaning = currentGameWord.meaning === "кошка" ? "собака" : (currentGameWord.meaning === "вода" ? "огонь" : "дом");
+        currentGameCorrect = Math.random() < 0.5;
+        let questionMeaning = currentGameCorrect ? currentGameWord.meaning : wrongMeaning;
+        document.getElementById("gameQuestion").innerHTML = `${currentGameWord.emoji} ${currentGameWord.hanzi}`;
+        document.getElementById("gameOptions").innerHTML = `
+            <div class="game-option" data-ans="true">✅ Правда (${questionMeaning})</div>
+            <div class="game-option" data-ans="false">❌ Ложь</div>
+        `;
+        document.querySelectorAll(".game-option").forEach(opt => {
+            opt.onclick = () => {
+                let userChoice = opt.getAttribute("data-ans") === "true";
+                let isRight = (userChoice === currentGameCorrect);
+                if(isRight) {
+                    document.getElementById("gameFeedback").innerHTML = "🎉 Правильно! +1 к памяти!";
+                    markWord(currentGameWord.id, true);
+                } else {
+                    document.getElementById("gameFeedback").innerHTML = `😅 Ошибка! ${currentGameWord.hanzi} — это ${currentGameWord.meaning}`;
+                    markWord(currentGameWord.id, false);
+                }
+                setTimeout(newGameQuestion, 1500);
+            };
+        });
+    }
+
+    // вкладки
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.onclick = () => {
+            document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+            tab.classList.add("active");
+            let target = tab.getAttribute("data-tab");
+            document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+            if(target === "study") document.getElementById("studyPanel").classList.add("active");
+            if(target === "songs") document.getElementById("songsPanel").classList.add("active");
+            if(target === "game") { document.getElementById("gamePanel").classList.add("active"); newGameQuestion(); }
+        };
+    });
+
+    window.onload = () => {
+        loadStats();
+        currentIndex = Math.floor(Math.random() * wordsDB.length);
+        showStudyWord(currentIndex);
+        initVoice();
+        document.getElementById("listenStudy").onclick = () => { let w=wordsDB[currentIndex%wordsDB.length]; speakChinese(w.hanzi); };
+        document.getElementById("voiceStudy").onclick = startVoice;
+        document.getElementById("nextStudy").onclick = () => { currentIndex++; showStudyWord(currentIndex); };
+        renderSong("liangzhilaohu", "songLines1");
+        renderSong("xingxing", "songLines2");
+        renderSong("hello", "songLines3");
+        document.querySelectorAll(".playSongBtn").forEach(btn => {
+            btn.onclick = (e) => {
+                let songKey = btn.getAttribute("data-song");
+                let song = songs[songKey];
+                if(song) {
+                    let fullText = song.lines.map(l=>l.chinese).join("。");
+                    speakChinese(fullText);
+                    document.getElementById("songFeedback").
