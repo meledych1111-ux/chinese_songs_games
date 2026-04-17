@@ -1138,19 +1138,48 @@ function initVoice() { const SR=window.SpeechRecognition||window.webkitSpeechRec
 function startVoice(py, feed) { 
   if(!recognition && !initVoice()) { if(feed) feed.innerHTML="❌ Голос не поддерживается"; return; } 
   if(isRec) { recognition.stop(); return; } 
-  recognition.onresult=e=>{ 
+  
+  recognition.onresult = e => { 
     const said = e.results[0][0].transcript.toLowerCase().trim().replace(/\s+/g, '');
     const target = py.toLowerCase().trim().replace(/\s+/g, '');
-    const removeTones = (s) => s.replace(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/g, (m) => ({'ā':'a','á':'a','ǎ':'a','à':'a','ē':'e','é':'e','ě':'e','è':'e','ī':'i','í':'i','ǐ':'i','ì':'i','ō':'o','ó':'o','ǒ':'o','ò':'o','ū':'u','ú':'u','ǔ':'u','ù':'u','ǖ':'ü','ǘ':'ü','ǚ':'ü','ǜ':'ü'})[m] || m);
-    const correct = removeTones(said) === removeTones(target);
-    if(feed) feed.innerHTML = correct ? "✅ Правильно! Отлично!" : "❌ Неправильно. Нужно: " + py;
-    isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec'));
+    
+    // Убираем тоны, но сохраняем буквы
+    const removeTones = (s) => {
+      return s.replace(/[āáǎà]/g, 'a')
+              .replace(/[ēéěè]/g, 'e')
+              .replace(/[īíǐì]/g, 'i')
+              .replace(/[ōóǒò]/g, 'o')
+              .replace(/[ūúǔù]/g, 'u')
+              .replace(/[ǖǘǚǜ]/g, 'ü');
+    };
+    
+    const saidClean = removeTones(said);
+    const targetClean = removeTones(target);
+    
+    // Точное сравнение
+    const correct = (saidClean === targetClean);
+    
+    const message = correct ? "✅ Правильно! Отлично!" : "❌ Неправильно. Нужно: " + py;
+    if(feed) feed.innerHTML = message;
+    
+    isRec = false;
+    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec'));
   }; 
-  recognition.onend=()=>{ isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec')); }; 
-  recognition.onerror=e=>{ if(feed) feed.innerHTML="❌ Ошибка: " + e.error; isRec=false; }; 
-  recognition.start(); isRec=true; if(feed) feed.innerHTML="🎤 Слушаю... Говорите!"; 
+  
+  recognition.onend = () => { 
+    isRec = false; 
+    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec')); 
+  }; 
+  
+  recognition.onerror = e => { 
+    if(feed) feed.innerHTML = "❌ Ошибка: " + e.error; 
+    isRec = false; 
+  }; 
+  
+  recognition.start(); 
+  isRec = true; 
+  if(feed) feed.innerHTML = "🎤 Слушаю... Говорите!"; 
 }
-
 function openModal(w) { 
   const c=document.getElementById('modalContent'); 
   c.innerHTML=`<button class="close" onclick="closeModal()">×</button><div class="big-char">${w.c}</div><div class="pinyin">${colorP(w.p)}</div><div class="meaning">${w.m}</div><div class="emoji">${w.e||'📖'}</div><div class="badge">${CAT_NAMES[w.cat]||w.cat}</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>${w.a||'Практикуй произношение!'}</div><div class="btn-group"><button onclick="speak('${w.c}')">🔊 Слушать</button><button class="voice-btn" onclick="startVoice('${w.p}', document.getElementById('mFeed'))">🎙️ Проверить</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`; 
@@ -1270,18 +1299,22 @@ function updateUI() {
   document.getElementById('sCat').textContent = CAT_NAMES[currentW.cat] || currentW.cat; 
   document.getElementById('nChar').textContent = currentW.c; 
   document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...';
+  
   // Карточки
   document.getElementById('cChar').textContent = currentW.c; 
-  document.getElementById('cFrontEmoji').textContent = currentW.e || '📖';
+  if(document.getElementById('cFrontEmoji')) {
+    document.getElementById('cFrontEmoji').textContent = currentW.e || '📖';
+    document.getElementById('cFrontEmoji').style.display = 'block';
+  }
   document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
   document.getElementById('cPinyin').style.display = 'block';
-  document.getElementById('cFrontEmoji').style.display = 'block';
   document.getElementById('cMeaning').textContent = currentW.m; 
   document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p); 
-  document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
+  if(document.getElementById('cBackEmoji')) {
+    document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
+  }
   document.getElementById('cBack').style.display = 'none'; 
 }
-
 function flipCard() { 
   const back = document.getElementById('cBack');
   const frontPinyin = document.getElementById('cPinyin');
