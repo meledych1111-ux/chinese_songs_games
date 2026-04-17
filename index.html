@@ -243,25 +243,23 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     </div>
   </div>
 
-  <div id="cardsPanel" class="panel">
-    <div class="card">
-      <div class="big-char" id="cChar">水</div>
-      <div class="emoji" id="cFrontEmoji" style="font-size:55px; margin:10px 0;">💧</div>
-      <div class="pinyin" id="cPinyin">shuǐ</div>
-      <div id="cBack" style="display:none;">
-        <div class="pinyin" id="cPinyinBack"></div>
-        <div class="meaning" id="cMeaning"></div>
-        <div class="emoji" id="cBackEmoji" style="font-size:55px; margin:10px 0;"></div>
-      </div>
-      <div class="btn-group">
-        <button id="cListen">🔊 Слушать</button>
-        <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
-        <button id="cFlip">🔄 Перевернуть</button>
-        <button id="cNext">🎲 Следующая</button>
-      </div>
-      <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
+<div id="cardsPanel" class="panel">
+  <div class="card">
+    <div class="big-char" id="cChar">水</div>
+    <div class="pinyin" id="cPinyin">shuǐ</div>
+    <div id="cBack" style="display:none;">
+      <div class="meaning" id="cMeaning">вода</div>
+      <div class="emoji" id="cBackEmoji" style="font-size:55px; margin:10px 0;">💧</div>
     </div>
+    <div class="btn-group">
+      <button id="cListen">🔊 Слушать</button>
+      <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
+      <button id="cFlip">🔄 Перевернуть</button>
+      <button id="cNext">🎲 Следующая</button>
+    </div>
+    <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
   </div>
+</div>
 
   <div id="cubesPanel" class="panel">
     <div class="card">
@@ -1300,33 +1298,29 @@ function updateUI() {
   document.getElementById('nChar').textContent = currentW.c; 
   document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...';
   
-  // Карточки
+  // Карточки: лицевая сторона (только иероглиф и пиньинь)
   document.getElementById('cChar').textContent = currentW.c; 
-  if(document.getElementById('cFrontEmoji')) {
-    document.getElementById('cFrontEmoji').textContent = currentW.e || '📖';
-    document.getElementById('cFrontEmoji').style.display = 'block';
-  }
   document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
   document.getElementById('cPinyin').style.display = 'block';
+  
+  // Обратная сторона (перевод и эмодзи)
   document.getElementById('cMeaning').textContent = currentW.m; 
-  document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p); 
-  if(document.getElementById('cBackEmoji')) {
-    document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
-  }
+  document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
+  
+  // Скрываем обратную сторону при смене слова
   document.getElementById('cBack').style.display = 'none'; 
 }
+
 function flipCard() { 
   const back = document.getElementById('cBack');
   const frontPinyin = document.getElementById('cPinyin');
-  const frontEmoji = document.getElementById('cFrontEmoji');
+  
   if (back.style.display === 'none') {
-    back.style.display = 'block';
-    frontPinyin.style.display = 'none';
-    frontEmoji.style.display = 'none';
+    back.style.display = 'block';      // показываем обратную сторону
+    frontPinyin.style.display = 'none'; // скрываем пиньинь на лицевой
   } else {
-    back.style.display = 'none';
-    frontPinyin.style.display = 'block';
-    frontEmoji.style.display = 'block';
+    back.style.display = 'none';        // скрываем обратную сторону
+    frontPinyin.style.display = 'block'; // показываем пиньинь
   }
 }
 
