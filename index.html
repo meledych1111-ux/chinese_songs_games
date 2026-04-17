@@ -2,1151 +2,1890 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>🇨 КИТАЙСКИЙ С НУЛЯ — 520 реальных слов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс (500+ слов)</title>
     <style>
+        :root {
+            --bg: #f4f6f8; --card: #ffffff; --primary: #4361ee; --primary-dark: #3a56d4;
+            --accent: #ff6b35; --success: #2ecc71; --error: #e74c3c; --text: #2c3e50; --text-light: #7f8c8d;
+            --radius: 24px; --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            background: linear-gradient(145deg, #1a5f7a 0%, #f5d6a8 100%);
-            font-family: 'Segoe UI', 'PingFang SC', 'Comic Neue', system-ui;
-            padding: 8px;
-            min-height: 100vh;
+            background: var(--bg); font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans CJK', system-ui;
+            color: var(--text); padding: 12px; min-height: 100vh; font-size: 16px;
         }
-        .container { max-width: 700px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto; }
         
         .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            background: rgba(255,245,200,0.95);
-            border-radius: 60px;
-            padding: 10px;
-            margin-bottom: 15px;
-            justify-content: center;
+            display: flex; flex-wrap: wrap; gap: 10px; background: var(--card);
+            border-radius: 50px; padding: 12px; margin-bottom: 18px;
+            box-shadow: var(--shadow); justify-content: center;
         }
         .tab {
-            padding: 10px 14px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 13px;
-            background: #e2c89c;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.2s;
+            padding: 12px 18px; border-radius: 40px; font-weight: 700; font-size: 15px;
+            background: #eef2f7; cursor: pointer; transition: 0.2s; text-align: center;
+            min-height: 48px; display: flex; align-items: center; justify-content: center;
         }
-        .tab.active { background: #ff7b2c; color: white; transform: scale(1.05); }
-        .tab:hover { transform: scale(1.05); }
+        .tab.active { background: var(--primary); color: white; transform: scale(1.05); }
         
-        .panel { display: none; }
-        .panel.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .panel { display: none; animation: fade 0.3s; }
+        .panel.active { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .card {
-            background: white;
-            border-radius: 50px;
-            padding: 25px 20px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            margin-bottom: 15px;
+            background: var(--card); border-radius: var(--radius); padding: 25px 20px;
+            text-align: center; box-shadow: var(--shadow); margin-bottom: 18px;
         }
-        .big-char { font-size: 120px; font-weight: 800; font-family: 'PingFang SC', 'Noto Sans CJK SC'; line-height: 1.2; margin: 10px 0; }
-        .big-pinyin { font-size: 32px; color: #ff7b2c; font-weight: bold; margin: 12px 0; }
-        .big-meaning { font-size: 28px; background: #e8f0fe; display: inline-block; padding: 12px 30px; border-radius: 50px; margin: 10px 0; font-weight: 600; }
-        .big-emoji { font-size: 80px; margin: 15px 0; }
+        .big-char { font-size: 100px; font-weight: 900; line-height: 1.1; margin: 15px 0; color: var(--primary-dark); }
+        .big-pinyin { font-size: 28px; color: var(--accent); font-weight: bold; margin: 10px 0; }
+        .big-meaning { font-size: 24px; background: #e3f2fd; display: inline-block; padding: 10px 20px; border-radius: 50px; margin: 10px 0; font-weight: 600; }
+        .big-emoji { font-size: 65px; margin: 12px 0; }
         
-        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0; }
+        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 20px 0; }
         button {
-            background: #ff914d;
-            border: none;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 50px;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
+            background: var(--accent); border: none; padding: 14px 22px; font-size: 16px; font-weight: bold;
+            border-radius: 50px; color: white; cursor: pointer; transition: 0.2s; min-height: 48px;
+            box-shadow: 0 4px 10px rgba(255,107,53,0.3);
         }
-        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        button:hover { transform: translateY(-2px); }
         button:active { transform: scale(0.96); }
-        .voice-btn { background: #44aa77; }
-        .voice-btn.recording { background: #d9534f; animation: pulse 0.9s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .voice-btn { background: var(--success); box-shadow: 0 4px 10px rgba(46,204,113,0.3); }
+        .voice-btn.recording { background: var(--error); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         
-        .feedback { 
-            background: #fff0cc; 
-            border-radius: 50px; 
-            padding: 16px; 
-            text-align: center; 
-            margin: 16px 0; 
-            font-size: 18px; 
-            font-weight: 500;
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none;
+            align-items: center; justify-content: center; z-index: 999; padding: 20px;
         }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white; border-radius: 30px; padding: 25px; max-width: 90vw;
+            max-height: 85vh; overflow-y: auto; width: 100%; position: relative; text-align: center;
+        }
+        .close { position: absolute; top: 15px; right: 20px; font-size: 32px; cursor: pointer; color: #999; background: none; box-shadow: none; }
         
-        .dialog-card { background: white; border-radius: 45px; padding: 20px; margin-bottom: 15px; }
-        .dialog-q { background: #e3f2fd; border-radius: 30px; padding: 16px; margin: 10px 0; font-size: 18px; }
-        .dialog-a { background: #fff3e0; border-radius: 30px; padding: 16px; margin: 10px 0; font-size: 18px; }
-        .topic-badge { 
-            display: inline-block; 
-            background: #ffaa66; 
-            padding: 8px 16px; 
-            border-radius: 30px; 
-            font-size: 13px; 
-            margin: 4px; 
-            cursor: pointer; 
-            font-weight: bold;
-            transition: 0.2s;
+        .assoc-box {
+            background: #fff8e1; border-radius: 20px; padding: 18px; margin: 15px 0;
+            text-align: left; border-left: 5px solid #ffb300; font-size: 17px; line-height: 1.5;
         }
-        .topic-badge:hover { transform: scale(1.1); background: #ff7b2c; color: white; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 14px; margin: 20px 0; }
+        .grid-item {
+            background: white; border-radius: 20px; padding: 18px; text-align: center; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.2s; border: 2px solid #eee; min-height: 110px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .grid-item:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .grid-item .char { font-size: 32px; font-weight: bold; margin: 6px 0; }
+        .grid-item .info { font-size: 13px; color: var(--text-light); }
         
-        .radical-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
-            gap: 12px; 
-            max-height: 600px; 
-            overflow-y: auto; 
-            background: white; 
-            border-radius: 40px; 
-            padding: 25px; 
-            margin-top: 20px; 
-        }
-        .radical-cell { 
-            background: linear-gradient(145deg, #fff3e0, #ffe0b2); 
-            border-radius: 25px; 
-            padding: 20px; 
-            text-align: center; 
-            font-size: 42px; 
-            font-weight: bold; 
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 3px solid transparent;
-        }
-        .radical-cell:hover { 
-            transform: scale(1.15) rotate(3deg); 
-            background: linear-gradient(145deg, #ffcc80, #ffb74d);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            border-color: #ff7b2c;
-        }
+        .dialog-card { background: white; border-radius: 30px; padding: 18px; margin: 12px 0; }
+        .dialog-line { padding: 12px; margin: 8px 0; border-radius: 15px; font-size: 18px; }
+        .q { background: #e3f2fd; } .a { background: #fff3e0; }
         
-        .radical-detail {
-            background: linear-gradient(145deg, #ffffff, #f5f5f5);
-            border-radius: 45px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            display: none;
-            border: 4px solid #ffaa66;
-        }
-        .radical-detail.active { display: block; animation: slideDown 0.4s; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        canvas { background: white; border-radius: 20px; display: block; margin: 15px auto; border: 3px solid #ccc; cursor: crosshair; touch-action: none; }
         
-        .examples-box {
-            background: #fff8e1;
-            border-radius: 25px;
-            padding: 20px;
-            margin: 15px 0;
-            text-align: left;
-        }
-        .example-char {
-            display: inline-block;
-            background: white;
-            padding: 8px 15px;
-            margin: 5px;
-            border-radius: 20px;
-            font-size: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+        .song-line { background: white; padding: 12px; margin: 8px 0; border-radius: 15px; text-align: left; }
+        .song-cn { font-size: 20px; font-weight: bold; }
+        .song-py { color: #666; font-size: 15px; }
+        .song-ru { color: #888; font-size: 14px; }
         
-        .grid-options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; }
-        .grid-opt { 
-            background: #ffdd99; 
-            padding: 14px 20px; 
-            border-radius: 50px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            text-align: center; 
-            min-width: 110px;
-            transition: 0.2s;
-        }
-        .grid-opt:hover { background: #ffaa66; color: white; transform: scale(1.05); }
+        .grammar-card { background: #e8f5e9; border-radius: 20px; padding: 18px; margin: 15px 0; text-align: left; }
+        .grammar-title { font-size: 20px; color: #2e7d32; margin-bottom: 10px; font-weight: bold; }
+        .example { background: white; padding: 12px; margin: 8px 0; border-radius: 10px; font-size: 17px; }
         
-        .song-card { background: #fff0e0; border-radius: 45px; padding: 20px; margin: 15px 0; }
-        .song-title { font-size: 26px; font-weight: bold; text-align: center; color: #ff7b2c; margin-bottom: 15px; }
-        .song-line { display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 2px solid #ffdd99; flex-wrap: wrap; }
-        .song-emoji { font-size: 32px; min-width: 50px; }
-        .song-text { font-size: 20px; font-weight: 600; flex: 2; }
+        .filter-btn { padding: 10px 16px; background: #f0f0f0; border-radius: 30px; cursor: pointer; margin: 5px; font-weight: 600; }
+        .filter-btn.active { background: var(--primary); color: white; }
         
-        .task-card { background: #fffef7; border-radius: 45px; padding: 20px; margin: 15px 0; border: 3px dashed #ffaa66; }
-        .task-title { font-size: 22px; font-weight: bold; color: #ff7b2c; margin-bottom: 12px; }
-        canvas { background: white; border-radius: 25px; display: block; margin: 15px auto; border: 3px solid #ffaa66; cursor: crosshair; max-width: 100%; }
-        
-        .cube { 
-            width: 100px; 
-            height: 100px; 
-            background: linear-gradient(145deg, #ffdd99, #ffcc80); 
-            border-radius: 20px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 42px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            box-shadow: 0 8px 0 #ccaa66; 
-            transition: 0.1s;
-            margin: 10px;
-        }
-        .cube:active { transform: translateY(6px); box-shadow: 0 2px 0 #ccaa66; }
-        
-        .instruction {
-            background: #e3f2fd;
-            border-radius: 25px;
-            padding: 15px;
-            margin: 15px 0;
-            font-size: 16px;
-            text-align: center;
-            border-left: 5px solid #2196f3;
-        }
-        
-        @media (max-width: 600px) { 
-            .big-char { font-size: 90px; } 
-            .big-pinyin { font-size: 26px; } 
-            .big-meaning { font-size: 22px; }
-            .cube { width: 80px; height: 80px; font-size: 32px; }
-            .radical-cell { font-size: 32px; padding: 15px; }
+        @media (max-width: 600px) {
+            .big-char { font-size: 80px; }
+            .tab { padding: 10px 14px; font-size: 14px; }
+            .grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="tabs">
-        <div class="tab active" data-tab="study">📖 Учить</div>
+        <div class="tab active" data-tab="study">📖 Слова</div>
+        <div class="tab" data-tab="numbers">🔢 Числа</div>
+        <div class="tab" data-tab="colors">🎨 Цвета</div>
         <div class="tab" data-tab="dialogs">💬 Диалоги</div>
-        <div class="tab" data-tab="notebook">📓 Тетрадь</div>
-        <div class="tab" data-tab="cubes">🎲 Кубики</div>
-        <div class="tab" data-tab="cards">🃏 Карточки</div>
-        <div class="tab" data-tab="songs">🎵 Песни</div>
+        <div class="tab" data-tab="grammar">📚 Грамматика</div>
+        <div class="tab" data-tab="songs">🎵 Песни (20)</div>
         <div class="tab" data-tab="radicals">🔤 Радикалы</div>
+        <div class="tab" data-tab="notebook">📓 Тетрадь</div>
+        <div class="tab" data-tab="cards">🃏 Карточки</div>
+        <div class="tab" data-tab="cubes">🎲 Кубики</div>
         <div class="tab" data-tab="game">🎮 Игра</div>
-        <div class="tab" data-tab="quiz">📝 Тест</div>
     </div>
 
-    <!-- Учить слова -->
+    <div id="modal" class="modal"><div class="modal-content" id="modalContent"></div></div>
+
     <div id="studyPanel" class="panel active">
         <div class="card">
-            <div class="big-char" id="studyChar">水</div>
-            <div class="big-pinyin" id="studyPinyin">shuǐ</div>
-            <div class="big-meaning" id="studyMeaning">вода</div>
-            <div class="big-emoji" id="studyEmoji">💧</div>
+            <div class="big-char" id="sChar">水</div>
+            <div class="big-pinyin" id="sPinyin">shuǐ</div>
+            <div class="big-meaning" id="sMeaning">вода</div>
+            <div class="big-emoji" id="sEmoji">💧</div>
+            <div class="category-badge" id="sCat">Природа</div>
         </div>
         <div class="btn-group">
-            <button id="studyListen">🔊 Слушать</button>
-            <button id="studyVoice" class="voice-btn">🎙️ Проверить</button>
-            <button id="studyNext">🎲 Следующее</button>
+            <button id="sListen">🔊 Слушать</button>
+            <button id="sVoice" class="voice-btn">🎙️ Проверить</button>
+            <button id="sNext">🎲 Следующее</button>
         </div>
-        <div id="studyFeedback" class="feedback">⭐ 520 реальных слов. Нажми 🎙️ и скажи</div>
-        <div id="studyStats" class="feedback" style="background:#d4ecd0;">📊 Слов: <span id="wordsCount">520</span></div>
+        <div id="sFeedback" class="feedback"></div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;margin:15px 0;">
+            <span class="filter-btn active" data-cat="all">Все</span>
+            <span class="filter-btn" data-cat="food">🍜 Еда</span>
+            <span class="filter-btn" data-cat="home">🏠 Дом</span>
+            <span class="filter-btn" data-cat="nature">🌿 Природа</span>
+            <span class="filter-btn" data-cat="medicine">💊 Медицина</span>
+            <span class="filter-btn" data-cat="family">👨‍👩‍👧 Семья</span>
+            <span class="filter-btn" data-cat="transport">🚗 Транспорт</span>
+        </div>
+        <div class="grid" id="wordGrid"></div>
     </div>
 
-    <!-- Диалоги -->
-    <div id="dialogsPanel" class="panel">
+    <div id="numbersPanel" class="panel">
         <div class="card">
-            <div id="dialogTopicBar">
-                <span class="topic-badge" data-topic="all">📌 Все</span>
-                <span class="topic-badge" data-topic="greeting">👋 Приветствия</span>
-                <span class="topic-badge" data-topic="food">🍜 Еда</span>
-                <span class="topic-badge" data-topic="shop">🛍️ Покупки</span>
-                <span class="topic-badge" data-topic="transport">🚗 Транспорт</span>
-                <span class="topic-badge" data-topic="home">🏠 Дом</span>
-                <span class="topic-badge" data-topic="health">💊 Здоровье</span>
-                <span class="topic-badge" data-topic="travel">✈️ Путешествия</span>
-            </div>
-            <div id="dialogContent" class="dialog-card"></div>
+            <h2 style="margin-bottom:15px;color:var(--primary);">🔢 Китайские числа</h2>
+            <div id="numGrid" class="grid"></div>
         </div>
-        <div class="btn-group">
-            <button id="dialogPrev">◀ Пред.</button>
-            <button id="dialogListen">🔊 Озвучить</button>
-            <button id="dialogVoice" class="voice-btn">🎙️ Ответить</button>
-            <button id="dialogNext">След. ▶</button>
-        </div>
-        <div id="dialogFeedback" class="feedback">💬 Диалогов: <span id="dialogCount">0</span></div>
     </div>
 
-    <!-- Тетрадь -->
+    <div id="colorsPanel" class="panel">
+        <div class="card">
+            <h2 style="margin-bottom:15px;color:var(--accent);">🎨 Цвета</h2>
+            <div id="colorGrid" class="grid"></div>
+        </div>
+    </div>
+
+    <div id="dialogsPanel" class="panel">
+        <div class="card" id="dialogBox"></div>
+        <div class="btn-group">
+            <button id="dPrev">◀ Пред</button>
+            <button id="dListen">🔊 Слушать</button>
+            <button id="dNext">След ▶</button>
+        </div>
+    </div>
+
+    <div id="grammarPanel" class="panel">
+        <div class="card" id="grammarBox"></div>
+    </div>
+
+    <div id="songsPanel" class="panel">
+        <div id="songsBox"></div>
+    </div>
+
+    <div id="radicalsPanel" class="panel">
+        <div class="card">
+            <div class="big-char" id="rChar">一</div>
+            <div class="big-pinyin" id="rPinyin">yī</div>
+            <div class="big-meaning" id="rMeaning">один/горизонталь</div>
+        </div>
+        <div class="btn-group">
+            <button id="rListen">🔊 Слушать</button>
+            <button id="rVoice" class="voice-btn">🎙️ Проверить</button>
+            <button id="rNext">🎲 Следующий</button>
+            <button id="rAll">📋 Все 214</button>
+        </div>
+        <div id="radicalDetail" class="assoc-box" style="display:none;"></div>
+        <div id="radGrid" class="grid"></div>
+    </div>
+
     <div id="notebookPanel" class="panel">
         <div class="card">
-            <div class="big-char" id="nbChar">水</div>
-            <div class="big-pinyin" id="nbPinyin">shuǐ</div>
-            <div class="big-meaning" id="nbMeaning">вода</div>
-        </div>
-        <div class="task-card"><div class="task-title">✍️ 1. Прописи в тетради (10 раз)</div><div class="task-text">Напиши <strong id="taskChar">水</strong> 10 раз ручкой</div></div>
-        <div class="task-card"><div class="task-title">🎨 2. Нарисуй ассоциацию</div><canvas id="drawCanvas" width="350" height="220"></canvas><button id="clearCanvas">🧽 Стереть</button></div>
-        <div class="task-card"><div class="task-title">🗣️ 3. Произнеси вслух</div><button id="nbListen">🔊 Образец</button><button id="nbVoice" class="voice-btn">🎙️ Проверить</button></div>
-        <button id="nbNext">🎲 Следующее слово</button>
-        <div id="nbFeedback" class="feedback"></div>
-    </div>
-
-    <!-- Кубики -->
-    <div id="cubesPanel" class="panel">
-        <div class="card"><h3>🎲 Бросай кубик — учи слово</h3><div id="cubeResult" class="big-char" style="font-size:90px;">?</div><div id="cubeMeaning" class="big-meaning"></div><button id="rollCube">🎲 Бросить кубик</button><button id="cubeListen">🔊 Слушать</button></div>
-    </div>
-
-    <!-- Карточки -->
-    <div id="cardsPanel" class="panel">
-        <div class="card"><h3>🃏 Карточки для запоминания</h3><div class="big-char" id="cardChar">水</div><div class="big-pinyin" id="cardPinyin">shuǐ</div><div class="big-meaning" id="cardMeaning">вода</div><div class="btn-group"><button id="cardFlip">🔄 Перевернуть</button><button id="cardNext">🎲 Следующая</button><button id="cardListen">🔊 Слушать</button></div><div id="cardFeedback" class="feedback">Нажми "Перевернуть" — увидишь перевод</div></div>
-    </div>
-
-    <!-- Песни -->
-    <div id="songsPanel" class="panel"><div id="songsList"></div></div>
-
-    <!-- Радикалы -->
-    <div id="radicalsPanel" class="panel">
-        <div class="instruction">
-            <strong>👆 НАЖМИ на любой радикал ниже</strong><br>
-            Чтобы увидеть полную информацию, услышать произношение и проверить себя!
-        </div>
-        
-        <div id="radicalDetail" class="radical-detail">
-            <h2 style="margin-bottom:20px; color:#ff7b2c; font-size:28px;">📖 Подробная информация о радикале</h2>
-            <div class="big-char" id="detailChar"></div>
-            <div class="big-pinyin" id="detailPinyin"></div>
-            <div class="big-meaning" id="detailMeaning"></div>
-            <div class="big-emoji" id="detailEmoji"></div>
-            
-            <div class="examples-box">
-                <h3 style="margin-bottom:15px; color:#ff7b2c;">📚 Примеры иероглифов с этим радикалом:</h3>
-                <div id="detailExamples"></div>
-            </div>
-            
+            <div class="big-char" id="nChar">水</div>
+            <canvas id="drawCanvas" width="340" height="220"></canvas>
             <div class="btn-group">
-                <button id="detailListen">🔊 Слушать произношение</button>
-                <button id="detailVoice" class="voice-btn">🎙️ Проверить моё произношение</button>
+                <button id="nListen">🔊 Образец</button>
+                <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
+                <button id="nClear">🧽 Стереть</button>
+                <button id="nNext">🎲 Следующее</button>
             </div>
-            <div id="detailFeedback" class="feedback"></div>
         </div>
-        
-        <div class="btn-group">
-            <button id="showAllRad">📋 Показать все 214 радикалов</button>
-            <button id="radNext">🎲 Случайный радикал</button>
-        </div>
-        
-        <div id="allRadicalsList" style="display:none;"></div>
     </div>
 
-    <!-- Игра -->
+    <div id="cardsPanel" class="panel">
+        <div class="card">
+            <div class="big-char" id="cChar">水</div>
+            <div id="cBack" style="display:none;">
+                <div class="big-pinyin" id="cPinyin"></div>
+                <div class="big-meaning" id="cMeaning"></div>
+            </div>
+            <div class="btn-group">
+                <button id="cFlip">🔄 Перевернуть</button>
+                <button id="cNext">🎲 Следующая</button>
+                <button id="cListen">🔊 Слушать</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cubesPanel" class="panel">
+        <div class="card">
+            <div class="big-char" id="cubeRes">?</div>
+            <div class="btn-group">
+                <button id="cubeRoll">🎲 Бросить</button>
+                <button id="cubeListen">🔊 Слушать</button>
+            </div>
+        </div>
+    </div>
+
     <div id="gamePanel" class="panel">
-        <div class="card"><div class="big-char" id="gameChar">?</div></div>
-        <div id="gameOptions" class="grid-options"></div>
-        <div id="gameFeedback" class="feedback">⭐ Выбери перевод</div>
-        <button id="newGame">🔄 Новый вопрос</button>
-    </div>
-
-    <!-- Тест радикалов -->
-    <div id="quizPanel" class="panel">
-        <div class="card"><div class="big-char" id="quizChar">?</div><div class="big-pinyin" style="font-size:22px;">Что означает?</div></div>
-        <div id="quizOptions" class="grid-options"></div>
-        <div id="quizFeedback" class="feedback">⭐ Выбери ответ</div>
-        <button id="nextQuiz">🔄 Следующий</button>
+        <div class="card">
+            <div class="big-char" id="gChar">?</div>
+            <div id="gOpts" class="btn-group"></div>
+            <div id="gFeed" class="feedback"></div>
+            <button id="gNew">🔄 Новый вопрос</button>
+        </div>
     </div>
 </div>
 
 <script>
-    // ==================== 520 РЕАЛЬНЫХ СЛОВ ====================
-    const wordsList = [
-        {char:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧"},
-        {char:"茶", pinyin:"chá", meaning:"чай", emoji:"🍵"},
-        {char:"咖啡", pinyin:"kāfēi", meaning:"кофе", emoji:"☕"},
-        {char:"牛奶", pinyin:"niúnǎi", meaning:"молоко", emoji:"🥛"},
-        {char:"果汁", pinyin:"guǒzhī", meaning:"сок", emoji:"🧃"},
-        {char:"米饭", pinyin:"mǐfàn", meaning:"рис", emoji:"🍚"},
-        {char:"面条", pinyin:"miàntiáo", meaning:"лапша", emoji:"🍜"},
-        {char:"面包", pinyin:"miànbāo", meaning:"хлеб", emoji:"🍞"},
-        {char:"鸡蛋", pinyin:"jīdàn", meaning:"яйцо", emoji:"🥚"},
-        {char:"肉", pinyin:"ròu", meaning:"мясо", emoji:"🥩"},
-        {char:"鱼", pinyin:"yú", meaning:"рыба", emoji:"🐟"},
-        {char:"鸡", pinyin:"jī", meaning:"курица", emoji:"🐔"},
-        {char:"牛肉", pinyin:"niúròu", meaning:"говядина", emoji:"🥩"},
-        {char:"猪肉", pinyin:"zhūròu", meaning:"свинина", emoji:"🐖"},
-        {char:"蔬菜", pinyin:"shūcài", meaning:"овощи", emoji:"🥬"},
-        {char:"水果", pinyin:"shuǐguǒ", meaning:"фрукты", emoji:"🍎"},
-        {char:"苹果", pinyin:"píngguǒ", meaning:"яблоко", emoji:"🍎"},
-        {char:"香蕉", pinyin:"xiāngjiāo", meaning:"банан", emoji:"🍌"},
-        {char:"橙子", pinyin:"chéngzi", meaning:"апельсин", emoji:"🍊"},
-        {char:"葡萄", pinyin:"pútáo", meaning:"виноград", emoji:"🍇"},
-        {char:"西瓜", pinyin:"xīguā", meaning:"арбуз", emoji:"🍉"},
-        {char:"西红柿", pinyin:"xīhóngshì", meaning:"помидор", emoji:"🍅"},
-        {char:"土豆", pinyin:"tǔdòu", meaning:"картофель", emoji:"🥔"},
-        {char:"胡萝卜", pinyin:"húluóbo", meaning:"морковь", emoji:"🥕"},
-        {char:"洋葱", pinyin:"yángcōng", meaning:"лук", emoji:"🧅"},
-        {char:"大蒜", pinyin:"dàsuàn", meaning:"чеснок", emoji:"🧄"},
-        {char:"盐", pinyin:"yán", meaning:"соль", emoji:"🧂"},
-        {char:"糖", pinyin:"táng", meaning:"сахар", emoji:"🍬"},
-        {char:"油", pinyin:"yóu", meaning:"масло", emoji:"🫒"},
-        {char:"醋", pinyin:"cù", meaning:"уксус", emoji:"🍶"},
-        {char:"家", pinyin:"jiā", meaning:"дом", emoji:"🏠"},
-        {char:"房间", pinyin:"fángjiān", meaning:"комната", emoji:"🚪"},
-        {char:"客厅", pinyin:"kètīng", meaning:"гостиная", emoji:"🛋️"},
-        {char:"卧室", pinyin:"wòshì", meaning:"спальня", emoji:"🛏️"},
-        {char:"浴室", pinyin:"yùshì", meaning:"ванная", emoji:"🚿"},
-        {char:"厕所", pinyin:"cèsuǒ", meaning:"туалет", emoji:"🚽"},
-        {char:"桌子", pinyin:"zhuōzi", meaning:"стол", emoji:"🪑"},
-        {char:"椅子", pinyin:"yǐzi", meaning:"стул", emoji:"🪑"},
-        {char:"床", pinyin:"chuáng", meaning:"кровать", emoji:"🛏️"},
-        {char:"沙发", pinyin:"shāfā", meaning:"диван", emoji:"🛋️"},
-        {char:"地铁", pinyin:"dìtiě", meaning:"метро", emoji:"🚇"},
-        {char:"出租车", pinyin:"chūzūchē", meaning:"такси", emoji:"🚕"},
-        {char:"公交车", pinyin:"gōngjiāochē", meaning:"автобус", emoji:"🚌"},
-        {char:"飞机", pinyin:"fēijī", meaning:"самолёт", emoji:"✈️"},
-        {char:"火车", pinyin:"huǒchē", meaning:"поезд", emoji:"🚂"},
-        {char:"汽车", pinyin:"qìchē", meaning:"машина", emoji:"🚗"},
-        {char:"自行车", pinyin:"zìxíngchē", meaning:"велосипед", emoji:"🚲"},
-        {char:"机场", pinyin:"jīchǎng", meaning:"аэропорт", emoji:"🛫"},
-        {char:"火车站", pinyin:"huǒchēzhàn", meaning:"вокзал", emoji:"🚉"},
-        {char:"衣服", pinyin:"yīfu", meaning:"одежда", emoji:"👕"},
-        {char:"衬衫", pinyin:"chènshān", meaning:"рубашка", emoji:"👔"},
-        {char:"裤子", pinyin:"kùzi", meaning:"брюки", emoji:"👖"},
-        {char:"裙子", pinyin:"qúnzi", meaning:"юбка", emoji:"👗"},
-        {char:"外套", pinyin:"wàitào", meaning:"пальто", emoji:"🧥"},
-        {char:"鞋子", pinyin:"xiézi", meaning:"обувь", emoji:"👟"},
-        {char:"帽子", pinyin:"màozi", meaning:"шапка", emoji:"🧢"},
-        {char:"围巾", pinyin:"wéijīn", meaning:"шарф", emoji:"🧣"},
-        {char:"妈妈", pinyin:"māma", meaning:"мама", emoji:"👩"},
-        {char:"爸爸", pinyin:"bàba", meaning:"папа", emoji:"👨"},
-        {char:"孩子", pinyin:"háizi", meaning:"ребёнок", emoji:"👶"},
-        {char:"儿子", pinyin:"érzi", meaning:"сын", emoji:"👦"},
-        {char:"女儿", pinyin:"nǚ'ér", meaning:"дочь", emoji:"👧"},
-        {char:"兄弟", pinyin:"xiōngdì", meaning:"брат", emoji:"👬"},
-        {char:"姐妹", pinyin:"jiěmèi", meaning:"сестра", emoji:"👭"},
-        {char:"朋友", pinyin:"péngyou", meaning:"друг", emoji:"👫"},
-        {char:"你好", pinyin:"nǐhǎo", meaning:"здравствуйте", emoji:"👋"},
-        {char:"谢谢", pinyin:"xièxie", meaning:"спасибо", emoji:"🙏"},
-        {char:"再见", pinyin:"zàijiàn", meaning:"до свидания", emoji:"👋"},
-        {char:"对不起", pinyin:"duìbuqǐ", meaning:"извините", emoji:"😔"},
-        {char:"请", pinyin:"qǐng", meaning:"пожалуйста", emoji:"🙏"},
-        {char:"买", pinyin:"mǎi", meaning:"покупать", emoji:"🛍️"},
-        {char:"卖", pinyin:"mài", meaning:"продавать", emoji:"💰"},
-        {char:"商店", pinyin:"shāngdiàn", meaning:"магазин", emoji:"🏪"},
-        {char:"超市", pinyin:"chāoshì", meaning:"супермаркет", emoji:"🛒"},
-        {char:"多少钱", pinyin:"duōshǎo qián", meaning:"сколько стоит", emoji:"💰"},
-        {char:"便宜", pinyin:"piányi", meaning:"дёшево", emoji:"💸"},
-        {char:"贵", pinyin:"guì", meaning:"дорого", emoji:"💎"},
-        {char:"药店", pinyin:"yàodiàn", meaning:"аптека", emoji:"💊"},
-        {char:"感冒", pinyin:"gǎnmào", meaning:"простуда", emoji:"🤧"},
-        {char:"药", pinyin:"yào", meaning:"лекарство", emoji:"💊"},
-        {char:"医生", pinyin:"yīshēng", meaning:"врач", emoji:"👨‍⚕️"},
-        {char:"医院", pinyin:"yīyuàn", meaning:"больница", emoji:"🏥"},
-        {char:"头痛", pinyin:"tóutòng", meaning:"головная боль", emoji:"🤕"},
-        {char:"现在", pinyin:"xiànzài", meaning:"сейчас", emoji:"⏰"},
-        {char:"今天", pinyin:"jīntiān", meaning:"сегодня", emoji:"📅"},
-        {char:"明天", pinyin:"míngtiān", meaning:"завтра", emoji:"📅"},
-        {char:"昨天", pinyin:"zuótiān", meaning:"вчера", emoji:"📅"},
-        {char:"早上", pinyin:"zǎoshang", meaning:"утро", emoji:"🌅"},
-        {char:"中午", pinyin:"zhōngwǔ", meaning:"полдень", emoji:"☀️"},
-        {char:"晚上", pinyin:"wǎnshang", meaning:"вечер", emoji:"🌙"},
-        {char:"天气", pinyin:"tiānqì", meaning:"погода", emoji:"🌤️"},
-        {char:"晴天", pinyin:"qíngtiān", meaning:"солнечно", emoji:"☀️"},
-        {char:"下雨", pinyin:"xià yǔ", meaning:"дождь", emoji:"🌧️"},
-        {char:"雪", pinyin:"xuě", meaning:"снег", emoji:"❄️"},
-        {char:"一", pinyin:"yī", meaning:"один", emoji:"1️⃣"},
-        {char:"二", pinyin:"èr", meaning:"два", emoji:"2️⃣"},
-        {char:"三", pinyin:"sān", meaning:"три", emoji:"3️⃣"},
-        {char:"四", pinyin:"sì", meaning:"четыре", emoji:"4️⃣"},
-        {char:"五", pinyin:"wǔ", meaning:"пять", emoji:"5️⃣"},
-        {char:"六", pinyin:"liù", meaning:"шесть", emoji:"6️⃣"},
-        {char:"七", pinyin:"qī", meaning:"семь", emoji:"7️⃣"},
-        {char:"八", pinyin:"bā", meaning:"восемь", emoji:"8️⃣"},
-        {char:"九", pinyin:"jiǔ", meaning:"девять", emoji:"9️⃣"},
-        {char:"十", pinyin:"shí", meaning:"десять", emoji:"🔟"}
-    ];
-    
-    let allWords = wordsList;
-    let currentWordIndex = 0;
-    let currentCubeWord = null;
-    
-    // ==================== ДИАЛОГИ ====================
-    const dialogTemplates = [
-        {topic:"greeting", q:"你好！", qp:"Nǐ hǎo!", qr:"Здравствуйте!", a:"你好！你好吗？", ap:"Nǐ hǎo! Nǐ hǎo ma?", ar:"Здравствуйте! Как дела?"},
-        {topic:"greeting", q:"你叫什么名字？", qp:"Nǐ jiào shénme míngzi?", qr:"Как тебя зовут?", a:"我叫安娜。", ap:"Wǒ jiào nnà.", ar:"Меня зовут Анна."},
-        {topic:"food", q:"你想吃什么？", qp:"Nǐ xiǎng chī shénme?", qr:"Что хочешь съесть?", a:"我想吃中国菜。", ap:"Wǒ xiǎng chī Zhōngguó cài.", ar:"Хочу китайскую еду."},
-        {topic:"food", q:"这个好吃吗？", qp:"Zhège hǎochī ma?", qr:"Это вкусно?", a:"很好吃！", ap:"Hěn hǎochī!", ar:"Очень вкусно!"},
-        {topic:"shop", q:"这个多少钱？", qp:"Zhège duōshǎo qián?", qr:"Сколько это стоит?", a:"这个200元。", ap:"Zhège 200 yuán.", ar:"Это 200 юаней."},
-        {topic:"shop", q:"可以便宜一点吗？", qp:"Kěyǐ piányi yīdiǎn ma?", qr:"Можно подешевле?", a:"最低180元。", ap:"Zuìdī 180 yuán.", ar:"Минимум 180 юаней."},
-        {topic:"transport", q:"去机场怎么走？", qp:"Qù jīchǎng zěnme zǒu?", qr:"Как добраться до аэропорта?", a:"坐地铁2号线。", ap:"Zuò dìtiě èr hào xiàn.", ar:"На метро, линия 2."},
-        {topic:"transport", q:"到市中心要多久？", qp:"Dào shì zhōngxīn yào duōjiǔ?", qr:"Сколько до центра?", a:"大概30分钟。", ap:"Dàgài 30 fēnzhōng.", ar:"Примерно 30 минут."},
-        {topic:"home", q:"你家在哪里？", qp:"Nǐ jiā zài nǎlǐ?", qr:"Где ты живёшь?", a:"我住在市中心。", ap:"Wǒ zhù zài shì zhōngxīn.", ar:"Я живу в центре."},
-        {topic:"health", q:"你怎么了？", qp:"Nǐ zěnme le?", qr:"Что с тобой?", a:"我感冒了。", ap:"Wǒ gǎnmào le.", ar:"Я простудился."},
-        {topic:"travel", q:"你去过中国吗？", qp:"Nǐ qùguò Zhōngguó ma?", qr:"Ты был в Китае?", a:"去过，我去过北京。", ap:"Qùguò, wǒ qùguò Běijīng.", ar:"Да, был в Пекине."}
-    ];
-    
-    let allDialogs = [];
-    for(let i=0; i<47; i++) {
-        for(let d of dialogTemplates) {
-            allDialogs.push({...d});
-        }
-    }
-    allDialogs = allDialogs.slice(0, 520);
-    let currentDialogIndex = 0, currentTopic = "all";
-    let filteredDialogs = allDialogs;
-    document.getElementById("dialogCount").innerText = filteredDialogs.length;
-    
-    // ==================== 214 РАДИКАЛОВ КАНСИ ====================
-    const radicalsList = [
-        {symbol:"一", pinyin:"yī", meaning:"один", emoji:"1️⃣", examples:"王、丁、七、三、上"},
-        {symbol:"丨", pinyin:"gǔn", meaning:"линия", emoji:"📏", examples:"十、中、串、丰、申"},
-        {symbol:"丶", pinyin:"zhǔ", meaning:"точка", emoji:"🔴", examples:"丸、丹、主、之、为"},
-        {symbol:"丿", pinyin:"piě", meaning:"наклон влево", emoji:"↙️", examples:"八、人、入、个、今"},
-        {symbol:"乙", pinyin:"yǐ", meaning:"второй", emoji:"2️⃣", examples:"九、也、乞、飞、乡"},
-        {symbol:"亅", pinyin:"jué", meaning:"крюк", emoji:"🪝", examples:"了、事、矛、予、争"},
-        {symbol:"二", pinyin:"èr", meaning:"два", emoji:"2️⃣", examples:"于、云、些、五、井"},
-        {symbol:"亠", pinyin:"tóu", meaning:"крышка", emoji:"🔝", examples:"方、亡、交、京、亮"},
-        {symbol:"人", pinyin:"rén", meaning:"человек", emoji:"👤", examples:"你、什、仁、从、众"},
-        {symbol:"儿", pinyin:"ér", meaning:"сын", emoji:"👶", examples:"元、允、兄、先、光"},
-        {symbol:"入", pinyin:"rù", meaning:"входить", emoji:"➡️", examples:"内、全、两、八、公"},
-        {symbol:"八", pinyin:"bā", meaning:"восемь", emoji:"8️⃣", examples:"公、六、兮、共、兵"},
-        {symbol:"冂", pinyin:"jiōng", meaning:"далёкий", emoji:"📦", examples:"冉、肉、内、网、冈"},
-        {symbol:"冖", pinyin:"mì", meaning:"покрывало", emoji:"🧵", examples:"冗、冠、冥、写、军"},
-        {symbol:"冫", pinyin:"bīng", meaning:"лёд", emoji:"❄️", examples:"冬、冰、冷、冻、冲"},
-        {symbol:"几", pinyin:"jī", meaning:"столик", emoji:"🪑", examples:"凡、凯、风、凤、凭"},
-        {symbol:"凵", pinyin:"kǎn", meaning:"ёмкость", emoji:"📥", examples:"凶、凸、凹、击、函"},
-        {symbol:"刀", pinyin:"dāo", meaning:"нож", emoji:"🔪", examples:"分、切、剪、初、别"},
-        {symbol:"力", pinyin:"lì", meaning:"сила", emoji:"💪", examples:"加、功、男、助、努"},
-        {symbol:"勹", pinyin:"bāo", meaning:"обёртка", emoji:"📦", examples:"包、勺、勾、匆、匈"},
-        {symbol:"匕", pinyin:"bǐ", meaning:"ложка", emoji:"🥄", examples:"化、北、比、死、旨"},
-        {symbol:"匚", pinyin:"fāng", meaning:"ящик", emoji:"📦", examples:"区、巨、匠、医、匣"},
-        {symbol:"匸", pinyin:"xǐ", meaning:"прятать", emoji:"🙈", examples:"亡、匹、医、匿、区"},
-        {symbol:"十", pinyin:"shí", meaning:"десять", emoji:"🔟", examples:"千、半、升、华、协"},
-        {symbol:"卜", pinyin:"bǔ", meaning:"гадание", emoji:"🔮", examples:"下、上、占、卡、卦"},
-        {symbol:"卩", pinyin:"jié", meaning:"печать", emoji:"🔖", examples:"即、卷、印、却、卿"},
-        {symbol:"厂", pinyin:"hǎn", meaning:"утёс", emoji:"🪨", examples:"原、厚、历、压、厕"},
-        {symbol:"厶", pinyin:"sī", meaning:"частный", emoji:"🔒", examples:"台、公、去、参、允"},
-        {symbol:"又", pinyin:"yòu", meaning:"снова", emoji:"🔄", examples:"叉、及、友、双、取"},
-        {symbol:"口", pinyin:"kǒu", meaning:"рот", emoji:"👄", examples:"吃、叫、品、和、味"},
-        {symbol:"囗", pinyin:"wéi", meaning:"ограда", emoji:"⭕", examples:"四、国、围、园、因"},
-        {symbol:"土", pinyin:"tǔ", meaning:"земля", emoji:"🌍", examples:"地、圣、圭、在、城"},
-        {symbol:"士", pinyin:"shì", meaning:"учёный", emoji:"🎓", examples:"壬、喜、壮、壳、壶"},
-        {symbol:"夂", pinyin:"zhǐ", meaning:"идти", emoji:"🚶", examples:"各、冬、爱、复、夏"},
-        {symbol:"夊", pinyin:"suī", meaning:"медленно", emoji:"🐌", examples:"复、夏、备、处、外"},
-        {symbol:"夕", pinyin:"xī", meaning:"вечер", emoji:"🌆", examples:"外、多、夜、梦、够"},
-        {symbol:"大", pinyin:"dà", meaning:"большой", emoji:"📏", examples:"太、天、夫、奇、夺"},
-        {symbol:"女", pinyin:"nǚ", meaning:"женщина", emoji:"👩", examples:"妈、奶、好、姓、婚"},
-        {symbol:"子", pinyin:"zǐ", meaning:"ребёнок", emoji:"👶", examples:"学、孔、字、存、孩"},
-        {symbol:"宀", pinyin:"mián", meaning:"крыша", emoji:"🏠", examples:"家、安、宁、宝、室"},
-        {symbol:"寸", pinyin:"cùn", meaning:"дюйм", emoji:"📏", examples:"村、寺、封、对、导"},
-        {symbol:"小", pinyin:"xiǎo", meaning:"маленький", emoji:"📏", examples:"少、尖、当、光、尚"},
-        {symbol:"尢", pinyin:"wāng", meaning:"хромой", emoji:"🦵", examples:"尤、尴、尬、就、龙"},
-        {symbol:"尸", pinyin:"shī", meaning:"труп", emoji:"💀", examples:"尺、尼、尾、屋、居"},
-        {symbol:"屮", pinyin:"chè", meaning:"росток", emoji:"🌱", examples:"草、屯、顿、出、击"},
-        {symbol:"山", pinyin:"shān", meaning:"гора", emoji:"⛰️", examples:"峰、密、幽、岛、岸"},
-        {symbol:"巛", pinyin:"chuān", meaning:"река", emoji:"🌊", examples:"川、州、顺、巡、巢"},
-        {symbol:"工", pinyin:"gōng", meaning:"работа", emoji:"🔧", examples:"左、巧、功、差、项"},
-        {symbol:"己", pinyin:"jǐ", meaning:"себя", emoji:"👤", examples:"记、改、忌、起、配"},
-        {symbol:"巾", pinyin:"jīn", meaning:"тюрбан", emoji:"🧣", examples:"市、帅、刷、师、帮"},
-        {symbol:"干", pinyin:"gān", meaning:"сухой", emoji:"🌵", examples:"旱、平、年、幸、竿"},
-        {symbol:"幺", pinyin:"yāo", meaning:"нить", emoji:"🧵", examples:"幻、幽、几、玄、率"},
-        {symbol:"广", pinyin:"yǎn", meaning:"утёс", emoji:"🏔️", examples:"庄、床、店、府、座"},
-        {symbol:"廴", pinyin:"yǐn", meaning:"шаг", emoji:"👣", examples:"廷、延、建、巡、进"},
-        {symbol:"廾", pinyin:"gǒng", meaning:"арка", emoji:"🌉", examples:"廿、弄、弊、异、弃"},
-        {symbol:"弋", pinyin:"yì", meaning:"стрелять", emoji:"🏹", examples:"弋、贰、式、代、武"},
-        {symbol:"弓", pinyin:"gōng", meaning:"лук", emoji:"🏹", examples:"引、弗、强、张、弹"},
-        {symbol:"彐", pinyin:"jì", meaning:"рыло", emoji:"🐷", examples:"录、彗、雪、归、当"},
-        {symbol:"彡", pinyin:"shān", meaning:"щётка", emoji:"🖌️", examples:"形、彤、彩、影、须"},
-        {symbol:"彳", pinyin:"chì", meaning:"шаг", emoji:"👣", examples:"行、往、征、得、德"},
-        {symbol:"心", pinyin:"xīn", meaning:"сердце", emoji:"❤️", examples:"必、忌、忘、忍、念"},
-        {symbol:"戈", pinyin:"gē", meaning:"алебарда", emoji:"⚔️", examples:"戊、戌、战、我、戏"},
-        {symbol:"户", pinyin:"hù", meaning:"дверь", emoji:"🚪", examples:"房、所、扇、启、肩"},
-        {symbol:"手", pinyin:"shǒu", meaning:"рука", emoji:"✋", examples:"才、打、拿、拜、拳"},
-        {symbol:"支", pinyin:"zhī", meaning:"ветвь", emoji:"🌿", examples:"攴、收、改、攻、败"},
-        {symbol:"攴", pinyin:"pū", meaning:"стучать", emoji:"👊", examples:"收、改、攻、败、放"},
-        {symbol:"文", pinyin:"wén", meaning:"письмо", emoji:"📝", examples:"齐、斌、斐、刘、齐"},
-        {symbol:"斗", pinyin:"dǒu", meaning:"ковш", emoji:"🥄", examples:"料、斛、斜、斟、斡"},
-        {symbol:"斤", pinyin:"jīn", meaning:"топор", emoji:"🪓", examples:"斥、斧、断、新、斯"},
-        {symbol:"方", pinyin:"fāng", meaning:"квадрат", emoji:"⬜", examples:"於、放、旅、族、旗"},
-        {symbol:"无", pinyin:"wú", meaning:"нет", emoji:"❌", examples:"既、概、溉、慨、既"},
-        {symbol:"日", pinyin:"rì", meaning:"солнце", emoji:"☀️", examples:"旦、旨、早、时、明"},
-        {symbol:"曰", pinyin:"yuē", meaning:"говорить", emoji:"💬", examples:"曲、更、曹、曼、最"},
-        {symbol:"月", pinyin:"yuè", meaning:"луна", emoji:"🌙", examples:"有、朋、服、期、朝"},
-        {symbol:"木", pinyin:"mù", meaning:"дерево", emoji:"🌳", examples:"未、本、林、森、树"},
-        {symbol:"欠", pinyin:"qiàn", meaning:"нехватка", emoji:"😮‍💨", examples:"次、欣、欲、欢、歌"},
-        {symbol:"止", pinyin:"zhǐ", meaning:"остановка", emoji:"🛑", examples:"正、此、步、武、岁"},
-        {symbol:"歹", pinyin:"dǎi", meaning:"смерть", emoji:"💀", examples:"死、殁、残、殊、殖"},
-        {symbol:"殳", pinyin:"shū", meaning:"оружие", emoji:"🗡️", examples:"段、殷、杀、般、殿"},
-        {symbol:"毋", pinyin:"wú", meaning:"не", emoji:"🚫", examples:"母、每、毒、海、梅"},
-        {symbol:"比", pinyin:"bǐ", meaning:"сравнить", emoji:"⚖️", examples:"毗、毙、毕、皆、昆"},
-        {symbol:"毛", pinyin:"máo", meaning:"шерсть", emoji:"🧶", examples:"毡、毣、毯、毫、毳"},
-        {symbol:"氏", pinyin:"shì", meaning:"клан", emoji:"👨‍👧", examples:"民、氓、纸、低、底"},
-        {symbol:"气", pinyin:"qì", meaning:"пар", emoji:"💨", examples:"氕、氘、氚、氧、氢"},
-        {symbol:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧", examples:"永、冰、江、河、海"},
-        {symbol:"火", pinyin:"huǒ", meaning:"огонь", emoji:"🔥", examples:"灰、灯、灶、炎、热"},
-        {symbol:"爪", pinyin:"zhǎo", meaning:"коготь", emoji:"🐾", examples:"爬、争、爱、采、受"},
-        {symbol:"父", pinyin:"fù", meaning:"отец", emoji:"👨", examples:"爸、爹、爷、斧、釜"},
-        {symbol:"爻", pinyin:"yáo", meaning:"триграммы", emoji:"☯️", examples:"爽、尔、爻、驳、爻"},
-        {symbol:"爿", pinyin:"qiáng", meaning:"дерево", emoji:"🪵", examples:"床、状、将、壮、妆"},
-        {symbol:"片", pinyin:"piàn", meaning:"ломтик", emoji:"📄", examples:"版、牌、牍、牒、牖"},
-        {symbol:"牙", pinyin:"yá", meaning:"клык", emoji:"🦷", examples:"牚、、牁、邪、雅"},
-        {symbol:"牛", pinyin:"niú", meaning:"корова", emoji:"🐄", examples:"牟、牠、牲、特、物"},
-        {symbol:"犬", pinyin:"quǎn", meaning:"собака", emoji:"🐕", examples:"犯、犰、状、狂、独"},
-        {symbol:"玄", pinyin:"xuán", meaning:"глубокий", emoji:"🔮", examples:"率、玅、玈、畜、玄"},
-        {symbol:"玉", pinyin:"yù", meaning:"нефрит", emoji:"💎", examples:"玻、玛、璧、珍、珠"},
-        {symbol:"瓜", pinyin:"guā", meaning:"дыня", emoji:"🍈", examples:"瓞、瓟、瓢、瓣、瓤"},
-        {symbol:"瓦", pinyin:"wǎ", meaning:"черепица", emoji:"🏺", examples:"瓮、瓫、瓶、瓷、瓯"},
-        {symbol:"甘", pinyin:"gān", meaning:"сладкий", emoji:"🍬", examples:"甚、甜、某、柑、甘"},
-        {symbol:"生", pinyin:"shēng", meaning:"жизнь", emoji:"🌱", examples:"产、甥、牲、胜、星"},
-        {symbol:"用", pinyin:"yòng", meaning:"использовать", emoji:"🔧", examples:"甩、甫、甬、用、甩"},
-        {symbol:"田", pinyin:"tián", meaning:"поле", emoji:"🌾", examples:"由、甲、申、电、男"},
-        {symbol:"疋", pinyin:"pǐ", meaning:"болт ткани", emoji:"🧵", examples:"疏、疎、楚、胥、"},
-        {symbol:"", pinyin:"nè", meaning:"болезнь", emoji:"🤒", examples:"疚、疝、病、痛、疗"},
-        {symbol:"癶", pinyin:"bō", meaning:"шаги", emoji:"👣", examples:"癸、発、登、癸、癶"},
-        {symbol:"白", pinyin:"bái", meaning:"белый", emoji:"⚪", examples:"百、皂、的、白、百"},
-        {symbol:"皮", pinyin:"pí", meaning:"кожа", emoji:"🧑‍🦰", examples:"皯、皴、皱、皮、皱"},
-        {symbol:"皿", pinyin:"mǐn", meaning:"блюдо", emoji:"🍽️", examples:"盂、盅、盆、盘、盒"},
-        {symbol:"目", pinyin:"mù", meaning:"глаз", emoji:"👁️", examples:"盯、盲、看、眼、睛"},
-        {symbol:"矛", pinyin:"máo", meaning:"копьё", emoji:"🔱", examples:"矜、矞、矟、矛、柔"},
-        {symbol:"矢", pinyin:"shǐ", meaning:"стрела", emoji:"🏹", examples:"矣、知、短、矩、矫"},
-        {symbol:"石", pinyin:"shí", meaning:"камень", emoji:"🪨", examples:"矸、矿、研、破、确"},
-        {symbol:"示", pinyin:"shì", meaning:"дух", emoji:"👻", examples:"礼、社、神、福、祝"},
-        {symbol:"禸", pinyin:"róu", meaning:"след", emoji:"👣", examples:"禹、禺、离、禸、"},
-        {symbol:"禾", pinyin:"hé", meaning:"зерно", emoji:"🌾", examples:"秃、秀、私、和、种"},
-        {symbol:"穴", pinyin:"xué", meaning:"пещера", emoji:"🕳️", examples:"究、空、穿、窗、窟"},
-        {symbol:"立", pinyin:"lì", meaning:"стоять", emoji:"🧍", examples:"竑、站、竞、童、端"},
-        {symbol:"竹", pinyin:"zhú", meaning:"бамбук", emoji:"🎋", examples:"竺、竿、笔、笑、等"},
-        {symbol:"米", pinyin:"mǐ", meaning:"рис", emoji:"🍚", examples:"籽、粒、粉、粮、粥"},
-        {symbol:"糸", pinyin:"mì", meaning:"шёлк", emoji:"🧵", examples:"红、纪、纺、织、经"},
-        {symbol:"缶", pinyin:"fǒu", meaning:"кувшин", emoji:"🏺", examples:"缸、缺、罐、缶、缸"},
-        {symbol:"网", pinyin:"wǎng", meaning:"сеть", emoji:"🕸️", examples:"罗、罚、置、罪、网"},
-        {symbol:"羊", pinyin:"yáng", meaning:"овца", emoji:"🐑", examples:"美、羔、群、养、羞"},
-        {symbol:"羽", pinyin:"yǔ", meaning:"перо", emoji:"🪶", examples:"翅、翔、翠、羽、翅"},
-        {symbol:"老", pinyin:"lǎo", meaning:"старый", emoji:"👴", examples:"考、者、耆、老、考"},
-        {symbol:"而", pinyin:"ér", meaning:"а", emoji:"🔗", examples:"耐、耍、耏、而、耐"},
-        {symbol:"耒", pinyin:"lěi", meaning:"плуг", emoji:"🌾", examples:"耕、耘、耜、耒、耕"},
-        {symbol:"耳", pinyin:"ěr", meaning:"ухо", emoji:"👂", examples:"取、闻、聪、耳、联"},
-        {symbol:"聿", pinyin:"yù", meaning:"кисть", emoji:"🖌️", examples:"律、建、書、聿、肆"},
-        {symbol:"肉", pinyin:"ròu", meaning:"мясо", emoji:"🥩", examples:"肌、肝、胖、肉、肥"},
-        {symbol:"臣", pinyin:"chén", meaning:"министр", emoji:"👔", examples:"臧、臨、卧、臣、臧"},
-        {symbol:"自", pinyin:"zì", meaning:"сам", emoji:"👤", examples:"臭、息、臬、自、息"},
-        {symbol:"至", pinyin:"zhì", meaning:"достигать", emoji:"🎯", examples:"到、致、臻、至、致"},
-        {symbol:"臼", pinyin:"jiù", meaning:"ступка", emoji:"🥣", examples:"舂、舅、臾、臼、舅"},
-        {symbol:"舌", pinyin:"shé", meaning:"язык", emoji:"👅", examples:"甜、舔、舐、舌、话"},
-        {symbol:"舛", pinyin:"chuǎn", meaning:"ошибка", emoji:"❌", examples:"舞、舜、舛、舛、舞"},
-        {symbol:"舟", pinyin:"zhōu", meaning:"лодка", emoji:"🚤", examples:"船、航、舰、舟、船"},
-        {symbol:"艮", pinyin:"gèn", meaning:"остановка", emoji:"🛑", examples:"良、艰、根、艮、良"},
-        {symbol:"色", pinyin:"sè", meaning:"цвет", emoji:"🎨", examples:"艳、艴、、色、艳"},
-        {symbol:"艸", pinyin:"cǎo", meaning:"трава", emoji:"🌿", examples:"艾、芳、花、草、茶"},
-        {symbol:"虍", pinyin:"hū", meaning:"тигр", emoji:"🐯", examples:"虎、虐、虚、虍、虎"},
-        {symbol:"虫", pinyin:"chóng", meaning:"насекомое", emoji:"🐛", examples:"虱、虾、蛇、虫、蚊"},
-        {symbol:"血", pinyin:"xuè", meaning:"кровь", emoji:"🩸", examples:"衁、衃、衄、血、血"},
-        {symbol:"行", pinyin:"xíng", meaning:"идти", emoji:"🚶", examples:"衍、街、衡、行、街"},
-        {symbol:"衣", pinyin:"yī", meaning:"одежда", emoji:"👕", examples:"初、表、衫、衣、装"},
-        {symbol:"襾", pinyin:"yà", meaning:"покрывать", emoji:"🧥", examples:"西、要、覆、襾、西"},
-        {symbol:"见", pinyin:"jiàn", meaning:"видеть", emoji:"👁️", examples:"规、觅、视、见、观"},
-        {symbol:"角", pinyin:"jiǎo", meaning:"рог", emoji:"🦄", examples:"觔、、解、角、解"},
-        {symbol:"言", pinyin:"yán", meaning:"речь", emoji:"💬", examples:"订、计、话、言、说"},
-        {symbol:"谷", pinyin:"gǔ", meaning:"долина", emoji:"🏔️", examples:"谹、、豁、谷、谷"},
-        {symbol:"豆", pinyin:"dòu", meaning:"боб", emoji:"🫘", examples:"豇、、豆、豆、"},
-        {symbol:"", pinyin:"shǐ", meaning:"свинья", emoji:"🐖", examples:"豚、豜、豢、豕、家"},
-        {symbol:"豸", pinyin:"zhì", meaning:"барсук", emoji:"🦡", examples:"豺、豹、貌、豸、豹"},
-        {symbol:"贝", pinyin:"bèi", meaning:"ракушка", emoji:"🐚", examples:"贞、负、财、贝、财"},
-        {symbol:"赤", pinyin:"chì", meaning:"красный", emoji:"🔴", examples:"赦、赧、赫、赤、赫"},
-        {symbol:"走", pinyin:"zǒu", meaning:"бежать", emoji:"🏃", examples:"赴、赶、超、走、超"},
-        {symbol:"足", pinyin:"zú", meaning:"нога", emoji:"🦶", examples:"趴、趵、路、足、路"},
-        {symbol:"身", pinyin:"shēn", meaning:"тело", emoji:"🧍", examples:"躬、躭、躯、身、躯"},
-        {symbol:"车", pinyin:"chē", meaning:"телега", emoji:"🚗", examples:"轧、轨、军、车、军"},
-        {symbol:"辛", pinyin:"xīn", meaning:"горький", emoji:"😣", examples:"辜、辟、辣、辛、辣"},
-        {symbol:"辰", pinyin:"chén", meaning:"утро", emoji:"🌅", examples:"辱、农、晨、辰、晨"},
-        {symbol:"辶", pinyin:"chuò", meaning:"ходить", emoji:"🚶", examples:"边、巡、远、辶、远"},
-        {symbol:"邑", pinyin:"yì", meaning:"город", emoji:"🏙️", examples:"邕、都、邑、都、邦"},
-        {symbol:"酉", pinyin:"yǒu", meaning:"вино", emoji:"🍷", examples:"酊、酌、醉、酉、醉"},
-        {symbol:"釆", pinyin:"biàn", meaning:"различать", emoji:"🔍", examples:"采、釉、释、釆、采"},
-        {symbol:"里", pinyin:"lǐ", meaning:"деревня", emoji:"🏘️", examples:"重、野、量、里、重"},
-        {symbol:"金", pinyin:"jīn", meaning:"золото", emoji:"🥇", examples:"釓、铁、金、金、铁"},
-        {symbol:"长", pinyin:"cháng", meaning:"длинный", emoji:"📏", examples:"镺、、镼、长、长"},
-        {symbol:"门", pinyin:"mén", meaning:"ворота", emoji:"🚪", examples:"闪、问、间、门、问"},
-        {symbol:"阜", pinyin:"fù", meaning:"холм", emoji:"⛰️", examples:"阡、阢、陆、阜、陆"},
-        {symbol:"隶", pinyin:"lì", meaning:"раб", emoji:"⛓️", examples:"隷、隸、逮、隶、逮"},
-        {symbol:"隹", pinyin:"zhuī", meaning:"птица", emoji:"🐦", examples:"隻、隼、隽、隹、集"},
-        {symbol:"雨", pinyin:"yǔ", meaning:"дождь", emoji:"🌧️", examples:"雪、雯、雷、雨、雪"},
-        {symbol:"青", pinyin:"qīng", meaning:"синий", emoji:"🔵", examples:"靖、静、靓、青、静"},
-        {symbol:"非", pinyin:"fēi", meaning:"неправильно", emoji:"❌", examples:"靠、靡、辈、非、靠"},
-        {symbol:"面", pinyin:"miàn", meaning:"лицо", emoji:"😊", examples:"靥、靦、、面、面"},
-        {symbol:"革", pinyin:"gé", meaning:"кожа", emoji:"👞", examples:"靳、靶、鞋、革、鞋"},
-        {symbol:"韦", pinyin:"wéi", meaning:"кожа", emoji:"👞", examples:"韧、韍、韦、韧、韩"},
-        {symbol:"韭", pinyin:"jiǔ", meaning:"лук", emoji:"🧅", examples:"韰、、韭、韭、"},
-        {symbol:"音", pinyin:"yīn", meaning:"звук", emoji:"🔊", examples:"竟、章、韵、音、韵"},
-        {symbol:"页", pinyin:"yè", meaning:"лист", emoji:"📄", examples:"顶、顷、顾、页、顾"},
-        {symbol:"风", pinyin:"fēng", meaning:"ветер", emoji:"💨", examples:"颩、飘、风、风、飘"},
-        {symbol:"飞", pinyin:"fēi", meaning:"лететь", emoji:"✈️", examples:"飜、飞、飞、飞、飜"},
-        {symbol:"食", pinyin:"shí", meaning:"еда", emoji:"🍽️", examples:"飡、饥、饭、食、饭"},
-        {symbol:"首", pinyin:"shǒu", meaning:"голова", emoji:"👤", examples:"馗、、首、首、首"},
-        {symbol:"香", pinyin:"xiāng", meaning:"аромат", emoji:"🌸", examples:"馝、、馡、香、香"},
-        {symbol:"马", pinyin:"mǎ", meaning:"лошадь", emoji:"🐴", examples:"驭、冯、驾、马、驾"},
-        {symbol:"骨", pinyin:"gǔ", meaning:"кость", emoji:"🦴", examples:"骫、骭、骼、骨、骼"},
-        {symbol:"高", pinyin:"gāo", meaning:"высокий", emoji:"📏", examples:"髚、髛、髙、高、高"},
-        {symbol:"髟", pinyin:"biāo", meaning:"волосы", emoji:"💇", examples:"髠、髡、髢、髟、"},
-        {symbol:"斗", pinyin:"dòu", meaning:"бой", emoji:"⚔️", examples:"鬦、闹、鬨、斗、闹"},
-        {symbol:"鬯", pinyin:"chàng", meaning:"вино", emoji:"🍷", examples:"鬰、鬱、鬯、、鬱"},
-        {symbol:"鬲", pinyin:"lì", meaning:"котёл", emoji:"🍲", examples:"鬳、鬴、鬵、鬲、鬲"},
-        {symbol:"鬼", pinyin:"guǐ", meaning:"призрак", emoji:"👻", examples:"魁、魂、魄、鬼、魂"},
-        {symbol:"鱼", pinyin:"yú", meaning:"рыба", emoji:"🐟", examples:"魟、鲜、鱼、鱼、鲜"},
-        {symbol:"鸟", pinyin:"niǎo", meaning:"птица", emoji:"🐦", examples:"鳦、鸠、鸟、鸟、鸠"},
-        {symbol:"卤", pinyin:"lǔ", meaning:"соль", emoji:"🧂", examples:"鹹、鹺、鹼、卤、鹹"},
-        {symbol:"鹿", pinyin:"lù", meaning:"олень", emoji:"🦌", examples:"麀、麁、麂、鹿、麂"},
-        {symbol:"麦", pinyin:"mài", meaning:"пшеница", emoji:"🌾", examples:"麨、麩、麦、麦、麩"},
-        {symbol:"麻", pinyin:"má", meaning:"конопля", emoji:"🌿", examples:"麼、麾、黁、麻、麻"},
-        {symbol:"黄", pinyin:"huáng", meaning:"жёлтый", emoji:"🟡", examples:"黈、、黄、黄、黈"},
-        {symbol:"黍", pinyin:"shǔ", meaning:"просо", emoji:"🌾", examples:"黎、黏、黐、黍、黎"},
-        {symbol:"黑", pinyin:"hēi", meaning:"чёрный", emoji:"⚫", examples:"墨、黔、黓、黑、墨"},
-        {symbol:"黹", pinyin:"zhǐ", meaning:"вышивка", emoji:"🧵", examples:"黺、黻、黼、黹、黻"},
-        {symbol:"黾", pinyin:"mǐn", meaning:"лягушка", emoji:"🐸", examples:"鼀、鼁、鼋、黾、鼋"},
-        {symbol:"鼎", pinyin:"dǐng", meaning:"треножник", emoji:"🏺", examples:"鼏、、鼒、鼎、鼎"},
-        {symbol:"鼓", pinyin:"gǔ", meaning:"барабан", emoji:"🥁", examples:"鼕、鼖、鼗、鼓、鼓"},
-        {symbol:"鼠", pinyin:"shǔ", meaning:"крыса", emoji:"🐀", examples:"鼢、鼥、鼩、鼠、鼢"},
-        {symbol:"鼻", pinyin:"bí", meaning:"нос", emoji:"👃", examples:"鼽、鼾、齁、鼻、鼻"},
-        {symbol:"齐", pinyin:"qí", meaning:"ровный", emoji:"📐", examples:"斋、齌、齍、齐、斋"},
-        {symbol:"齿", pinyin:"chǐ", meaning:"зуб", emoji:"🦷", examples:"齔、齕、齖、齿、齕"},
-        {symbol:"龙", pinyin:"lóng", meaning:"дракон", emoji:"🐉", examples:"龏、、龚、龙、龚"},
-        {symbol:"龟", pinyin:"guī", meaning:"черепаха", emoji:"🐢", examples:"䶰、、龞、龟、"},
-        {symbol:"", pinyin:"yuè", meaning:"флейта", emoji:"🎶", examples:"龡、龢、龤、龠、龢"}
-    ];
-    
-    let radicalIndex = 0;
-    let currentRadical = radicalsList[0];
-    
-    // ==================== ПЕСНИ ====================
-    const songs = [
-        {title:"🐯 两只老虎 (Два тигра)", lines:[
-            {emoji:"🐯", ch:"两只老虎", pinyin:"liǎng zhī lǎohǔ", ru:"Два тигра"},
-            {emoji:"🏃", ch:"跑得快", pinyin:"pǎo de kuài", ru:"Бегут быстро"}
-        ]},
-        {title:"✨ 小星星 (Маленькая звёздочка)", lines:[
-            {emoji:"⭐", ch:"一闪一闪亮晶晶", pinyin:"yī shǎn yī shǎn liàng jīng jīng", ru:"Мерцай ярко"},
-            {emoji:"🌌", ch:"满天都是小星星", pinyin:"mǎn tiān dōu shì xiǎo xīng xīng", ru:"Всё небо в звёздах"}
-        ]}
-    ];
-    
-    // ==================== ГОЛОСОВОЙ ВВОД ====================
-    let recognition = null, isRecording = false;
-    function speak(text) { 
-        if(!window.speechSynthesis) { alert("Голос не поддерживается браузером"); return; } 
-        window.speechSynthesis.cancel(); 
-        let u = new SpeechSynthesisUtterance(text); 
-        u.lang = "zh-CN"; 
-        u.rate = 0.7; 
-        window.speechSynthesis.speak(u); 
-    }
-    
-    function initVoice() { 
-        let SpeechRecog = window.SpeechRecognition || window.webkitSpeechRecognition; 
-        if(!SpeechRecog) return false; 
-        recognition = new SpeechRecog(); 
-        recognition.lang = "zh-CN"; 
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        return true; 
-    }
-    
-    function startVoiceTest(correctPinyin, feedbackEl, onResult) {
-        if(!recognition && !initVoice()) { 
-            if(feedbackEl) feedbackEl.innerHTML = "❌ Голос не поддерживается браузером"; 
-            return; 
-        }
-        if(isRecording) { recognition.stop(); return; }
-        
-        recognition.onresult = (e) => {
-            let spoken = e.results[0][0].transcript.toLowerCase().replace(/[^a-z]/g,'');
-            let target = correctPinyin.toLowerCase().replace(/[^a-z]/g,'');
-            let isCorrect = spoken.includes(target) || target.includes(spoken) || spoken.length > 3 && target.includes(spoken.substring(0,3));
-            if(feedbackEl) feedbackEl.innerHTML = isCorrect ? "✅ Отлично! Правильно!" : `❌ Нужно: ${correctPinyin}<br>Вы сказали: ${e.results[0][0].transcript}`;
-            if(onResult) onResult(isCorrect);
-            isRecording = false; 
-            document.querySelectorAll(".voice-btn").forEach(b => b.classList.remove("recording"));
-        };
-        recognition.onend = () => { 
-            isRecording = false; 
-            document.querySelectorAll(".voice-btn").forEach(b => b.classList.remove("recording")); 
-        };
-        recognition.onerror = (e) => {
-            if(feedbackEl) feedbackEl.innerHTML = "❌ Ошибка: " + e.error;
-            isRecording = false;
-            document.querySelectorAll(".voice-btn").forEach(b => b.classList.remove("recording"));
-        };
-        recognition.start(); 
-        isRecording = true; 
-        if(feedbackEl) feedbackEl.innerHTML = "🎤 Говорите... (нажмите ещё раз чтобы остановить)";
-    }
-    
-    // ==================== ФУНКЦИИ ====================
-    function updateStudy() { 
-        let w = allWords[currentWordIndex % allWords.length]; 
-        document.getElementById("studyChar").innerText = w.char; 
-        document.getElementById("studyPinyin").innerText = w.pinyin; 
-        document.getElementById("studyMeaning").innerText = w.meaning; 
-        document.getElementById("studyEmoji").innerText = w.emoji || "📖"; 
-    }
-    
-    function nextWord() { 
-        currentWordIndex = (currentWordIndex + 1) % allWords.length; 
-        updateStudy(); 
-        document.getElementById("studyFeedback").innerHTML = "⭐ Новое слово!"; 
-    }
-    
-    function updateDialog() { 
-        let d = filteredDialogs[currentDialogIndex % filteredDialogs.length]; 
-        document.getElementById("dialogContent").innerHTML = `
-            <div class="dialog-q"><strong>❓ Вопрос:</strong><br>${d.q}<br><span style="color:#666;font-size:16px;">📖 ${d.qp}</span><br><span style="color:#444;font-size:15px;">✨ ${d.qr}</span></div>
-            <div class="dialog-a"><strong>✅ Ответ:</strong><br>${d.a}<br><span style="color:#666;font-size:16px;">📖 ${d.ap}</span><br><span style="color:#444;font-size:15px;">✨ ${d.ar}</span></div>
-        `; 
-    }
-    
-    function nextDialog() { 
-        currentDialogIndex = (currentDialogIndex + 1) % filteredDialogs.length; 
-        updateDialog(); 
-    }
-    
-    function prevDialog() { 
-        currentDialogIndex = (currentDialogIndex - 1 + filteredDialogs.length) % filteredDialogs.length; 
-        updateDialog(); 
-    }
-    
-    function speakDialog() { 
-        let d = filteredDialogs[currentDialogIndex % filteredDialogs.length]; 
-        speak(d.q + " " + d.a); 
-    }
-    
-    function filterDialogs(topic) { 
-        if(topic === "all") filteredDialogs = allDialogs; 
-        else filteredDialogs = allDialogs.filter(d => d.topic === topic); 
-        currentDialogIndex = 0; 
-        updateDialog(); 
-        document.getElementById("dialogCount").innerText = filteredDialogs.length; 
-    }
-    
-    function rollCube() { 
-        let idx = Math.floor(Math.random() * allWords.length); 
-        currentCubeWord = allWords[idx]; 
-        document.getElementById("cubeResult").innerText = currentCubeWord.char; 
-        document.getElementById("cubeMeaning").innerText = currentCubeWord.meaning; 
-    }
-    
-    let cardIndex = 0;
-    let cardFlipped = false;
-    function updateCard() { 
-        let w = allWords[cardIndex % allWords.length]; 
-        document.getElementById("cardChar").innerText = w.char; 
-        document.getElementById("cardPinyin").innerText = w.pinyin; 
-        document.getElementById("cardMeaning").innerText = cardFlipped ? w.meaning : "???"; 
-        cardFlipped = false;
-    }
-    function flipCard() { 
-        let w = allWords[cardIndex % allWords.length]; 
-        document.getElementById("cardMeaning").innerText = w.meaning; 
-        cardFlipped = true;
-    }
-    function nextCard() { 
-        cardIndex = (cardIndex + 1) % allWords.length; 
-        updateCard(); 
-    }
-    
-    let currentGameWord = null;
-    function newGame() { 
-        let idx = Math.floor(Math.random() * allWords.length); 
-        currentGameWord = allWords[idx]; 
-        document.getElementById("gameChar").innerText = currentGameWord.char; 
-        let wrong1 = allWords[(idx + 1) % allWords.length].meaning; 
-        let wrong2 = allWords[(idx + 2) % allWords.length].meaning; 
-        let opts = [currentGameWord.meaning, wrong1, wrong2]; 
-        opts.sort(() => Math.random() - 0.5); 
-        let html = ''; 
-        opts.forEach(opt => {
-            html += `<div class="grid-opt" data-val="${opt}">${opt}</div>`;
-        }); 
-        document.getElementById("gameOptions").innerHTML = html; 
-        document.querySelectorAll("#gameOptions .grid-opt").forEach(opt => {
-            opt.onclick = () => {
-                if(opt.getAttribute("data-val") === currentGameWord.meaning) {
-                    document.getElementById("gameFeedback").innerHTML = "🎉 Правильно!";
-                    document.getElementById("gameFeedback").style.background = "#d4ecd0";
-                } else {
-                    document.getElementById("gameFeedback").innerHTML = `😅 Ошибка!<br>${currentGameWord.char} — ${currentGameWord.meaning}`;
-                    document.getElementById("gameFeedback").style.background = "#fdd";
-                }
-                setTimeout(newGame, 1500); 
-            };
-        }); 
-    }
-    
-    let currentQuiz = null;
-    function newQuiz() { 
-        let idx = Math.floor(Math.random() * radicalsList.length); 
-        currentQuiz = radicalsList[idx]; 
-        document.getElementById("quizChar").innerText = currentQuiz.symbol; 
-        let wrong1 = radicalsList[(idx + 1) % radicalsList.length].meaning; 
-        let wrong2 = radicalsList[(idx + 2) % radicalsList.length].meaning; 
-        let opts = [currentQuiz.meaning, wrong1, wrong2]; 
-        opts.sort(() => Math.random() - 0.5); 
-        let html = ''; 
-        opts.forEach(opt => {
-            html += `<div class="grid-opt" data-val="${opt}">${opt}</div>`;
-        }); 
-        document.getElementById("quizOptions").innerHTML = html; 
-        document.querySelectorAll("#quizOptions .grid-opt").forEach(opt => {
-            opt.onclick = () => {
-                if(opt.getAttribute("data-val") === currentQuiz.meaning) {
-                    document.getElementById("quizFeedback").innerHTML = "✅ Правильно!";
-                    document.getElementById("quizFeedback").style.background = "#d4ecd0";
-                } else {
-                    document.getElementById("quizFeedback").innerHTML = `❌ Ошибка!<br>${currentQuiz.symbol} — ${currentQuiz.meaning}`;
-                    document.getElementById("quizFeedback").style.background = "#fdd";
-                }
-                setTimeout(newQuiz, 1500); 
-            };
-        }); 
-    }
-    
-    // ГЛАВНАЯ ФУНКЦИЯ - ПОКАЗ РАДИКАЛА С ПОЛНОЙ ИНФОРМАЦИЕЙ
-    function showRadicalDetail(radical) {
-        currentRadical = radical;
-        
-        // Показываем панель с деталями
-        document.getElementById("detailChar").innerText = radical.symbol;
-        document.getElementById("detailPinyin").innerText = radical.pinyin;
-        document.getElementById("detailMeaning").innerText = radical.meaning;
-        document.getElementById("detailEmoji").innerText = radical.emoji;
-        
-        // Показываем примеры иероглифов
-        let examplesHtml = '';
-        if(radical.examples) {
-            let examples = radical.examples.split('、');
-            examples.forEach(ex => {
-                if(ex.trim()) {
-                    examplesHtml += `<span class="example-char">${ex.trim()}</span>`;
-                }
-            });
-        }
-        document.getElementById("detailExamples").innerHTML = examplesHtml || 'Примеры недоступны';
-        
-        // Показываем панель
-        document.getElementById("radicalDetail").classList.add("active");
-        
-        // Прокручиваем к детали
-        setTimeout(() => {
-            document.getElementById("radicalDetail").scrollIntoView({behavior: "smooth", block: "center"});
-        }, 100);
-        
-        // Очищаем предыдущий фидбек
-        document.getElementById("detailFeedback").innerHTML = '';
-    }
-    
-    function nextRadical() { 
-        radicalIndex = Math.floor(Math.random() * radicalsList.length); 
-        showRadicalDetail(radicalsList[radicalIndex]);
-    }
-    
-    function showAllRadicals() { 
-        let div = document.getElementById("allRadicalsList"); 
-        if(div.style.display === "none") {
-            let html = '<h3 style="text-align:center;margin:20px 0;color:#ff7b2c;font-size:24px;">👆 НАЖМИ на любой радикал для подробной информации</h3>';
-            html += '<div class="radical-grid">'; 
-            radicalsList.forEach((r, index) => {
-                html += `<div class="radical-cell" onclick="showRadicalDetail(radicalsList[${index}])" title="${r.meaning}">${r.symbol}</div>`;
-            }); 
-            html += '</div>'; 
-            div.innerHTML = html; 
-            div.style.display = "block"; 
-            
-            // Прокрутка к списку
-            setTimeout(() => {
-                div.scrollIntoView({behavior: "smooth", block: "start"});
-            }, 100);
-        } else {
-            div.style.display = "none"; 
-        }
-    }
-    
-    let canvas, ctx;
-    function initCanvas() {
-        canvas = document.getElementById("drawCanvas"); 
-        if(!canvas) return; 
-        ctx = canvas.getContext("2d"); 
-        canvas.width = 350; 
-        canvas.height = 220; 
-        ctx.fillStyle = "white"; 
-        ctx.fillRect(0, 0, canvas.width, canvas.height); 
-        ctx.strokeStyle = "#333"; 
-        ctx.lineWidth = 3; 
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-        
-        let painting = false; 
-        
-        function start(e) { 
-            painting = true; 
-            let p = getPos(e); 
-            ctx.beginPath(); 
-            ctx.moveTo(p.x, p.y); 
-        } 
-        
-        function draw(e) { 
-            if(!painting) return; 
-            let p = getPos(e); 
-            ctx.lineTo(p.x, p.y); 
-            ctx.stroke(); 
-            ctx.beginPath(); 
-            ctx.moveTo(p.x, p.y); 
-        } 
-        
-        function end() { 
-            painting = false; 
-            ctx.beginPath(); 
-        } 
-        
-        function getPos(e) { 
-            let rect = canvas.getBoundingClientRect(); 
-            let scaleX = canvas.width / rect.width; 
-            let scaleY = canvas.height / rect.height; 
-            let clientX = e.touches ? e.touches[0].clientX : e.clientX; 
-            let clientY = e.touches ? e.touches[0].clientY : e.clientY; 
-            return {
-                x: (clientX - rect.left) * scaleX, 
-                y: (clientY - rect.top) * scaleY
-            }; 
-        } 
-        
-        canvas.addEventListener("mousedown", start); 
-        canvas.addEventListener("mousemove", draw); 
-        canvas.addEventListener("mouseup", end); 
-        canvas.addEventListener("mouseleave", end);
-        canvas.addEventListener("touchstart", (e) => {e.preventDefault(); start(e.touches[0]);}, {passive: false}); 
-        canvas.addEventListener("touchmove", (e) => {e.preventDefault(); draw(e.touches[0]);}, {passive: false}); 
-        canvas.addEventListener("touchend", end); 
-    }
-    
-    function clearCanvas() {
-        if(ctx) { 
-            ctx.fillStyle = "white"; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height); 
-        } 
-    }
-    
-    function renderSongs() {
-        let html = ''; 
-        songs.forEach((song, idx) => {
-            let linesHtml = ''; 
-            song.lines.forEach(l => {
-                linesHtml += `<div class="song-line">
-                    <div class="song-emoji">${l.emoji}</div>
-                    <div class="song-text">${l.ch}</div>
-                    <div style="color:#666;font-size:16px;">${l.pinyin}</div>
-                    <div style="font-size:14px;color:#888;">${l.ru}</div>
-                </div>`;
-            }); 
-            html += `<div class="song-card">
-                <div class="song-title">${song.title}</div>
-                ${linesHtml}
-                <button class="playSongBtn" data-idx="${idx}" style="margin-top:15px;width:100%;">🎵 Спеть всю песню</button>
-            </div>`; 
-        }); 
-        document.getElementById("songsList").innerHTML = html; 
-        document.querySelectorAll(".playSongBtn").forEach(btn => {
-            btn.onclick = () => {
-                let idx = parseInt(btn.getAttribute("data-idx")); 
-                let fullText = songs[idx].lines.map(l => l.ch).join(" "); 
-                speak(fullText); 
-            };
-        }); 
-    }
-    
-    // ВКЛАДКИ
-    document.querySelectorAll(".tab").forEach(tab => {
-        tab.onclick = () => {
-            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active")); 
-            tab.classList.add("active"); 
-            let target = tab.getAttribute("data-tab"); 
-            document.querySelectorAll(".panel").forEach(p => p.classList.remove("active")); 
-            document.getElementById(target + "Panel").classList.add("active"); 
-            if(target === "radicals") {
-                // При открытии вкладки радикалов показываем первый радикал
-                showRadicalDetail(radicalsList[0]);
-            }
-            if(target === "quiz") newQuiz(); 
-            if(target === "game") newGame(); 
-            if(target === "songs") renderSongs(); 
-            if(target === "cubes") rollCube(); 
-            if(target === "cards") updateCard(); 
-        };
-    });
-    
-    document.querySelectorAll(".topic-badge").forEach(b => {
-        b.onclick = () => { 
-            filterDialogs(b.getAttribute("data-topic")); 
-        };
-    });
-    
-    // ЗАПУСК
-    window.onload = () => { 
-        initCanvas(); 
-        updateStudy(); 
-        updateDialog(); 
-        newGame(); 
-        newQuiz(); 
-        renderSongs(); 
-        rollCube(); 
-        updateCard(); 
-        initVoice();
-        // Показываем первый радикал при загрузке
-        showRadicalDetail(radicalsList[0]);
-        
-        document.getElementById("studyListen").onclick = () => {
-            let w = allWords[currentWordIndex % allWords.length]; 
-            speak(w.char);
-        };
-        document.getElementById("studyVoice").onclick = () => {
-            let w = allWords[currentWordIndex % allWords.length]; 
-            startVoiceTest(w.pinyin, document.getElementById("studyFeedback"), null);
-        };
-        document.getElementById("studyNext").onclick = nextWord;
-        
-        document.getElementById("dialogPrev").onclick = prevDialog; 
-        document.getElementById("dialogNext").onclick = nextDialog; 
-        document.getElementById("dialogListen").onclick = speakDialog;
-        document.getElementById("dialogVoice").onclick = () => {
-            let d = filteredDialogs[currentDialogIndex % filteredDialogs.length]; 
-            startVoiceTest(d.a.split(" ")[0], document.getElementById("dialogFeedback"), null);
-        };
-        
-        document.getElementById("nbListen").onclick = () => {
-            let w = allWords[currentWordIndex % allWords.length]; 
-            speak(w.char);
-        };
-        document.getElementById("nbVoice").onclick = () => {
-            let w = allWords[currentWordIndex % allWords.length]; 
-            startVoiceTest(w.pinyin, document.getElementById("nbFeedback"), null);
-        };
-        document.getElementById("nbNext").onclick = nextWord; 
-        document.getElementById("clearCanvas").onclick = clearCanvas;
-        
-        document.getElementById("detailListen").onclick = () => {
-            if(currentRadical) speak(currentRadical.symbol);
-        };
-        document.getElementById("detailVoice").onclick = () => {
-            if(currentRadical) startVoiceTest(currentRadical.pinyin, document.getElementById("detailFeedback"), null);
-        };
-        document.getElementById("radNext").onclick = nextRadical; 
-        document.getElementById("showAllRad").onclick = showAllRadicals;
-        
-        document.getElementById("newGame").onclick = newGame; 
-        document.getElementById("nextQuiz").onclick = newQuiz;
-        
-        document.getElementById("rollCube").onclick = rollCube; 
-        document.getElementById("cubeListen").onclick = () => {
-            if(currentCubeWord) speak(currentCubeWord.char);
-        };
-        
-        document.getElementById("cardFlip").onclick = flipCard; 
-        document.getElementById("cardNext").onclick = nextCard; 
-        document.getElementById("cardListen").onclick = () => {
-            let w = allWords[cardIndex % allWords.length]; 
-            speak(w.char);
-        };
+// ==================== ДАННЫЕ (500+ слов, 50 диалогов, 214 радикалов, 20 песен, грамматика) ====================
+const CAT_NAMES = {food:"🍜 Еда", home:"🏠 Дом", nature:"🌿 Природа", medicine:"💊 Медицина", family:"👨‍👩‍👧 Семья", transport:"🚗 Транспорт", basics:"👋 Основы", verbs:"🏃 Глаголы", adj:"🎨 Прилаг."};
+
+const WORDS = [
+    {c:"一",p:"yī",m:"один",e:"1️⃣",cat:"basics",a:"Звучит как 'йи'. Иероглиф — одна горизонтальная палочка. Как цифра 1, только лежащая."},
+    {c:"二",p:"èr",m:"два",e:"2️⃣",cat:"basics",a:"Две палочки. Звук похож на 'ар' (как выдох при ударе)."},
+    {c:"三",p:"sān",m:"три",e:"3️⃣",cat:"basics",a:"Три палочки. 'Сан' — представь песок на пляже (sand)."},
+    {c:"四",p:"sì",m:"четыре",e:"4️⃣",cat:"basics",a:"Квадрат внутри рамки. Звук 'сы' (тихий, как шёпот)."},
+    {c:"五",p:"wǔ",m:"пять",e:"5️⃣",cat:"basics",a:"Похож на часы со стрелками. 'Ву' — звук удара в барабан."},
+    {c:"六",p:"liù",m:"шесть",e:"6️⃣",cat:"basics",a:"Крыша с ножками. 'Лю' — как 'люк', только мягче."},
+    {c:"七",p:"qī",m:"семь",e:"7️⃣",cat:"basics",a:"Палка с крючком. 'Чи' — как чай (tea), но с носовым звуком."},
+    {c:"八",p:"bā",m:"восемь",e:"8️⃣",cat:"basics",a:"Две расходящиеся линии. 'Ба' — короткое, как 'па'."},
+    {c:"九",p:"jiǔ",m:"девять",e:"9️⃣",cat:"basics",a:"Изгиб как цифра 9. 'Цзю' — как 'джоу' (движение руки)."},
+    {c:"十",p:"shí",m:"десять",e:"🔟",cat:"basics",a:"Крест. 'Ши' — длинное, тяни звук."},
+    {c:"水",p:"shuǐ",m:"вода",e:"💧",cat:"nature",a:"Иероглиф похож на капли или ручей. 'Шуэй' — представь шум ручья 'шу-шу'."},
+    {c:"火",p:"huǒ",m:"огонь",e:"🔥",cat:"nature",a:"Похож на пламя. 'Хуо' — как дыхание на огонь 'хуу-хуу'."},
+    {c:"山",p:"shān",m:"гора",e:"⛰️",cat:"nature",a:"Три вершины. 'Шань' — ветер в горах 'шшш'."},
+    {c:"日",p:"rì",m:"солнце/день",e:"☀️",cat:"nature",a:"Квадрат с точкой/чертой — солнце. 'Жы' — тяни, как рычание 'жжж'."},
+    {c:"月",p:"yuè",m:"луна/месяц",e:"🌙",cat:"nature",a:"Полумесяц. 'Юэ' — мягкое, как 'юе' в слове ювелир."},
+    {c:"人",p:"rén",m:"человек",e:"👤",cat:"basics",a:"Человек шагает. 'Жень' — как 'женщина', но короче."},
+    {c:"口",p:"kǒu",m:"рот",e:"👄",cat:"basics",a:"Открытый рот. 'Коу' — как 'cow' (корова), но с округлыми губами."},
+    {c:"大",p:"dà",m:"большой",e:"📏",cat:"adj",a:"Человек расставил руки — большой. 'Да' — резко, как удар."},
+    {c:"小",p:"xiǎo",m:"маленький",e:"🤏",cat:"adj",a:"Маленькие штрихи вокруг. 'Сяо' — нежно, как 'сяо-сяо'."},
+    {c:"吃",p:"chī",m:"есть",e:"🍽️",cat:"verbs",a:"Рот + что-то падает. 'Чы' — как 'чи' в чизкейк."},
+    {c:"喝",p:"hē",m:"пить",e:"🥤",cat:"verbs",a:"Рот + солнце/человек. 'Хэ' — как выдох 'хээ'."},
+    {c:"茶",p:"chá",m:"чай",e:"🍵",cat:"food",a:"Трава + дерево + человек. 'Ча' — как русское 'ча'й."},
+    {c:"咖啡",p:"kāfēi",m:"кофе",e:"☕",cat:"food",a:"Звучит почти как 'кофе'. 'Ка-фэй'."},
+    {c:"苹果",p:"píngguǒ",m:"яблоко",e:"🍎",cat:"food",a:"Трава + дерево + результат. 'Пин-гуо'."},
+    {c:"米饭",p:"mǐfàn",m:"рис",e:"🍚",cat:"food",a:"Зерно + еда. 'Ми-фань'."},
+    {c:"面条",p:"miàntiáo",m:"лапша",e:"🍜",cat:"food",a:"Мука + нити. 'Мянь-тяо'."},
+    {c:"面包",p:"miànbāo",m:"хлеб",e:"🍞",cat:"food",a:"Мука + обёртка. 'Мянь-бао'."},
+    {c:"鸡蛋",p:"jīdàn",m:"яйцо",e:"🥚",cat:"food",a:"Курица + яйцо. 'Цзи-дань'."},
+    {c:"牛奶",p:"niúnǎi",m:"молоко",e:"🥛",cat:"food",a:"Корова + сосок/жидкость. 'Ню-най'."},
+    {c:"肉",p:"ròu",m:"мясо",e:"🥩",cat:"food",a:"Похож на кусок мяса в рамке. 'Жоу' — тяни, как 'роу'."},
+    {c:"鱼",p:"yú",m:"рыба",e:"🐟",cat:"nature",a:"Рыба с головой, телом, хвостом. 'Юй' — мягко, с округлением губ."},
+    {c:"猫",p:"māo",m:"кошка",e:"🐱",cat:"nature",a:"Зверь + росток. 'Мао' — длинное, как мяуканье 'мяу'."},
+    {c:"狗",p:"gǒu",m:"собака",e:"🐶",cat:"nature",a:"Зверь + слова. 'Гоу' — как 'go' (идти), но с о."},
+    {c:"家",p:"jiā",m:"дом/семья",e:"🏠",cat:"home",a:"Крыша + свинья (в древности символ достатка). 'Цзя'."},
+    {c:"房间",p:"fángjiān",m:"комната",e:"🚪",cat:"home",a:"Дверь/дом + промежуток. 'Фан-цзянь'."},
+    {c:"床",p:"chuáng",m:"кровать",e:"🛏️",cat:"home",a:"Дерево + человек (опирается). 'Чуан'."},
+    {c:"桌子",p:"zhuōzi",m:"стол",e:"🪑",cat:"home",a:"Дерево + ловкость. 'Чжо-цзы'."},
+    {c:"门",p:"mén",m:"дверь",e:"🚪",cat:"home",a:"Две створки. 'Мэнь' — как 'меню', но короче."},
+    {c:"手机",p:"shǒujī",m:"телефон",e:"📱",cat:"home",a:"Рука + машина. 'Шоу-цзи'."},
+    {c:"电视",p:"diànshì",m:"телевизор",e:"📺",cat:"home",a:"Электричество + видение. 'Дянь-ши'."},
+    {c:"电脑",p:"diànnǎo",m:"компьютер",e:"💻",cat:"home",a:"Электричество + мозг. 'Дянь-нао'."},
+    {c:"妈妈",p:"māma",m:"мама",e:"👩",cat:"family",a:"Женщина + лошадь (древн. звук). 'Ма-ма' — как в русском."},
+    {c:"爸爸",p:"bàba",m:"папа",e:"👨",cat:"family",a:"Символ отца. 'Ба-ба'."},
+    {c:"哥哥",p:"gēge",m:"старший брат",e:"👦",cat:"family",a:"Копьё + брат. 'Гэ-гэ'."},
+    {c:"妹妹",p:"mèimei",m:"младшая сестра",e:"👧",cat:"family",a:"Женщина + будущее. 'Мэй-мэй'."},
+    {c:"朋友",p:"péngyou",m:"друг",e:"👫",cat:"family",a:"Ракушка + луна. 'Пэн-йоу'."},
+    {c:"你好",p:"nǐhǎo",m:"здравствуйте",e:"👋",cat:"basics",a:"Ты + хорошо. 'Ни-хао'."},
+    {c:"谢谢",p:"xièxie",m:"спасибо",e:"🙏",cat:"basics",a:"Речь + тело. 'Сье-сье'."},
+    {c:"对不起",p:"duìbuqǐ",m:"извините",e:"😔",cat:"basics",a:"Копьё + не + вставать. 'Дуй-бу-ци'."},
+    {c:"汽车",p:"qìchē",m:"машина",e:"🚗",cat:"transport",a:"Пар/воздух + колесо. 'Чи-чэ'."},
+    {c:"飞机",p:"fēijī",m:"самолёт",e:"✈️",cat:"transport",a:"Летать + машина. 'Фэй-цзи'."},
+    {c:"火车",p:"huǒchē",m:"поезд",e:"🚂",cat:"transport",a:"Огонь + повозка. 'Хуо-чэ'."},
+    {c:"医院",p:"yīyuàn",m:"больница",e:"🏥",cat:"medicine",a:"Ящик/корзина + двор. 'И-юань'."},
+    {c:"医生",p:"yīshēng",m:"врач",e:"👨‍⚕️",cat:"medicine",a:"Ящик + рождение. 'И-шэн'."},
+    {c:"药",p:"yào",m:"лекарство",e:"💊",cat:"medicine",a:"Трава + радость/лёгкость. 'Яо' — тяни, как 'йоу'."},
+    {c:"头疼",p:"tóuténg",m:"головная боль",e:"🤕",cat:"medicine",a:"Голова + болезнь/боль. 'Тоу-тэн'."},
+    {c:"感冒",p:"gǎnmào",m:"простуда",e:"🤧",cat:"medicine",a:"Водяной/лёд + шапка/шляпа. 'Гань-мао'."},
+    {c:"太阳",p:"tàiyáng",m:"солнце",e:"☀️",cat:"nature",a:"Большой + солнце. 'Тай-ян'."},
+    {c:"下雨",p:"xiàyǔ",m:"идёт дождь",e:"🌧️",cat:"nature",a:"Под + дождь. 'Ся-юй'."},
+    {c:"风",p:"fēng",m:"ветер",e:"💨",cat:"nature",a:"Насекомое + оболочка. 'Фэн' — с носовым н."},
+    {c:"雪",p:"xuě",m:"снег",e:"❄️",cat:"nature",a:"Дождь + щётка. 'Сюэ' — мягко, с округлением."},
+    {c:"树",p:"shù",m:"дерево",e:"🌳",cat:"nature",a:"Дерево + дерево. 'Шу' — короткое."},
+    {c:"花",p:"huā",m:"цветок",e:"🌸",cat:"nature",a:"Трава + изменение. 'Хуа' — как 'hua!'."},
+    {c:"红色",p:"hóngsè",m:"красный",e:"🔴",cat:"adj",a:"Шёлк + работа. 'Хун-сэ'."},
+    {c:"蓝色",p:"lánsè",m:"синий",e:"🔵",cat:"adj",a:"Трава + блюсти. 'Лань-сэ'."},
+    {c:"绿色",p:"lǜsè",m:"зелёный",e:"🟢",cat:"adj",a:"Шёлк + вода/снег. 'Люй-сэ'."},
+    {c:"白色",p:"báisè",m:"белый",e:"⚪",cat:"adj",a:"Белый + цвет. 'Бай-сэ'."},
+    {c:"黑色",p:"hēisè",m:"чёрный",e:"⚫",cat:"adj",a:"Огонь/окно + земля. 'Хэй-сэ'."},
+    {c:"黄色",p:"huángsè",m:"жёлтый",e:"🟡",cat:"adj",a:"Центр/жёлтый + цвет. 'Хуан-сэ'."},
+    {c:"买",p:"mǎi",m:"покупать",e:"🛍️",cat:"verbs",a:"Голова + сеть. 'Май'."},
+    {c:"卖",p:"mài",m:"продавать",e:"💰",cat:"verbs",a:"Покупать + выход. 'Май' (4 тон, резко)."},
+    {c:"便宜",p:"piányi",m:"дёшево",e:"💸",cat:"adj",a:"Человек + более. 'Пянь-и'."},
+    {c:"贵",p:"guì",m:"дорого",e:"💎",cat:"adj",a:"Центр + дорогой. 'Гуй'."},
+    {c:"走",p:"zǒu",m:"идти",e:"🚶",cat:"verbs",a:"Нога + земля. 'Цзоу'."},
+    {c:"跑",p:"pǎo",m:"бежать",e:"🏃",cat:"verbs",a:"Нога + обёртка. 'Пао'."},
+    {c:"看",p:"kàn",m:"смотреть",e:"👀",cat:"verbs",a:"Рука над глазом. 'Кань'."},
+    {c:"听",p:"tīng",m:"слушать",e:"👂",cat:"verbs",a:"Ухо + рот/сердце. 'Тин'."},
+    {c:"说",p:"shuō",m:"говорить",e:"🗣️",cat:"verbs",a:"Речь + перемена. 'Шуо'."},
+    {c:"写",p:"xiě",m:"писать",e:"✍️",cat:"verbs",a:"Крыша + птица. 'Сье'."},
+    {c:"读",p:"dú",m:"читать",e:"📖",cat:"verbs",a:"Речь + продажа. 'Ду'."},
+    {c:"学习",p:"xuéxí",m:"учиться",e:"📚",cat:"verbs",a:"Сын/дверь + крылья. 'Сюэ-си'."},
+    {c:"工作",p:"gōngzuò",m:"работа",e:"💼",cat:"verbs",a:"Инструмент + человек. 'Гун-цзо'."},
+    {c:"休息",p:"xiūxi",m:"отдыхать",e:"😌",cat:"verbs",a:"Человек у дерева. 'Сю-си'."},
+    {c:"睡觉",p:"shuìjiào",m:"спать",e:"😴",cat:"verbs",a:"Глаз + вертикаль. 'Шуй-цзяо'."},
+    {c:"爱",p:"ài",m:"любить",e:"❤️",cat:"verbs",a:"Когти + покрывало + сердце. 'Ай'."},
+    {c:"喜欢",p:"xǐhuan",m:"нравиться",e:"😍",cat:"verbs",a:"Радость + отсутствовать. 'Си-хуань'."},
+    {c:"好",p:"hǎo",m:"хороший",e:"👍",cat:"adj",a:"Женщина + ребёнок. 'Хао'."},
+    {c:"坏",p:"huài",m:"плохой",e:"👎",cat:"adj",a:"Земля + не. 'Хуай'."},
+    {c:"新",p:"xīn",m:"новый",e:"✨",cat:"adj",a:"Стоять + дерево + топор. 'Синь'."},
+    {c:"旧",p:"jiù",m:"старый",e:"🕰️",cat:"adj",a:"Один + день. 'Цзю'."},
+    {c:"高",p:"gāo",m:"высокий",e:"📏",cat:"adj",a:"Башня + рот. 'Гао'."},
+    {c:"矮",p:"ǎi",m:"низкий",e:"📉",cat:"adj",a:"Стрела + женщина. 'Ай'."},
+    {c:"快",p:"kuài",m:"быстрый",e:"⚡",cat:"adj",a:"Сердце + развилка. 'Куай'."},
+    {c:"慢",p:"màn",m:"медленный",e:"🐌",cat:"adj",a:"Сердце + день/сетка. 'Мань'."},
+    {c:"热",p:"rè",m:"горячий",e:"🔥",cat:"adj",a:"Солнце + огонь. 'Жэ'."},
+    {c:"冷",p:"lěng",m:"холодный",e:"❄️",cat:"adj",a:"Лёд + приказ. 'Лэн'."},
+    {c:"干净",p:"gānjìng",m:"чистый",e:"✨",cat:"adj",a:"Сухой + вода/спокойствие. 'Гань-цзин'."},
+    {c:"脏",p:"zāng",m:"грязный",e:"🤢",cat:"adj",a:"Луна/мясо + храм. 'Цзан'."},
+    {c:"多",p:"duō",m:"много",e:"📈",cat:"adj",a:"Два вечера. 'Дуо'."},
+    {c:"少",p:"shǎo",m:"мало",e:"📉",cat:"adj",a:"Маленький + крюк. 'Шао'."},
+    {c:"现在",p:"xiànzài",m:"сейчас",e:"⏰",cat:"basics",a:"Царь + земля. 'Сянь-цзай'."},
+    {c:"今天",p:"jīntiān",m:"сегодня",e:"📅",cat:"basics",a:"Человек + один + большой. 'Цзинь-тянь'."},
+    {c:"明天",p:"míngtiān",m:"завтра",e:"📅",cat:"basics",a:"Солнце + луна. 'Мин-тянь'."},
+    {c:"昨天",p:"zuótiān",m:"вчера",e:"📅",cat:"basics",a:"Человек + работа. 'Цзо-тянь'."},
+    {c:"早上",p:"zǎoshang",m:"утро",e:"🌅",cat:"basics",a:"Солнце + дерево + один. 'Цзао-шан'."},
+    {c:"中午",p:"zhōngwǔ",m:"полдень",e:"☀️",cat:"basics",a:"Палка + поле + стрела. 'Чжун-у'."},
+    {c:"晚上",p:"wǎnshang",m:"вечер",e:"🌙",cat:"basics",a:"Солнце +免去. 'Вань-шан'."},
+    {c:"哪里",p:"nǎlǐ",m:"где",e:"📍",cat:"basics",a:"Нож + земля/деревня. 'На-ли'."},
+    {c:"什么",p:"shénme",m:"что",e:"❓",cat:"basics",a:"Речь + человек. 'Шэнь-мэ'."},
+    {c:"谁",p:"shéi",m:"кто",e:"👤",cat:"basics",a:"Речь + птица. 'Шэй'."},
+    {c:"为什么",p:"wèishénme",m:"почему",e:"❔",cat:"basics",a:"Мысль + речь. 'Вэй-шэнь-мэ'."},
+    {c:"怎么",p:"zěnme",m:"как",e:"❓",cat:"basics",a:"Сердце + как. 'Цзэнь-мэ'."},
+    {c:"多少",p:"duōshao",m:"сколько",e:"🔢",cat:"basics",a:"Много + мало. 'Дуо-шао'."},
+    {c:"钱",p:"qián",m:"деньги",e:"💰",cat:"basics",a:"Металл + две линии. 'Цянь'."},
+    {c:"元",p:"yuán",m:"юань",e:"💵",cat:"basics",a:"Два + человек. 'Юань'."},
+    {c:"块",p:"kuài",m:"кусок/юань",e:"💵",cat:"basics",a:"Земля + решение. 'Куай'."},
+    {c:"岁",p:"suì",m:"лет (возраст)",e:"🎂",cat:"basics",a:"Гора + вечер. 'Суй'."},
+    {c:"名字",p:"míngzi",m:"имя",e:"📝",cat:"basics",a:"Солнце/вечер + рот. 'Мин-цзы'."},
+    {c:"叫",p:"jiào",m:"звать",e:"📢",cat:"basics",a:"Рот + четыре. 'Цзяо'."},
+    {c:"是",p:"shì",m:"быть/являться",e:"✅",cat:"basics",a:"Солнце + правильно. 'Ши'."},
+    {c:"有",p:"yǒu",m:"иметь",e:"📦",cat:"verbs",a:"Рука + луна/мясо. 'Ю'."},
+    {c:"没有",p:"méiyǒu",m:"нет/не иметь",e:"❌",cat:"verbs",a:"Не + иметь. 'Мэй-ю'."},
+    {c:"在",p:"zài",m:"находиться/в",e:"📍",cat:"basics",a:"Земля + существовать. 'Цзай'."},
+    {c:"去",p:"qù",m:"идти/ехать",e:"🚶",cat:"verbs",a:"Земля + частный. 'Цюй'."},
+    {c:"来",p:"lái",m:"приходить",e:"👣",cat:"verbs",a:"Два человека + дерево. 'Лай'."},
+    {c:"回",p:"huí",m:"возвращаться",e:"🔄",cat:"verbs",a:"Внутренний квадрат. 'Хуэй'."},
+    {c:"给",p:"gěi",m:"давать",e:"🤝",cat:"verbs",a:"Шёлк + соединение. 'Гэй'."},
+    {c:"拿",p:"ná",m:"брать",e:"✋",cat:"verbs",a:"Соединять + рука. 'На'."},
+    {c:"放",p:"fàng",m:"класть",e:"📥",cat:"verbs",a:"Флаг + сила. 'Фан'."},
+    {c:"打开",p:"dǎkāi",m:"открывать",e:"🔓",cat:"verbs",a:"Бить + открыто. 'Да-кай'."},
+    {c:"关上",p:"guānshàng",m:"закрывать",e:"🔒",cat:"verbs",a:"Ворота + небо. 'Гуань-шан'."},
+    {c:"开",p:"kāi",m:"включать/открывать",e:"🔛",cat:"verbs",a:"Две руки + палка. 'Кай'."},
+    {c:"关",p:"guān",m:"выключать/закрывать",e:"🔒",cat:"verbs",a:"Ворота. 'Гуань'."},
+    {c:"等",p:"děng",m:"ждать",e:"⏳",cat:"verbs",a:"Бамбук + храм. 'Дэн'."},
+    {c:"找",p:"zhǎo",m:"искать",e:"🔍",cat:"verbs",a:"Рука + копьё. 'Чжао'."},
+    {c:"看见",p:"kànjiàn",m:"увидеть",e:"👀",cat:"verbs",a:"Смотреть + видеть. 'Кань-цзянь'."},
+    {c:"知道",p:"zhīdào",m:"знать",e:"💡",cat:"verbs",a:"Стрела + идти/путь. 'Чжи-дао'."},
+    {c:"觉得",p:"juéde",m:"думать/чувствовать",e:"🤔",cat:"verbs",a:"Видеть + находить. 'Цзюэ-дэ'."},
+    {c:"帮助",p:"bāngzhù",m:"помогать",e:"🤝",cat:"verbs",a:"Помощь + сила. 'Бан-чжу'."},
+    {c:"谢谢",p:"xièxie",m:"спасибо",e:"🙏",cat:"basics",a:"Речь + тело. 'Сье-сье'."},
+    {c:"不客气",p:"búkèqì",m:"пожалуйста",e:"😊",cat:"basics",a:"Не + гость + воздух. 'Бу-кэ-ци'."},
+    {c:"请",p:"qǐng",m:"пожалуйста/просить",e:"🙏",cat:"basics",a:"Речь + зелёный. 'Цин'."},
+    {c:"对不起",p:"duìbuqǐ",m:"извините",e:"😔",cat:"basics",a:"Копьё + не + вставать. 'Дуй-бу-ци'."},
+    {c:"没关系",p:"méiguānxi",m:"ничего",e:"👌",cat:"basics",a:"Не + связь + система. 'Мэй-гуань-си'."},
+    {c:"再见",p:"zàijiàn",m:"до свидания",e:"👋",cat:"basics",a:"Снова + видеть. 'Цзай-цзянь'."},
+    {c:"拜拜",p:"báibái",m:"пока",e:"👋",cat:"basics",a:"Рука + рука. 'Бай-бай'."},
+    {c:"好",p:"hǎo",m:"хорошо",e:"👍",cat:"basics",a:"Женщина + ребёнок. 'Хао'."},
+    {c:"可以",p:"kěyǐ",m:"можно",e:"✅",cat:"basics",a:"Можно + уже. 'Кэ-и'."},
+    {c:"不行",p:"bùxíng",m:"нельзя",e:"❌",cat:"basics",a:"Не + идти. 'Бу-син'."},
+    {c:"太...了",p:"tài...le",m:"слишком...",e:"⚖️",cat:"basics",a:"Большой + точка. 'Тай...лэ'."},
+    {c:"很",p:"hěn",m:"очень",e:"📏",cat:"basics",a:"Два + шаг. 'Хэнь'."},
+    {c:"非常",p:"fēicháng",m:"очень/крайне",e:"🔝",cat:"basics",a:"Летать + обычный. 'Фэй-чан'."},
+    {c:"真",p:"zhēn",m:"правда/действительно",e:"✨",cat:"basics",a:"Прямой + восемь + точка. 'Чжэнь'."},
+    {c:"吗",p:"ma",m:"вопросительная частица",e:"❓",cat:"basics",a:"Лошадь + рот. 'Ма' (нейтральный тон)."},
+    {c:"呢",p:"ne",m:"а как насчёт?",e:"🤔",cat:"basics",a:"Рот + ткань. 'Нэ'."},
+    {c:"吧",p:"ba",m:"давай/наверное",e:"💭",cat:"basics",a:"Рот + восемь. 'Ба'."},
+    {c:"啊",p:"a",m:"эмоция/восхищение",e:"😮",cat:"basics",a:"Рот + холм. 'А'."},
+    {c:"哦",p:"ò",m:"понял",e:"💡",cat:"basics",a:"Рот + я. 'О'."},
+    {c:"嗯",p:"én",m:"да/ага",e:"👍",cat:"basics",a:"Рот + причина. 'Энь'."},
+    {c:"喂",p:"wèi",m:"алло (телефон)",e:"📞",cat:"basics",a:"Рот + мы. 'Вэй'."},
+    {c:"你好吗",p:"nǐhǎo ma",m:"как дела?",e:"😊",cat:"basics",a:"Ты хорошо + вопрос. 'Ни-хао-ма'."},
+    {c:"我很好",p:"wǒ hěn hǎo",m:"у меня всё хорошо",e:"👍",cat:"basics",a:"Я очень хорошо. 'Во хэнь хао'."},
+    {c:"谢谢你的帮助",p:"xièxie nǐ de bāngzhù",m:"спасибо за помощь",e:"🤝",cat:"basics",a:"Спасибо твой помощь. 'Сье-сье ни дэ бан-чжу'."},
+    {c:"祝你生日快乐",p:"zhù nǐ shēngrì kuàilè",m:"с днём рождения",e:"🎂",cat:"basics",a:"Желать ты день рождения быстрый радость. 'Чжу ни шэн-жи куай-лэ'."},
+    {c:"新年快乐",p:"xīnnián kuàilè",m:"с новым годом",e:"🎉",cat:"basics",a:"Новый год быстрый радость. 'Синь-нянь куай-лэ'."},
+    {c:"欢迎光临",p:"huānyíng guānglín",m:"добро пожаловать",e:"🏨",cat:"basics",a:"Радоваться + свет прибывает. 'Хуань-ин гуан-линь'."},
+    {c:"请坐",p:"qǐng zuò",m:"пожалуйста, садитесь",e:"🪑",cat:"basics",a:"Просить сидеть. 'Цин цзо'."},
+    {c:"慢慢来",p:"mànmàn lái",m:"не торопись",e:"🐌",cat:"basics",a:"Медленно медленно приходить. 'Мань-мань лай'."},
+    {c:"加油",p:"jiāyóu",m:"удачи/давай",e:"💪",cat:"basics",a:"Добавить масло. 'Цзя ю'."},
+    {c:"没问题",p:"méi wèntí",m:"без проблем",e:"✅",cat:"basics",a:"Нет вопрос. 'Мэй вэнь-ти'."},
+    {c:"我知道了",p:"wǒ zhīdào le",m:"я понял",e:"💡",cat:"basics",a:"Я знать + завершение. 'Во чжи-дао лэ'."},
+    {c:"我不明白",p:"wǒ bù míngbai",m:"я не понимаю",e:"❓",cat:"basics",a:"Я не ясно белый. 'Во бу мин-бай'."},
+    {c:"再说一遍",p:"zài shuō yī biàn",m:"повтори ещё раз",e:"🔁",cat:"basics",a:"Снова говорить один раз. 'Цзай шуо и бянь'."},
+    {c:"听不懂",p:"tīng bù dǒng",m:"не понимаю (на слух)",e:"👂",cat:"basics",a:"Слушать не понимать. 'Тин бу дун'."},
+    {c:"请帮我",p:"qǐng bāng wǒ",m:"пожалуйста, помоги мне",e:"🆘",cat:"basics",a:"Просить помощь я. 'Цин бан во'."},
+    {c:"多少钱",p:"duōshao qián",m:"сколько стоит",e:"💰",cat:"basics",a:"Сколько деньги. 'Дуо-шао цянь'."},
+    {c:"太贵了",p:"tài guì le",m:"слишком дорого",e:"💸",cat:"basics",a:"Слишком дорого + завершение. 'Тай гуй лэ'."},
+    {c:"便宜一点",p:"piányi yīdiǎn",m:"подешевле",e:"🏷️",cat:"basics",a:"Дёшево немного. 'Пянь-и и дянь'."},
+    {c:"买单",p:"mǎidān",m:"счёт/оплатить",e:"🧾",cat:"basics",a:"Покупать список. 'Май дань'."},
+    {c:"打包",p:"dǎbāo",m:"взять с собой",e:"🥡",cat:"basics",a:"Бить/делать упаковка. 'Да бао'."},
+    {c:"好吃",p:"hǎochī",m:"вкусно",e:"😋",cat:"basics",a:"Хорошо есть. 'Хао чи'."},
+    {c:"难吃",p:"nánchī",m:"невкусно",e:"🤢",cat:"basics",a:"Трудно есть. 'Нань чи'."},
+    {c:"辣",p:"là",m:"острый",e:"🌶️",cat:"basics",a:"Синий + нож. 'Ла'."},
+    {c:"甜",p:"tián",m:"сладкий",e:"🍬",cat:"basics",a:"Язык + сладкий. 'Тянь'."},
+    {c:"酸",p:"suān",m:"кислый",e:"🍋",cat:"basics",a:"Виноград + идти. 'Суань'."},
+    {c:"咸",p:"xián",m:"солёный",e:"🧂",cat:"basics",a:"Все + рот. 'Сянь'."},
+    {c:"苦",p:"kǔ",m:"горький",e:"☕",cat:"basics",a:"Трава + древний. 'Ку'."},
+    {c:"饿",p:"è",m:"голодный",e:"🍽️",cat:"basics",a:"Еда + я. 'Э'."},
+    {c:"饱",p:"bǎo",m:"сытый",e:"🤰",cat:"basics",a:"Еда + обёртка. 'Бао'."},
+    {c:"渴",p:"kě",m:"хочу пить",e:"💧",cat:"basics",a:"Вода + желающий. 'Кэ'."},
+    {c:"累",p:"lèi",m:"уставший",e:"😫",cat:"basics",a:"Поле + нить. 'Лэй'."},
+    {c:"病",p:"bìng",m:"болезнь",e:"🤒",cat:"basics",a:"Болезнь +丙. 'Бин'."},
+    {c:"疼",p:"téng",m:"болит",e:"😣",cat:"basics",a:"Болезнь + зима. 'Тэн'."},
+    {c:"药",p:"yào",m:"лекарство",e:"💊",cat:"basics",a:"Трава + радость. 'Яо'."},
+    {c:"医生",p:"yīshēng",m:"врач",e:"👨‍⚕️",cat:"basics",a:"Ящик + рождение. 'И-шэн'."},
+    {c:"医院",p:"yīyuàn",m:"больница",e:"🏥",cat:"basics",a:"Ящик + двор. 'И-юань'."},
+    {c:"药店",p:"yàodiàn",m:"аптека",e:"💊",cat:"basics",a:"Лекарство + магазин. 'Яо-дянь'."},
+    {c:"发烧",p:"fāshāo",m:"температура",e:"🤒",cat:"basics",a:"Пускать + жар. 'Фа-шао'."},
+    {c:"感冒",p:"gǎnmào",m:"простуда",e:"🤧",cat:"basics",a:"Вода + шапка. 'Гань-мао'."},
+    {c:"咳嗽",p:"késou",m:"кашель",e:"😷",cat:"basics",a:"Рот + ребёнок. 'Кэ-соу'."},
+    {c:"肚子疼",p:"dùzi téng",m:"болит живот",e:"🤢",cat:"basics",a:"Живот + ребёнок + боль. 'Ду-цзы тэн'."},
+    {c:"头疼",p:"tóuténg",m:"головная боль",e:"🤕",cat:"basics",a:"Голова + боль. 'Тоу-тэн'."},
+    {c:"牙疼",p:"yá téng",m:"болит зуб",e:"🦷",cat:"basics",a:"Зуб + боль. 'Я тэн'."},
+    {c:"眼睛",p:"yǎnjing",m:"глаза",e:"👀",cat:"basics",a:"Глаз + зерно. 'Янь-цзин'."},
+    {c:"耳朵",p:"ěrduo",m:"уши",e:"👂",cat:"basics",a:"Ухо + ухо. 'Эр-дуо'."},
+    {c:"鼻子",p:"bízi",m:"нос",e:"👃",cat:"basics",a:"Поле + поле + себя. 'Би-цзы'."},
+    {c:"嘴巴",p:"zuǐba",m:"рот",e:"👄",cat:"basics",a:"Рот + рот. 'Цзуй-ба'."},
+    {c:"手",p:"shǒu",m:"рука",e:"✋",cat:"basics",a:"Пальцы. 'Шоу'."},
+    {c:"脚",p:"jiǎo",m:"нога/стопа",e:"🦶",cat:"basics",a:"Луна/мясо + идти. 'Цзяо'."},
+    {c:"身体",p:"shēntǐ",m:"тело",e:"🧍",cat:"basics",a:"Человек + тело. 'Шэнь-ти'."},
+    {c:"健康",p:"jiànkāng",m:"здоровье",e:"💪",cat:"basics",a:"Строить + здоровье. 'Цзянь-кан'."},
+    {c:"休息",p:"xiūxi",m:"отдых",e:"😌",cat:"basics",a:"Человек у дерева. 'Сю-си'."},
+    {c:"运动",p:"yùndòng",m:"спорт",e:"⚽",cat:"basics",a:"Движение + сила. 'Юнь-дун'."},
+    {c:"游泳",p:"yóuyǒng",m:"плавать",e:"🏊",cat:"basics",a:"Вода + дети. 'Ю-юн'."},
+    {c:"跑步",p:"pǎobù",m:"бегать",e:"🏃",cat:"basics",a:"Бежать + шаг. 'Пао-бу'."},
+    {c:"爬山",p:"páshān",m:"лазить в горы",e:"⛰️",cat:"basics",a:"Коготь + гора. 'Па-шань'."},
+    {c:"打球",p:"dǎqiú",m:"играть в мяч",e:"🏀",cat:"basics",a:"Бить + шар. 'Да-цю'."},
+    {c:"唱歌",p:"chànggē",m:"петь",e:"🎤",cat:"basics",a:"Рот + песня. 'Чан-гэ'."},
+    {c:"跳舞",p:"tiàowǔ",m:"танцевать",e:"💃",cat:"basics",a:"Нога + танец. 'Тяо-у'."},
+    {c:"画画",p:"huàhuà",m:"рисовать",e:"🎨",cat:"basics",a:"Рисовать + рисунок. 'Хуа-хуа'."},
+    {c:"看书",p:"kànshū",m:"читать книгу",e:"📖",cat:"basics",a:"Смотреть + книга. 'Кань-шу'."},
+    {c:"写字",p:"xiězì",m:"писать иероглифы",e:"✍️",cat:"basics",a:"Писать + символ. 'Сье-цзы'."},
+    {c:"玩电脑",p:"wán diànnǎo",m:"играть на компьютере",e:"💻",cat:"basics",a:"Играть + электрический мозг. 'Вань дянь-нао'."},
+    {c:"看电影",p:"kàn diànyǐng",m:"смотреть фильм",e:"🎬",cat:"basics",a:"Смотреть + электрический тень. 'Кань дянь-ин'."},
+    {c:"听歌",p:"tīng gē",m:"слушать музыку",e:"🎵",cat:"basics",a:"Слушать + песня. 'Тин гэ'."},
+    {c:"逛街",p:"guàngjiē",m:"гулять по магазинам",e:"🛍️",cat:"basics",a:"Бродить + улица. 'Гуан-цзе'."},
+    {c:"做饭",p:"zuòfàn",m:"готовить еду",e:"🍳",cat:"basics",a:"Делать + еда. 'Цзо-фань'."},
+    {c:"洗衣服",p:"xǐ yīfu",m:"стирать одежду",e:"🧺",cat:"basics",a:"Мыть + одежда. 'Си и-фу'."},
+    {c:"打扫房间",p:"dǎsǎo fángjiān",m:"убирать комнату",e:"🧹",cat:"basics",a:"Убирать + комната. 'Да-сао фан-цзянь'."},
+    {c:"睡觉",p:"shuìjiào",m:"спать",e:"😴",cat:"basics",a:"Глаз + звать. 'Шуй-цзяо'."},
+    {c:"起床",p:"qǐchuáng",m:"вставать с кровати",e:"⏰",cat:"basics",a:"Вставать + кровать. 'Ци-чуан'."},
+    {c:"洗脸",p:"xǐliǎn",m:"умываться",e:"🧼",cat:"basics",a:"Мыть + лицо. 'Си-лянь'."},
+    {c:"刷牙",p:"shuāyá",m:"чистить зубы",e:"🪥",cat:"basics",a:"Щётка + зуб. 'Шуа-я'."},
+    {c:"洗澡",p:"xǐzǎo",m:"принимать душ",e:"🚿",cat:"basics",a:"Мыть + вода/солнце. 'Си-цзао'."},
+    {c:"出门",p:"chūmén",m:"выходить из дома",e:"🚪",cat:"basics",a:"Выходить + дверь. 'Чу-мэнь'."},
+    {c:"回家",p:"huíjiā",m:"возвращаться домой",e:"🏠",cat:"basics",a:"Возвращаться + дом. 'Хуэй-цзя'."},
+    {c:"上班",p:"shàngbān",m:"идти на работу",e:"💼",cat:"basics",a:"Подниматься + доска/смена. 'Шан-бань'."},
+    {c:"下班",p:"xiàbān",m:"уходить с работы",e:"🏃",cat:"basics",a:"Опускаться + доска. 'Ся-бань'."},
+    {c:"上学",p:"shàngxué",m:"идти в школу",e:"🎒",cat:"basics",a:"Подниматься + учиться. 'Шан-сюэ'."},
+    {c:"放学",p:"fàngxué",m:"заканчивать школу",e:"🏫",cat:"basics",a:"Отпускать + учиться. 'Фан-сюэ'."},
+    {c:"考试",p:"kǎoshì",m:"экзамен",e:"📝",cat:"basics",a:"Старый + дело. 'Као-ши'."},
+    {c:"作业",p:"zuòyè",m:"домашнее задание",e:"📚",cat:"basics",a:"Делать + занятие. 'Цзо-е'."},
+    {c:"问题",p:"wèntí",m:"вопрос/проблема",e:"❓",cat:"basics",a:"Ворота + лист. 'Вэнь-ти'."},
+    {c:"答案",p:"dá'àn",m:"ответ",e:"✅",cat:"basics",a:"Бамбук + таблица. 'Да-ань'."},
+    {c:"对",p:"duì",m:"правильно",e:"✅",cat:"basics",a:"Копьё + дюйм. 'Дуй'."},
+    {c:"错",p:"cuò",m:"ошибка",e:"❌",cat:"basics",a:"Металл + старый. 'Цо'."},
+    {c:"对吗",p:"duì ma",m:"правильно?",e:"✅",cat:"basics",a:"Правильно + вопрос. 'Дуй ма'."},
+    {c:"不对",p:"bú duì",m:"неправильно",e:"❌",cat:"basics",a:"Не + правильно. 'Бу дуй'."},
+    {c:"真的吗",p:"zhēn de ma",m:"правда?",e:"🤔",cat:"basics",a:"Правда + частица + вопрос. 'Чжэнь дэ ма'."},
+    {c:"当然是",p:"dāngrán shì",m:"конечно",e:"👍",cat:"basics",a:"Когда + так + быть. 'Дан-жань ши'."},
+    {c:"也许",p:"yěxǔ",m:"может быть",e:"🤔",cat:"basics",a:"Также + разрешать. 'Е-сюй'."},
+    {c:"一定",p:"yīdìng",m:"обязательно",e:"🔒",cat:"basics",a:"Один + определён. 'И-дин'."},
+    {c:"从来",p:"cónglái",m:"никогда/всегда",e:"⏳",cat:"basics",a:"Из + приходить. 'Цун-лай'."},
+    {c:"总是",p:"zǒngshì",m:"всегда",e:"🔁",cat:"basics",a:"Всегда + быть. 'Цзун-ши'."},
+    {c:"经常",p:"jīngcháng",m:"часто",e:"📈",cat:"basics",a:"Шёлк + обычный. 'Цзин-чан'."},
+    {c:"有时候",p:"yǒushíhou",m:"иногда",e:"🕰️",cat:"basics",a:"Иметь + время + промежуток. 'Ю-ши-хоу'."},
+    {c:"很少",p:"hěn shǎo",m:"редко",e:"📉",cat:"basics",a:"Очень мало. 'Хэнь шао'."},
+    {c:"从来不",p:"cónglái bù",m:"никогда не",e:"🚫",cat:"basics",a:"Из + приходить + не. 'Цун-лай бу'."},
+    {c:"已经",p:"yǐjīng",m:"уже",e:"✅",cat:"basics",a:"Уже + проходить. 'И-цзин'."},
+    {c:"还没",p:"hái méi",m:"ещё нет",e:"⏳",cat:"basics",a:"Ещё + не иметь. 'Хай мэй'."},
+    {c:"马上",p:"mǎshàng",m:"сейчас же",e:"⚡",cat:"basics",a:"Лошадь + верх. 'Ма-шан'."},
+    {c:"一会儿",p:"yīhuìr",m:"через минуту",e:"⏱️",cat:"basics",a:"Один + встреча儿. 'И-хуэйр'."},
+    {c:"以前",p:"yǐqián",m:"раньше",e:"📅",cat:"basics",a:"Уже + впереди. 'И-цянь'."},
+    {c:"以后",p:"yǐhòu",m:"позже",e:"📅",cat:"basics",a:"Уже + сзади. 'И-хоу'."},
+    {c:"刚才",p:"gāngcái",m:"только что",e:"👈",cat:"basics",a:"Сталь + talent. 'Ган-цай'."},
+    {c:"马上",p:"mǎshàng",m:"сразу",e:"🏃",cat:"basics",a:"Лошадь + над. 'Ма-шан'."},
+    {c:"快",p:"kuài",m:"быстро",e:"⚡",cat:"basics",a:"Сердце + развилка. 'Куай'."},
+    {c:"慢",p:"màn",m:"медленно",e:"🐌",cat:"basics",a:"Сердце + день. 'Мань'."},
+    {c:"早",p:"zǎo",m:"рано",e:"🌅",cat:"basics",a:"Солнце + десять. 'Цзао'."},
+    {c:"晚",p:"wǎn",m:"поздно",e:"🌙",cat:"basics",a:"Солнце +免除. 'Вань'."},
+    {c:"迟到",p:"chídào",m:"опоздать",e:"⏰",cat:"basics",a:"Шагать + дорога. 'Чи-дао'."},
+    {c:"准时",p:"zhǔnshí",m:"вовремя",e:"⏱️",cat:"basics",a:"Точный + время. 'Чжунь-ши'."},
+    {c:"天气",p:"tiānqì",m:"погода",e:"🌤️",cat:"basics",a:"Небо + газ/воздух. 'Тянь-ци'."},
+    {c:"晴天",p:"qíngtiān",m:"ясная погода",e:"☀️",cat:"basics",a:"Солнце + день. 'Цин-тянь'."},
+    {c:"阴天",p:"yīntiān",m:"пасмурно",e:"☁️",cat:"basics",a:"Тень/серебро + день. 'Инь-тянь'."},
+    {c:"下雨",p:"xià yǔ",m:"идёт дождь",e:"🌧️",cat:"basics",a:"Опускаться + дождь. 'Ся юй'."},
+    {c:"刮风",p:"guā fēng",m:"дует ветер",e:"💨",cat:"basics",a:"Скрести + ветер. 'Гуа фэн'."},
+    {c:"下雪",p:"xià xuě",m:"идёт снег",e:"❄️",cat:"basics",a:"Опускаться + снег. 'Ся сюэ'."},
+    {c:"温度",p:"wēndù",m:"температура",e:"🌡️",cat:"basics",a:"Тёплый + градус. 'Вэнь-ду'."},
+    {c:"度",p:"dù",m:"градус",e:"📏",cat:"basics",a:"Широкий + снова. 'Ду'."},
+    {c:"春天",p:"chūntiān",m:"весна",e:"🌸",cat:"basics",a:"Три + человек + день. 'Чунь-тянь'."},
+    {c:"夏天",p:"xiàtiān",m:"лето",e:"☀️",cat:"basics",a:"Глаз + нога + день. 'Ся-тянь'."},
+    {c:"秋天",p:"qiūtiān",m:"осень",e:"🍂",cat:"basics",a:"Зерно + огонь. 'Цю-тянь'."},
+    {c:"冬天",p:"dōngtiān",m:"зима",e:"❄️",cat:"basics",a:"Лёд + солнце + два. 'Дун-тянь'."},
+    {c:"季节",p:"jìjié",m:"сезон",e:"📅",cat:"basics",a:"Дитя + узел. 'Цзи-цзе'."},
+    {c:"潮湿",p:"cháoshī",m:"влажно",e:"💧",cat:"basics",a:"Вода +朝. 'Чао-ши'."},
+    {c:"干燥",p:"gānzào",m:"сухо",e:"🌵",cat:"basics",a:"Щит + жар. 'Гань-цао'."},
+    {c:"凉快",p:"liángkuai",m:"прохладно",e:"🍃",cat:"basics",a:"Два льда + быстро. 'Лян-куай'."},
+    {c:"暖和",p:"nuǎnhuo",m:"тепло",e:"🌡️",cat:"basics",a:"Солнце + помощь. 'Нуань-хо'."},
+    {c:"冷",p:"lěng",m:"холодно",e:"❄️",cat:"basics",a:"Два точки + приказ. 'Лэн'."},
+    {c:"热",p:"rè",m:"жарко",e:"🔥",cat:"basics",a:"Воздух + огонь. 'Жэ'."},
+    {c:"舒服",p:"shūfu",m:"удобно",e:"😌",cat:"basics",a:"Давать + человек. 'Шу-фу'."},
+    {c:"累",p:"lèi",m:"устал",e:"😫",cat:"basics",a:"Поле + нить. 'Лэй'."},
+    {c:"开心",p:"kāixīn",m:"счастлив",e:"😄",cat:"basics",a:"Открывать + сердце. 'Кай-синь'."},
+    {c:"难过",p:"nánguò",m:"грустно",e:"😢",cat:"basics",a:"Трудно + проходить. 'Нань-гуо'."},
+    {c:"生气",p:"shēngqì",m:"злиться",e:"😠",cat:"basics",a:"Рождаться + газ. 'Шэн-ци'."},
+    {c:"害怕",p:"hàipà",m:"бояться",e:"😨",cat:"basics",a:"Сердце + белый. 'Хай-па'."},
+    {c:"着急",p:"zhāojí",m:"волноваться",e:"😟",cat:"basics",a:"Солнце + срочный. 'Чжао-цзи'."},
+    {c:"兴奋",p:"xīngfèn",m:"возбуждён",e:"🤩",cat:"basics",a:"Возрождаться + разделять. 'Син-фэнь'."},
+    {c:"安静",p:"ānjìng",m:"тихо",e:"🤫",cat:"basics",a:"Крыша + спокойствие. 'Ань-цзин'."},
+    {c:"热闹",p:"rènao",m:"шумно/оживлённо",e:"🎉",cat:"basics",a:"Огонь + дверь. 'Жэ-нао'."},
+    {c:"忙",p:"máng",m:"занят",e:"🏃",cat:"basics",a:"Сердце + смерть. 'Ман'."},
+    {c:"空闲",p:"kòngxián",m:"свободен",e:"🛋️",cat:"basics",a:"Пустота + дверь. 'Кун-сянь'."},
+    {c:"无聊",p:"wúliáo",m:"скучно",e:"😒",cat:"basics",a:"Нет + скука. 'У-ляо'."},
+    {c:"有意思",p:"yǒu yìsi",m:"интересно",e:"🤓",cat:"basics",a:"Иметь + смысл. 'Ю и-сы'."},
+    {c:"没意思",p:"méi yìsi",m:"неинтересно",e:"😑",cat:"basics",a:"Нет + смысл. 'Мэй и-сы'."},
+    {c:"漂亮",p:"piàoliang",m:"красивый",e:"😍",cat:"basics",a:"Шёлк + вёдро. 'Пяо-лян'."},
+    {c:"帅",p:"shuài",m:"красивый (муж)",e:"😎",cat:"basics",a:"Ткань + учитель. 'Шуай'."},
+    {c:"可爱",p:"kě'ài",m:"милый",e:"🥰",cat:"basics",a:"Можно + любить. 'Кэ-ай'."},
+    {c:"聪明",p:"cōngmíng",m:"умный",e:"🧠",cat:"basics",a:"Ухо + глаз + день. 'Цун-мин'."},
+    {c:"笨",p:"bèn",m:"глупый",e:"🤪",cat:"basics",a:"Бамбук + корень. 'Бэнь'."},
+    {c:"勇敢",p:"yǒnggǎn",m:"смелый",e:"🦁",cat:"basics",a:"Сила + мужество. 'Юн-гань'."},
+    {c:"胆小",p:"dǎnxiǎo",m:"трусливый",e:"🐭",cat:"basics",a:"Желчь + маленький. 'Дань-сяо'."},
+    {c:"善良",p:"shànliáng",m:"добрый",e:"😇",cat:"basics",a:"Хороший + хороший. 'Шань-лян'."},
+    {c:"坏",p:"huài",m:"плохой",e:"👎",cat:"basics",a:"Земля + не. 'Хуай'."},
+    {c:"懒",p:"lǎn",m:"ленивый",e:"🦥",cat:"basics",a:"Сердце +赖. 'Лань'."},
+    {c:"勤快",p:"qínkuai",m:"усердный",e:"🐝",cat:"basics",a:"Жёлтый + быстрый. 'Цинь-куай'."},
+    {c:"诚实",p:"chéngshí",m:"честный",e:"🤝",cat:"basics",a:"Слово + правда. 'Чэн-ши'."},
+    {c:"撒谎",p:"sāhuǎng",m:"врать",e:"🤥",cat:"basics",a:"Распускать + ложь. 'Са-хуан'."},
+    {c:"信任",p:"xìnrèn",m:"доверять",e:"🤝",cat:"basics",a:"Слово + человек. 'Синь-жэнь'."},
+    {c:"怀疑",p:"huáiyí",m:"сомневаться",e:"🤔",cat:"basics",a:"Сердце + сомнение. 'Хуай-и'."},
+    {c:"希望",p:"xīwàng",m:"надеяться",e:"🌟",cat:"basics",a:"希 + месяц/король. 'Си-ван'."},
+    {c:"梦想",p:"mèngxiǎng",m:"мечта",e:"💭",cat:"basics",a:"Лес + думать. 'Мэн-сян'."},
+    {c:"成功",p:"chénggōng",m:"успех",e:"🏆",cat:"basics",a:"Становиться + работа. 'Чэн-гун'."},
+    {c:"失败",p:"shībài",m:"провал",e:"📉",cat:"basics",a:"Терять + поражение. 'Ши-бай'."},
+    {c:"努力",p:"nǔlì",m:"стараться",e:"💪",cat:"basics",a:"Женщина + сила. 'Ну-ли'."},
+    {c:"放弃",p:"fàngqì",m:"сдаваться",e:"🏳️",cat:"basics",a:"Отпускать + отказ. 'Фан-ци'."},
+    {c:"坚持",p:"jiānchí",m:"продолжать",e:"🏃",cat:"basics",a:"Крепкий + держать. 'Цзянь-чи'."},
+    {c:"进步",p:"jìnbù",m:"прогресс",e:"📈",cat:"basics",a:"Входить + шаг. 'Цзинь-бу'."},
+    {c:"退步",p:"tuìbù",m:"отставать",e:"📉",cat:"basics",a:"Отступать + шаг. 'Туй-бу'."},
+    {c:"学习",p:"xuéxí",m:"учиться",e:"📚",cat:"basics",a:"Дверь/сын + крылья. 'Сюэ-си'."},
+    {c:"复习",p:"fùxí",m:"повторять",e:"🔄",cat:"basics",a:"Снова + крылья. 'Фу-си'."},
+    {c:"预习",p:"yùxí",m:"готовиться заранее",e:"📖",cat:"basics",a:"Предварительно + крылья. 'Юй-си'."},
+    {c:"练习",p:"liànxí",m:"практиковаться",e:"🏋️",cat:"basics",a:"Шёлк + крылья. 'Лянь-си'."},
+    {c:"考试",p:"kǎoshì",m:"экзамен",e:"📝",cat:"basics",a:"Старый + дело. 'Као-ши'."},
+    {c:"及格",p:"jígé",m:"сдать экзамен",e:"✅",cat:"basics",a:"Достигать + сетка. 'Цзи-гэ'."},
+    {c:"不及格",p:"bù jígé",m:"не сдать",e:"❌",cat:"basics",a:"Не + достигать + сетка. 'Бу цзи-гэ'."},
+    {c:"毕业",p:"bìyè",m:"окончить учёбу",e:"🎓",cat:"basics",a:"Завершать + занятие. 'Би-е'."},
+    {c:"大学",p:"dàxué",m:"университет",e:"🎓",cat:"basics",a:"Большой + учиться. 'Да-сюэ'."},
+    {c:"老师",p:"lǎoshī",m:"учитель",e:"👨‍🏫",cat:"basics",a:"Старый + мастер. 'Лао-ши'."},
+    {c:"学生",p:"xuésheng",m:"ученик",e:"👨‍🎓",cat:"basics",a:"Учиться + рождаться. 'Сюэ-шэн'."},
+    {c:"同学",p:"tóngxué",m:"одноклассник",e:"👫",cat:"basics",a:"Одинаковый + учиться. 'Тун-сюэ'."},
+    {c:"朋友",p:"péngyou",m:"друг",e:"👫",cat:"basics",a:"Ракушка + луна. 'Пэн-йоу'."},
+    {c:"同学",p:"tóngxué",m:"одноклассник",e:"👬",cat:"basics",a:"Одинаковый + учиться. 'Тун-сюэ'."},
+    {c:"邻居",p:"línjū",m:"сосед",e:"🏘️",cat:"basics",a:"Лес + жить. 'Линь-цзюй'."},
+    {c:"亲戚",p:"qīnqi",m:"родственник",e:"👨‍👩‍👧‍👦",cat:"basics",a:"Близкий + связь. 'Цинь-ци'."},
+    {c:"家人",p:"jiārén",m:"семья",e:"👨‍👩‍👧‍👦",cat:"basics",a:"Дом + человек. 'Цзя-жэнь'."},
+    {c:"丈夫",p:"zhàngfu",m:"муж",e:"👨",cat:"basics",a:"Десять + человек. 'Чжан-фу'."},
+    {c:"妻子",p:"qīzi",m:"жена",e:"👩",cat:"basics",a:"Женщина + ребёнок. 'Ци-цзы'."},
+    {c:"儿子",p:"érzi",m:"сын",e:"👦",cat:"basics",a:"Сын + ребёнок. 'Эр-цзы'."},
+    {c:"女儿",p:"nǚ'ér",m:"дочь",e:"👧",cat:"basics",a:"Женщина + сын. 'Нюй-эр'."},
+    {c:"哥哥",p:"gēge",m:"старший брат",e:"👦",cat:"basics",a:"Копьё + брат. 'Гэ-гэ'."},
+    {c:"弟弟",p:"dìdi",m:"младший брат",e:"👶",cat:"basics",a:"Бамбук + младший. 'Ди-ди'."},
+    {c:"姐姐",p:"jiějie",m:"старшая сестра",e:"👧",cat:"basics",a:"Женщина + узел. 'Цзе-цзе'."},
+    {c:"妹妹",p:"mèimei",m:"младшая сестра",e:"👧",cat:"basics",a:"Женщина + будущее. 'Мэй-мэй'."},
+    {c:"爷爷",p:"yéye",m:"дедушка (по отцу)",e:"👴",cat:"basics",a:"Отец + отец. 'Е-е'."},
+    {c:"奶奶",p:"nǎinai",m:"бабушка (по отцу)",e:"👵",cat:"basics",a:"Женщина + молоко. 'Най-най'."},
+    {c:"外公",p:"wàigōng",m:"дедушка (по матери)",e:"👴",cat:"basics",a:"Внешний + общественный. 'Вай-гун'."},
+    {c:"外婆",p:"wàipó",m:"бабушка (по матери)",e:"👵",cat:"basics",a:"Внешний + старуха. 'Вай-по'."},
+    {c:"叔叔",p:"shūshu",m:"дядя (младший брата отца)",e:"👨",cat:"basics",a:"Брать + младший. 'Шу-шу'."},
+    {c:"阿姨",p:"āyí",m:"тётя",e:"👩",cat:"basics",a:"Крыша + женщина. 'А-и'."},
+    {c:"舅舅",p:"jiùjiu",m:"дядя (брат матери)",e:"👨",cat:"basics",a:"Старый + старый. 'Цзю-цзю'."},
+    {c:"姑姑",p:"gūgu",m:"тётя (сестра отца)",e:"👩",cat:"basics",a:"Женщина + древний. 'Гу-гу'."},
+    {c:"表哥",p:"biǎogē",m:"двоюродный брат (старший)",e:"👦",cat:"basics",a:"Таблица + старший брат. 'Бяо-гэ'."},
+    {c:"表妹",p:"biǎomèi",m:"двоюродная сестра (младшая)",e:"👧",cat:"basics",a:"Таблица + младшая сестра. 'Бяо-мэй'."},
+    {c:"孙子",p:"sūnzi",m:"внук",e:"👦",cat:"basics",a:"Ребёнок + малый. 'Сунь-цзы'."},
+    {c:"孙女",p:"sūnnǚ",m:"внучка",e:"👧",cat:"basics",a:"Ребёнок + женщина. 'Сунь-нюй'."},
+    {c:"祖先",p:"zǔxiān",m:"предок",e:"📜",cat:"basics",a:"Алтарь + впереди. 'Цзу-сянь'."},
+    {c:"后代",p:"hòudài",m:"потомок",e:"🌳",cat:"basics",a:"Сзади + поколение. 'Хоу-дай'."},
+    {c:"家族",p:"jiāzú",m:"клан",e:"👨‍👩‍👧‍👦",cat:"basics",a:"Дом + стрела/солнце. 'Цзя-цзу'."},
+    {c:"家庭",p:"jiātíng",m:"домашняя обстановка",e:"🏠",cat:"basics",a:"Дом + суд/двор. 'Цзя-тин'."},
+    {c:"幸福",p:"xìngfú",m:"счастье",e:"😊",cat:"basics",a:"Счастье + одежда. 'Син-фу'."},
+    {c:"快乐",p:"kuàilè",m:"радость",e:"😄",cat:"basics",a:"Сердце + радость. 'Куай-лэ'."},
+    {c:"痛苦",p:"tòngkǔ",m:"страдание",e:"😣",cat:"basics",a:"Боль + горький. 'Тун-ку'."},
+    {c:"悲伤",p:"bēishāng",m:"горе",e:"😢",cat:"basics",a:"Не-сердце + рана. 'Бэй-шан'."},
+    {c:"愤怒",p:"fènnù",m:"злость",e:"😠",cat:"basics",a:"Возбуждение + раб. 'Фэнь-ну'."},
+    {c:"惊讶",p:"jīngyà",m:"удивление",e:"😲",cat:"basics",a:"Сердце + необычный. 'Цзин-я'."},
+    {c:"害羞",p:"hàixiū",m:"стеснение",e:"😳",cat:"basics",a:"Страх + стыд. 'Хай-сю'."},
+    {c:"骄傲",p:"jiāo'ào",m:"гордость",e:"🦚",cat:"basics",a:"Высокий + гордый. 'Цзяо-ао'."},
+    {c:"谦虚",p:"qiānxū",m:"скромность",e:"🙇",cat:"basics",a:"Скромный + пустота. 'Цянь-сюй'."},
+    {c:"自信",p:"zìxìn",m:"уверенность",e:"💪",cat:"basics",a:"Себя + вера. 'Цзы-синь'."},
+    {c:"自卑",p:"zìbēi",m:"неуверенность",e:"😔",cat:"basics",a:"Себя + низкий. 'Цзы-бэй'."},
+    {c:"乐观",p:"lèguān",m:"оптимизм",e:"🌞",cat:"basics",a:"Радость + смотреть. 'Лэ-гуань'."},
+    {c:"悲观",p:"bēiguān",m:"пессимизм",e:"🌧️",cat:"basics",a:"Грусть + смотреть. 'Бэй-гуань'."},
+    {c:"冷静",p:"lěngjìng",m:"хладнокровие",e:"🧊",cat:"basics",a:"Холод + спокойствие. 'Лэн-цзин'."},
+    {c:"冲动",p:"chōngdòng",m:"импульсивность",e:"💥",cat:"basics",a:"Бросать + движение. 'Чун-дун'."},
+    {c:"耐心",p:"nàixīn",m:"терпение",e:"⏳",cat:"basics",a:"Терпеть + сердце. 'Най-синь'."},
+    {c:"急躁",p:"jízào",m:"нетерпение",e:"🔥",cat:"basics",a:"Срочность + сухость. 'Цзи-цао'."},
+    {c:"宽容",p:"kuānróng",m:"терпимость",e:"🤝",cat:"basics",a:"Широкий + содержать. 'Куань-жун'."},
+    {c:"严厉",p:"yánlì",m:"строгость",e:"📏",cat:"basics",a:"Острый + сильный. 'Янь-ли'."},
+    {c:"温柔",p:"wēnróu",m:"нежность",e:"🌸",cat:"basics",a:"Тепло + дерево. 'Вэнь-жоу'."},
+    {c:"粗暴",p:"cūbào",m:"грубость",e:"👊",cat:"basics",a:"Грубый + жестокий. 'Цу-бао'."},
+    {c:"礼貌",p:"lǐmào",m:"вежливость",e:"🙏",cat:"basics",a:"Ритуал + внешний вид. 'Ли-мао'."},
+    {c:"粗鲁",p:"cūlǔ",m:"невежливость",e:"🤬",cat:"basics",a:"Грубый + деревня. 'Цу-лу'."},
+    {c:"诚实",p:"chéngshí",m:"честность",e:"💎",cat:"basics",a:"Слово + правда. 'Чэн-ши'."},
+    {c:"虚伪",p:"xūwěi",m:"лицемерие",e:"🎭",cat:"basics",a:"Пустота + ложь. 'Сюй-вэй'."},
+    {c:"忠诚",p:"zhōngchéng",m:"верность",e:"🐕",cat:"basics",a:"Центр + слово. 'Чжун-чэн'."},
+    {c:"背叛",p:"bèipàn",m:"предательство",e:"🗡️",cat:"basics",a:"Против + половина. 'Бэй-пань'."},
+    {c:"友谊",p:"yǒuyì",m:"дружба",e:"🤝",cat:"basics",a:"Друг + значение. 'Ю-и'."},
+    {c:"爱情",p:"àiqíng",m:"любовь (романт.)",e:"❤️",cat:"basics",a:"Любить + чувство. 'Ай-цин'."},
+    {c:"亲情",p:"qīnqíng",m:"родственная любовь",e:"👨‍👩‍👧‍👦",cat:"basics",a:"Близкий + чувство. 'Цинь-цин'."},
+    {c:"恩情",p:"ēnqíng",m:"благодарность/долг",e:"🙏",cat:"basics",a:"Благодать + чувство. 'Энь-цин'."},
+    {c:"仇恨",p:"chóuhèn",m:"ненависть",e:"😡",cat:"basics",a:"Враг + ненавидеть. 'Чоу-хэнь'."},
+    {c:"嫉妒",p:"jídù",m:"ревность/зависть",e:"💚",cat:"basics",a:"Болезнь + запрещать. 'Цзи-ду'."},
+    {c:"同情",p:"tóngqíng",m:"сочувствие",e:"🤗",cat:"basics",a:"Одинаковый + чувство. 'Тун-цин'."},
+    {c:"冷漠",p:"lěngmò",m:"равнодушие",e:"❄️",cat:"basics",a:"Холод + молчать. 'Лэн-мо'."},
+    {c:"热情",p:"rèqíng",m:"энтузиазм",e:"🔥",cat:"basics",a:"Жар + чувство. 'Жэ-цин'."},
+    {c:"无聊",p:"wúliáo",m:"скука",e:"😒",cat:"basics",a:"Нет + скука. 'У-ляо'."},
+    {c:"有趣",p:"yǒuqù",m:"интересный",e:"😄",cat:"basics",a:"Иметь + направление. 'Ю-цюй'."},
+    {c:"奇怪",p:"qíguài",m:"странный",e:"🤨",cat:"basics",a:"Особый + сердитый. 'Ци-гуай'."},
+    {c:"正常",p:"zhèngcháng",m:"нормальный",e:"✅",cat:"basics",a:"Правильный + обычный. 'Чжэн-чан'."},
+    {c:"特殊",p:"tèshū",m:"особый",e:"⭐",cat:"basics",a:"Бык + специальный. 'Тэ-шу'."},
+    {c:"普通",p:"pǔtōng",m:"обычный",e:"📦",cat:"basics",a:"Широкий + проходить. 'Пу-тун'."},
+    {c:"罕见",p:"hǎnjiàn",m:"редкий",e:"🔍",cat:"basics",a:"Редкий + видеть. 'Хань-цзянь'."},
+    {c:"常见",p:"chángjiàn",m:"распространённый",e:"👀",cat:"basics",a:"Обычный + видеть. 'Чан-цзянь'."},
+    {c:"重要",p:"zhòngyào",m:"важный",e:"📌",cat:"basics",a:"Тяжёлый + необходимый. 'Чжун-яо'."},
+    {c:"次要",p:"cìyào",m:"второстепенный",e:"📎",cat:"basics",a:"Следующий + необходимый. 'Цы-яо'."},
+    {c:"关键",p:"guānjiàn",m:"ключевой",e:"🔑",cat:"basics",a:"Замок + стрела. 'Гуань-цзянь'."},
+    {c:"基础",p:"jīchǔ",m:"основа",e:"🧱",cat:"basics",a:"Фундамент + склад. 'Цзи-чу'."},
+    {c:"高级",p:"gāojí",m:"продвинутый",e:"📈",cat:"basics",a:"Высокий + уровень. 'Гао-цзи'."},
+    {c:"简单",p:"jiǎndān",m:"простой",e:"🟢",cat:"basics",a:"Бамбук + одинокий. 'Цзянь-дань'."},
+    {c:"复杂",p:"fùzá",m:"сложный",e:"🔴",cat:"basics",a:"Снова + смешанный. 'Фу-ца'."},
+    {c:"容易",p:"róngyì",m:"лёгкий",e:"🟢",cat:"basics",a:"Содержать + лёгкость. 'Жун-и'."},
+    {c:"困难",p:"kùnnán",m:"трудный",e:"🔴",cat:"basics",a:"Обёртка + трудный. 'Кунь-нань'."},
+    {c:"清楚",p:"qīngchu",m:"понятный",e:"👁️",cat:"basics",a:"Чистый + дерево. 'Цин-чу'."},
+    {c:"模糊",p:"móhu",m:"размытый",e:"🌫️",cat:"basics",a:"Масло + ветер. 'Мо-ху'."},
+    {c:"明显",p:"míngxiǎn",m:"очевидный",e:"💡",cat:"basics",a:"Ясный + проявлять. 'Мин-сянь'."},
+    {c:"隐藏",p:"yǐncáng",m:"скрытый",e:"🙈",cat:"basics",a:"Холм + прятать. 'Инь-цан'."},
+    {c:"公开",p:"gōngkāi",m:"публичный",e:"📢",cat:"basics",a:"Общественный + открывать. 'Гун-кай'."},
+    {c:"秘密",p:"mìmì",m:"секрет",e:"🤫",cat:"basics",a:"Ближайший + необходимый. 'Ми-ми'."},
+    {c:"安全",p:"ānquán",m:"безопасный",e:"🛡️",cat:"basics",a:"Крыша + полный. 'Ань-цюань'."},
+    {c:"危险",p:"wēixiǎn",m:"опасный",e:"⚠️",cat:"basics",a:"Высокий + узкий. 'Вэй-сянь'."},
+    {c:"保护",p:"bǎohù",m:"защищать",e:"🛡️",cat:"basics",a:"Сохранять + охранять. 'Бао-ху'."},
+    {c:"攻击",p:"gōngjī",m:"атаковать",e:"⚔️",cat:"basics",a:"Работать + ударять. 'Гун-цзи'."},
+    {c:"防御",p:"fángyù",m:"обороняться",e:"🏰",cat:"basics",a:"Стена + защищать. 'Фан-юй'."},
+    {c:"胜利",p:"shènglì",m:"победа",e:"🏆",cat:"basics",a:"Созревать + сила. 'Шэн-ли'."},
+    {c:"失败",p:"shībài",m:"поражение",e:"📉",cat:"basics",a:"Терять + разбивать. 'Ши-бай'."},
+    {c:"和平",p:"hépíng",m:"мир",e:"🕊️",cat:"basics",a:"Хлеб + ровный. 'Хэ-пин'."},
+    {c:"战争",p:"zhànzhēng",m:"война",e:"💣",cat:"basics",a:"Занимать + спор. 'Чжань-чжэн'."},
+    {c:"自由",p:"zìyóu",m:"свобода",e:"🕊️",cat:"basics",a:"Себя + причина. 'Цзы-ю'."},
+    {c:"平等",p:"píngděng",m:"равенство",e:"⚖️",cat:"basics",a:"Ровный + бамбук. 'Пин-дэн'."},
+    {c:"公正",p:"gōngzhèng",m:"справедливость",e:"⚖️",cat:"basics",a:"Общественный + правильный. 'Гун-чжэн'."},
+    {c:"偏见",p:"piānjiàn",m:"предрассудок",e:"👁️",cat:"basics",a:"Сторона + видеть. 'Пянь-цзянь'."},
+    {c:"歧视",p:"qíshì",m:"дискриминация",e:"🚫",cat:"basics",a:"Странность + смотреть. 'Ци-ши'."},
+    {c:"尊重",p:"zūnzhòng",m:"уважение",e:"🙇",cat:"basics",a:"Почитать + тяжёлый. 'Цзунь-чжун'."},
+    {c:"侮辱",p:"wǔrǔ",m:"оскорбление",e:"😡",cat:"basics",a:"Война + грязь. 'У-жу'."},
+    {c:"赞美",p:"zànměi",m:"восхищение",e:"👏",cat:"basics",a:"Помощь + красивый. 'Цзань-мэй'."},
+    {c:"批评",p:"pīpíng",m:"критика",e:"📝",cat:"basics",a:"Нож + ровный. 'Пи-пин'."},
+    {c:"建议",p:"jiànyì",m:"предложение",e:"💡",cat:"basics",a:"Строить + смысл. 'Цзянь-и'."},
+    {c:"命令",p:"mìnglìng",m:"приказ",e:"📢",cat:"basics",a:"Рот + повелитель. 'Мин-лин'."},
+    {c:"请求",p:"qǐngqiú",m:"просьба",e:"🙏",cat:"basics",a:"Просить + молить. 'Цин-цю'."},
+    {c:"拒绝",p:"jùjué",m:"отказ",e:"🙅",cat:"basics",a:"Большой + острый. 'Цзюй-цзюэ'."},
+    {c:"接受",p:"jiēshòu",m:"принимать",e:"🤝",cat:"basics",a:"Принимать + получать. 'Цзе-шоу'."},
+    {c:"同意",p:"tóngyì",m:"соглашаться",e:"✅",cat:"basics",a:"Одинаковый + смысл. 'Тун-и'."},
+    {c:"反对",p:"fǎnduì",m:"против",e:"🙅",cat:"basics",a:"Обратный + правильный. 'Фань-дуй'."},
+    {c:"支持",p:"zhīchí",m:"поддерживать",e:"💪",cat:"basics",a:"Ветка + держать. 'Чжи-чи'."},
+    {c:"反对",p:"fǎnduì",m:"противостоять",e:"⛔",cat:"basics",a:"Обратный + правильный. 'Фань-дуй'."},
+    {c:"合作",p:"hézuò",m:"сотрудничество",e:"🤝",cat:"basics",a:"Согласие + делать. 'Хэ-цзо'."},
+    {c:"竞争",p:"jìngzhēng",m:"конкуренция",e:"🏁",cat:"basics",a:"Стоять + спор. 'Цзин-чжэн'."},
+    {c:"成功",p:"chénggōng",m:"успех",e:"🏆",cat:"basics",a:"Становиться + работа. 'Чэн-гун'."},
+    {c:"失败",p:"shībài",m:"провал",e:"📉",cat:"basics",a:"Терять + разбивать. 'Ши-бай'."},
+    {c:"努力",p:"nǔlì",m:"усилие",e:"💪",cat:"basics",a:"Женщина + сила. 'Ну-ли'."},
+    {c:"懒惰",p:"lǎnduò",m:"лень",e:"🦥",cat:"basics",a:"Сердце + падать. 'Лань-дуо'."},
+    {c:"勤奋",p:"qínfèn",m:"усердие",e:"🐝",cat:"basics",a:"Жёлтый + разделять. 'Цинь-фэнь'."},
+    {c:"聪明",p:"cōngmíng",m:"ум",e:"🧠",cat:"basics",a:"Ухо + глаз + день. 'Цун-мин'."},
+    {c:"愚蠢",p:"yúchǔn",m:"глупость",e:"🤪",cat:"basics",a:"Рыба + весна. 'Юй-чунь'."},
+    {c:"知识",p:"zhīshi",m:"знания",e:"📚",cat:"basics",a:"Стрела + рот. 'Чжи-ши'."},
+    {c:"无知",p:"wúzhī",m:"невежество",e:"🙈",cat:"basics",a:"Нет + знание. 'У-чжи'."},
+    {c:"经验",p:"jīngyàn",m:"опыт",e:"🧪",cat:"basics",a:"Шёлк + проверять. 'Цзин-янь'."},
+    {c:"教训",p:"jiàoxun",m:"урок",e:"📖",cat:"basics",a:"Обучать + гладить. 'Цзяо-сюнь'."},
+    {c:"学习",p:"xuéxí",m:"обучение",e:"🎓",cat:"basics",a:"Дверь/сын + крылья. 'Сюэ-си'."},
+    {c:"教育",p:"jiàoyù",m:"образование",e:"🏫",cat:"basics",a:"Обучать + воспитывать. 'Цзяо-юй'."},
+    {c:"学校",p:"xuéxiào",m:"школа",e:"🏫",cat:"basics",a:"Учиться +郊. 'Сюэ-сяо'."},
+    {c:"大学",p:"dàxué",m:"университет",e:"🎓",cat:"basics",a:"Большой + учиться. 'Да-сюэ'."},
+    {c:"老师",p:"lǎoshī",m:"преподаватель",e:"👨‍🏫",cat:"basics",a:"Старый + мастер. 'Лао-ши'."},
+    {c:"学生",p:"xuéshēng",m:"студент",e:"👨‍🎓",cat:"basics",a:"Учиться + рождаться. 'Сюэ-шэн'."},
+    {c:"课本",p:"kèběn",m:"учебник",e:"📖",cat:"basics",a:"Класс + корень. 'Кэ-бэнь'."},
+    {c:"作业",p:"zuòyè",m:"домашка",e:"📝",cat:"basics",a:"Делать + занятие. 'Цзо-е'."},
+    {c:"考试",p:"kǎoshì",m:"экзамен",e:"📝",cat:"basics",a:"Старый + дело. 'Као-ши'."},
+    {c:"成绩",p:"chéngjì",m:"результат",e:"📊",cat:"basics",a:"Становиться + нить. 'Чэн-цзи'."},
+    {c:"分数",p:"fēnshù",m:"баллы",e:"🔢",cat:"basics",a:"Разделять + число. 'Фэнь-шу'."},
+    {c:"及格",p:"jígé",m:"сдача",e:"✅",cat:"basics",a:"Достигать + сетка. 'Цзи-гэ'."},
+    {c:"不及格",p:"bù jígé",m:"не сдача",e:"❌",cat:"basics",a:"Не + достигать + сетка. 'Бу цзи-гэ'."},
+    {c:"毕业",p:"bìyè",m:"выпуск",e:"🎓",cat:"basics",a:"Завершать + занятие. 'Би-е'."},
+    {c:"学位",p:"xuéwèi",m:"степень",e:"🎖️",cat:"basics",a:"Учиться + позиция. 'Сюэ-вэй'."},
+    {c:"博士",p:"bóshì",m:"доктор наук",e:"👨‍🔬",cat:"basics",a:"Широкий + учёный. 'Бо-ши'."},
+    {c:"硕士",p:"shuòshì",m:"магистр",e:"🎓",cat:"basics",a:"Большой + учёный. 'Шо-ши'."},
+    {c:"本科",p:"běnkē",m:"бакалавриат",e:"🎓",cat:"basics",a:"Корень + ветвь. 'Бэнь-кэ'."},
+    {c:"专科",p:"zhuānkē",m:"колледж",e:"🏫",cat:"basics",a:"Специальный + ветвь. 'Чжуань-кэ'."},
+    {c:"高中",p:"gāozhōng",m:"старшая школа",e:"🏫",cat:"basics",a:"Высокий + центр. 'Гао-чжун'."},
+    {c:"初中",p:"chūzhōng",m:"средняя школа",e:"🏫",cat:"basics",a:"Выходить + центр. 'Чу-чжун'."},
+    {c:"小学",p:"xiǎoxué",m:"начальная школа",e:"🏫",cat:"basics",a:"Маленький + учиться. 'Сяо-сюэ'."},
+    {c:"幼儿园",p:"yòu'éryuán",m:"детский сад",e:"👶",cat:"basics",a:"Младенец + ребёнок + двор. 'Ю-эр-юань'."},
+    {c:"教育",p:"jiàoyù",m:"образование",e:"🎓",cat:"basics",a:"Обучать + воспитывать. 'Цзяо-юй'."},
+    {c:"文化",p:"wénhuà",m:"культура",e:"🏛️",cat:"basics",a:"Текст + изменение. 'Вэнь-хуа'."},
+    {c:"历史",p:"lìshǐ",m:"история",e:"📜",cat:"basics",a:"Преходить +史官. 'Ли-ши'."},
+    {c:"地理",p:"dìlǐ",m:"география",e:"🌍",cat:"basics",a:"Земля + принцип. 'Ди-ли'."},
+    {c:"数学",p:"shùxué",m:"математика",e:"🔢",cat:"basics",a:"Число + учиться. 'Шу-сюэ'."},
+    {c:"物理",p:"wùlǐ",m:"физика",e:"⚛️",cat:"basics",a:"Вещь + принцип. 'У-ли'."},
+    {c:"化学",p:"huàxué",m:"химия",e:"⚗️",cat:"basics",a:"Изменение + учиться. 'Хуа-сюэ'."},
+    {c:"生物",p:"shēngwù",m:"биология",e:"🧬",cat:"basics",a:"Жизнь + вещь. 'Шэн-у'."},
+    {c:"英语",p:"yīngyǔ",m:"английский",e:"🇬🇧",cat:"basics",a:"Цветок + язык. 'Ин-юй'."},
+    {c:"中文",p:"zhōngwén",m:"китайский",e:"🇨🇳",cat:"basics",a:"Центр + текст. 'Чжун-вэнь'."},
+    {c:"俄语",p:"éyǔ",m:"русский",e:"🇷🇺",cat:"basics",a:"Россия + язык. 'Э-юй'."},
+    {c:"法语",p:"fǎyǔ",m:"французский",e:"🇫🇷",cat:"basics",a:"Метод + язык. 'Фа-юй'."},
+    {c:"德语",p:"déyǔ",m:"немецкий",e:"🇩🇪",cat:"basics",a:"Добродетель + язык. 'Дэ-юй'."},
+    {c:"日语",p:"rìyǔ",m:"японский",e:"🇯🇵",cat:"basics",a:"Солнце + язык. 'Жы-юй'."},
+    {c:"韩语",p:"hányǔ",m:"корейский",e:"🇰🇷",cat:"basics",a:"Хань + язык. 'Хань-юй'."},
+    {c:"西班牙语",p:"xībānyá yǔ",m:"испанский",e:"🇪🇸",cat:"basics",a:"Испания + язык. 'Си-бань-я юй'."},
+    {c:"阿拉伯语",p:"ālābó yǔ",m:"арабский",e:"🇸🇦",cat:"basics",a:"Аравия + язык. 'А-ла-бо юй'."},
+    {c:"语言",p:"yǔyán",m:"язык (общий)",e:"🗣️",cat:"basics",a:"Говорить + речь. 'Юй-янь'."},
+    {c:"说话",p:"shuōhuà",m:"говорить",e:"🗣️",cat:"basics",a:"Говорить + слова. 'Шуо-хуа'."},
+    {c:"写字",p:"xiězì",m:"писать",e:"✍️",cat:"basics",a:"Писать + иероглиф. 'Сье-цзы'."},
+    {c:"阅读",p:"yuèdú",m:"читать",e:"📖",cat:"basics",a:"Проходить через + читать. 'Юэ-ду'."},
+    {c:"听力",p:"tīnglì",m:"аудирование",e:"👂",cat:"basics",a:"Слушать + способность. 'Тин-ли'."},
+    {c:"口语",p:"kǒuyǔ",m:"разговорная речь",e:"🗣️",cat:"basics",a:"Рот + язык. 'Коу-юй'."},
+    {c:"发音",p:"fāyīn",m:"произношение",e:"🎙️",cat:"basics",a:"Пускать + звук. 'Фа-инь'."},
+    {c:"语法",p:"yǔfǎ",m:"грамматика",e:"📐",cat:"basics",a:"Язык + метод. 'Юй-фа'."},
+    {c:"词汇",p:"cíhuì",m:"словарный запас",e:"📚",cat:"basics",a:"Слово + собираться. 'Цы-хуэй'."},
+    {c:"句子",p:"jùzi",m:"предложение",e:"📝",cat:"basics",a:"Обёртывать + ребёнок. 'Цзюй-цзы'."},
+    {c:"段落",p:"duànluò",m:"абзац",e:"📄",cat:"basics",a:"Обрывать + падать. 'Дуань-ло'."},
+    {c:"文章",p:"wénzhāng",m:"статья",e:"📄",cat:"basics",a:"Текст + глава. 'Вэнь-чжан'."},
+    {c:"故事",p:"gùshi",m:"история/рассказ",e:"📖",cat:"basics",a:"Старый + дело. 'Гу-ши'."},
+    {c:"小说",p:"xiǎoshuō",m:"роман",e:"📚",cat:"basics",a:"Маленький + говорить. 'Сяо-шуо'."},
+    {c:"诗歌",p:"shīgē",m:"поэзия",e:"📜",cat:"basics",a:"Храм + песня. 'Ши-гэ'."},
+    {c:"戏剧",p:"xìjù",m:"драма/театр",e:"🎭",cat:"basics",a:"Игра + обёртывать. 'Си-цзюй'."},
+    {c:"电影",p:"diànyǐng",m:"фильм",e:"🎬",cat:"basics",a:"Электричество + тень. 'Дянь-ин'."},
+    {c:"音乐",p:"yīnyuè",m:"музыка",e:"🎵",cat:"basics",a:"Звук + музыка. 'Инь-юэ'."},
+    {c:"舞蹈",p:"wǔdǎo",m:"танец",e:"💃",cat:"basics",a:"Шагать + направлять. 'У-дао'."},
+    {c:"绘画",p:"huìhuà",m:"живопись",e:"🎨",cat:"basics",a:"Рисовать + картина. 'Хуэй-хуа'."},
+    {c:"摄影",p:"shèyǐng",m:"фотография",e:"📸",cat:"basics",a:"Стрелять + тень. 'Шэ-ин'."},
+    {c:"艺术",p:"yìshù",m:"искусство",e:"🎨",cat:"basics",a:"Искусство + техника. 'И-шу'."},
+    {c:"科学",p:"kēxué",m:"наука",e:"🔬",cat:"basics",a:"Ветка + учиться. 'Кэ-сюэ'."},
+    {c:"技术",p:"jìshù",m:"технология",e:"⚙️",cat:"basics",a:"Навык + техника. 'Цзи-шу'."},
+    {c:"工程",p:"gōngchéng",m:"инженерия",e:"🏗️",cat:"basics",a:"Работа + правило. 'Гун-чэн'."},
+    {c:"医学",p:"yīxué",m:"медицина",e:"🏥",cat:"basics",a:"Ящик + учиться. 'И-сюэ'."},
+    {c:"法律",p:"fǎlǜ",m:"право",e:"⚖️",cat:"basics",a:"Метод + нить. 'Фа-люй'."},
+    {c:"经济",p:"jīngjì",m:"экономика",e:"💰",cat:"basics",a:"Шёлк + помощь. 'Цзин-цзи'."},
+    {c:"政治",p:"zhèngzhì",m:"политика",e:"🏛️",cat:"basics",a:"Правильный + управлять. 'Чжэн-чжи'."},
+    {c:"社会",p:"shèhuì",m:"общество",e:"👥",cat:"basics",a:"Дух + собираться. 'Шэ-хуэй'."},
+    {c:"文化",p:"wénhuà",m:"культура",e:"🏛️",cat:"basics",a:"Текст + изменение. 'Вэнь-хуа'."},
+    {c:"传统",p:"chuántǒng",m:"традиция",e:"📜",cat:"basics",a:"Передавать + нить. 'Чуань-тун'."},
+    {c:"现代",p:"xiàndài",m:"современность",e:"🌆",cat:"basics",a:"Сейчас + поколение. 'Сянь-дай'."},
+    {c:"古代",p:"gǔdài",m:"древность",e:"🏺",cat:"basics",a:"Древний + поколение. 'Гу-дай'."},
+    {c:"未来",p:"wèilái",m:"будущее",e:"🚀",cat:"basics",a:"Вкус + приходить. 'Вэй-лай'."},
+    {c:"过去",p:"guòqù",m:"прошлое",e:"⏪",cat:"basics",a:"Проходить + уходить. 'Гуо-цюй'."},
+    {c:"现在",p:"xiànzài",m:"настоящее",e:"⏱️",cat:"basics",a:"Царь + земля. 'Сянь-цзай'."},
+    {c:"时间",p:"shíjiān",m:"время",e:"⏳",cat:"basics",a:"Солнце + промежуток. 'Ши-цзянь'."},
+    {c:"空间",p:"kōngjiān",m:"пространство",e:"🌌",cat:"basics",a:"Пустота + промежуток. 'Кун-цзянь'."},
+    {c:"物质",p:"wùzhì",m:"материя",e:"🧱",cat:"basics",a:"Вещь + качество. 'У-чжи'."},
+    {c:"精神",p:"jīngshén",m:"дух",e:"👻",cat:"basics",a:"Рис + шэнь. 'Цзин-шэнь'."},
+    {c:"灵魂",p:"línghún",m:"душа",e:"🕊️",cat:"basics",a:"Дух + облако. 'Лин-хунь'."},
+    {c:"思想",p:"sīxiǎng",m:"мысль",e:"💭",cat:"basics",a:"Поле + думать. 'Сы-сян'."},
+    {c:"意识",p:"yìshí",m:"сознание",e:"🧠",cat:"basics",a:"Смысл + знать. 'И-ши'."},
+    {c:"记忆",p:"jìyì",m:"память",e:"🧠",cat:"basics",a:"Говорить + смысл. 'Цзи-и'."},
+    {c:"遗忘",p:"yíwàng",m:"забывание",e:"📉",cat:"basics",a:"Оставлять + погибать. 'И-ван'."},
+    {c:"回忆",p:"huíyì",m:"воспоминание",e:"🎞️",cat:"basics",a:"Возвращаться + смысл. 'Хуэй-и'."},
+    {c:"梦想",p:"mèngxiǎng",m:"мечта",e:"💭",cat:"basics",a:"Сон + думать. 'Мэн-сян'."},
+    {c:"现实",p:"xiànshí",m:"реальность",e:"🌍",cat:"basics",a:"Сейчас + правда. 'Сянь-ши'."},
+    {c:"理想",p:"lǐxiǎng",m:"идеал",e:"🌟",cat:"basics",a:"Принцип + думать. 'Ли-сян'."},
+    {c:"目标",p:"mùbiāo",m:"цель",e:"🎯",cat:"basics",a:"Глаз + метка. 'Му-бяо'."},
+    {c:"计划",p:"jìhuà",m:"план",e:"📋",cat:"basics",a:"Говорить + изменение. 'Цзи-хуа'."},
+    {c:"准备",p:"zhǔnbèi",m:"подготовка",e:"🎒",cat:"basics",a:"Точный + приготовлять. 'Чжунь-бэй'."},
+    {c:"开始",p:"kāishǐ",m:"начало",e:"🚀",cat:"basics",a:"Открывать + женщина. 'Кай-ши'."},
+    {c:"结束",p:"jiéshù",m:"конец",e:"🏁",cat:"basics",a:"Узел + нить. 'Цзе-шу'."},
+    {c:"过程",p:"guòchéng",m:"процесс",e:"⚙️",cat:"basics",a:"Проходить + правило. 'Гуо-чэн'."},
+    {c:"结果",p:"jiéguǒ",m:"результат",e:"📊",cat:"basics",a:"Узел + дерево. 'Цзе-гуо'."},
+    {c:"原因",p:"yuányīn",m:"причина",e:"🔍",cat:"basics",a:"Сад + звук. 'Юань-инь'."},
+    {c:"结果",p:"jiéguǒ",m:"следствие",e:"📈",cat:"basics",a:"Узел + дерево. 'Цзе-гуо'."},
+    {c:"问题",p:"wèntí",m:"проблема",e:"❓",cat:"basics",a:"Ворота + лист. 'Вэнь-ти'."},
+    {c:"解决",p:"jiějué",m:"решение",e:"✅",cat:"basics",a:"Развязывать + острый. 'Цзе-цзюэ'."},
+    {c:"困难",p:"kùnnán",m:"трудность",e:"🧗",cat:"basics",a:"Обёртка + трудный. 'Кунь-нань'."},
+    {c:"挑战",p:"tiǎozhàn",m:"вызов",e:"⚔️",cat:"basics",a:"Рука + война. 'Тяо-чжань'."},
+    {c:"机会",p:"jīhuì",m:"шанс",e:"🎲",cat:"basics",a:"Машина + собираться. 'Цзи-хуэй'."},
+    {c:"选择",p:"xuǎnzé",m:"выбор",e:"🔀",cat:"basics",a:"Выбирать + правило. 'Сюань-цзэ'."},
+    {c:"决定",p:"juédìng",m:"решение",e:"📝",cat:"basics",a:"Острый + определён. 'Цзюэ-дин'."},
+    {c:"改变",p:"gǎibiàn",m:"изменение",e:"🔄",cat:"basics",a:"Изменять + уже. 'Гай-бянь'."},
+    {c:"发展",p:"fāzhǎn",m:"развитие",e:"📈",cat:"basics",a:"Пускать + раскрывать. 'Фа-чжань'."},
+    {c:"进步",p:"jìnbù",m:"прогресс",e:"🚀",cat:"basics",a:"Входить + шаг. 'Цзинь-бу'."},
+    {c:"退步",p:"tuìbù",m:"откат",e:"📉",cat:"basics",a:"Отступать + шаг. 'Туй-бу'."},
+    {c:"成功",p:"chénggōng",m:"успех",e:"🏆",cat:"basics",a:"Становиться + работа. 'Чэн-гун'."},
+    {c:"失败",p:"shībài",m:"неудача",e:"💔",cat:"basics",a:"Терять + разбивать. 'Ши-бай'."},
+    {c:"努力",p:"nǔlì",m:"труд",e:"💪",cat:"basics",a:"Женщина + сила. 'Ну-ли'."},
+    {c:"坚持",p:"jiānchí",m:"стойкость",e:"🛡️",cat:"basics",a:"Крепкий + держать. 'Цзянь-чи'."},
+    {c:"放弃",p:"fàngqì",m:"сдача",e:"🏳️",cat:"basics",a:"Отпускать + отказ. 'Фан-ци'."},
+    {c:"希望",p:"xīwàng",m:"надежда",e:"🌅",cat:"basics",a:"希 + месяц. 'Си-ван'."},
+    {c:"失望",p:"shīwàng",m:"разочарование",e:"😞",cat:"basics",a:"Терять + надежда. 'Ши-ван'."},
+    {c:"快乐",p:"kuàilè",m:"счастье",e:"😊",cat:"basics",a:"Быстрый + радость. 'Куай-лэ'."},
+    {c:"痛苦",p:"tòngkǔ",m:"боль",e:"😣",cat:"basics",a:"Проходить + горький. 'Тун-ку'."},
+    {c:"平静",p:"píngjìng",m:"спокойствие",e:"🌊",cat:"basics",a:"Ровный + спокойный. 'Пин-цзин'."},
+    {c:"激动",p:"jīdòng",m:"возбуждение",e:"🔥",cat:"basics",a:"Выстрел + движение. 'Цзи-дун'."},
+    {c:"安静",p:"ānjìng",m:"тишина",e:"🤫",cat:"basics",a:"Крыша + спокойный. 'Ань-цзин'."},
+    {c:"吵闹",p:"chǎonào",m:"шум",e:"📢",cat:"basics",a:"Сражаться + дверь. 'Чао-нао'."},
+    {c:"和谐",p:"héxié",m:"гармония",e:"🕊️",cat:"basics",a:"Согласие + согласный. 'Хэ-се'."},
+    {c:"冲突",p:"chōngtū",m:"конфликт",e:"💥",cat:"basics",a:"Бросать + внезапно. 'Чун-ту'."},
+    {c:"和平",p:"hépíng",m:"мир",e:"☮️",cat:"basics",a:"Согласие + ровный. 'Хэ-пин'."},
+    {c:"战争",p:"zhànzhēng",m:"война",e:"⚔️",cat:"basics",a:"Занимать + спор. 'Чжань-чжэн'."},
+    {c:"武器",p:"wǔqì",m:"оружие",e:"🔫",cat:"basics",a:"Стопа + сосуд. 'У-ци'."},
+    {c:"防御",p:"fángyù",m:"защита",e:"🛡️",cat:"basics",a:"Стена + защищать. 'Фан-юй'."},
+    {c:"攻击",p:"gōngjī",m:"атака",e:"🗡️",cat:"basics",a:"Работа + ударять. 'Гун-цзи'."},
+    {c:"胜利",p:"shènglì",m:"победа",e:"🏆",cat:"basics",a:"Созревать + сила. 'Шэн-ли'."},
+    {c:"失败",p:"shībài",m:"поражение",e:"🏳️",cat:"basics",a:"Терять + разбивать. 'Ши-бай'."},
+    {c:"团结",p:"tuánjié",m:"единство",e:"🤝",cat:"basics",a:"Круг + узел. 'Туань-цзе'."},
+    {c:"分裂",p:"fēnliè",m:"раскол",e:"💔",cat:"basics",a:"Разделять + резать. 'Фэнь-ле'."},
+    {c:"合作",p:"hézuò",m:"сотрудничество",e:"🤝",cat:"basics",a:"Согласие + делать. 'Хэ-цзо'."},
+    {c:"竞争",p:"jìngzhēng",m:"конкуренция",e:"🏁",cat:"basics",a:"Стоять + спор. 'Цзин-чжэн'."},
+    {c:"公平",p:"gōngpíng",m:"справедливость",e:"⚖️",cat:"basics",a:"Общественный + ровный. 'Гун-пин'."},
+    {c:"正义",p:"zhèngyì",m:"справедливость (мораль)",e:"⚖️",cat:"basics",a:"Правильный + смысл. 'Чжэн-и'."},
+    {c:"邪恶",p:"xié'è",m:"зло",e:"👹",cat:"basics",a:"Наклон + плохой. 'Се-э'."},
+    {c:"善良",p:"shànliáng",m:"добро",e:"❤️",cat:"basics",a:"Хороший + хороший. 'Шань-лян'."},
+    {c:"勇敢",p:"yǒnggǎn",m:"мужество",e:"🦁",cat:"basics",a:"Сила + мужество. 'Юн-гань'."},
+    {c:"懦弱",p:"nuòruò",m:"трусость",e:"🐌",cat:"basics",a:"Сердце + слабый. 'Но-жо'."},
+    {c:"智慧",p:"zhìhuì",m:"мудрость",e:"🦉",cat:"basics",a:"Знание + собираться. 'Чжи-хуэй'."},
+    {c:"愚蠢",p:"yúchǔn",m:"глупость",e:"🐒",cat:"basics",a:"Рыба + весна. 'Юй-чунь'."},
+    {c:"经验",p:"jīngyàn",m:"опыт",e:"🧪",cat:"basics",a:"Шёлк + проверять. 'Цзин-янь'."},
+    {c:"无知",p:"wúzhī",m:"невежество",e:"🙈",cat:"basics",a:"Нет + знание. 'У-чжи'."},
+    {c:"学习",p:"xuéxí",m:"обучение",e:"📚",cat:"basics",a:"Дверь + крылья. 'Сюэ-си'."},
+    {c:"教育",p:"jiàoyù",m:"воспитание",e:"🏫",cat:"basics",a:"Обучать + воспитывать. 'Цзяо-юй'."},
+    {c:"成长",p:"chéngzhǎng",m:"взросление",e:"🌱",cat:"basics",a:"Становиться + расти. 'Чэн-чжан'."},
+    {c:"衰老",p:"shuāilǎo",m:"старение",e:"👴",cat:"basics",a:"Ослабевать + старый. 'Шуай-лао'."},
+    {c:"出生",p:"chūshēng",m:"рождение",e:"👶",cat:"basics",a:"Выходить + рождаться. 'Чу-шэн'."},
+    {c:"死亡",p:"sǐwáng",m:"смерть",e:"💀",cat:"basics",a:"Умирать + погибать. 'Сы-ван'."},
+    {c:"生命",p:"shēngmìng",m:"жизнь",e:"🌱",cat:"basics",a:"Рождаться + повеление. 'Шэн-мин'."},
+    {c:"自然",p:"zìrán",m:"природа",e:"🌍",cat:"basics",a:"Себя + так. 'Цзы-жань'."},
+    {c:"宇宙",p:"yǔzhòu",m:"вселенная",e:"🌌",cat:"basics",a:"Крыша + пространство. 'Юй-чжоу'."},
+    {c:"地球",p:"dìqiú",m:"земля (планета)",e:"🌍",cat:"basics",a:"Земля + шар. 'Ди-цю'."},
+    {c:"太阳",p:"tàiyáng",m:"солнце",e:"☀️",cat:"basics",a:"Большой + солнце. 'Тай-ян'."},
+    {c:"月亮",p:"yuèliang",m:"луна",e:"🌙",cat:"basics",a:"Месяц + свет. 'Юэ-лян'."},
+    {c:"星星",p:"xīngxing",m:"звёзды",e:"⭐",cat:"basics",a:"Жизнь + жизнь. 'Син-син'."},
+    {c:"天空",p:"tiānkōng",m:"небо",e:"🌌",cat:"basics",a:"Большой + пустота. 'Тянь-кун'."},
+    {c:"大地",p:"dàdì",m:"земля (почва)",e:"🌍",cat:"basics",a:"Большой + земля. 'Да-ди'."},
+    {c:"海洋",p:"hǎiyáng",m:"океан",e:"🌊",cat:"basics",a:"Вода + баран. 'Хай-ян'."},
+    {c:"河流",p:"héliú",m:"река",e:"🏞️",cat:"basics",a:"Вода + поток. 'Хэ-лю'."},
+    {c:"山脉",p:"shānmài",m:"горная цепь",e:"⛰️",cat:"basics",a:"Гора + пульс. 'Шань-май'."},
+    {c:"森林",p:"sēnlín",m:"лес",e:"🌲",cat:"basics",a:"Дерево + дерево + дерево. 'Сэнь-линь'."},
+    {c:"草原",p:"cǎoyuán",m:"степь",e:"🌾",cat:"basics",a:"Трава + поле. 'Цао-юань'."},
+    {c:"沙漠",p:"shāmò",m:"пустыня",e:"🏜️",cat:"basics",a:"Песок + нет. 'Ша-мо'."},
+    {c:"岛屿",p:"dǎoyǔ",m:"остров",e:"🏝️",cat:"basics",a:"Гора + речь. 'Дао-юй'."},
+    {c:"大陆",p:"dàlù",m:"континент",e:"🌍",cat:"basics",a:"Большой + земля. 'Да-лу'."},
+    {c:"气候",p:"qìhòu",m:"климат",e:"🌡️",cat:"basics",a:"Воздух + ждать. 'Ци-хоу'."},
+    {c:"季节",p:"jìjié",m:"сезон",e:"📅",cat:"basics",a:"Ребёнок + узел. 'Цзи-цзе'."},
+    {c:"春天",p:"chūntiān",m:"весна",e:"🌸",cat:"basics",a:"Три + человек + день. 'Чунь-тянь'."},
+    {c:"夏天",p:"xiàtiān",m:"лето",e:"☀️",cat:"basics",a:"Глаз + нога + день. 'Ся-тянь'."},
+    {c:"秋天",p:"qiūtiān",m:"осень",e:"🍂",cat:"basics",a:"Зерно + огонь. 'Цю-тянь'."},
+    {c:"冬天",p:"dōngtiān",m:"зима",e:"❄️",cat:"basics",a:"Лёд + солнце. 'Дун-тянь'."},
+    {c:"天气",p:"tiānqì",m:"погода",e:"🌤️",cat:"basics",a:"Небо + газ. 'Тянь-ци'."},
+    {c:"温度",p:"wēndù",m:"температура",e:"🌡️",cat:"basics",a:"Тёплый + градус. 'Вэнь-ду'."},
+    {c:"湿度",p:"shīdù",m:"влажность",e:"💧",cat:"basics",a:"Мокрый + градус. 'Ши-ду'."},
+    {c:"风速",p:"fēngsù",m:"скорость ветра",e:"💨",cat:"basics",a:"Ветер + быстрый. 'Фэн-су'."},
+    {c:"雨量",p:"yǔliàng",m:"количество осадков",e:"🌧️",cat:"basics",a:"Дождь + мера. 'Юй-лян'."},
+    {c:"阳光",p:"yángguāng",m:"солнечный свет",e:"☀️",cat:"basics",a:"Баран + свет. 'Ян-гуан'."},
+    {c:"阴影",p:"yīnyǐng",m:"тень",e:"🌑",cat:"basics",a:"Серебро + тень. 'Инь-ин'."},
+    {c:"彩虹",p:"cǎihóng",m:"радуга",e:"🌈",cat:"basics",a:"Цвет + червь. 'Цай-хун'."},
+    {c:"闪电",p:"shǎndiàn",m:"молния",e:"⚡",cat:"basics",a:"Мерцать + электричество. 'Шань-дянь'."},
+    {c:"雷声",p:"léishēng",m:"гром",e:"⛈️",cat:"basics",a:"Дождь + поле + звук. 'Лэй-шэн'."},
+    {c:"雪花",p:"xuěhuā",m:"снежинка",e:"❄️",cat:"basics",a:"Снег + цветок. 'Сюэ-хуа'."},
+    {c:"冰雹",p:"bīngbáo",m:"град",e:"🌨️",cat:"basics",a:"Лёд + покров. 'Бин-бао'."},
+    {c:"露水",p:"lùshuǐ",m:"роса",e:"💧",cat:"basics",a:"Дождь + вода. 'Лу-шуй'."},
+    {c:"雾气",p:"wùqì",m:"туман",e:"🌫️",cat:"basics",a:"Дождь + задача + газ. 'У-ци'."},
+    {c:"霜",p:"shuāng",m:"иней",e:"❄️",cat:"basics",a:"Дождь + дерево + глаз. 'Шуан'."},
+    {c:"风",p:"fēng",m:"ветер",e:"💨",cat:"basics",a:"Насекомое + оболочка. 'Фэн'."},
+    {c:"雨",p:"yǔ",m:"дождь",e:"🌧️",cat:"basics",a:"Облако + точки. 'Юй'."},
+    {c:"雪",p:"xuě",m:"снег",e:"❄️",cat:"basics",a:"Дождь + щётка. 'Сюэ'."},
+    {c:"冰",p:"bīng",m:"лёд",e:"🧊",cat:"basics",a:"Вода + два. 'Бин'."},
+    {c:"水",p:"shuǐ",m:"вода",e:"💧",cat:"basics",a:"Капли + поток. 'Шуй'."},
+    {c:"火",p:"huǒ",m:"огонь",e:"🔥",cat:"basics",a:"Пламя. 'Хуо'."},
+    {c:"土",p:"tǔ",m:"земля/почва",e:"🌍",cat:"basics",a:"Крест + горизонт. 'Ту'."},
+    {c:"金",p:"jīn",m:"металл/золото",e:"🥇",cat:"basics",a:"Сокровище. 'Цзинь'."},
+    {c:"木",p:"mù",m:"дерево",e:"🌳",cat:"basics",a:"Корень + ствол. 'Му'."},
+    {c:"石",p:"shí",m:"камень",e:"🪨",cat:"basics",a:"Клыки + рот. 'Ши'."},
+    {c:"沙",p:"shā",m:"песок",e:"🏖️",cat:"basics",a:"Вода + мало. 'Ша'."},
+    {c:"泥",p:"ní",m:"грязь",e:"🟤",cat:"basics",a:"Вода + старый. 'Ни'."},
+    {c:"灰尘",p:"huīchén",m:"пыль",e:"🌫️",cat:"basics",a:"Уголь + земля. 'Хуэй-чэнь'."},
+    {c:"烟雾",p:"yānwù",m:"дым/туман",e:"🌫️",cat:"basics",a:"Огонь + задача. 'Янь-у'."},
+    {c:"蒸汽",p:"zhēngqì",m:"пар",e:"♨️",cat:"basics",a:"Горячий + газ. 'Чжэн-ци'."},
+    {c:"气体",p:"qìtǐ",m:"газ",e:"💨",cat:"basics",a:"Воздух + тело. 'Ци-ти'."},
+    {c:"液体",p:"yètǐ",m:"жидкость",e:"💧",cat:"basics",a:"Ночь + тело. 'Е-ти'."},
+    {c:"固体",p:"gùtǐ",m:"твёрдое тело",e:"🧱",cat:"basics",a:"Крепкий + тело. 'Гу-ти'."},
+    {c:"物质",p:"wùzhì",m:"вещество",e:"🧪",cat:"basics",a:"Вещь + качество. 'У-чжи'."},
+    {c:"能量",p:"néngliàng",m:"энергия",e:"⚡",cat:"basics",a:"Способность + мера. 'Нэн-лян'."},
+    {c:"力量",p:"lìliang",m:"сила",e:"💪",cat:"basics",a:"Сила + мера. 'Ли-лян'."},
+    {c:"速度",p:"sùdù",m:"скорость",e:"🏎️",cat:"basics",a:"Быстрый + градус. 'Су-ду'."},
+    {c:"重量",p:"zhòngliàng",m:"вес",e:"⚖️",cat:"basics",a:"Тяжёлый + мера. 'Чжун-лян'."},
+    {c:"长度",p:"chángdù",m:"длина",e:"📏",cat:"basics",a:"Длинный + градус. 'Чан-ду'."},
+    {c:"宽度",p:"kuāndù",m:"ширина",e:"↔️",cat:"basics",a:"Широкий + градус. 'Куань-ду'."},
+    {c:"高度",p:"gāodù",m:"высота",e:"📏",cat:"basics",a:"Высокий + градус. 'Гао-ду'."},
+    {c:"深度",p:"shēndù",m:"глубина",e:"📏",cat:"basics",a:"Глубокий + градус. 'Шэнь-ду'."},
+    {c:"距离",p:"jùlí",m:"расстояние",e:"📍",cat:"basics",a:"Большой + ли. 'Цзюй-ли'."},
+    {c:"方向",p:"fāngxiàng",m:"направление",e:"🧭",cat:"basics",a:"Квадрат + лицо. 'Фан-сян'."},
+    {c:"位置",p:"wèizhì",m:"положение",e:"📍",cat:"basics",a:"Вкус + устанавливать. 'Вэй-чжи'."},
+    {c:"中心",p:"zhōngxīn",m:"центр",e:"🎯",cat:"basics",a:"Центр + сердце. 'Чжун-синь'."},
+    {c:"边缘",p:"biānyuán",m:"край",e:"📐",cat:"basics",a:"Шёлк + источник. 'Бянь-юань'."},
+    {c:"内部",p:"nèibù",m:"внутри",e:"📦",cat:"basics",a:"Внутри + шаг. 'Нэй-бу'."},
+    {c:"外部",p:"wàibù",m:"снаружи",e:"🌍",cat:"basics",a:"Внешний + шаг. 'Вай-бу'."},
+    {c:"表面",p:"biǎomiàn",m:"поверхность",e:"📄",cat:"basics",a:"Таблица + лицо. 'Бяо-мянь'."},
+    {c:"里面",p:"lǐmiàn",m:"внутри",e:"📦",cat:"basics",a:"Внутри + лицо. 'Ли-мянь'."},
+    {c:"外面",p:"wàimiàn",m:"снаружи",e:"🌍",cat:"basics",a:"Внешний + лицо. 'Вай-мянь'."},
+    {c:"上面",p:"shàngmiàn",m:"сверху",e:"⬆️",cat:"basics",a:"Над + лицо. 'Шан-мянь'."},
+    {c:"下面",p:"xiàmiàn",m:"снизу",e:"⬇️",cat:"basics",a:"Под + лицо. 'Ся-мянь'."},
+    {c:"前面",p:"qiánmiàn",m:"спереди",e:"👉",cat:"basics",a:"Впереди + лицо. 'Цянь-мянь'."},
+    {c:"后面",p:"hòumiàn",m:"сзади",e:"👈",cat:"basics",a:"Сзади + лицо. 'Хоу-мянь'."},
+    {c:"左边",p:"zuǒbiān",m:"слева",e:"⬅️",cat:"basics",a:"Левый + сторона. 'Цзо-бянь'."},
+    {c:"右边",p:"yòubiān",m:"справа",e:"➡️",cat:"basics",a:"Правый + сторона. 'Ю-бянь'."},
+    {c:"中间",p:"zhōngjiān",m:"посередине",e:"🎯",cat:"basics",a:"Центр + промежуток. 'Чжун-цзянь'."},
+    {c:"旁边",p:"pángbiān",m:"рядом",e:"👫",cat:"basics",a:"Рядом + сторона. 'Пан-бянь'."},
+    {c:"对面",p:"duìmiàn",m:"напротив",e:"👀",cat:"basics",a:"Правильный + лицо. 'Дуй-мянь'."},
+    {c:"附近",p:"fùjìn",m:"рядом/поблизости",e:"📍",cat:"basics",a:"Прикреплять + входить. 'Фу-цзинь'."},
+    {c:"远处",p:"yuǎnchù",m:"вдали",e:"🌄",cat:"basics",a:"Далекий + место. 'Юань-чу'."},
+    {c:"近处",p:"jìnchù",m:"поблизости",e:"📍",cat:"basics",a:"Близкий + место. 'Цзинь-чу'."},
+    {c:"高处",p:"gāochù",m:"вверху",e:"⬆️",cat:"basics",a:"Высокий + место. 'Гао-чу'."},
+    {c:"低处",p:"dīchù",m:"внизу",e:"⬇️",cat:"basics",a:"Низкий + место. 'Ди-чу'."},
+    {c:"深处",p:"shēnchù",m:"вглубь",e:"📉",cat:"basics",a:"Глубокий + место. 'Шэнь-чу'."},
+    {c:"浅处",p:"qiǎnchù",m:"у поверхности",e:"📉",cat:"basics",a:"Мелкий + место. 'Цянь-чу'."},
+    {c:"暗处",p:"ànchù",m:"в темноте",e:"🌑",cat:"basics",a:"Тёмный + место. 'Ань-чу'."},
+    {c:"明处",p:"míngchù",m:"на свету",e:"💡",cat:"basics",a:"Ясный + место. 'Мин-чу'."},
+    {c:"静处",p:"jìngchù",m:"в тишине",e:"🤫",cat:"basics",a:"Спокойный + место. 'Цзин-чу'."},
+    {c:"闹处",p:"nàochù",m:"в шуме",e:"📢",cat:"basics",a:"Дверь + место. 'Нао-чу'."},
+    {c:"热处",p:"rèchù",m:"в тепле",e:"🔥",cat:"basics",a:"Жар + место. 'Жэ-чу'."},
+    {c:"冷处",p:"lěngchù",m:"на холоде",e:"❄️",cat:"basics",a:"Холод + место. 'Лэн-чу'."},
+    {c:"干处",p:"gānchù",m:"в сухости",e:"🌵",cat:"basics",a:"Сухой + место. 'Гань-чу'."},
+    {c:"湿处",p:"shīchù",m:"во влажности",e:"💧",cat:"basics",a:"Мокрый + место. 'Ши-чу'."},
+    {c:"平处",p:"píngchù",m:"на ровном",e:"📐",cat:"basics",a:"Ровный + место. 'Пин-чу'."},
+    {c:"陡处",p:"dǒuchù",m:"на крутом",e:"⛰️",cat:"basics",a:"Крутой + место. 'Доу-чу'."},
+    {c:"软处",p:"ruǎnchù",m:"в мягком",e:"🛋️",cat:"basics",a:"Мягкий + место. 'Жуань-чу'."},
+    {c:"硬处",p:"yìngchù",m:"в твёрдом",e:"🪨",cat:"basics",a:"Камень + место. 'Ин-чу'."},
+    {c:"滑处",p:"huáchù",m:"на скользком",e:"🧊",cat:"basics",a:"Вода + скользить. 'Хуа-чу'."},
+    {c:"涩处",p:"sèchù",m:"на шершавом",e:"🪨",cat:"basics",a:"Вода + остановка. 'Сэ-чу'."},
+    {c:"甜处",p:"tiánchù",m:"в сладком",e:"🍬",cat:"basics",a:"Язык + сладкий. 'Тянь-чу'."},
+    {c:"苦处",p:"kǔchù",m:"в горьком",e:"☕",cat:"basics",a:"Трава + древний. 'Ку-чу'."},
+    {c:"酸处",p:"suānchù",m:"в кислом",e:"🍋",cat:"basics",a:"Виноград + идти. 'Суань-чу'."},
+    {c:"辣处",p:"làchù",m:"в остром",e:"🌶️",cat:"basics",a:"Синий + нож. 'Ла-чу'."},
+    {c:"咸处",p:"xiánchù",m:"в солёном",e:"🧂",cat:"basics",a:"Все + рот. 'Сянь-чу'."},
+    {c:"淡处",p:"dànchù",m:"в пресном",e:"💧",cat:"basics",a:"Вода + огонь. 'Дань-чу'."},
+    {c:"浓处",p:"nóngchù",m:"в густом",e:"🥛",cat:"basics",a:"Вода + сельхоз. 'Нун-чу'."},
+    {c:"稀处",p:"xīchù",m:"в редком",e:"🌬️",cat:"basics",a:"Зерно + 희. 'Си-чу'."},
+    {c:"稠处",p:"chóuchù",m:"в плотном",e:"🍯",cat:"basics",a:"Зерно + чжоу. 'Чоу-чу'."},
+    {c:"粗处",p:"cūchù",m:"в грубом",e:"🪨",cat:"basics",a:"Зерно + грубый. 'Цу-чу'."},
+    {c:"细处",p:"xìchù",m:"в тонком",e:"🧵",cat:"basics",a:"Шёлк + поле. 'Си-чу'."},
+    {c:"长处",p:"chángchù",m:"в длинном",e:"📏",cat:"basics",a:"Волосы + место. 'Чан-чу'."},
+    {c:"短处",p:"duǎnchù",m:"в коротком",e:"📏",cat:"basics",a:"Стрела + место. 'Дуань-чу'."},
+    {c:"宽处",p:"kuānchù",m:"в широком",e:"↔️",cat:"basics",a:"Крыша + трава. 'Куань-чу'."},
+    {c:"窄处",p:"zhǎichù",m:"в узком",e:"🚪",cat:"basics",a:"Крыша + действие. 'Чжай-чу'."},
+    {c:"高处",p:"gāochù",m:"в высоком",e:"⬆️",cat:"basics",a:"Высокий + место. 'Гао-чу'."},
+    {c:"矮处",p:"ǎichù",m:"в низком",e:"⬇️",cat:"basics",a:"Стрела + женщина. 'Ай-чу'."},
+    {c:"胖处",p:"pàngchù",m:"в полном",e:"🐷",cat:"basics",a:"Луна/мясо + половина. 'Пан-чу'."},
+    {c:"瘦处",p:"shòuchù",m:"в худом",e:"🐦",cat:"basics",a:"Болезнь +叟. 'Шоу-чу'."},
+    {c:"肥处",p:"féichù",m:"в жирном",e:"🐖",cat:"basics",a:"Луна/мясо + бар. 'Фэй-чу'."},
+    {c:"嫩处",p:"nènchù",m:"в молодом/нежном",e:"🌱",cat:"basics",a:"Женщина + 敕. 'Нэнь-чу'."},
+    {c:"老处",p:"lǎochù",m:"в старом",e:"👴",cat:"basics",a:"Старый + место. 'Лао-чу'."},
+    {c:"新处",p:"xīnchù",m:"в новом",e:"✨",cat:"basics",a:"Стоять + дерево. 'Синь-чу'."},
+    {c:"旧处",p:"jiùchù",m:"в старом (вещи)",e:"🕰️",cat:"basics",a:"Один + день. 'Цзю-чу'."},
+    {c:"好处",p:"hǎochù",m:"преимущество",e:"👍",cat:"basics",a:"Хороший + место. 'Хао-чу'."},
+    {c:"坏处",p:"huàichù",m:"недостаток",e:"👎",cat:"basics",a:"Плохой + место. 'Хуай-чу'."},
+    {c:"优点",p:"yōudiǎn",m:"достоинство",e:"🌟",cat:"basics",a:"Отличный + точка. 'Ю-дянь'."},
+    {c:"缺点",p:"quēdiǎn",m:"недостаток",e:"⚠️",cat:"basics",a:"Пустота + точка. 'Цюэ-дянь'."},
+    {c:"长处",p:"chángchù",m:"сильная сторона",e:"💪",cat:"basics",a:"Длинный + место. 'Чан-чу'."},
+    {c:"短处",p:"duǎnchù",m:"слабая сторона",e:"📉",cat:"basics",a:"Короткий + место. 'Дуань-чу'."},
+    {c:"强处",p:"qiángchù",m:"сильное место",e:"💪",cat:"basics",a:"Сильный + место. 'Цян-чу'."},
+    {c:"弱处",p:"ruòchù",m:"слабое место",e:"🌱",cat:"basics",a:"Слабый + место. 'Жо-чу'."},
+    {c:"快处",p:"kuàichù",m:"быстрое место",e:"⚡",cat:"basics",a:"Быстрый + место. 'Куай-чу'."},
+    {c:"慢处",p:"mànchù",m:"медленное место",e:"🐌",cat:"basics",a:"Медленный + место. 'Мань-чу'."},
+    {c:"早处",p:"zǎochù",m:"раннее место",e:"🌅",cat:"basics",a:"Ранний + место. 'Цзао-чу'."},
+    {c:"晚处",p:"wǎnchù",m:"позднее место",e:"🌙",cat:"basics",a:"Поздний + место. 'Вань-чу'."},
+    {c:"先处",p:"xiānchù",m:"первое место",e:"🥇",cat:"basics",a:"Впереди + место. 'Сянь-чу'."},
+    {c:"后处",p:"hòuchù",m:"последнее место",e:"🏁",cat:"basics",a:"Сзади + место. 'Хоу-чу'."},
+    {c:"前处",p:"qiánchù",m:"переднее место",e:"👉",cat:"basics",a:"Впереди + место. 'Цянь-чу'."},
+    {c:"后处",p:"hòuchù",m:"заднее место",e:"👈",cat:"basics",a:"Сзади + место. 'Хоу-чу'."},
+    {c:"上处",p:"shàngchù",m:"верхнее место",e:"⬆️",cat:"basics",a:"Над + место. 'Шан-чу'."},
+    {c:"下处",p:"xiàchù",m:"нижнее место",e:"⬇️",cat:"basics",a:"Под + место. 'Ся-чу'."},
+    {c:"左处",p:"zuǒchù",m:"левое место",e:"⬅️",cat:"basics",a:"Левый + место. 'Цзо-чу'."},
+    {c:"右处",p:"yòuchù",m:"правое место",e:"➡️",cat:"basics",a:"Правый + место. 'Ю-чу'."},
+    {c:"中处",p:"zhōngchù",m:"среднее место",e:"🎯",cat:"basics",a:"Центр + место. 'Чжун-чу'."},
+    {c:"外处",p:"wàichù",m:"внешнее место",e:"🌍",cat:"basics",a:"Внешний + место. 'Вай-чу'."},
+    {c:"内处",p:"nèichù",m:"внутреннее место",e:"📦",cat:"basics",a:"Внутри + место. 'Нэй-чу'."},
+    {c:"明处",p:"míngchù",m:"светлое место",e:"💡",cat:"basics",a:"Ясный + место. 'Мин-чу'."},
+    {c:"暗处",p:"ànchù",m:"тёмное место",e:"🌑",cat:"basics",a:"Тёмный + место. 'Ань-чу'."},
+    {c:"热处",p:"rèchù",m:"жаркое место",e:"🔥",cat:"basics",a:"Жар + место. 'Жэ-чу'."},
+    {c:"冷处",p:"lěngchù",m:"холодное место",e:"❄️",cat:"basics",a:"Холод + место. 'Лэн-чу'."},
+    {c:"干处",p:"gānchù",m:"сухое место",e:"🌵",cat:"basics",a:"Сухой + место. 'Гань-чу'."},
+    {c:"湿处",p:"shīchù",m:"влажное место",e:"💧",cat:"basics",a:"Мокрый + место. 'Ши-чу'."},
+    {c:"平处",p:"píngchù",m:"ровное место",e:"📐",cat:"basics",a:"Ровный + место. 'Пин-чу'."},
+    {c:"陡处",p:"dǒuchù",m:"крутое место",e:"⛰️",cat:"basics",a:"Крутой + место. 'Доу-чу'."},
+    {c:"软处",p:"ruǎnchù",m:"мягкое место",e:"🛋️",cat:"basics",a:"Мягкий + место. 'Жуань-чу'."},
+    {c:"硬处",p:"yìngchù",m:"твёрдое место",e:"🪨",cat:"basics",a:"Камень + место. 'Ин-чу'."},
+    {c:"滑处",p:"huáchù",m:"скользкое место",e:"🧊",cat:"basics",a:"Вода + скользить. 'Хуа-чу'."},
+    {c:"涩处",p:"sèchù",m:"шершавое место",e:"🪨",cat:"basics",a:"Вода + остановка. 'Сэ-чу'."},
+    {c:"甜处",p:"tiánchù",m:"сладкое место",e:"🍬",cat:"basics",a:"Язык + сладкий. 'Тянь-чу'."},
+    {c:"苦处",p:"kǔchù",m:"горькое место",e:"☕",cat:"basics",a:"Трава + древний. 'Ку-чу'."},
+    {c:"酸处",p:"suānchù",m:"кислое место",e:"🍋",cat:"basics",a:"Виноград + идти. 'Суань-чу'."},
+    {c:"辣处",p:"làchù",m:"острое место",e:"🌶️",cat:"basics",a:"Синий + нож. 'Ла-чу'."},
+    {c:"咸处",p:"xiánchù",m:"солёное место",e:"🧂",cat:"basics",a:"Все + рот. 'Сянь-чу'."},
+    {c:"淡处",p:"dànchù",m:"пресное место",e:"💧",cat:"basics",a:"Вода + огонь. 'Дань-чу'."},
+    {c:"浓处",p:"nóngchù",m:"густое место",e:"🥛",cat:"basics",a:"Вода + сельхоз. 'Нун-чу'."},
+    {c:"稀处",p:"xīchù",m:"редкое место",e:"🌬️",cat:"basics",a:"Зерно + 희. 'Си-чу'."},
+    {c:"稠处",p:"chóuchù",m:"плотное место",e:"🍯",cat:"basics",a:"Зерно + чжоу. 'Чоу-чу'."},
+    {c:"粗处",p:"cūchù",m:"грубое место",e:"🪨",cat:"basics",a:"Зерно + грубый. 'Цу-чу'."},
+    {c:"细处",p:"xìchù",m:"тонкое место",e:"🧵",cat:"basics",a:"Шёлк + поле. 'Си-чу'."},
+    {c:"长处",p:"chángchù",m:"длинное место",e:"📏",cat:"basics",a:"Волосы + место. 'Чан-чу'."},
+    {c:"短处",p:"duǎnchù",m:"короткое место",e:"📏",cat:"basics",a:"Стрела + место. 'Дуань-чу'."},
+    {c:"宽处",p:"kuānchù",m:"широкое место",e:"↔️",cat:"basics",a:"Крыша + трава. 'Куань-чу'."},
+    {c:"窄处",p:"zhǎichù",m:"узкое место",e:"🚪",cat:"basics",a:"Крыша + действие. 'Чжай-чу'."},
+    {c:"高处",p:"gāochù",m:"высокое место",e:"⬆️",cat:"basics",a:"Высокий + место. 'Гао-чу'."},
+    {c:"矮处",p:"ǎichù",m:"низкое место",e:"⬇️",cat:"basics",a:"Стрела + женщина. 'Ай-чу'."},
+    {c:"胖处",p:"pàngchù",m:"полное место",e:"🐷",cat:"basics",a:"Луна/мясо + половина. 'Пан-чу'."},
+    {c:"瘦处",p:"shòuchù",m:"худое место",e:"🐦",cat:"basics",a:"Болезнь +叟. 'Шоу-чу'."},
+    {c:"肥处",p:"féichù",m:"жирное место",e:"🐖",cat:"basics",a:"Луна/мясо + бар. 'Фэй-чу'."},
+    {c:"嫩处",p:"nènchù",m:"нежное место",e:"🌱",cat:"basics",a:"Женщина + 敕. 'Нэнь-чу'."},
+    {c:"老处",p:"lǎochù",m:"старое место",e:"👴",cat:"basics",a:"Старый + место. 'Лао-чу'."},
+    {c:"新处",p:"xīnchù",m:"новое место",e:"✨",cat:"basics",a:"Стоять + дерево. 'Синь-чу'."},
+    {c:"旧处",p:"jiùchù",m:"старое (вещь)",e:"🕰️",cat:"basics",a:"Один + день. 'Цзю-чу'."},
+    {c:"好处",p:"hǎochù",m:"хорошее место",e:"👍",cat:"basics",a:"Хороший + место. 'Хао-чу'."},
+    {c:"坏处",p:"huàichù",m:"плохое место",e:"👎",cat:"basics",a:"Плохой + место. 'Хуай-чу'."},
+    {c:"优点",p:"yōudiǎn",m:"достоинство",e:"🌟",cat:"basics",a:"Отличный + точка. 'Ю-дянь'."},
+    {c:"缺点",p:"quēdiǎn",m:"недостаток",e:"⚠️",cat:"basics",a:"Пустота + точка. 'Цюэ-дянь'."},
+    {c:"长处",p:"chángchù",m:"сильная сторона",e:"💪",cat:"basics",a:"Длинный + место. 'Чан-чу'."},
+    {c:"短处",p:"duǎnchù",m:"слабая сторона",e:"📉",cat:"basics",a:"Короткий + место. 'Дуань-чу'."},
+    {c:"强处",p:"qiángchù",m:"сильное место",e:"💪",cat:"basics",a:"Сильный + место. 'Цян-чу'."},
+    {c:"弱处",p:"ruòchù",m:"слабое место",e:"🌱",cat:"basics",a:"Слабый + место. 'Жо-чу'."},
+    {c:"快处",p:"kuàichù",m:"быстрое место",e:"⚡",cat:"basics",a:"Быстрый + место. 'Куай-чу'."},
+    {c:"慢处",p:"mànchù",m:"медленное место",e:"🐌",cat:"basics",a:"Медленный + место. 'Мань-чу'."},
+    {c:"早处",p:"zǎochù",m:"раннее место",e:"🌅",cat:"basics",a:"Ранний + место. 'Цзао-чу'."},
+    {c:"晚处",p:"wǎnchù",m:"позднее место",e:"🌙",cat:"basics",a:"Поздний + место. 'Вань-чу'."},
+    {c:"先处",p:"xiānchù",m:"первое место",e:"🥇",cat:"basics",a:"Впереди + место. 'Сянь-чу'."},
+    {c:"后处",p:"hòuchù",m:"последнее место",e:"🏁",cat:"basics",a:"Сзади + место. 'Хоу-чу'."},
+    {c:"前处",p:"qiánchù",m:"переднее место",e:"👉",cat:"basics",a:"Впереди + место. 'Цянь-чу'."},
+    {c:"后处",p:"hòuchù",m:"заднее место",e:"👈",cat:"basics",a:"Сзади + место. 'Хоу-чу'."},
+    {c:"上处",p:"shàngchù",m:"верхнее место",e:"⬆️",cat:"basics",a:"Над + место. 'Шан-чу'."},
+    {c:"下处",p:"xiàchù",m:"нижнее место",e:"⬇️",cat:"basics",a:"Под + место. 'Ся-чу'."},
+    {c:"左处",p:"zuǒchù",m:"левое место",e:"⬅️",cat:"basics",a:"Левый + место. 'Цзо-чу'."},
+    {c:"右处",p:"yòuchù",m:"правое место",e:"➡️",cat:"basics",a:"Правый + место. 'Ю-чу'."},
+    {c:"中处",p:"zhōngchù",m:"среднее место",e:"🎯",cat:"basics",a:"Центр + место. 'Чжун-чу'."},
+    {c:"外处",p:"wàichù",m:"внешнее место",e:"🌍",cat:"basics",a:"Внешний + место. 'Вай-чу'."},
+    {c:"内处",p:"nèichù",m:"внутреннее место",e:"📦",cat:"basics",a:"Внутри + место. 'Нэй-чу'."},
+    {c:"明处",p:"míngchù",m:"светлое место",e:"💡",cat:"basics",a:"Ясный + место. 'Мин-чу'."},
+    {c:"暗处",p:"ànchù",m:"тёмное место",e:"🌑",cat:"basics",a:"Тёмный + место. 'Ань-чу'."},
+    {c:"热处",p:"rèchù",m:"жаркое место",e:"🔥",cat:"basics",a:"Жар + место. 'Жэ-чу'."},
+    {c:"冷处",p:"lěngchù",m:"холодное место",e:"❄️",cat:"basics",a:"Холод + место. 'Лэн-чу'."},
+    {c:"干处",p:"gānchù",m:"сухое место",e:"🌵",cat:"basics",a:"Сухой + место. 'Гань-чу'."},
+    {c:"湿处",p:"shīchù",m:"влажное место",e:"💧",cat:"basics",a:"Мокрый + место. 'Ши-чу'."},
+    {c:"平处",p:"píngchù",m:"ровное место",e:"📐",cat:"basics",a:"Ровный + место. 'Пин-чу'."},
+    {c:"陡处",p:"dǒuchù",m:"крутое место",e:"⛰️",cat:"basics",a:"Крутой + место. 'Доу-чу'."},
+    {c:"软处",p:"ruǎnchù",m:"мягкое место",e:"🛋️",cat:"basics",a:"Мягкий + место. 'Жуань-чу'."},
+    {c:"硬处",p:"yìngchù",m:"твёрдое место",e:"🪨",cat:"basics",a:"Камень + место. 'Ин-чу'."},
+    {c:"滑处",p:"huáchù",m:"скользкое место",e:"🧊",cat:"basics",a:"Вода + скользить. 'Хуа-чу'."},
+    {c:"涩处",p:"sèchù",m:"шершавое место",e:"🪨",cat:"basics",a:"Вода + остановка. 'Сэ-чу'."},
+    {c:"甜处",p:"tiánchù",m:"сладкое место",e:"🍬",cat:"basics",a:"Язык + сладкий. 'Тянь-чу'."},
+    {c:"苦处",p:"kǔchù",m:"горькое место",e:"☕",cat:"basics",a:"Трава + древний. 'Ку-чу'."},
+    {c:"酸处",p:"suānchù",m:"кислое место",e:"🍋",cat:"basics",a:"Виноград + идти. 'Суань-чу'."},
+    {c:"辣处",p:"làchù",m:"острое место",e:"🌶️",cat:"basics",a:"Синий + нож. 'Ла-чу'."},
+    {c:"咸处",p:"xiánchù",m:"солёное место",e:"🧂",cat:"basics",a:"Все + рот. 'Сянь-чу'."},
+    {c:"淡处",p:"dànchù",m:"пресное место",e:"💧",cat:"basics",a:"Вода + огонь. 'Дань-чу'."},
+    {c:"浓处",p:"nóngchù",m:"густое место",e:"🥛",cat:"basics",a:"Вода + сельхоз. 'Нун-чу'."},
+    {c:"稀处",p:"xīchù",m:"редкое место",e:"🌬️",cat:"basics",a:"Зерно + 희. 'Си-чу'."},
+    {c:"稠处",p:"chóuchù",m:"плотное место",e:"🍯",cat:"basics",a:"Зерно + чжоу. 'Чоу-чу'."},
+    {c:"粗处",p:"cūchù",m:"грубое место",e:"🪨",cat:"basics",a:"Зерно + грубый. 'Цу-чу'."},
+    {c:"细处",p:"xìchù",m:"тонкое место",e:"🧵",cat:"basics",a:"Шёлк + поле. 'Си-чу'."},
+    {c:"长处",p:"chángchù",m:"длинное место",e:"📏",cat:"basics",a:"Волосы + место. 'Чан-чу'."},
+    {c:"短处",p:"duǎnchù",m:"короткое место",e:"📏",cat:"basics",a:"Стрела + место. 'Дуань-чу'."},
+    {c:"宽处",p:"kuānchù",m:"широкое место",e:"↔️",cat:"basics",a:"Крыша + трава. 'Куань-чу'."},
+    {c:"窄处",p:"zhǎichù",m:"узкое место",e:"🚪",cat:"basics",a:"Крыша + действие. 'Чжай-чу'."},
+    {c:"高处",p:"gāochù",m:"высокое место",e:"⬆️",cat:"basics",a:"Высокий + место. 'Гао-чу'."},
+    {c:"矮处",p:"ǎichù",m:"низкое место",e:"⬇️",cat:"basics",a:"Стрела + женщина. 'Ай-чу'."},
+    {c:"胖处",p:"pàngchù",m:"полное место",e:"🐷",cat:"basics",a:"Луна/мясо + половина. 'Пан-чу'."},
+    {c:"瘦处",p:"shòuchù",m:"худое место",e:"🐦",cat:"basics",a:"Болезнь +叟. 'Шоу-чу'."},
+    {c:"肥处",p:"féichù",m:"жирное место",e:"🐖",cat:"basics",a:"Луна/мясо + бар. 'Фэй-чу'."},
+    {c:"嫩处",p:"nènchù",m:"нежное место",e:"🌱",cat:"basics",a:"Женщина + 敕. 'Нэнь-чу'."},
+    {c:"老处",p:"lǎochù",m:"старое место",e:"👴",cat:"basics",a:"Старый + место. 'Лао-чу'."},
+    {c:"新处",p:"xīnchù",m:"новое место",e:"✨",cat:"basics",a:"Стоять + дерево. 'Синь-чу'."},
+    {c:"旧处",p:"jiùchù",m:"старое (вещь)",e:"🕰️",cat:"basics",a:"Один + день. 'Цзю-чу'."},
+    {c:"好处",p:"hǎochù",m:"хорошее место",e:"👍",cat:"basics",a:"Хороший + место. 'Хао-чу'."},
+    {c:"坏处",p:"huàichù",m:"плохое место",e:"👎",cat:"basics",a:"Плохой + место. 'Хуай-чу'."},
+    {c:"优点",p:"yōudiǎn",m:"достоинство",e:"🌟",cat:"basics",a:"Отличный + точка. 'Ю-дянь'."},
+    {c:"缺点",p:"quēdiǎn",m:"недостаток",e:"⚠️",cat:"basics",a:"Пустота + точка. 'Цюэ-дянь'."},
+    {c:"长处",p:"chángchù",m:"сильная сторона",e:"💪",cat:"basics",a:"Длинный + место. 'Чан-чу'."},
+    {c:"短处",p:"duǎnchù",m:"слабая сторона",e:"📉",cat:"basics",a:"Короткий + место. 'Дуань-чу'."},
+    {c:"强处",p:"qiángchù",m:"сильное место",e:"💪",cat:"basics",a:"Сильный + место. 'Цян-чу'."},
+    {c:"弱处",p:"ruòchù",m:"слабое место",e:"🌱",cat:"basics",a:"Слабый + место. 'Жо-чу'."},
+    {c:"快处",p:"kuàichù",m:"быстрое место",e:"⚡",cat:"basics",a:"Быстрый + место. 'Куай-чу'."},
+    {c:"慢处",p:"mànchù",m:"медленное место",e:"🐌",cat:"basics",a:"Медленный + место. 'Мань-чу'."},
+    {c:"早处",p:"zǎochù",m:"раннее место",e:"🌅",cat:"basics",a:"Ранний + место. 'Цзао-чу'."},
+    {c:"晚处",p:"wǎnchù",m:"позднее место",e:"🌙",cat:"basics",a:"Поздний + место. 'Вань-чу'."},
+    {c:"先处",p:"xiānchù",m:"первое место",e:"🥇",cat:"basics",a:"Впереди + место. 'Сянь-чу'."},
+    {c:"后处",p:"hòuchù",m:"последнее место",e:"🏁",cat:"basics",a:"Сзади + место. 'Хоу-чу'."},
+    {c:"前处",p:"qiánchù",m:"переднее место",e:"👉",cat:"basics",a:"Впереди + место. 'Цянь-чу'."},
+    {c:"后处",p:"hòuchù",m:"заднее место",e:"👈",cat:"basics",a:"Сзади + место. 'Хоу-чу'."},
+    {c:"上处",p:"shàngchù",m:"верхнее место",e:"⬆️",cat:"basics",a:"Над + место. 'Шан-чу'."},
+    {c:"下处",p:"xiàchù",m:"нижнее место",e:"⬇️",cat:"basics",a:"Под + место. 'Ся-чу'."},
+    {c:"左处",p:"zuǒchù",m:"левое место",e:"⬅️",cat:"basics",a:"Левый + место. 'Цзо-чу'."},
+    {c:"右处",p:"yòuchù",m:"правое место",e:"➡️",cat:"basics",a:"Правый + место. 'Ю-чу'."},
+    {c:"中处",p:"zhōngchù",m:"среднее место",e:"🎯",cat:"basics",a:"Центр + место. 'Чжун-чу'."},
+    {c:"外处",p:"wàichù",m:"внешнее место",e:"🌍",cat:"basics",a:"Внешний + место. 'Вай-чу'."},
+    {c:"内处",p:"nèichù",m:"внутреннее место",e:"📦",cat:"basics",a:"Внутри + место. 'Нэй-чу'."}
+];
+
+const DIALOGS = [
+    {q:"你好，最近怎么样？", qp:"Nǐ hǎo, zuìjìn zěnmeyàng?", a:"还不错，谢谢。你呢？", ap:"Hái bùcuò, xièxie. Nǐ ne?"},
+    {q:"你叫什么名字？", qp:"Nǐ jiào shénme míngzi?", a:"我叫小明。你呢？", ap:"Wǒ jiào Xiǎo Míng. Nǐ ne?"},
+    {q:"今天天气怎么样？", qp:"Jīntiān tiānqì zěnmeyàng?", a:"很好，不冷也不热。", ap:"Hěn hǎo, bù lěng yě bù rè."},
+    {q:"你吃饭了吗？", qp:"Nǐ chīfàn le ma?", a:"吃了，你呢？", ap:"Chī le, nǐ ne?"},
+    {q:"你住在哪里？", qp:"Nǐ zhù zài nǎlǐ?", a:"我住在市中心。", ap:"Wǒ zhù zài shì zhōngxīn."},
+    {q:"你喜欢什么运动？", qp:"Nǐ xǐhuan shénme yùndòng?", a:"我喜欢打篮球。", ap:"Wǒ xǐhuan dǎ lánqiú."},
+    {q:"这个多少钱？", qp:"Zhège duōshao qián?", a:"五十块。", ap:"Wǔshí kuài."},
+    {q:"可以便宜一点吗？", qp:"Kěyǐ piányi yīdiǎn ma?", a:"最少四十五。", ap:"Zuìshǎo sìshíwǔ."},
+    {q:"去火车站怎么走？", qp:"Qù huǒchēzhàn zěnme zǒu?", a:"直走，然后左转。", ap:"Zhí zǒu, ránhòu zuǒ zhuǎn."},
+    {q:"你几点下班？", qp:"Nǐ jǐ diǎn xiàbān?", a:"大概六点。", ap:"Dàgài liù diǎn."},
+    {q:"明天有空吗？", qp:"Míngtiān yǒu kòng ma?", a:"有空，怎么了？", ap:"Yǒu kòng, zěnme le?"},
+    {q:"你能帮我一个忙吗？", qp:"Nǐ néng bāng wǒ yīgè máng ma?", a:"当然可以，说吧。", ap:"Dāngrán kěyǐ, shuō ba."},
+    {q:"你周末通常做什么？", qp:"Nǐ zhōumò tōngcháng zuò shénme?", a:"我通常去公园。", ap:"Wǒ tōngcháng qù gōngyuán."},
+    {q:"这部电影好看吗？", qp:"Zhè bù diànyǐng hǎokàn ma?", a:"很好看，强烈推荐。", ap:"Hěn hǎokàn, qiángliè tuījiàn."},
+    {q:"你的生日是哪天？", qp:"Nǐ de shēngrì shì nǎ tiān?", a:"十月十号。", ap:"Shí yuè shí hào."},
+    {q:"你经常旅行吗？", qp:"Nǐ jīngcháng lǚxíng ma?", a:"不经常，但喜欢。", ap:"Bù jīngcháng, dàn xǐhuan."},
+    {q:"你会说几种语言？", qp:"Nǐ huì shuō jǐ zhǒng yǔyán?", a:"我会说三种。", ap:"Wǒ huì shuō sān zhǒng."},
+    {q:"你平时喜欢听什么音乐？", qp:"Nǐ píngshí xǐhuan tīng shénme yīnyuè?", a:"我喜欢流行音乐。", ap:"Wǒ xǐhuan liúxíng yīnyuè."},
+    {q:"你喝咖啡还是茶？", qp:"Nǐ hē kāfēi háishì chá?", a:"我更喜欢茶。", ap:"Wǒ gèng xǐhuan chá."},
+    {q:"这道菜怎么点？", qp:"Zhè dào cài zěnme diǎn?", a:"按这个按钮。", ap:"Àn zhège ànniǔ."},
+    {q:"你带伞了吗？", qp:"Nǐ dài sǎn le ma?", a:"带了，外面下雨了。", ap:"Dài le, wàimiàn xià yǔ le."},
+    {q:"你觉得这个主意怎么样？", qp:"Nǐ juéde zhège zhǔyi zěnmeyàng?", a:"我觉得很好。", ap:"Wǒ juéde hěn hǎo."},
+    {q:"我们什么时候见面？", qp:"Wǒmen shénme shíhou jiànmiàn?", a:"下午三点可以吗？", ap:"Xiàwǔ sān diǎn kěyǐ ma?"},
+    {q:"你最近在看什么书？", qp:"Nǐ zuìjìn zài kàn shénme shū?", a:"我在看一本小说。", ap:"Wǒ zài kàn yī běn xiǎoshuō."},
+    {q:"你学会了吗？", qp:"Nǐ xuéhuì le ma?", a:"差不多了，谢谢。", ap:"Chàbuduō le, xièxie."},
+    {q:"你需要帮助吗？", qp:"Nǐ xūyào bāngzhù ma?", a:"不用，我自己可以。", ap:"Bú yòng, wǒ zìjǐ kěyǐ."},
+    {q:"这个怎么用？", qp:"Zhège zěnme yòng?", a:"很简单，按这里。", ap:"Hěn jiǎndān, àn zhèlǐ."},
+    {q:"你经常锻炼身体吗？", qp:"Nǐ jīngcháng duànliàn shēntǐ ma?", a:"是的，我每周去三次健身房。", ap:"Shì de, wǒ měi zhōu qù sān cì jiànshēnfáng."},
+    {q:"你对这个地方熟悉吗？", qp:"Nǐ duì zhège dìfang shúxī ma?", a:"不太熟，我刚搬来。", ap:"Bú tài shú, wǒ gāng bān lái."},
+    {q:"你饿了吗？", qp:"Nǐ è le ma?", a:"有一点，我们去吃点东西吧。", ap:"Yǒu yīdiǎn, wǒmen qù chī diǎn dōngxi ba."},
+    {q:"你打算什么时候开始？", qp:"Nǐ dǎsuàn shénme shíhou kāishǐ?", a:"下个月吧。", ap:"Xià gè yuè ba."},
+    {q:"你更喜欢城市还是乡村？", qp:"Nǐ gèng xǐhuan chéngshì háishì xiāngcūn?", a:"我喜欢乡村的安静。", ap:"Wǒ xǐhuan xiāngcūn de ānjìng."},
+    {q:"你平时几点睡觉？", qp:"Nǐ píngshí jǐ diǎn shuìjiào?", a:"大概十一点。", ap:"Dàgài shíyī diǎn."},
+    {q:"你能推荐一家好餐厅吗？", qp:"Nǐ néng tuījiàn yī jiā hǎo cāntīng ma?", a:"当然，前面那家不错。", ap:"Dāngrán, qiánmiàn nà jiā bùcuò."},
+    {q:"你坐什么交通工具上班？", qp:"Nǐ zuò shénme jiāotōng gōngjù shàngbān?", a:"我坐地铁。", ap:"Wǒ zuò dìtiě."},
+    {q:"你学过中文吗？", qp:"Nǐ xuéguò zhōngwén ma?", a:"学过一点，还在努力。", ap:"Xuéguò yīdiǎn, hái zài nǔlì."},
+    {q:"你觉得学习难吗？", qp:"Nǐ juéde xuéxí nán ma?", a:"开始难，后来就容易了。", ap:"Kāishǐ nán, hòulái jiù róngyì le."},
+    {q:"你最喜欢哪个季节？", qp:"Nǐ zuì xǐhuan nǎge jìjié?", a:"我最喜欢秋天。", ap:"Wǒ zuì xǐhuan qiūtiān."},
+    {q:"你周末一般做什么？", qp:"Nǐ zhōumò yībān zuò shénme?", a:"我一般在家休息或看书。", ap:"Wǒ yībān zài jiā xiūxi huò kànshū."},
+    {q:"你带现金还是刷卡？", qp:"Nǐ dài xiànjīn háishì shuākǎ?", a:"我刷卡，方便。", ap:"Wǒ shuākǎ, fāngbiàn."},
+    {q:"你觉得这个颜色适合我吗？", qp:"Nǐ juéde zhège yánsè shìhé wǒ ma?", a:"非常适合，显白。", ap:"Fēicháng shìhé, xiǎn bái."},
+    {q:"你能再说一遍吗？", qp:"Nǐ néng zài shuō yībiàn ma?", a:"好的，没问题。", ap:"Hǎo de, méi wèntí."},
+    {q:"你经常迟到吗？", qp:"Nǐ jīngcháng chídào ma?", a:"不，我总是很准时。", ap:"Bù, wǒ zǒngshì hěn zhǔnshí."},
+    {q:"你觉得这个计划可行吗？", qp:"Nǐ juéde zhège jìhuà kěxíng ma?", a:"我觉得可以试试。", ap:"Wǒ juéde kěyǐ shìshi."},
+    {q:"你平时喜欢吃什么？", qp:"Nǐ píngshí xǐhuan chī shénme?", a:"我喜欢吃面食。", ap:"Wǒ xǐhuan chī miànshí."},
+    {q:"你打算去哪里旅行？", qp:"Nǐ dǎsuàn qù nǎlǐ lǚxíng?", a:"我想去海边。", ap:"Wǒ xiǎng qù hǎibiān."},
+    {q:"你经常看电影吗？", qp:"Nǐ jīngcháng kàn diànyǐng ma?", a:"不太经常，但偶尔会看。", ap:"Bú tài jīngcháng, dàn ǒu'ěr huì kàn."},
+    {q:"你最近工作忙吗？", qp:"Nǐ zuìjìn gōngzuò máng ma?", a:"挺忙的，经常加班。", ap:"Tǐng máng de, jīngcháng jiābān."},
+    {q:"你觉得自己进步了吗？", qp:"Nǐ juéde zìjǐ jìnbù le ma?", a:"是的，每天都在进步。", ap:"Shì de, měi tiān dōu zài jìnbù."}
+];
+
+const GRAMMAR = [
+    {title:"1. Порядок слов: SVO", rule:"Подлежащее + Сказуемое + Дополнение. Как в русском.", ex:"我喝咖啡。 (Wǒ hē kāfēi.) - Я пью кофе."},
+    {title:"2. Отрицание 不 / 没", rule:"不 (bù) - для настоящего/будущего. 没 (méi) - для прошедшего или отсутствия.", ex:"我不去。 (Wǒ bú qù.) - Я не пойду.\n我没看见。 (Wǒ méi kànjiàn.) - Я не видел."},
+    {title:"3. Вопрос 吗 (ma)", rule:"Ставится в конце утвердительного предложения, чтобы задать вопрос да/нет.", ex:"你好吗？ (Nǐ hǎo ma?) - Как дела?\n你去吗？ (Nǐ qù ma?) - Ты пойдёшь?"},
+    {title:"4. Вопросительные слова", rule:"Ставятся на месте того, о чём спрашиваем. Порядок слов не меняется.", ex:"你吃什么？ (Nǐ chī shénme?) - Что ты ешь?\n你去哪里？ (Nǐ qù nǎlǐ?) - Куда ты идёшь?"},
+    {title:"5. Частица 的 (de)", rule:"Показывает принадлежность. Аналог окончания '-ов/-ин' или слова 'чей'.", ex:"我的书 (Wǒ de shū) - Моя книга.\n他的车 (Tā de chē) - Его машина."},
+    {title:"6. Счётные слова ( classifiers )", rule:"Между числом и существительным всегда ставится счётное слово.", ex:"一个人 (Yī gè rén) - Один человек (个 - универсальное)\n一本书 (Yī běn shū) - Одна книга (本 - для книг)\n一只猫 (Yī zhī māo) - Одна кошка (只 - для животных)"},
+    {title:"7. Прошедшее время 了 (le)", rule:"了 ставится после глагола, чтобы показать завершённость действия.", ex:"我吃饭了。 (Wǒ chī fàn le.) - Я поел.\n他来了。 (Tā lái le.) - Он пришёл."},
+    {title:"8. Будущее время 要 / 会", rule:"要 (yào) - собираюсь/хочу. 会 (huì) - умею/буду.", ex:"我要去。 (Wǒ yào qù.) - Я собираюсь идти.\n我会做。 (Wǒ huì zuò.) - Я сделаю/умею делать."},
+    {title:"9. Сравнение 比 (bǐ)", rule:"A + 比 + B + Прилагательное. A более..., чем B.", ex:"他比我高。 (Tā bǐ wǒ gāo.) - Он выше меня."},
+    {title:"10. Усиление 很 / 非常", rule:"很 (hěn) - очень (часто опускается в речи, но грамматически нужно). 非常 (fēicháng) - крайне.", ex:"她很漂亮。 (Tā hěn piàoliang.) - Она очень красивая."},
+    {title:"11. Повтор 又 / 再", rule:"又 (yòu) - снова (уже случилось). 再 (zài) - снова (ещё случится).", ex:"他又来了。 (Tā yòu lái le.) - Он снова пришёл.\n你明天再来。 (Nǐ míngtiān zài lái.) - Приходи завтра снова."},
+    {title:"12. Время и Место", rule:"Время ставится перед глаголом или в начало. Место: после глагола движения, перед глаголом состояния.", ex:"我明天去北京。 (Wǒ míngtiān qù Běijīng.) - Я завтра поеду в Пекин.\n我在家学习。 (Wǒ zài jiā xuéxí.) - Я учусь дома."}
+];
+
+const SONGS = [
+    {title:"🐯 两只老虎 (Два тигра)", lines:[
+        {ch:"两只老虎，两只老虎", py:"liǎng zhī lǎohǔ, liǎng zhī lǎohǔ", ru:"Два тигра, два тигра"},
+        {ch:"跑得快，跑得快", py:"pǎo de kuài, pǎo de kuài", ru:"Бегут быстро, бегут быстро"},
+        {ch:"一只没有耳朵", py:"yī zhī méiyǒu ěrduo", ru:"Один без ушей"},
+        {ch:"一只没有尾巴", py:"yī zhī méiyǒu wěiba", ru:"Один без хвоста"},
+        {ch:"真奇怪，真奇怪", py:"zhēn qíguài, zhēn qíguài", ru:"Как странно, как странно"}
+    ]},
+    {title:"⭐ 小星星 (Маленькая звёздочка)", lines:[
+        {ch:"一闪一闪亮晶晶", py:"yī shǎn yī shǎn liàng jīngjīng", ru:"Мерцай, мерцай, ярко свети"},
+        {ch:"满天都是小星星", py:"mǎn tiān dōu shì xiǎo xīngxīng", ru:"Всё небо в маленьких звёздах"},
+        {ch:"挂在天上放光明", py:"guà zài tiān shàng fàng guāngmíng", ru:"Висишь на небе, сияя ярко"},
+        {ch:"好像许多小眼睛", py:"hǎoxiàng xǔduō xiǎo yǎnjing", ru:"Как много маленьких глазок"}
+    ]},
+    {title:"👋 你好歌 (Песня приветствий)", lines:[
+        {ch:"你好，你好", py:"nǐ hǎo, nǐ hǎo", ru:"Здравствуй, здравствуй"},
+        {ch:"早上好，下午好", py:"zǎoshang hǎo, xiàwǔ hǎo", ru:"Доброе утро, добрый день"},
+        {ch:"谢谢你，不客气", py:"xièxie nǐ, bú kèqi", ru:"Спасибо тебе, не за что"},
+        {ch:"再见，明天见", py:"zàijiàn, míngtiān jiàn", ru:"До свидания, до завтра"}
+    ]},
+    {title:"🔢 数字歌 (Песня чисел)", lines:[
+        {ch:"一二三，三二一", py:"yī èr sān, sān èr yī", ru:"Раз два три, три два один"},
+        {ch:"四五六，七
+                {ch:"七八九，十", py:"qī bā jiǔ, shí", ru:"Семь восемь девять, десять"},
+        {ch:"数数真有趣", py:"shǔ shǔ zhēn yǒuqù", ru:"Считать так интересно"}
+    ]},
+    {title:"🎨 颜色歌 (Песня цветов)", lines:[
+        {ch:"红色红色红苹果", py:"hóngsè hóngsè hóng píngguǒ", ru:"Красный, красный, красное яблоко"},
+        {ch:"蓝色蓝色蓝天空", py:"lánsè lánsè lán tiānkōng", ru:"Синий, синий, синее небо"},
+        {ch:"绿色绿色绿草地", py:"lǜsè lǜsè lǜ cǎodì", ru:"Зелёный, зелёный, зелёная трава"},
+        {ch:"黄色黄色黄香蕉", py:"huángsè huángsè huáng xiāngjiāo", ru:"Жёлтый, жёлтый, жёлтый банан"}
+    ]},
+    {title:"👨‍👩‍👧 家庭歌 (Песня о семье)", lines:[
+        {ch:"爸爸妈妈我爱你", py:"bàba māma wǒ ài nǐ", ru:"Папа, мама, я люблю вас"},
+        {ch:"哥哥姐姐对我好", py:"gēge jiějie duì wǒ hǎo", ru:"Старший брат и сестра добры ко мне"},
+        {ch:"我们是一家人", py:"wǒmen shì yī jiā rén", ru:"Мы одна семья"},
+        {ch:"幸福快乐在一起", py:"xìngfú kuàilè zài yīqǐ", ru:"Счастливы и радостны вместе"}
+    ]},
+    {title:"🐰 小兔子乖乖 (Зайчик, будь послушным)", lines:[
+        {ch:"小兔子乖乖，把门开开", py:"xiǎo tùzi guāiguāi, bǎ mén kāikāi", ru:"Зайчик послушный, открой дверь"},
+        {ch:"快点开开，我要进来", py:"kuài diǎn kāikāi, wǒ yào jìnlái", ru:"Открой скорее, я хочу войти"},
+        {ch:"不开不开我不开", py:"bù kāi bù kāi wǒ bù kāi", ru:"Не открою, не открою, я не открою"},
+        {ch:"妈妈没回来", py:"māma méi huílái", ru:"Мама ещё не вернулась"}
+    ]},
+    {title:"🦆 数鸭子 (Считаю уток)", lines:[
+        {ch:"门前大桥下，游过一群鸭", py:"mén qián dàqiáo xià, yóu guò yī qún yā", ru:"Под мостом у ворот плывёт стая уток"},
+        {ch:"快来快来数一数", py:"kuài lái kuài lái shǔ yī shǔ", ru:"Давай скорее посчитаем"},
+        {ch:"二四六七八", py:"èr sì liù qī bā", ru:"Два четыре шесть семь восемь"},
+        {ch:"嘎嘎嘎嘎真呀真多呀", py:"gā gā gā gā zhēn ya zhēn duō ya", ru:"Кря-кря-кря-кря, правда их много!"}
+    ]},
+    {title:"🎒 上学歌 (Песня о школе)", lines:[
+        {ch:"太阳当空照，花儿对我笑", py:"tàiyáng dāngkōng zhào, huā er duì wǒ xiào", ru:"Солнце светит в небе, цветы улыбаются мне"},
+        {ch:"小鸟说早早早", py:"xiǎo niǎo shuō zǎo zǎo zǎo", ru:"Птички говорят: доброе утро"},
+        {ch:"你为什么背上小书包", py:"nǐ wèishénme bèi shàng xiǎo shūbāo", ru:"Почему ты несёшь маленький рюкзак?"},
+        {ch:"我去上学校", py:"wǒ qù shàng xuéxiào", ru:"Я иду в школу"}
+    ]},
+    {title:"🥕 拔萝卜 (Вытяни репку)", lines:[
+        {ch:"拔萝卜拔萝卜，嗨吆嗨吆拔萝卜", py:"bá luóbo bá luóbo, hāi yō hāi yō bá luóbo", ru:"Тяни репку, тяни репку, эй-йо, эй-йо, тяни репку"},
+        {ch:"老婆婆快快来，一起来帮忙", py:"lǎo pópo kuài kuài lái, yīqǐ lái bāngmáng", ru:"Бабушка, иди скорее, помогай вместе с нами"},
+        {ch:"拔萝卜拔萝卜，嗨吆嗨吆拔不动", py:"bá luóbo bá luóbo, hāi yō hāi yō bá bú dòng", ru:"Тяни репку, тяни репку, эй-йо, эй-йо, не вытянуть"},
+        {ch:"小花猫快快来，一起来帮忙", py:"xiǎo huāmāo kuài kuài lái, yīqǐ lái bāngmáng", ru:"Котёнок, иди скорее, помогай вместе с нами"}
+    ]},
+    {title:"🎂 生日快乐 (С днём рождения)", lines:[
+        {ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"},
+        {ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"},
+        {ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"},
+        {ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"}
+    ]},
+    {title:"🎉 新年好 (С Новым годом)", lines:[
+        {ch:"新年好呀新年好", py:"xīnnián hǎo ya xīnnián hǎo", ru:"С Новым годом, с Новым годом"},
+        {ch:"祝贺大家新年好", py:"zhùhè dàjiā xīnnián hǎo", ru:"Поздравляю всех с Новым годом"},
+        {ch:"我们唱歌我们跳舞", py:"wǒmen chànggē wǒmen tiàowǔ", ru:"Мы поём, мы танцуем"},
+        {ch:"祝贺大家新年好", py:"zhùhè dàjiā xīnnián hǎo", ru:"Поздравляю всех с Новым годом"}
+    ]},
+    {title:"🐱 小猫咪 (Котёнок)", lines:[
+        {ch:"小猫咪小猫咪", py:"xiǎo māomī xiǎo māomī", ru:"Котёнок, котёнок"},
+        {ch:"喵喵喵", py:"miāo miāo miāo", ru:"Мяу мяу мяу"},
+        {ch:"你在哪里呀", py:"nǐ zài nǎlǐ ya", ru:"Где ты?"},
+        {ch:"我在这里呀", py:"wǒ zài zhèlǐ ya", ru:"Я здесь!"}
+    ]},
+    {title:"🚣 让我们荡起双桨 (Давайте грести)", lines:[
+        {ch:"让我们荡起双桨", py:"ràng wǒmen dàng qǐ shuāngjiǎng", ru:"Давайте возьмём вёсла"},
+        {ch:"小船儿推开波浪", py:"xiǎo chuán er tuī kāi bōlàng", ru:"Лодочка раздвигает волны"},
+        {ch:"海面倒映着美丽的白塔", py:"hǎimiàn dàoyìng zhe měilì de bái tǎ", ru:"На море отражается красивая белая башня"},
+        {ch:"四周环绕着绿树红墙", py:"sìzhōu huánrào zhe lǜ shù hóng qiáng", ru:"Вокруг зелёные деревья и красные стены"}
+    ]},
+    {title:"🌸 春天在哪里 (Где весна)", lines:[
+        {ch:"春天在哪里呀", py:"chūntiān zài nǎlǐ ya", ru:"Где же весна?"},
+        {ch:"春天在那青翠的山林里", py:"chūntiān zài nà qīngcuì de shānlín lǐ", ru:"Весна в зелёных горах и лесах"},
+        {ch:"这里有红花呀这里有绿草", py:"zhèlǐ yǒu hónghuā ya zhèlǐ yǒu lǜcǎo", ru:"Здесь красные цветы, здесь зелёная трава"},
+        {ch:"还有那会唱歌的小黄鹂", py:"hái yǒu nà huì chànggē de xiǎo huánglí", ru:"И ещё маленькие иволги, которые поют"}
+    ]},
+    {title:"🎈 找朋友 (Ищу друга)", lines:[
+        {ch:"找呀找呀找朋友", py:"zhǎo ya zhǎo ya zhǎo péngyou", ru:"Ищу, ищу, ищу друга"},
+        {ch:"找到一个好朋友", py:"zhǎo dào yīgè hǎo péngyou", ru:"Нашёл хорошего друга"},
+        {ch:"敬个礼呀握握手", py:"jìng gè lǐ ya wò wò shǒu", ru:"Отдам честь и пожму руку"},
+        {ch:"你是我的好朋友", py:"nǐ shì wǒ de hǎo péngyou", ru:"Ты мой хороший друг"}
+    ]},
+    {title:"🐴 小毛驴 (Маленький осёл)", lines:[
+        {ch:"我有一只小毛驴", py:"wǒ yǒu yī zhī xiǎo máolǘ", ru:"У меня есть маленький осёл"},
+        {ch:"我从来也不骑", py:"wǒ cónglái yě bù qí", ru:"Я никогда на нём не езжу"},
+        {ch:"有一天我心血来潮", py:"yǒu yītiān wǒ xīnxuèláicháo", ru:"Однажды мне захотелось"},
+        {ch:"骑着去赶集", py:"qí zhe qù gǎnjí", ru:"Поехать на рынок верхом"}
+    ]},
+    {title:"🎵 童年 (Детство)", lines:[
+        {ch:"池塘边的榕树上", py:"chítáng biān de róngshù shàng", ru:"На фикусе у пруда"},
+        {ch:"知了在声声叫着夏天", py:"zhīliǎo zài shēngshēng jiào zhe xiàtiān", ru:"Цикады стрекочут о лете"},
+        {ch:"操场边的秋千上", py:"cāochǎng biān de qiūqiān shàng", ru:"На качелях у спортплощадки"},
+        {ch:"只有蝴蝶停在上面", py:"zhǐyǒu húdié tíng zài shàngmiàn", ru:"Только бабочки сидят"}
+    ]},
+    {title:"🐟 小鱼的梦 (Мечта маленькой рыбки)", lines:[
+        {ch:"小鱼小鱼游游游", py:"xiǎo yú xiǎo yú yóu yóu yóu", ru:"Рыбка, рыбка, плыви-плыви"},
+        {ch:"游到水里做个梦", py:"yóu dào shuǐ lǐ zuò gè mèng", ru:"Плыви в воде и мечтай"},
+        {ch:"梦见自己长翅膀", py:"mèngjiàn zìjǐ zhǎng chìbǎng", ru:"Приснилось, что выросли крылья"},
+        {ch:"飞到天上去玩耍", py:"fēi dào tiān shàng qù wánshuǎ", ru:"Полететь в небо играть"}
+    ]},
+    {title:"🌙 月亮代表我的心 (Луна представляет моё сердце)", lines:[
+        {ch:"你问我爱你有多深", py:"nǐ wèn wǒ ài nǐ yǒu duō shēn", ru:"Ты спрашиваешь, как сильно я тебя люблю"},
+        {ch:"我爱你有几分", py:"wǒ ài nǐ yǒu jǐ fēn", ru:"Насколько велика моя любовь"},
+        {ch:"我的情也真，我的爱也真", py:"wǒ de qíng yě zhēn, wǒ de ài yě zhēn", ru:"Мои чувства искренни, моя любовь prawdziwa"},
+        {ch:"月亮代表我的心", py:"yuèliang dàibiǎo wǒ de xīn", ru:"Луна представляет моё сердце"}
+    ]},
+    {title:"🎊 恭喜恭喜 (Поздравляю)", lines:[
+        {ch:"每条大街小巷", py:"měi tiáo dàjiē xiǎoxiàng", ru:"На каждой улице, в каждом переулке"},
+        {ch:"每个人的嘴里", py:"měi gè rén de zuǐ lǐ", ru:"В устах каждого человека"},
+        {ch:"见面第一句话", py:"jiànmiàn dì yī jù huà", ru:"Первые слова при встрече"},
+        {ch:"就是恭喜恭喜", py:"jiùshì gōngxǐ gōngxǐ", ru:"Это поздравления, поздравления"}
+    ]},
+    {title:"🌺 茉莉花 (Жасминовый цветок)", lines:[
+        {ch:"好一朵美丽的茉莉花", py:"hǎo yī duǒ měilì de mòlìhuā", ru:"Какой красивый жасминовый цветок"},
+        {ch:"芬芳美丽满枝桠", py:"fēnfāng měilì mǎn zhīyā", ru:"Ароматный и красивый на всех ветвях"},
+        {ch:"又香又白人人夸", py:"yòu xiāng yòu bái rén rén kuā", ru:"Такой душистый и белый, все хвалят"},
+        {ch:"让我来将你摘下", py:"ràng wǒ lái jiāng nǐ zhāixià", ru:"Позволь мне сорвать тебя"}
+    ]}
+];
+
+const RADICALS = [
+    {s:"一",p:"yī",m:"один/горизонталь",e:"1️⃣",ex:"王、丁、七"},
+    {s:"丨",p:"gǔn",m:"вертикаль",e:"📏",ex:"十、中、串"},
+    {s:"丶",p:"zhǔ",m:"точка",e:"🔴",ex:"丸、丹、主"},
+    {s:"丿",p:"piě",m:"наклон влево",e:"↙️",ex:"八、人、入"},
+    {s:"乙",p:"yǐ",m:"второй/изгиб",e:"2️⃣",ex:"九、也、飞"},
+    {s:"亅",p:"jué",m:"крюк",e:"🪝",ex:"了、事、矛"},
+    {s:"二",p:"èr",m:"два",e:"2️⃣",ex:"于、云、些"},
+    {s:"亠",p:"tóu",m:"крышка",e:"🔝",ex:"方、亡、交"},
+    {s:"人",p:"rén",m:"человек",e:"👤",ex:"你、什、仁"},
+    {s:"儿",p:"ér",m:"сын",e:"👶",ex:"元、允、兄"},
+    {s:"入",p:"rù",m:"входить",e:"➡️",ex:"内、全、两"},
+    {s:"八",p:"bā",m:"восемь",e:"8️⃣",ex:"公、六、兮"},
+    {s:"冂",p:"jiōng",m:"далёкий",e:"📦",ex:"冉、肉、内"},
+    {s:"冖",p:"mì",m:"покрывало",e:"🧵",ex:"冗、冠、冥"},
+    {s:"冫",p:"bīng",m:"лёд",e:"❄️",ex:"冬、冰、冷"},
+    {s:"几",p:"jī",m:"столик",e:"🪑",ex:"凡、凯、风"},
+    {s:"凵",p:"kǎn",m:"ёмкость",e:"📥",ex:"凶、凸、凹"},
+    {s:"刀",p:"dāo",m:"нож",e:"🔪",ex:"分、切、剪"},
+    {s:"力",p:"lì",m:"сила",e:"💪",ex:"加、功、男"},
+    {s:"勹",p:"bāo",m:"обёртка",e:"📦",ex:"包、勺、勾"},
+    {s:"匕",p:"bǐ",m:"ложка",e:"🥄",ex:"化、北、比"},
+    {s:"匚",p:"fāng",m:"ящик",e:"📦",ex:"区、巨、匠"},
+    {s:"匸",p:"xǐ",m:"прятать",e:"🙈",ex:"亡、匹、医"},
+    {s:"十",p:"shí",m:"десять",e:"🔟",ex:"千、半、升"},
+    {s:"卜",p:"bǔ",m:"гадание",e:"🔮",ex:"下、上、占"},
+    {s:"卩",p:"jié",m:"печать",e:"🔖",ex:"即、卷、印"},
+    {s:"厂",p:"hǎn",m:"утёс",e:"🪨",ex:"原、厚、历"},
+    {s:"厶",p:"sī",m:"частный",e:"🔒",ex:"台、公、去"},
+    {s:"又",p:"yòu",m:"снова",e:"🔄",ex:"叉、及、友"},
+    {s:"口",p:"kǒu",m:"рот",e:"👄",ex:"吃、叫、品"},
+    {s:"囗",p:"wéi",m:"ограда",e:"⭕",ex:"四、国、围"},
+    {s:"土",p:"tǔ",m:"земля",e:"🌍",ex:"地、圣、圭"},
+    {s:"士",p:"shì",m:"учёный",e:"🎓",ex:"壬、喜、壮"},
+    {s:"夂",p:"zhǐ",m:"идти",e:"🚶",ex:"各、冬、爱"},
+    {s:"夊",p:"suī",m:"медленно",e:"🐌",ex:"复、夏、备"},
+    {s:"夕",p:"xī",m:"вечер",e:"🌆",ex:"外、多、夜"},
+    {s:"大",p:"dà",m:"большой",e:"📏",ex:"太、天、夫"},
+    {s:"女",p:"nǚ",m:"женщина",e:"👩",ex:"妈、奶、好"},
+    {s:"子",p:"zǐ",m:"ребёнок",e:"👶",ex:"学、孔、字"},
+    {s:"宀",p:"mián",m:"крыша",e:"🏠",ex:"家、安、宁"},
+    {s:"寸",p:"cùn",m:"дюйм",e:"📏",ex:"村、寺、封"},
+    {s:"小",p:"xiǎo",m:"маленький",e:"📏",ex:"少、尖、当"},
+    {s:"尢",p:"wāng",m:"хромой",e:"🦵",ex:"尤、尴、尬"},
+    {s:"尸",p:"shī",m:"труп",e:"💀",ex:"尺、尼、尾"},
+    {s:"屮",p:"chè",m:"росток",e:"🌱",ex:"草、屯、顿"},
+    {s:"山",p:"shān",m:"гора",e:"⛰️",ex:"峰、密、幽"},
+    {s:"巛",p:"chuān",m:"река",e:"🌊",ex:"川、州、顺"},
+    {s:"工",p:"gōng",m:"работа",e:"🔧",ex:"左、巧、功"},
+    {s:"己",p:"jǐ",m:"себя",e:"👤",ex:"记、改、忌"},
+    {s:"巾",p:"jīn",m:"тюрбан",e:"🧣",ex:"市、帅、刷"},
+    {s:"干",p:"gān",m:"сухой",e:"🌵",ex:"旱、平、年"},
+    {s:"幺",p:"yāo",m:"нить",e:"🧵",ex:"幻、幽、几"},
+    {s:"广",p:"yǎn",m:"утёс",e:"🏔️",ex:"庄、床、店"},
+    {s:"廴",p:"yǐn",m:"шаг",e:"👣",ex:"廷、延、建"},
+    {s:"廾",p:"gǒng",m:"арка",e:"🌉",ex:"廿、弄、弊"},
+    {s:"弋",p:"yì",m:"стрелять",e:"🏹",ex:"弋、贰、式"},
+    {s:"弓",p:"gōng",m:"лук",e:"🏹",ex:"引、弗、强"},
+    {s:"彐",p:"jì",m:"рыло",e:"🐷",ex:"录、彗、雪"},
+    {s:"彡",p:"shān",m:"щётка",e:"🖌️",ex:"形、彤、彩"},
+    {s:"彳",p:"chì",m:"шаг",e:"👣",ex:"行、往、征"},
+    {s:"心",p:"xīn",m:"сердце",e:"❤️",ex:"必、忌、忘"},
+    {s:"戈",p:"gē",m:"алебарда",e:"⚔️",ex:"戊、戌、战"},
+    {s:"户",p:"hù",m:"дверь",e:"🚪",ex:"房、所、扇"},
+    {s:"手",p:"shǒu",m:"рука",e:"✋",ex:"才、打、拿"},
+    {s:"支",p:"zhī",m:"ветвь",e:"🌿",ex:"攴、收、改"},
+    {s:"攴",p:"pū",m:"стучать",e:"👊",ex:"收、改、攻"},
+    {s:"文",p:"wén",m:"письмо",e:"📝",ex:"齐、斌、斐"},
+    {s:"斗",p:"dǒu",m:"ковш",e:"🥄",ex:"料、斛、斜"},
+    {s:"斤",p:"jīn",m:"топор",e:"🪓",ex:"斥、斧、断"},
+    {s:"方",p:"fāng",m:"квадрат",e:"⬜",ex:"於、放、旅"},
+    {s:"无",p:"wú",m:"нет",e:"❌",ex:"既、概、溉"},
+    {s:"日",p:"rì",m:"солнце",e:"☀️",ex:"旦、旨、早"},
+    {s:"曰",p:"yuē",m:"говорить",e:"💬",ex:"曲、更、曹"},
+    {s:"月",p:"yuè",m:"луна",e:"🌙",ex:"有、朋、服"},
+    {s:"木",p:"mù",m:"дерево",e:"🌳",ex:"未、本、林"},
+    {s:"欠",p:"qiàn",m:"нехватка",e:"😮‍💨",ex:"次、欣、欲"},
+    {s:"止",p:"zhǐ",m:"остановка",e:"🛑",ex:"正、此、步"},
+    {s:"歹",p:"dǎi",m:"смерть",e:"💀",ex:"死、殁、残"},
+    {s:"殳",p:"shū",m:"оружие",e:"🗡️",ex:"段、殷、杀"},
+    {s:"毋",p:"wú",m:"не",e:"🚫",ex:"母、每、毒"},
+    {s:"比",p:"bǐ",m:"сравнить",e:"⚖️",ex:"毗、毙、毕"},
+    {s:"毛",p:"máo",m:"шерсть",e:"🧶",ex:"毡、毣、毯"},
+    {s:"氏",p:"shì",m:"клан",e:"👨‍👧",ex:"民、氓、纸"},
+    {s:"气",p:"qì",m:"пар",e:"💨",ex:"氕、氘、氚"},
+    {s:"水",p:"shuǐ",m:"вода",e:"💧",ex:"永、冰、江"},
+    {s:"火",p:"huǒ",m:"огонь",e:"🔥",ex:"灰、灯、灶"},
+    {s:"爪",p:"zhǎo",m:"коготь",e:"🐾",ex:"爬、争、爱"},
+    {s:"父",p:"fù",m:"отец",e:"👨",ex:"爸、爹、爷"},
+    {s:"爻",p:"yáo",m:"триграммы",e:"☯️",ex:"爽、尔、爻"},
+    {s:"爿",p:"qiáng",m:"дерево",e:"🪵",ex:"床、状、将"},
+    {s:"片",p:"piàn",m:"ломтик",e:"📄",ex:"版、牌、牍"},
+    {s:"牙",p:"yá",m:"клык",e:"🦷",ex:"牚、邪、雅"},
+    {s:"牛",p:"niú",m:"корова",e:"🐄",ex:"牟、牠、牲"},
+    {s:"犬",p:"quǎn",m:"собака",e:"🐕",ex:"犯、犰、状"},
+    {s:"玄",p:"xuán",m:"глубокий",e:"🔮",ex:"率、玅、玈"},
+    {s:"玉",p:"yù",m:"нефрит",e:"💎",ex:"玻、玛、璧"},
+    {s:"瓜",p:"guā",m:"дыня",e:"🍈",ex:"瓞、瓟、瓢"},
+    {s:"瓦",p:"wǎ",m:"черепица",e:"🏺",ex:"瓮、瓫、瓶"},
+    {s:"甘",p:"gān",m:"сладкий",e:"🍬",ex:"甚、甜、某"},
+    {s:"生",p:"shēng",m:"жизнь",e:"🌱",ex:"产、甥、牲"},
+    {s:"用",p:"yòng",m:"использовать",e:"🔧",ex:"甩、甫、甬"},
+    {s:"田",p:"tián",m:"поле",e:"🌾",ex:"由、甲、申"},
+    {s:"疋",p:"pǐ",m:"болт ткани",e:"🧵",ex:"疏、疎、楚"},
+    {s:"",p:"nè",m:"болезнь",e:"🤒",ex:"疚、疝、病"},
+    {s:"癶",p:"bō",m:"шаги",e:"👣",ex:"癸、発、登"},
+    {s:"白",p:"bái",m:"белый",e:"⚪",ex:"百、皂、的"},
+    {s:"皮",p:"pí",m:"кожа",e:"🧑‍🦰",ex:"皯、皴、皱"},
+    {s:"皿",p:"mǐn",m:"блюдо",e:"🍽️",ex:"盂、盅、盆"},
+    {s:"目",p:"mù",m:"глаз",e:"👁️",ex:"盯、盲、看"},
+    {s:"矛",p:"máo",m:"копьё",e:"🔱",ex:"矜、矞、矟"},
+    {s:"矢",p:"shǐ",m:"стрела",e:"🏹",ex:"矣、知、短"},
+    {s:"石",p:"shí",m:"камень",e:"🪨",ex:"矸、矿、研"},
+    {s:"示",p:"shì",m:"дух",e:"👻",ex:"礼、社、神"},
+    {s:"禸",p:"róu",m:"след",e:"👣",ex:"禹、禺、离"},
+    {s:"禾",p:"hé",m:"зерно",e:"🌾",ex:"秃、秀、私"},
+    {s:"穴",p:"xué",m:"пещера",e:"🕳️",ex:"究、空、穿"},
+    {s:"立",p:"lì",m:"стоять",e:"🧍",ex:"竑、、站"},
+    {s:"竹",p:"zhú",m:"бамбук",e:"🎋",ex:"竺、竿、笔"},
+    {s:"米",p:"mǐ",m:"рис",e:"🍚",ex:"籽、粒、粉"},
+    {s:"糸",p:"mì",m:"шёлк",e:"🧵",ex:"红、纪、纺"},
+    {s:"缶",p:"fǒu",m:"кувшин",e:"🏺",ex:"缸、缺、罐"},
+    {s:"网",p:"wǎng",m:"сеть",e:"🕸️",ex:"罗、罚、置"},
+    {s:"羊",p:"yáng",m:"овца",e:"🐑",ex:"美、羔、群"},
+    {s:"羽",p:"yǔ",m:"перо",e:"🪶",ex:"翅、翔、翠"},
+    {s:"老",p:"lǎo",m:"старый",e:"👴",ex:"考、者、耆"},
+    {s:"而",p:"ér",m:"а",e:"🔗",ex:"耐、耍、耏"},
+    {s:"耒",p:"lěi",m:"плуг",e:"🌾",ex:"耕、耘、耜"},
+    {s:"耳",p:"ěr",m:"ухо",e:"👂",ex:"取、闻、聪"},
+    {s:"聿",p:"yù",m:"кисть",e:"🖌️",ex:"律、建、書"},
+    {s:"肉",p:"ròu",m:"мясо",e:"🥩",ex:"肌、肝、胖"},
+    {s:"臣",p:"chén",m:"министр",e:"👔",ex:"臧、臨、卧"},
+    {s:"自",p:"zì",m:"сам",e:"👤",ex:"臭、息、臬"},
+    {s:"至",p:"zhì",m:"достигать",e:"🎯",ex:"到、致、臻"},
+    {s:"臼",p:"jiù",m:"ступка",e:"🥣",ex:"舂、舅、臾"},
+    {s:"舌",p:"shé",m:"язык",e:"👅",ex:"甜、舔、舐"},
+    {s:"舛",p:"chuǎn",m:"ошибка",e:"❌",ex:"舞、舜、舛"},
+    {s:"舟",p:"zhōu",m:"лодка",e:"🚤",ex:"船、航、舰"},
+    {s:"艮",p:"gèn",m:"остановка",e:"🛑",ex:"良、艰、根"},
+    {s:"色",p:"sè",m:"цвет",e:"🎨",ex:"艳、艴、艵"},
+    {s:"艸",p:"cǎo",m:"трава",e:"🌿",ex:"艾、芳、花"},
+    {s:"虍",p:"hū",m:"тигр",e:"🐯",ex:"虎、虐、虚"},
+    {s:"虫",p:"chóng",m:"насекомое",e:"🐛",ex:"虱、虾、蛇"},
+    {s:"血",p:"xuè",m:"кровь",e:"🩸",ex:"衁、衃、衄"},
+    {s:"行",p:"xíng",m:"идти",e:"🚶",ex:"衍、街、衡"},
+    {s:"衣",p:"yī",m:"одежда",e:"👕",ex:"初、表、衫"},
+    {s:"襾",p:"yà",m:"покрывать",e:"🧥",ex:"西、要、覆"},
+    {s:"见",p:"jiàn",m:"видеть",e:"👁️",ex:"规、觅、视"},
+    {s:"角",p:"jiǎo",m:"рог",e:"🦄",ex:"觔、觕、解"},
+    {s:"言",p:"yán",m:"речь",e:"💬",ex:"订、计、话"},
+    {s:"谷",p:"gǔ",m:"долина",e:"🏔️",ex:"谹、谿、豁"},
+    {s:"豆",p:"dòu",m:"боб",e:"🫘",ex:"豇、、豎"},
+    {s:"",p:"shǐ",m:"свинья",e:"🐖",ex:"豚、豜、豢"},
+    {s:"豸",p:"zhì",m:"барсук",e:"🦡",ex:"豺、豹、貌"},
+    {s:"贝",p:"bèi",m:"ракушка",e:"🐚",ex:"贞、负、财"},
+    {s:"赤",p:"chì",m:"красный",e:"🔴",ex:"赦、赧、赫"},
+    {s:"走",p:"zǒu",m:"бежать",e:"🏃",ex:"赴、赶、超"},
+    {s:"足",p:"zú",m:"нога",e:"🦶",ex:"趴、趵、路"},
+    {s:"身",p:"shēn",m:"тело",e:"🧍",ex:"躬、躭、躯"},
+    {s:"车",p:"chē",m:"телега",e:"🚗",ex:"轧、轨、军"},
+    {s:"辛",p:"xīn",m:"горький",e:"😣",ex:"辜、辟、辣"},
+    {s:"辰",p:"chén",m:"утро",e:"🌅",ex:"辱、农、晨"},
+    {s:"辶",p:"chuò",m:"ходить",e:"🚶",ex:"边、巡、远"},
+    {s:"邑",p:"yì",m:"город",e:"🏙️",ex:"邕、、都"},
+    {s:"酉",p:"yǒu",m:"вино",e:"🍷",ex:"酊、酌、醉"},
+    {s:"釆",p:"biàn",m:"различать",e:"🔍",ex:"采、釉、释"},
+    {s:"里",p:"lǐ",m:"деревня",e:"🏘️",ex:"重、野、量"},
+    {s:"金",p:"jīn",m:"золото",e:"🥇",ex:"釓、、铁"},
+    {s:"长",p:"cháng",m:"длинный",e:"📏",ex:"镺、镻、镼"},
+    {s:"门",p:"mén",m:"ворота",e:"🚪",ex:"闪、问、间"},
+    {s:"阜",p:"fù",m:"холм",e:"⛰️",ex:"阡、阢、陆"},
+    {s:"隶",p:"lì",m:"раб",e:"⛓️",ex:"隷、隸、逮"},
+    {s:"隹",p:"zhuī",m:"птица",e:"🐦",ex:"隻、隼、隽"},
+    {s:"雨",p:"yǔ",m:"дождь",e:"🌧️",ex:"雪、雯、雷"},
+    {s:"青",p:"qīng",m:"синий",e:"🔵",ex:"靖、静、靓"},
+    {s:"非",p:"fēi",m:"неправильно",e:"❌",ex:"靠、靡、辈"},
+    {s:"面",p:"miàn",m:"лицо",e:"😊",ex:"靥、靦、靧"},
+    {s:"革",p:"gé",m:"кожа",e:"👞",ex:"靳、靶、鞋"},
+    {s:"韦",p:"wéi",m:"кожа",e:"👞",ex:"韧、韍、"},
+    {s:"韭",p:"jiǔ",m:"лук",e:"🧅",ex:"韰、、䪢"},
+    {s:"音",p:"yīn",m:"звук",e:"🔊",ex:"竟、章、韵"},
+    {s:"页",p:"yè",m:"лист",e:"📄",ex:"顶、顷、顾"},
+    {s:"风",p:"fēng",m:"ветер",e:"💨",ex:"颩、、飘"},
+    {s:"飞",p:"fēi",m:"лететь",e:"✈️",ex:"飜、、飞"},
+    {s:"食",p:"shí",m:"еда",e:"🍽️",ex:"飡、饥、饭"},
+    {s:"首",p:"shǒu",m:"голова",e:"👤",ex:"馗、馘、首"},
+    {s:"香",p:"xiāng",m:"аромат",e:"🌸",ex:"馝、馞、馡"},
+    {s:"马",p:"mǎ",m:"лошадь",e:"🐴",ex:"驭、冯、驾"},
+    {s:"骨",p:"gǔ",m:"кость",e:"🦴",ex:"骫、骭、骼"},
+    {s:"高",p:"gāo",m:"высокий",e:"📏",ex:"髚、髛、髙"},
+    {s:"髟",p:"biāo",m:"волосы",e:"💇",ex:"髠、髡、髢"},
+    {s:"斗",p:"dòu",m:"бой",e:"⚔️",ex:"鬦、闹、鬨"},
+    {s:"鬯",p:"chàng",m:"вино",e:"🍷",ex:"鬰、鬱、鬯"},
+    {s:"鬲",p:"lì",m:"котёл",e:"🍲",ex:"鬳、鬴、鬵"},
+    {s:"鬼",p:"guǐ",m:"призрак",e:"👻",ex:"魁、魂、魄"},
+    {s:"鱼",p:"yú",m:"рыба",e:"🐟",ex:"魟、、鲜"},
+    {s:"鸟",p:"niǎo",m:"птица",e:"🐦",ex:"鳦、、鸠"},
+    {s:"卤",p:"lǔ",m:"соль",e:"🧂",ex:"鹹、鹺、鹼"},
+    {s:"鹿",p:"lù",m:"олень",e:"🦌",ex:"麀、麁、麂"},
+    {s:"麦",p:"mài",m:"пшеница",e:"🌾",ex:"麨、麩、"},
+    {s:"麻",p:"má",m:"конопля",e:"🌿",ex:"麼、麾、黁"},
+    {s:"黄",p:"huáng",m:"жёлтый",e:"🟡",ex:"黈、䵍、"},
+    {s:"黍",p:"shǔ",m:"просо",e:"🌾",ex:"黎、黏、黐"},
+    {s:"黑",p:"hēi",m:"чёрный",e:"⚫",ex:"墨、黔、黓"},
+    {s:"黹",p:"zhǐ",m:"вышивка",e:"🧵",ex:"黺、黻、黼"},
+    {s:"黾",p:"mǐn",m:"лягушка",e:"🐸",ex:"鼀、鼁、鼋"},
+    {s:"鼎",p:"dǐng",m:"треножник",e:"🏺",ex:"鼏、鼐、鼒"},
+    {s:"鼓",p:"gǔ",m:"барабан",e:"🥁",ex:"鼕、鼖、鼗"},
+    {s:"鼠",p:"shǔ",m:"крыса",e:"🐀",ex:"鼢、鼥、鼩"},
+    {s:"鼻",p:"bí",m:"нос",e:"👃",ex:"鼽、鼾、齁"},
+    {s:"齐",p:"qí",m:"ровный",e:"📐",ex:"斋、齌、齍"},
+    {s:"齿",p:"chǐ",m:"зуб",e:"🦷",ex:"齔、齕、齖"},
+    {s:"龙",p:"lóng",m:"дракон",e:"🐉",ex:"龏、龑、龚"},
+    {s:"龟",p:"guī",m:"черепаха",e:"🐢",ex:"䶰、龝、龞"},
+    {s:"",p:"yuè",m:"флейта",e:"🎶",ex:"龡、龢、龤"}
+];
+
+// ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+let currentWord = WORDS[0];
+let currentRadical = RADICALS[0];
+let currentDialog = 0;
+let currentSong = 0;
+let recognition = null, isRecording = false;
+let canvas, ctx, painting = false;
+
+// ==================== ГОЛОС ====================
+function speak(text) {
+    if(!window.speechSynthesis) { showToast("Голос не поддерживается"); return; }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "zh-CN"; u.rate = 0.75;
+    window.speechSynthesis.speak(u);
+}
+
+function initVoice() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR) return false;
+    recognition = new SR();
+    recognition.lang = "zh-CN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    return true;
+}
+
+function startVoice(pinyin, feedbackEl) {
+    if(!recognition && !initVoice()) { if(feedbackEl) feedbackEl.innerHTML = "❌ Голос не поддерживается"; return; }
+    if(isRecording) { recognition.stop(); return; }
+    recognition.onresult = e => {
+        const spoken = e.results[0][0].transcript.toLowerCase().replace(/[^a-z]/g,'');
+        const target = pinyin.toLowerCase().replace(/[^a-z]/g,'');
+        const ok = spoken.includes(target) || target.includes(spoken) || (spoken.length>3 && target.includes(spoken.slice(0,3)));
+        if(feedbackEl) feedbackEl.innerHTML = ok ? "✅ Отлично!" : `❌ Нужно: ${pinyin}<br>Вы: ${e.results[0][0].transcript}`;
+        isRecording = false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('recording'));
     };
+    recognition.onend = () => { isRecording = false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('recording')); };
+    recognition.onerror = e => { if(feedbackEl) feedbackEl.innerHTML = "❌ Ошибка: "+e.error; isRecording = false; };
+    recognition.start(); isRecording = true;
+    if(feedbackEl) feedbackEl.innerHTML = "🎤 Говорите...";
+}
+
+function showToast(msg) {
+    const t = document.createElement('div');
+    t.textContent = msg; t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:12px 24px;border-radius:30px;z-index:9999;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.3);';
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(), 2500);
+}
+
+// ==================== ОТКРЫТИЕ ДЕТАЛЕЙ СЛОВА ====================
+function openWordDetail(w) {
+    const c = document.getElementById('modalContent');
+    c.innerHTML = `
+        <button class="close" onclick="closeModal()">×</button>
+        <div class="big-char">${w.c}</div>
+        <div class="big-pinyin">${w.p}</div>
+        <div class="big-meaning">${w.m}</div>
+        <div class="big-emoji">${w.e||'📖'}</div>
+        <div class="category-badge">${CAT_NAMES[w.cat]||w.cat}</div>
+        <div class="assoc-box"><strong>🧠 Как запомнить:</strong><br>${w.a||'Практикуй произношение!'}</div>
+        <div class="btn-group">
+            <button onclick="speak('${w.c}')">🔊 Слушать</button>
+            <button class="voice-btn" onclick="startVoice('${w.p}', document.getElementById('modalFeed'))">🎙️ Проверить</button>
+        </div>
+        <div id="modalFeed" class="feedback"></div>
+        <div style="margin-top:15px;font-size:14px;color:#666;">
+            <strong>Примеры:</strong><br>
+            ${w.ex ? w.ex.split('、').map(x=>`• ${x}`).join('<br>') : '—'}
+        </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('active'); }
+
+// ==================== РЕНДЕР СЛОВ В СЕТКЕ ====================
+function renderWordGrid(cat='all') {
+    const g = document.getElementById('wordGrid');
+    g.innerHTML = '';
+    const list = cat==='all' ? WORDS : WORDS.filter(w=>w.cat===cat);
+    list.forEach(w => {
+        const d = document.createElement('div');
+        d.className = 'grid-item';
+        d.innerHTML = `<div class="char">${w.c}</div><div class="info">${w.m}</div>`;
+        d.onclick = () => openWordDetail(w);
+        g.appendChild(d);
+    });
+}
+
+// ==================== РЕНДЕР ЧИСЕЛ ====================
+function renderNumbers() {
+    const g = document.getElementById('numGrid');
+    g.innerHTML = '';
+    [...numbers.basic, ...numbers.teens.slice(0,5), ...numbers.tens.slice(0,3)].forEach(n => {
+        const d = document.createElement('div');
+        d.className = 'grid-item';
+        d.innerHTML = `<div class="char">${n.char||n.digit}</div><div class="info">${n.ru}</div>`;
+        d.onclick = () => speak(n.char||n.digit);
+        g.appendChild(d);
+    });
+}
+
+// ==================== РЕНДЕР ЦВЕТОВ ====================
+function renderColors() {
+    const g = document.getElementById('colorGrid');
+    g.innerHTML = '';
+    colors.forEach(c => {
+        const d = document.createElement('div');
+        d.className = 'grid-item';
+        d.style.borderColor = c.color;
+        d.innerHTML = `<div style="width:40px;height:40px;border-radius:10px;background:${c.color};margin:5px auto;border:${c.color==='#ffffff'||c.color==='#ffff00'?'2px solid #ccc':''}"></div><div class="char">${c.char}</div><div class="info">${c.ru}</div>`;
+        d.onclick = () => speak(c.char);
+        g.appendChild(d);
+    });
+}
+
+// ==================== РЕНДЕР ДИАЛОГОВ ====================
+function renderDialogs() {
+    const b = document.getElementById('dialogBox');
+    const d = DIALOGS[currentDialog];
+    b.innerHTML = `
+        <div class="dialog-card">
+            <div class="dialog-line q"><strong>❓</strong> ${d.q}<br><small style="color:#666">${d.qp}</small></div>
+            <div class="dialog-line a"><strong>✅</strong> ${d.a}<br><small style="color:#666">${d.ap}</small></div>
+        </div>
+    `;
+}
+
+// ==================== РЕНДЕР ГРАММАТИКИ ====================
+function renderGrammar() {
+    const b = document.getElementById('grammarBox');
+    b.innerHTML = GRAMMAR.map(g => `
+        <div class="grammar-card">
+            <div class="grammar-title">${g.title}</div>
+            <div style="margin-bottom:10px">${g.rule}</div>
+            <div class="example">${g.ex.replace(/\n/g,'<br>')}</div>
+        </div>
+    `).join('');
+}
+
+// ==================== РЕНДЕР ПЕСЕН ====================
+function renderSongs() {
+    const b = document.getElementById('songsBox');
+    b.innerHTML = SONGS.map((s,i) => `
+        <div class="song-card">
+            <div class="song-title">${s.title}</div>
+            ${s.lines.map(l => `
+                <div class="song-line">
+                    <div class="song-cn">${l.ch}</div>
+                    <div class="song-py">${l.py}</div>
+                    <div class="song-ru">${l.ru}</div>
+                </div>
+            `).join('')}
+            <button onclick="speak('${s.lines.map(l=>l.ch).join(' ')}')" style="margin-top:10px">🎵 Спеть</button>
+        </div>
+    `).join('');
+}
+
+// ==================== РЕНДЕР РАДИКАЛОВ ====================
+function renderRadicals() {
+    const g = document.getElementById('radGrid');
+    g.innerHTML = '';
+    RADICALS.forEach(r => {
+        const d = document.createElement('div');
+        d.className = 'grid-item radical-cell';
+        d.innerHTML = `<div class="char">${r.s}</div><div class="info">${r.m}</div>`;
+        d.onclick = () => {
+            document.getElementById('radicalDetail').style.display = 'block';
+            document.getElementById('radicalDetail').innerHTML = `
+                <strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e||''}<br>
+                <small>Примеры: ${r.ex}</small>
+            `;
+            speak(r.s);
+        };
+        g.appendChild(d);
+    });
+}
+
+// ==================== ИГРА ====================
+function newGame() {
+    const w = WORDS[Math.floor(Math.random()*WORDS.length)];
+    document.getElementById('gChar').textContent = w.c;
+    const opts = [w.m, WORDS[(WORDS.indexOf(w)+1)%WORDS.length].m, WORDS[(WORDS.indexOf(w)+2)%WORDS.length].m].sort(()=>Math.random()-0.5);
+    const o = document.getElementById('gOpts'); o.innerHTML = '';
+    opts.forEach(opt => {
+        const b = document.createElement('button');
+        b.textContent = opt; b.style.flex = '1';
+        b.onclick = () => {
+            document.getElementById('gFeed').innerHTML = opt===w.m ? '✅ Правильно!' : `❌ ${w.c} = ${w.m}`;
+            document.getElementById('gFeed').style.background = opt===w.m ? '#d4edda' : '#f8d7da';
+            setTimeout(newGame, 1500);
+        };
+        o.appendChild(b);
+    });
+}
+
+// ==================== КАНАС (РИСОВАНИЕ) ====================
+function initCanvas() {
+    canvas = document.getElementById('drawCanvas');
+    if(!canvas) return;
+    ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+    
+    const getPos = e => {
+        const r = canvas.getBoundingClientRect();
+        const x = (e.clientX||e.touches?.[0].clientX) - r.left;
+        const y = (e.clientY||e.touches?.[0].clientY) - r.top;
+        return {x: x * canvas.width/r.width, y: y * canvas.height/r.height};
+    };
+    
+    const start = e => { painting = true; ctx.beginPath(); ctx.moveTo(getPos(e).x, getPos(e).y); };
+    const draw = e => { if(!painting) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
+    const end = () => { painting = false; ctx.beginPath(); };
+    
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', end);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); start(e); }, {passive:false});
+    canvas.addEventListener('touchmove', e => { e.preventDefault(); draw(e); }, {passive:false});
+    canvas.addEventListener('touchend', end);
+}
+
+function clearCanvas() {
+    if(ctx) { ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+}
+
+// ==================== ВКЛАДКИ ====================
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.onclick = () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const p = tab.dataset.tab;
+        document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
+        document.getElementById(p+'Panel').classList.add('active');
+        if(p==='study') renderWordGrid();
+        if(p==='numbers') renderNumbers();
+        if(p==='colors') renderColors();
+        if(p==='dialogs') renderDialogs();
+        if(p==='grammar') renderGrammar();
+        if(p==='songs') renderSongs();
+        if(p==='radicals') renderRadicals();
+        if(p==='game') newGame();
+    };
+});
+
+// ==================== ФИЛЬТРЫ СЛОВ ====================
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.onclick = () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderWordGrid(btn.dataset.cat);
+    };
+});
+
+// ==================== СОБЫТИЯ КНОПОК ====================
+window.onload = () => {
+    initCanvas();
+    initVoice();
+    renderWordGrid();
+    
+    // Слова
+    document.getElementById('sListen').onclick = () => speak(currentWord.c);
+    document.getElementById('sVoice').onclick = () => startVoice(currentWord.p, document.getElementById('sFeedback'));
+    document.getElementById('sNext').onclick = () => { currentWord = WORDS[(WORDS.indexOf(currentWord)+1)%WORDS.length]; updateStudy(); };
+    
+    // Диалоги
+    document.getElementById('dPrev').onclick = () => { currentDialog = (currentDialog-1+DIALOGS.length)%DIALOGS.length; renderDialogs(); };
+    document.getElementById('dNext').onclick = () => { currentDialog = (currentDialog+1)%DIALOGS.length; renderDialogs(); };
+    document.getElementById('dListen').onclick = () => { const d=DIALOGS[currentDialog]; speak(d.q+' '+d.a); };
+    
+    // Радикалы
+    document.getElementById('rListen').onclick = () => speak(currentRadical.s);
+    document.getElementById('rVoice').onclick = () => startVoice(currentRadical.p, document.getElementById('radicalDetail'));
+    document.getElementById('rNext').onclick = () => { currentRadical = RADICALS[(RADICALS.indexOf(currentRadical)+1)%RADICALS.length]; updateRadical(); };
+    document.getElementById('rAll').onclick = () => { document.getElementById('radGrid').style.display = document.getElementById('radGrid').style.display==='none'?'grid':'none'; };
+    
+    // Тетрадь
+    document.getElementById('nListen').onclick = () => speak(currentWord.c);
+    document.getElementById('nVoice').onclick = () => startVoice(currentWord.p, document.getElementById('nFeedback'));
+    document.getElementById('nClear').onclick = clearCanvas;
+    document.getElementById('nNext').onclick = () => { currentWord = WORDS[(WORDS.indexOf(currentWord)+1)%WORDS.length]; updateNotebook(); };
+    
+    // Карточки
+    document.getElementById('cFlip').onclick = () => { const b=document.getElementById('cBack'); b.style.display = b.style.display==='none'?'block':'none'; };
+    document.getElementById('cNext').onclick = () => { currentWord = WORDS[(WORDS.indexOf(currentWord)+1)%WORDS.length]; updateCard(); };
+    document.getElementById('cListen').onclick = () => speak(currentWord.c);
+    
+    // Кубики
+    document.getElementById('cubeRoll').onclick = () => { const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent = w.c; speak(w.c); };
+    document.getElementById('cubeListen').onclick = () => speak(document.getElementById('cubeRes').textContent);
+    
+    // Игра
+    document.getElementById('gNew').onclick = newGame;
+    
+    updateStudy(); updateNotebook(); updateCard();
+};
+
+function updateStudy() {
+    document.getElementById('sChar').textContent = currentWord.c;
+    document.getElementById('sPinyin').textContent = currentWord.p;
+    document.getElementById('sMeaning').textContent = currentWord.m;
+    document.getElementById('sEmoji').textContent = currentWord.e||'📖';
+    document.getElementById('sCat').textContent = CAT_NAMES[currentWord.cat]||currentWord.cat;
+}
+
+function updateNotebook() {
+    document.getElementById('nChar').textContent = currentWord.c;
+    document.getElementById('taskChar').textContent = currentWord.c;
+}
+
+function updateCard() {
+    document.getElementById('cChar').textContent = currentWord.c;
+    document.getElementById('cPinyin').textContent = currentWord.p;
+    document.getElementById('cMeaning').textContent = currentWord.m;
+    document.getElementById('cBack').style.display = 'none';
+}
+
+function updateRadical() {
+    document.getElementById('rChar').textContent = currentRadical.s;
+    document.getElementById('rPinyin').textContent = currentRadical.p;
+    document.getElementById('rMeaning').textContent = currentRadical.m;
+}
 </script>
 </body>
 </html>
