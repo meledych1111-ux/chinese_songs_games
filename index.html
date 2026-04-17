@@ -1143,39 +1143,24 @@ function startVoice(py, feed) {
     return; 
   }
   
+  recognition.lang = "zh-CN";
+  
   recognition.onresult = function(e) { 
-    var said = e.results[0][0].transcript.toLowerCase().trim();
-    var target = py.toLowerCase().trim();
+    var said = e.results[0][0].transcript.trim();
+    var targetChar = currentW.c;
+    var targetPinyin = py;
     
-    // Убираем все пробелы для сравнения
-    said = said.replace(/\s+/g, '');
-    target = target.replace(/\s+/g, '');
+    console.log("Распознано:", said);
+    console.log("Ожидаемый иероглиф:", targetChar);
     
-    // Убираем тоны
-    said = said.replace(/[āáǎà]/g, 'a');
-    said = said.replace(/[ēéěè]/g, 'e');
-    said = said.replace(/[īíǐì]/g, 'i');
-    said = said.replace(/[ōóǒò]/g, 'o');
-    said = said.replace(/[ūúǔù]/g, 'u');
-    said = said.replace(/[ǖǘǚǜ]/g, 'ü');
-    
-    target = target.replace(/[āáǎà]/g, 'a');
-    target = target.replace(/[ēéěè]/g, 'e');
-    target = target.replace(/[īíǐì]/g, 'i');
-    target = target.replace(/[ōóǒò]/g, 'o');
-    target = target.replace(/[ūúǔù]/g, 'u');
-    target = target.replace(/[ǖǘǚǜ]/g, 'ü');
-    
-    // ТОЧНОЕ СРАВНЕНИЕ
-    var correct = (said === target);
+    var correct = (said === targetChar);
     
     if(feed) {
       if(correct) {
         feed.innerHTML = "✅ Правильно! Молодец!";
       } else {
-        feed.innerHTML = "❌ Неправильно! Нужно: " + py + "<br>Вы сказали: " + e.results[0][0].transcript;
+        feed.innerHTML = "❌ Неправильно! Нужно: " + targetChar + " (" + targetPinyin + ")<br>Вы сказали: " + said;
       }
-      // Очищаем через 3 секунды
       setTimeout(function() { 
         if(feed) feed.innerHTML = ""; 
       }, 3000);
@@ -1203,7 +1188,7 @@ function startVoice(py, feed) {
   
   recognition.start(); 
   isRec = true; 
-  if(feed) feed.innerHTML = "🎤 Слушаю... Говорите!"; 
+  if(feed) feed.innerHTML = "🎤 Слушаю... Говорите по-китайски!"; 
 }
 function openModal(w) { 
   const c=document.getElementById('modalContent'); 
