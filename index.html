@@ -1214,6 +1214,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('sNext').onclick=nextWord;
   document.getElementById('dPrev').onclick=prevDia; document.getElementById('dNext').onclick=nextDia; document.getElementById('dListen').onclick=speakDia;
   document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
+  
+  // Кнопки тетради (сетка)
+  document.getElementById('nGridBtn').onclick = toggleGrid;
+  document.getElementById('nExample').onclick = showExample;
+  
   document.getElementById('nListen').onclick=()=>speak(currentW.c); document.getElementById('nClear').onclick=clearCanvas; document.getElementById('nNext').onclick=nextWord;
   document.getElementById('cFlip').onclick=flipCard; document.getElementById('cNext').onclick=nextCard; document.getElementById('cListen').onclick=()=>speak(currentW.c);
   document.getElementById('cubeRoll').onclick=()=>{ const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent=w.c; speak(w.c); }; document.getElementById('cubeListen').onclick=()=>speak(document.getElementById('cubeRes').textContent);
