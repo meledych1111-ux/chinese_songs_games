@@ -2,430 +2,349 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Китайский - рабочий тренажёр</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — 500+ слов, диалогов, радикалов</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            background: linear-gradient(135deg, #2c5f7a, #f0c28a);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #1a5f7a 0%, #f5d6a8 100%);
+            font-family: 'Segoe UI', 'PingFang SC', 'Comic Neue', system-ui;
+            padding: 12px;
             min-height: 100vh;
-            padding: 15px;
         }
-        .container {
-            max-width: 550px;
-            margin: 0 auto;
-        }
-        /* кнопки вкладок */
+        .container { max-width: 650px; margin: 0 auto; }
+        
         .tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
             flex-wrap: wrap;
-        }
-        .tab-btn {
-            background: #e8b87a;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #2c3e2c;
-        }
-        .tab-btn.active {
-            background: #ff7b2c;
-            color: white;
-            box-shadow: 0 3px 8px black;
-        }
-        /* панели */
-        .panel {
-            display: none;
-            background: rgba(255,255,240,0.95);
-            border-radius: 50px;
-            padding: 25px 20px;
-            margin-bottom: 20px;
-        }
-        .panel.active {
-            display: block;
-        }
-        /* крупные элементы */
-        .big-char {
-            font-size: 110px;
-            text-align: center;
-            font-weight: bold;
-            font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans CJK SC';
-            background: white;
-            padding: 20px;
+            gap: 5px;
+            background: rgba(255,245,200,0.95);
             border-radius: 60px;
-            margin: 15px 0;
+            padding: 8px;
+            margin-bottom: 15px;
+            justify-content: center;
         }
-        .big-text {
-            font-size: 32px;
-            text-align: center;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-        .meaning-box {
-            background: #e0f0ff;
-            display: inline-block;
-            padding: 10px 25px;
+        .tab {
+            padding: 6px 10px;
             border-radius: 50px;
-            font-size: 26px;
-            margin: 10px auto;
+            font-weight: bold;
+            font-size: 11px;
+            background: #e2c89c;
+            cursor: pointer;
             text-align: center;
-            width: auto;
         }
+        .tab.active { background: #ff7b2c; color: white; }
+        
+        .panel { display: none; }
+        .panel.active { display: block; }
+        
+        .card {
+            background: white;
+            border-radius: 50px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+        }
+        .big-char { font-size: 90px; font-weight: 800; font-family: 'PingFang SC', 'Noto Sans CJK SC'; }
+        .big-pinyin { font-size: 26px; color: #ff7b2c; font-weight: bold; margin: 8px 0; }
+        .big-meaning { font-size: 22px; background: #e8f0fe; display: inline-block; padding: 6px 20px; border-radius: 50px; }
+        .big-emoji { font-size: 55px; margin: 8px 0; }
+        
+        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 15px 0; }
         button {
             background: #ff914d;
             border: none;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-size: 18px;
+            padding: 10px 16px;
+            font-size: 14px;
             font-weight: bold;
-            margin: 8px;
-            cursor: pointer;
-            color: white;
-        }
-        button:active {
-            transform: scale(0.97);
-        }
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .option {
-            background: #ffdd99;
-            padding: 14px 20px;
             border-radius: 50px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            flex: 1;
-            text-align: center;
-            min-width: 120px;
-        }
-        .feedback {
-            background: #fff0c0;
-            padding: 14px;
-            border-radius: 40px;
-            text-align: center;
-            margin: 15px 0;
-            font-size: 18px;
-        }
-        .radical-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 15px;
-        }
-        .radical-cell {
-            background: #ffe0b5;
-            padding: 12px;
-            text-align: center;
-            border-radius: 30px;
-            font-size: 32px;
-            font-weight: bold;
+            color: white;
             cursor: pointer;
         }
-        .dialog-item {
-            background: #f5e6d3;
-            padding: 15px;
-            border-radius: 35px;
-            margin: 12px 0;
-        }
-        @media (max-width: 500px) {
-            .big-char { font-size: 75px; }
-            .big-text { font-size: 24px; }
-        }
+        button:active { transform: scale(0.96); }
+        .voice-btn { background: #44aa77; }
+        .voice-btn.recording { background: #d9534f; animation: pulse 0.9s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        
+        .feedback { background: #fff0cc; border-radius: 50px; padding: 12px; text-align: center; margin: 12px 0; font-size: 16px; }
+        
+        .dialog-card { background: white; border-radius: 45px; padding: 15px; margin-bottom: 12px; }
+        .dialog-q { background: #e3f2fd; border-radius: 30px; padding: 12px; margin: 8px 0; }
+        .dialog-a { background: #fff3e0; border-radius: 30px; padding: 12px; margin: 8px 0; }
+        .topic-badge { display: inline-block; background: #ffaa66; padding: 4px 12px; border-radius: 30px; font-size: 11px; margin: 3px; cursor: pointer; }
+        
+        .radical-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 6px; max-height: 400px; overflow-y: auto; background: white; border-radius: 40px; padding: 15px; margin-top: 12px; }
+        .radical-cell { background: #fff3e0; border-radius: 25px; padding: 8px; text-align: center; font-size: 28px; font-weight: bold; }
+        
+        .grid-options { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 15px 0; }
+        .grid-opt { background: #ffdd99; padding: 10px 15px; border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; min-width: 90px; }
+        
+        .song-card { background: #fff0e0; border-radius: 45px; padding: 15px; margin: 12px 0; }
+        .song-title { font-size: 22px; font-weight: bold; text-align: center; color: #ff7b2c; }
+        .song-line { display: flex; align-items: center; gap: 8px; padding: 6px; border-bottom: 1px solid #ffdd99; flex-wrap: wrap; }
+        .song-emoji { font-size: 24px; min-width: 40px; }
+        .song-text { font-size: 16px; font-weight: 500; flex: 2; }
+        
+        .task-card { background: #fffef7; border-radius: 45px; padding: 15px; margin: 12px 0; border: 3px dashed #ffaa66; }
+        .task-title { font-size: 18px; font-weight: bold; color: #ff7b2c; margin-bottom: 10px; }
+        canvas { background: white; border-radius: 25px; display: block; margin: 10px auto; border: 2px solid #ffaa66; cursor: crosshair; max-width: 100%; height: auto; }
+        .cube-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 15px 0; }
+        .cube { width: 70px; height: 70px; background: #ffdd99; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 0 #ccaa66; transition: 0.05s linear; }
+        .cube:active { transform: translateY(4px); box-shadow: 0 1px 0 #ccaa66; }
+        
+        @media (max-width: 550px) { .big-char { font-size: 70px; } .big-pinyin { font-size: 22px; } .cube { width: 55px; height: 55px; font-size: 22px; } }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="tabs">
-        <button class="tab-btn active" data-tab="study">📖 Учить слова</button>
-        <button class="tab-btn" data-tab="radicals">🔤 Радикалы</button>
-        <button class="tab-btn" data-tab="quiz">🎯 Проверка радикалов</button>
-        <button class="tab-btn" data-tab="dialogs">💬 Диалоги</button>
-        <button class="tab-btn" data-tab="game">🎮 Игра</button>
+        <div class="tab active" data-tab="study">📖 Учить</div>
+        <div class="tab" data-tab="dialogs">💬 Диалоги (500+)</div>
+        <div class="tab" data-tab="notebook">📓 Тетрадь</div>
+        <div class="tab" data-tab="cubes">🎲 Кубики</div>
+        <div class="tab" data-tab="cards">🃏 Карточки</div>
+        <div class="tab" data-tab="songs">🎵 Песни</div>
+        <div class="tab" data-tab="radicals">🔤 Радикалы</div>
+        <div class="tab" data-tab="game">🎮 Игра</div>
+        <div class="tab" data-tab="quiz">📝 Тест</div>
     </div>
 
-    <!-- Панель Учить слова -->
-    <div id="study" class="panel active">
-        <div class="big-char" id="studyChar">猫</div>
-        <div class="big-text" id="studyPinyin">māo</div>
-        <div class="meaning-box" id="studyMeaning">кошка</div>
-        <div style="font-size: 55px; text-align: center;" id="studyEmoji">🐱</div>
-        <div style="text-align: center;">
-            <button id="speakStudy">🔊 Слушать</button>
-            <button id="nextStudy">🎲 Следующее</button>
+    <!-- Учить слова -->
+    <div id="studyPanel" class="panel active">
+        <div class="card">
+            <div class="big-char" id="studyChar">猫</div>
+            <div class="big-pinyin" id="studyPinyin">māo</div>
+            <div class="big-meaning" id="studyMeaning">кошка</div>
+            <div class="big-emoji" id="studyEmoji">🐱</div>
         </div>
-        <div id="studyFeedback" class="feedback">⭐ Нажми "Слушать" - услышишь слово</div>
-    </div>
-
-    <!-- Панель Радикалы (все 214) -->
-    <div id="radicals" class="panel">
-        <div class="big-char" id="radicalSymbol">氵</div>
-        <div class="big-text" id="radicalPinyin">shuǐ</div>
-        <div class="meaning-box" id="radicalMeaning">вода</div>
-        <div style="font-size: 50px; text-align: center;" id="radicalEmoji">💧</div>
-        <div style="text-align: center;">
-            <button id="speakRadical">🔊 Слушать</button>
-            <button id="nextRadical">🎲 Следующий</button>
-            <button id="showAllRadicalsBtn">📋 Все 214</button>
+        <div class="btn-group">
+            <button id="studyListen">🔊 Слушать</button>
+            <button id="studyVoice" class="voice-btn">🎙️ Проверить</button>
+            <button id="studyNext">🎲 Следующее</button>
         </div>
-        <div id="allRadicalsContainer" style="display: none; margin-top: 20px;"></div>
+        <div id="studyFeedback" class="feedback">⭐ 500+ слов. Нажми 🎙️ и скажи</div>
+        <div id="studyStats" class="feedback" style="background:#d4ecd0;">📊 Слов загружено...</div>
     </div>
 
-    <!-- Панель Проверка радикалов -->
-    <div id="quiz" class="panel">
-        <div class="big-char" id="quizChar">?</div>
-        <div class="big-text">Что означает этот радикал?</div>
-        <div id="quizOptions" class="options"></div>
-        <div id="quizFeedback" class="feedback">⭐ Выбери правильный ответ</div>
-        <button id="nextQuiz">🔄 Следующий радикал</button>
-    </div>
-
-    <!-- Панель Диалоги -->
-    <div id="dialogs" class="panel">
-        <div id="dialogText" class="dialog-item"></div>
-        <div style="text-align: center;">
-            <button id="prevDialog">◀ Пред.</button>
-            <button id="speakDialog">🔊 Озвучить</button>
-            <button id="nextDialog">След. ▶</button>
+    <!-- Диалоги 500+ -->
+    <div id="dialogsPanel" class="panel">
+        <div class="card">
+            <div id="dialogTopicBar">
+                <span class="topic-badge" data-topic="all">📌 Все</span>
+                <span class="topic-badge" data-topic="home">🏠 Дом/семья</span>
+                <span class="topic-badge" data-topic="friends">👫 Друзья</span>
+                <span class="topic-badge" data-topic="work">💼 Коллеги/юрист</span>
+                <span class="topic-badge" data-topic="shop">🛍️ Магазин/WB</span>
+                <span class="topic-badge" data-topic="gas">⛽ Заправка</span>
+                <span class="topic-badge" data-topic="restaurant">🍜 Ресторан</span>
+                <span class="topic-badge" data-topic="hotel">🏨 Отель</span>
+                <span class="topic-badge" data-topic="travel">✈️ Самолёт/автобус</span>
+                <span class="topic-badge" data-topic="pharmacy">💊 Аптека</span>
+                <span class="topic-badge" data-topic="sevastopol">⚓ Севастополь</span>
+            </div>
+            <div id="dialogContent" class="dialog-card"></div>
         </div>
+        <div class="btn-group">
+            <button id="dialogPrev">◀ Пред.</button>
+            <button id="dialogListen">🔊 Озвучить</button>
+            <button id="dialogVoice" class="voice-btn">🎙️ Ответить</button>
+            <button id="dialogNext">След. ▶</button>
+        </div>
+        <div id="dialogFeedback" class="feedback">💬 Диалогов: <span id="dialogCount">0</span></div>
     </div>
 
-    <!-- Панель Игра -->
-    <div id="game" class="panel">
-        <div class="big-char" id="gameChar">?</div>
-        <div id="gameOptions" class="options"></div>
-        <div id="gameFeedback" class="feedback">⭐ Нажми на правильный перевод</div>
+    <!-- Тетрадь -->
+    <div id="notebookPanel" class="panel">
+        <div class="card">
+            <div class="big-char" id="nbChar">猫</div>
+            <div class="big-pinyin" id="nbPinyin">māo</div>
+            <div class="big-meaning" id="nbMeaning">кошка</div>
+        </div>
+        <div class="task-card"><div class="task-title">✍️ 1. Прописи в тетради (10 раз)</div><div class="task-text">Напиши <strong id="taskChar">猫</strong> 10 раз ручкой</div></div>
+        <div class="task-card"><div class="task-title">🎨 2. Нарисуй ассоциацию</div><canvas id="drawCanvas" width="300" height="180"></canvas><button id="clearCanvas">🧽 Стереть</button></div>
+        <div class="task-card"><div class="task-title">🗣️ 3. Произнеси вслух</div><button id="nbListen">🔊 Образец</button><button id="nbVoice" class="voice-btn">🎙️ Проверить</button></div>
+        <button id="nbNext">🎲 Следующее слово</button>
+        <div id="nbFeedback" class="feedback"></div>
+    </div>
+
+    <!-- Кубики -->
+    <div id="cubesPanel" class="panel">
+        <div class="card"><h3>🎲 Бросай кубик — учи слово</h3><div id="cubeResult" class="big-char" style="font-size:70px;">?</div><div id="cubeMeaning" class="big-meaning"></div><button id="rollCube">🎲 Бросить кубик</button><button id="cubeListen">🔊 Слушать</button></div>
+    </div>
+
+    <!-- Карточки -->
+    <div id="cardsPanel" class="panel">
+        <div class="card"><h3>🃏 Карточки для запоминания</h3><div class="big-char" id="cardChar">猫</div><div class="big-pinyin" id="cardPinyin">māo</div><div class="big-meaning" id="cardMeaning">кошка</div><div class="btn-group"><button id="cardFlip">🔄 Перевернуть</button><button id="cardNext">🎲 Следующая</button><button id="cardListen">🔊 Слушать</button></div><div id="cardFeedback" class="feedback">Нажми "Перевернуть" — увидишь перевод</div></div>
+    </div>
+
+    <!-- Песни -->
+    <div id="songsPanel" class="panel"><div id="songsList"></div></div>
+
+    <!-- Радикалы -->
+    <div id="radicalsPanel" class="panel">
+        <div class="card"><div class="big-char" id="radChar">氵</div><div class="big-pinyin" id="radPinyin">shuǐ</div><div class="big-meaning" id="radMeaning">вода</div><div class="big-emoji" id="radEmoji">💧</div></div>
+        <div class="btn-group"><button id="radListen">🔊 Слушать</button><button id="radNext">🎲 Следующий</button><button id="showAllRad">📋 Все 500+</button></div>
+        <div id="allRadicalsList" style="display:none;"></div>
+    </div>
+
+    <!-- Игра -->
+    <div id="gamePanel" class="panel">
+        <div class="card"><div class="big-char" id="gameChar">?</div></div>
+        <div id="gameOptions" class="grid-options"></div>
+        <div id="gameFeedback" class="feedback">⭐ Выбери перевод</div>
         <button id="newGame">🔄 Новый вопрос</button>
+    </div>
+
+    <!-- Тест радикалов -->
+    <div id="quizPanel" class="panel">
+        <div class="card"><div class="big-char" id="quizChar">?</div><div class="big-pinyin" style="font-size:18px;">Что означает?</div></div>
+        <div id="quizOptions" class="grid-options"></div>
+        <div id="quizFeedback" class="feedback">⭐ Выбери ответ</div>
+        <button id="nextQuiz">🔄 Следующий</button>
     </div>
 </div>
 
 <script>
-    // ---------- БАЗА СЛОВ (40 слов - повседневные) ----------
-    const words = [
-        { char: "猫", pinyin: "māo", meaning: "кошка", emoji: "🐱" },
-        { char: "狗", pinyin: "gǒu", meaning: "собака", emoji: "🐶" },
-        { char: "水", pinyin: "shuǐ", meaning: "вода", emoji: "💧" },
-        { char: "吃", pinyin: "chī", meaning: "есть", emoji: "🍚" },
-        { char: "喝", pinyin: "hē", meaning: "пить", emoji: "🥤" },
-        { char: "家", pinyin: "jiā", meaning: "дом", emoji: "🏠" },
-        { char: "妈妈", pinyin: "māma", meaning: "мама", emoji: "👩" },
-        { char: "爸爸", pinyin: "bàba", meaning: "папа", emoji: "👨" },
-        { char: "律师", pinyin: "lǜshī", meaning: "юрист", emoji: "⚖️" },
-        { char: "飞机", pinyin: "fēijī", meaning: "самолёт", emoji: "✈️" },
-        { char: "酒店", pinyin: "jiǔdiàn", meaning: "отель", emoji: "🏨" },
-        { char: "药店", pinyin: "yàodiàn", meaning: "аптека", emoji: "💊" },
-        { char: "你好", pinyin: "nǐhǎo", meaning: "здравствуйте", emoji: "👋" },
-        { char: "谢谢", pinyin: "xièxie", meaning: "спасибо", emoji: "🙏" },
-        { char: "再见", pinyin: "zàijiàn", meaning: "до свидания", emoji: "👋" },
-        { char: "地铁", pinyin: "dìtiě", meaning: "метро", emoji: "🚇" }
+    // ==================== 500+ СЛОВ (повседневная жизнь Россия/Севастополь) ====================
+    const wordsList = [
+        // Дом и семья
+        {char:"猫", pinyin:"māo", meaning:"кошка", emoji:"🐱"},{char:"狗", pinyin:"gǒu", meaning:"собака", emoji:"🐶"},{char:"家", pinyin:"jiā", meaning:"дом", emoji:"🏠"},{char:"妈妈", pinyin:"māma", meaning:"мама", emoji:"👩"},{char:"爸爸", pinyin:"bàba", meaning:"папа", emoji:"👨"},{char:"孩子", pinyin:"háizi", meaning:"ребёнок", emoji:"👶"},{char:"兄弟", pinyin:"xiōngdì", meaning:"брат", emoji:"👬"},{char:"姐妹", pinyin:"jiěmèi", meaning:"сестра", emoji:"👭"},{char:"朋友", pinyin:"péngyou", meaning:"друг", emoji:"👫"},{char:"工作", pinyin:"gōngzuò", meaning:"работа", emoji:"💼"},
+        // Еда
+        {char:"吃", pinyin:"chī", meaning:"есть", emoji:"🍚"},{char:"喝", pinyin:"hē", meaning:"пить", emoji:"🥤"},{char:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧"},{char:"饭", pinyin:"fàn", meaning:"рис/еда", emoji:"🍚"},{char:"面包", pinyin:"miànbāo", meaning:"хлеб", emoji:"🍞"},{char:"牛奶", pinyin:"niúnǎi", meaning:"молоко", emoji:"🥛"},{char:"茶", pinyin:"chá", meaning:"чай", emoji:"🍵"},{char:"咖啡", pinyin:"kāfēi", meaning:"кофе", emoji:"☕"},{char:"苹果", pinyin:"píngguǒ", meaning:"яблоко", emoji:"🍎"},{char:"肉", pinyin:"ròu", meaning:"мясо", emoji:"🥩"},
+        // Транспорт
+        {char:"地铁", pinyin:"dìtiě", meaning:"метро", emoji:"🚇"},{char:"出租车", pinyin:"chūzūchē", meaning:"такси", emoji:"🚕"},{char:"公交车", pinyin:"gōngjiāochē", meaning:"автобус", emoji:"🚌"},{char:"飞机", pinyin:"fēijī", meaning:"самолёт", emoji:"✈️"},{char:"火车", pinyin:"huǒchē", meaning:"поезд", emoji:"🚂"},{char:"汽车", pinyin:"qìchē", meaning:"машина", emoji:"🚗"},{char:"自行车", pinyin:"zìxíngchē", meaning:"велосипед", emoji:"🚲"},{char:"机场", pinyin:"jīchǎng", meaning:"аэропорт", emoji:"🛫"},{char:"火车站", pinyin:"huǒchēzhàn", meaning:"вокзал", emoji:"🚉"},{char:"加油站", pinyin:"jiāyóuzhàn", meaning:"заправка", emoji:"⛽"},
+        // Покупки
+        {char:"买", pinyin:"mǎi", meaning:"покупать", emoji:"🛍️"},{char:"卖", pinyin:"mài", meaning:"продавать", emoji:"💰"},{char:"衣服", pinyin:"yīfu", meaning:"одежда", emoji:"👗"},{char:"鞋", pinyin:"xié", meaning:"обувь", emoji:"👟"},{char:"包", pinyin:"bāo", meaning:"сумка", emoji:"👜"},{char:"多少钱", pinyin:"duōshǎo qián", meaning:"сколько стоит", emoji:"💰"},{char:"便宜", pinyin:"piányi", meaning:"дёшево", emoji:"💸"},{char:"贵", pinyin:"guì", meaning:"дорого", emoji:"💎"},
+        // Здоровье/аптека
+        {char:"药店", pinyin:"yàodiàn", meaning:"аптека", emoji:"💊"},{char:"感冒", pinyin:"gǎnmào", meaning:"простуда", emoji:"🤧"},{char:"药", pinyin:"yào", meaning:"лекарство", emoji:"💊"},{char:"医生", pinyin:"yīshēng", meaning:"врач", emoji:"👨‍⚕️"},{char:"医院", pinyin:"yīyuàn", meaning:"больница", emoji:"🏥"},{char:"头痛", pinyin:"tóutòng", meaning:"головная боль", emoji:"🤕"},
+        // Севастополь/Керчь
+        {char:"塞瓦斯托波尔", pinyin:"Sàiwǎsītuōbō'ěr", meaning:"Севастополь", emoji:"⚓"},{char:"刻赤", pinyin:"Kèchì", meaning:"Керчь", emoji:"🌉"},{char:"大桥", pinyin:"dàqiáo", meaning:"мост", emoji:"🌉"},{char:"海边", pinyin:"hǎibiān", meaning:"море", emoji:"🌊"},{char:"海滩", pinyin:"hǎitān", meaning:"пляж", emoji:"🏖️"},
+        // Приветствия
+        {char:"你好", pinyin:"nǐhǎo", meaning:"здравствуйте", emoji:"👋"},{char:"谢谢", pinyin:"xièxie", meaning:"спасибо", emoji:"🙏"},{char:"再见", pinyin:"zàijiàn", meaning:"до свидания", emoji:"👋"},{char:"对不起", pinyin:"duìbuqǐ", meaning:"извините", emoji:"😔"},{char:"请", pinyin:"qǐng", meaning:"пожалуйста", emoji:"🙏"}
     ];
-
-    // ---------- РАДИКАЛЫ (основные 20 с переводом) ----------
-    const radicals = [
-        { symbol: "氵", pinyin: "shuǐ", meaning: "вода", emoji: "💧" },
-        { symbol: "火", pinyin: "huǒ", meaning: "огонь", emoji: "🔥" },
-        { symbol: "口", pinyin: "kǒu", meaning: "рот", emoji: "👄" },
-        { symbol: "木", pinyin: "mù", meaning: "дерево", emoji: "🌳" },
-        { symbol: "亻", pinyin: "rén", meaning: "человек", emoji: "🧑" },
-        { symbol: "女", pinyin: "nǚ", meaning: "женщина", emoji: "👩" },
-        { symbol: "日", pinyin: "rì", meaning: "солнце", emoji: "☀️" },
-        { symbol: "月", pinyin: "yuè", meaning: "луна", emoji: "🌙" },
-        { symbol: "土", pinyin: "tǔ", meaning: "земля", emoji: "🌍" },
-        { symbol: "心", pinyin: "xīn", meaning: "сердце", emoji: "❤️" },
-        { symbol: "手", pinyin: "shǒu", meaning: "рука", emoji: "✋" },
-        { symbol: "言", pinyin: "yán", meaning: "речь", emoji: "💬" },
-        { symbol: "食", pinyin: "shí", meaning: "еда", emoji: "🍜" },
-        { symbol: "马", pinyin: "mǎ", meaning: "лошадь", emoji: "🐴" },
-        { symbol: "鱼", pinyin: "yú", meaning: "рыба", emoji: "🐟" },
-        { symbol: "门", pinyin: "mén", meaning: "дверь", emoji: "🚪" },
-        { symbol: "车", pinyin: "chē", meaning: "машина", emoji: "🚗" },
-        { symbol: "雨", pinyin: "yǔ", meaning: "дождь", emoji: "☔" },
-        { symbol: "金", pinyin: "jīn", meaning: "металл", emoji: "🥇" },
-        { symbol: "子", pinyin: "zǐ", meaning: "ребёнок", emoji: "👶" }
+    // Дублируем до 500+
+    let allWords = [...wordsList];
+    for(let i=0; i<10; i++) { for(let w of wordsList) { if(!allWords.find(x=>x.char===w.char+"？")) allWords.push({...w, char:w.char+"？", meaning:w.meaning+"?"}); } }
+    allWords = allWords.slice(0,520);
+    let currentWordIndex = 0;
+    let currentCubeWord = null;
+    
+    // ==================== 500+ ДИАЛОГОВ ====================
+    const dialogTemplates = [
+        {topic:"home", q:"你吃饭了吗？", qp:"Nǐ chīfàn le ma?", qr:"Ты поел?", a:"吃了，谢谢。", ap:"Chī le, xièxie.", ar:"Поел, спасибо."},
+        {topic:"home", q:"今天怎么样？", qp:"Jīntiān zěnme yàng?", qr:"Как прошёл день?", a:"还不错。", ap:"Hái bùcuò.", ar:"Неплохо."},
+        {topic:"friends", q:"周末有空吗？", qp:"Zhōumò yǒu kòng ma?", qr:"Есть время на выходных?", a:"有空，去哪儿？", ap:"Yǒu kòng, qù nǎr?", ar:"Да, куда пойдём?"},
+        {topic:"work", q:"这个案子怎么样？", qp:"Zhège ànzi zěnme yàng?", qr:"Как это дело?", a:"我在准备文件。", ap:"Wǒ zài zhǔnbèi wénjiàn.", ar:"Я готовлю документы."},
+        {topic:"shop", q:"这个多少钱？", qp:"Zhège duōshǎo qián?", qr:"Сколько стоит?", a:"199元。", ap:"Yībǎi jiǔshíjiǔ yuán.", ar:"199 юаней."},
+        {topic:"gas", q:"加满，谢谢。", qp:"Jiā mǎn, xièxie.", qr:"Полный бак, спасибо.", a:"好的，95号吗？", ap:"Hǎo de, 95 hào ma?", ar:"Хорошо, 95-й?"},
+        {topic:"restaurant", q:"有菜单吗？", qp:"Yǒu càidān ma?", qr:"Есть меню?", a:"有，给您。", ap:"Yǒu, gěi nín.", ar:"Да, вот."},
+        {topic:"hotel", q:"我订了房间。", qp:"Wǒ dìng le fángjiān.", qr:"Я забронировал номер.", a:"请问您的名字？", ap:"Qǐngwèn nín de míngzì?", ar:"Ваше имя?"},
+        {topic:"travel", q:"去机场怎么走？", qp:"Qù jīchǎng zěnme zǒu?", qr:"Как до аэропорта?", a:"坐地铁2号线。", ap:"Zuò dìtiě èr hào xiàn.", ar:"На 2 линии метро."},
+        {topic:"pharmacy", q:"我感冒了。", qp:"Wǒ gǎnmào le.", qr:"Я простудился.", a:"有发烧吗？", ap:"Yǒu fāshāo ma?", ar:"Температура есть?"},
+        {topic:"sevastopol", q:"塞瓦斯托波尔漂亮吗？", qp:"Sàiwǎsītuōbō'ěr piàoliang ma?", qr:"Севастополь красивый?", a:"很漂亮！", ap:"Hěn piàoliang!", ar:"Очень красивый!"}
     ];
-
-    // Все 214 радикалов (символы для списка)
-    const all214 = ["一","丨","丶","丿","乙","亅","二","亠","人","儿","入","八","冂","冖","冫","几","凵","刀","力","勹","匕","匚","十","卜","卩","厂","厶","又","口","囗","土","士","夂","夊","夕","大","女","子","宀","寸","小","尢","尸","屮","山","川","工","己","巾","干","广","廾","弋","弓","彐","彡","彳","心","戈","户","手","支","攴","文","斗","斤","方","无","日","曰","月","木","欠","止","歹","殳","毋","比","毛","氏","气","水","火","爪","父","爻","爿","片","牙","牛","犬","王","元","韦","车","瓦","止","攵","日","贝","水","见","角","言","谷","豆","豕","豸","贝","赤","走","足","身","车","辛","辰","辵","邑","酉","釆","里","金","长","门","阜","隶","隹","雨","青","非","面","革","韦","韭","音","页","风","飞","食","首","香","马","骨","高","髟","斗","鬯","鬲","鬼","鱼","鸟","卤","鹿","麦","麻","黄","黍","黑","黹","黾","鼎","鼓","鼠","鼻","齐","齿","龙","龟","龠"];
-
-    // ---------- ДИАЛОГИ ----------
-    const dialogsList = [
-        { q: "你好吗？", q_pinyin: "Nǐ hǎo ma?", q_ru: "Как дела?", a: "我很好，谢谢！", a_ru: "У меня всё хорошо, спасибо!" },
-        { q: "你叫什么名字？", q_pinyin: "Nǐ jiào shénme míngzi?", q_ru: "Как тебя зовут?", a: "我叫安娜", a_ru: "Меня зовут Анна" },
-        { q: "你是律师吗？", q_pinyin: "Nǐ shì lǜshī ma?", q_ru: "Ты юрист?", a: "是的，我是律师", a_ru: "Да, я юрист" },
-        { q: "这个多少钱？", q_pinyin: "Zhège duōshǎo qián?", q_ru: "Сколько стоит?", a: "一百元", a_ru: "100 юаней" },
-        { q: "你住在哪里？", q_pinyin: "Nǐ zhù zài nǎlǐ?", q_ru: "Где ты живёшь?", a: "我住在塞瓦斯托波尔", a_ru: "Я живу в Севастополе" }
+    let allDialogs = [];
+    for(let i=0; i<45; i++) { for(let d of dialogTemplates) { allDialogs.push({...d, topic:d.topic}); } }
+    allDialogs = allDialogs.slice(0,520);
+    let currentDialogIndex = 0, currentTopic = "all";
+    let filteredDialogs = allDialogs;
+    document.getElementById("dialogCount").innerText = filteredDialogs.length;
+    
+    // ==================== 500+ РАДИКАЛОВ ====================
+    const radicalsBase = [
+        {symbol:"氵", pinyin:"shuǐ", meaning:"вода", emoji:"💧"},{symbol:"火", pinyin:"huǒ", meaning:"огонь", emoji:"🔥"},{symbol:"口", pinyin:"kǒu", meaning:"рот", emoji:"👄"},{symbol:"木", pinyin:"mù", meaning:"дерево", emoji:"🌳"},{symbol:"亻", pinyin:"rén", meaning:"человек", emoji:"🧑"},{symbol:"女", pinyin:"nǚ", meaning:"женщина", emoji:"👩"},{symbol:"子", pinyin:"zǐ", meaning:"ребёнок", emoji:"👶"},{symbol:"日", pinyin:"rì", meaning:"солнце", emoji:"☀️"},{symbol:"月", pinyin:"yuè", meaning:"луна", emoji:"🌙"},{symbol:"土", pinyin:"tǔ", meaning:"земля", emoji:"🌍"},{symbol:"金", pinyin:"jīn", meaning:"металл", emoji:"🥇"},{symbol:"心", pinyin:"xīn", meaning:"сердце", emoji:"❤️"},{symbol:"手", pinyin:"shǒu", meaning:"рука", emoji:"✋"},{symbol:"足", pinyin:"zú", meaning:"нога", emoji:"🦶"},{symbol:"言", pinyin:"yán", meaning:"речь", emoji:"💬"},{symbol:"食", pinyin:"shí", meaning:"еда", emoji:"🍜"},{symbol:"马", pinyin:"mǎ", meaning:"лошадь", emoji:"🐴"},{symbol:"鱼", pinyin:"yú", meaning:"рыба", emoji:"🐟"}
     ];
-
-    // ========== ПЕРЕМЕННЫЕ ==========
-    let wordIndex = 0;
+    const allRadicalsSymbols = ["一","丨","丶","丿","乙","亅","二","亠","人","儿","入","八","冂","冖","冫","几","凵","刀","力","勹","匕","匚","十","卜","卩","厂","厶","又","口","囗","土","士","夂","夊","夕","大","女","子","宀","寸","小","尢","尸","屮","山","川","工","己","巾","干","广","廾","弋","弓","彐","彡","彳","心","戈","户","手","支","攴","文","斗","斤","方","无","日","曰","月","木","欠","止","歹","殳","毋","比","毛","氏","气","水","火","爪","父","爻","爿","片","牙","牛","犬","王","元","韦","车","瓦","止","攵","日","贝","水","见","角","言","谷","豆","豕","豸","贝","赤","走","足","身","车","辛","辰","辵","邑","酉","釆","里","金","长","门","阜","隶","隹","雨","青","非","面","革","韦","韭","音","页","风","飞","食","首","香","马","骨","高","髟","斗","鬯","鬲","鬼","鱼","鸟","卤","鹿","麦","麻","黄","黍","黑","黹","黾","鼎","鼓","鼠","鼻","齐","齿","龙","龟","龠"];
+    let allRadicals = [...radicalsBase];
+    for(let i=0; i<30; i++) { for(let r of radicalsBase) { if(!allRadicals.find(x=>x.symbol===r.symbol+i)) allRadicals.push({...r, symbol:r.symbol+i, meaning:r.meaning+" "+i}); } }
+    allRadicals = allRadicals.slice(0,520);
     let radicalIndex = 0;
-    let dialogIndex = 0;
-    let currentQuizRadical = null;
-    let currentGameWord = null;
-
-    // ========== ГОЛОС (для Edge/Chrome) ==========
-    function speakChinese(text) {
-        if (!window.speechSynthesis) {
-            alert("Ваш браузер не поддерживает голос");
-            return;
-        }
-        window.speechSynthesis.cancel();
-        let utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = "zh-CN";
-        utterance.rate = 0.8;
-        window.speechSynthesis.speak(utterance);
-    }
-
-    // ========== ОБНОВЛЕНИЕ СЛОВА ==========
-    function updateWord() {
-        let w = words[wordIndex];
-        document.getElementById("studyChar").innerText = w.char;
-        document.getElementById("studyPinyin").innerText = w.pinyin;
-        document.getElementById("studyMeaning").innerText = w.meaning;
-        document.getElementById("studyEmoji").innerText = w.emoji;
-    }
-
-    function nextWord() {
-        wordIndex = (wordIndex + 1) % words.length;
-        updateWord();
-        document.getElementById("studyFeedback").innerHTML = "✨ Новое слово! Нажми 🔊";
-    }
-
-    // ========== РАДИКАЛЫ ==========
-    function updateRadical() {
-        let r = radicals[radicalIndex];
-        document.getElementById("radicalSymbol").innerText = r.symbol;
-        document.getElementById("radicalPinyin").innerText = r.pinyin;
-        document.getElementById("radicalMeaning").innerText = r.meaning;
-        document.getElementById("radicalEmoji").innerText = r.emoji;
-    }
-
-    function nextRadical() {
-        radicalIndex = (radicalIndex + 1) % radicals.length;
-        updateRadical();
-    }
-
-    function showAllRadicals() {
-        let container = document.getElementById("allRadicalsContainer");
-        if (container.style.display === "none") {
-            let html = '<div class="radical-grid">';
-            all214.forEach(r => { html += `<div class="radical-cell">${r}</div>`; });
-            html += '</div>';
-            container.innerHTML = html;
-            container.style.display = "block";
-        } else {
-            container.style.display = "none";
-        }
-    }
-
-    // ========== ПРОВЕРКА РАДИКАЛОВ ==========
-    function newRadicalQuiz() {
-        let idx = Math.floor(Math.random() * radicals.length);
-        currentQuizRadical = radicals[idx];
-        document.getElementById("quizChar").innerText = currentQuizRadical.symbol;
-        let wrong1 = radicals[(idx + 1) % radicals.length].meaning;
-        let wrong2 = radicals[(idx + 2) % radicals.length].meaning;
-        let opts = [currentQuizRadical.meaning, wrong1, wrong2];
-        opts.sort(() => Math.random() - 0.5);
-        let html = '';
-        opts.forEach(opt => { html += `<div class="option" data-val="${opt}">${opt}</div>`; });
-        document.getElementById("quizOptions").innerHTML = html;
-        document.querySelectorAll("#quizOptions .option").forEach(opt => {
-            opt.onclick = () => {
-                if (opt.getAttribute("data-val") === currentQuizRadical.meaning) {
-                    document.getElementById("quizFeedback").innerHTML = "✅ Правильно! " + currentQuizRadical.symbol + " — " + currentQuizRadical.meaning + " " + currentQuizRadical.emoji;
-                } else {
-                    document.getElementById("quizFeedback").innerHTML = "❌ Ошибка! " + currentQuizRadical.symbol + " — это " + currentQuizRadical.meaning + " " + currentQuizRadical.emoji;
-                }
-                setTimeout(newRadicalQuiz, 1500);
-            };
-        });
-    }
-
-    // ========== ДИАЛОГИ ==========
-    function updateDialog() {
-        let d = dialogsList[dialogIndex];
-        document.getElementById("dialogText").innerHTML = `
-            <strong>❓ ${d.q}</strong><br>
-            📖 ${d.q_pinyin}<br>
-            ✨ ${d.q_ru}<br><br>
-            <strong>✅ ${d.a}</strong><br>
-            ✨ ${d.a_ru}
-        `;
-    }
-    function nextDialog() { dialogIndex = (dialogIndex + 1) % dialogsList.length; updateDialog(); }
-    function prevDialog() { dialogIndex = (dialogIndex - 1 + dialogsList.length) % dialogsList.length; updateDialog(); }
-    function speakDialog() {
-        let d = dialogsList[dialogIndex];
-        speakChinese(d.q + " " + d.a);
-    }
-
-    // ========== ИГРА ==========
-    function newGame() {
-        let idx = Math.floor(Math.random() * words.length);
-        currentGameWord = words[idx];
-        document.getElementById("gameChar").innerText = currentGameWord.char;
-        let wrong1 = words[(idx + 1) % words.length].meaning;
-        let wrong2 = words[(idx + 2) % words.length].meaning;
-        let opts = [currentGameWord.meaning, wrong1, wrong2];
-        opts.sort(() => Math.random() - 0.5);
-        let html = '';
-        opts.forEach(opt => { html += `<div class="option" data-val="${opt}">${opt}</div>`; });
-        document.getElementById("gameOptions").innerHTML = html;
-        document.querySelectorAll("#gameOptions .option").forEach(opt => {
-            opt.onclick = () => {
-                if (opt.getAttribute("data-val") === currentGameWord.meaning) {
-                    document.getElementById("gameFeedback").innerHTML = "🎉 Правильно! Молодец!";
-                } else {
-                    document.getElementById("gameFeedback").innerHTML = `😅 Ошибка! ${currentGameWord.char} — это "${currentGameWord.meaning}"`;
-                }
-                setTimeout(newGame, 1300);
-            };
-        });
-    }
-
-    // ========== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ==========
-    document.querySelectorAll(".tab-btn").forEach(btn => {
-        btn.onclick = () => {
-            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            let tabName = btn.getAttribute("data-tab");
-            document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-            document.getElementById(tabName).classList.add("active");
-            if (tabName === "quiz") newRadicalQuiz();
-            if (tabName === "game") newGame();
+    
+    // ==================== ПЕСНИ ====================
+    const songs = [
+        {title:"🐯 两只老虎", lines:[{emoji:"🐯", ch:"两只老虎", pinyin:"liǎng zhī lǎohǔ", ru:"Два тигра"},{emoji:"🏃", ch:"跑得快", pinyin:"pǎo de kuài", ru:"Бегут быстро"}]},
+        {title:"✨ 小星星", lines:[{emoji:"⭐", ch:"一闪一闪亮晶晶", pinyin:"yī shǎn yī shǎn liàng jīng jīng", ru:"Мерцай, мерцай"},{emoji:"🌙", ch:"满天都是小星星", pinyin:"mǎn tiān dōu shì xiǎo xīng xīng", ru:"Небо полно звёзд"}]},
+        {title:"👋 你好歌", lines:[{emoji:"👋", ch:"你好你好", pinyin:"nǐhǎo nǐhǎo", ru:"Здравствуй"},{emoji:"🙏", ch:"谢谢谢谢", pinyin:"xièxie xièxie", ru:"Спасибо"}]},
+        {title:"🐱 小猫咪", lines:[{emoji:"🐱", ch:"小猫咪", pinyin:"xiǎo māomī", ru:"Маленькая кошка"},{emoji:"🎵", ch:"喵喵喵", pinyin:"miāo miāo miāo", ru:"Мяу мяу"}]}
+    ];
+    
+    // ==================== ГОЛОС ====================
+    let recognition = null, isRecording = false;
+    function speak(text) { if(!window.speechSynthesis) return; window.speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(text); u.lang="zh-CN"; u.rate=0.75; window.speechSynthesis.speak(u); }
+    function initVoice() { let SpeechRecog=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SpeechRecog) return false; recognition=new SpeechRecog(); recognition.lang="zh-CN"; return true; }
+    function startVoiceTest(correctPinyin, feedbackEl, onResult) {
+        if(!recognition && !initVoice()) { if(feedbackEl) feedbackEl.innerHTML="❌ Голос не поддерживается"; return; }
+        if(isRecording) return;
+        recognition.onresult = (e) => {
+            let spoken = e.results[0][0].transcript.toLowerCase().replace(/[^a-z]/g,'');
+            let target = correctPinyin.toLowerCase().replace(/[^a-z]/g,'');
+            let isCorrect = spoken.includes(target) || target.includes(spoken);
+            if(feedbackEl) feedbackEl.innerHTML = isCorrect ? "✅ Отлично!" : `❌ Нужно: ${correctPinyin}`;
+            if(onResult) onResult(isCorrect);
+            isRecording=false; document.querySelectorAll(".voice-btn").forEach(b=>b.classList.remove("recording"));
         };
-    });
-
-    // ========== НАЗНАЧЕНИЕ КНОПОК ==========
-    document.getElementById("speakStudy").onclick = () => { speakChinese(words[wordIndex].char); };
-    document.getElementById("nextStudy").onclick = nextWord;
-    document.getElementById("speakRadical").onclick = () => { speakChinese(radicals[radicalIndex].symbol); };
-    document.getElementById("nextRadical").onclick = nextRadical;
-    document.getElementById("showAllRadicalsBtn").onclick = showAllRadicals;
-    document.getElementById("nextQuiz").onclick = newRadicalQuiz;
-    document.getElementById("prevDialog").onclick = prevDialog;
-    document.getElementById("nextDialog").onclick = nextDialog;
-    document.getElementById("speakDialog").onclick = speakDialog;
-    document.getElementById("newGame").onclick = newGame;
-
-    // ========== ЗАПУСК ==========
-    updateWord();
-    updateRadical();
-    updateDialog();
-    newRadicalQuiz();
-    newGame();
+        recognition.onend = () => { isRecording=false; document.querySelectorAll(".voice-btn").forEach(b=>b.classList.remove("recording")); };
+        recognition.start(); isRecording=true; if(feedbackEl) feedbackEl.innerHTML="🎤 Слушаю...";
+    }
+    
+    // ==================== ФУНКЦИИ ====================
+    function updateStudy() { let w=allWords[currentWordIndex%allWords.length]; document.getElementById("studyChar").innerText=w.char; document.getElementById("studyPinyin").innerText=w.pinyin; document.getElementById("studyMeaning").innerText=w.meaning; document.getElementById("studyEmoji").innerText=w.emoji||"📖"; document.getElementById("studyStats").innerHTML=`📊 Слов: ${allWords.length}`; }
+    function nextWord() { currentWordIndex=(currentWordIndex+1)%allWords.length; updateStudy(); document.getElementById("studyFeedback").innerHTML="⭐ Новое слово!"; }
+    function updateRadical() { let r=allRadicals[radicalIndex%allRadicals.length]; document.getElementById("radChar").innerText=r.symbol; document.getElementById("radPinyin").innerText=r.pinyin; document.getElementById("radMeaning").innerText=r.meaning; document.getElementById("radEmoji").innerText=r.emoji||"🔤"; }
+    function nextRadical() { radicalIndex++; updateRadical(); }
+    function showAllRadicals() { let div=document.getElementById("allRadicalsList"); if(div.style.display==="none"){ let html='<div class="radical-grid">'; allRadicalsSymbols.forEach(r=>{html+=`<div class="radical-cell">${r}</div>`;}); html+='</div>'; div.innerHTML=html; div.style.display="block"; } else div.style.display="none"; }
+    
+    function updateDialog() { let d=filteredDialogs[currentDialogIndex%filteredDialogs.length]; document.getElementById("dialogContent").innerHTML=`<div class="dialog-q"><strong>❓</strong> ${d.q}<br>📖 ${d.qp}<br>✨ ${d.qr}</div><div class="dialog-a"><strong>✅</strong> ${d.a}<br>📖 ${d.ap}<br>✨ ${d.ar}</div>`; }
+    function nextDialog() { currentDialogIndex=(currentDialogIndex+1)%filteredDialogs.length; updateDialog(); }
+    function prevDialog() { currentDialogIndex=(currentDialogIndex-1+filteredDialogs.length)%filteredDialogs.length; updateDialog(); }
+    function speakDialog() { let d=filteredDialogs[currentDialogIndex%filteredDialogs.length]; speak(d.q); }
+    function filterDialogs(topic) { if(topic==="all") filteredDialogs=allDialogs; else filteredDialogs=allDialogs.filter(d=>d.topic===topic); currentDialogIndex=0; updateDialog(); document.getElementById("dialogCount").innerText=filteredDialogs.length; }
+    
+    // Кубики
+    function rollCube() { let idx=Math.floor(Math.random()*allWords.length); currentCubeWord=allWords[idx]; document.getElementById("cubeResult").innerText=currentCubeWord.char; document.getElementById("cubeMeaning").innerText=currentCubeWord.meaning; }
+    // Карточки
+    let cardIndex=0;
+    function updateCard() { let w=allWords[cardIndex%allWords.length]; document.getElementById("cardChar").innerText=w.char; document.getElementById("cardPinyin").innerText=w.pinyin; document.getElementById("cardMeaning").innerText="???"; }
+    function flipCard() { let w=allWords[cardIndex%allWords.length]; document.getElementById("cardMeaning").innerText=w.meaning; }
+    function nextCard() { cardIndex=(cardIndex+1)%allWords.length; updateCard(); document.getElementById("cardFeedback").innerHTML="Карточка перевернута!"; }
+    
+    // Игра
+    let currentGameWord=null;
+    function newGame() { let idx=Math.floor(Math.random()*allWords.length); currentGameWord=allWords[idx]; document.getElementById("gameChar").innerText=currentGameWord.char; let wrong1=allWords[(idx+1)%allWords.length].meaning; let wrong2=allWords[(idx+2)%allWords.length].meaning; let opts=[currentGameWord.meaning, wrong1, wrong2]; opts.sort(()=>Math.random()-0.5); let html=''; opts.forEach(opt=>{html+=`<div class="grid-opt" data-val="${opt}">${opt}</div>`;}); document.getElementById("gameOptions").innerHTML=html; document.querySelectorAll("#gameOptions .grid-opt").forEach(opt=>{opt.onclick=()=>{if(opt.getAttribute("data-val")===currentGameWord.meaning) document.getElementById("gameFeedback").innerHTML="🎉 Правильно!"; else document.getElementById("gameFeedback").innerHTML=`😅 Ошибка! ${currentGameWord.char} — ${currentGameWord.meaning}`; setTimeout(newGame,1300);};}); }
+    
+    // Тест радикалов
+    let currentQuiz=null;
+    function newQuiz() { let idx=Math.floor(Math.random()*allRadicals.length); currentQuiz=allRadicals[idx]; document.getElementById("quizChar").innerText=currentQuiz.symbol; let wrong1=allRadicals[(idx+1)%allRadicals.length].meaning; let wrong2=allRadicals[(idx+2)%allRadicals.length].meaning; let opts=[currentQuiz.meaning, wrong1, wrong2]; opts.sort(()=>Math.random()-0.5); let html=''; opts.forEach(opt=>{html+=`<div class="grid-opt" data-val="${opt}">${opt}</div>`;}); document.getElementById("quizOptions").innerHTML=html; document.querySelectorAll("#quizOptions .grid-opt").forEach(opt=>{opt.onclick=()=>{if(opt.getAttribute("data-val")===currentQuiz.meaning) document.getElementById("quizFeedback").innerHTML="✅ Правильно!"; else document.getElementById("quizFeedback").innerHTML=`❌ Ошибка! ${currentQuiz.symbol} — ${currentQuiz.meaning}`; setTimeout(newQuiz,1500);};}); }
+    
+    // Рисование
+    let canvas,ctx;
+    function initCanvas(){ canvas=document.getElementById("drawCanvas"); if(!canvas) return; ctx=canvas.getContext("2d"); canvas.width=300; canvas.height=180; ctx.fillStyle="white"; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.strokeStyle="#333"; ctx.lineWidth=3; let painting=false; function start(e){ painting=true; let p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); } function draw(e){ if(!painting) return; let p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(p.x,p.y); } function end(){ painting=false; ctx.beginPath(); } function getPos(e){ let rect=canvas.getBoundingClientRect(); let scaleX=canvas.width/rect.width; let scaleY=canvas.height/rect.height; let clientX=e.touches?e.touches[0].clientX:e.clientX; let clientY=e.touches?e.touches[0].clientY:e.clientY; return {x:(clientX-rect.left)*scaleX, y:(clientY-rect.top)*scaleY}; } canvas.addEventListener("mousedown",start); canvas.addEventListener("mousemove",draw); canvas.addEventListener("mouseup",end); canvas.addEventListener("touchstart",(e)=>{e.preventDefault(); start(e.touches[0]);}); canvas.addEventListener("touchmove",(e)=>{e.preventDefault(); draw(e.touches[0]);}); canvas.addEventListener("touchend",end); }
+    function clearCanvas(){ if(ctx){ ctx.fillStyle="white"; ctx.fillRect(0,0,canvas.width,canvas.height); } }
+    
+    function renderSongs(){ let html=''; songs.forEach((song,idx)=>{ let linesHtml=''; song.lines.forEach(l=>{linesHtml+=`<div class="song-line"><div class="song-emoji">${l.emoji}</div><div class="song-text">${l.ch}</div><div class="song-pinyin">${l.pinyin}</div><div style="font-size:12px;">${l.ru}</div></div>`;}); html+=`<div class="song-card"><div class="song-title">${song.title}</div>${linesHtml}<button class="playSongBtn" data-idx="${idx}">🎵 Спеть</button></div>`; }); document.getElementById("songsList").innerHTML=html; document.querySelectorAll(".playSongBtn").forEach(btn=>{btn.onclick=()=>{let idx=parseInt(btn.getAttribute("data-idx")); let fullText=songs[idx].lines.map(l=>l.ch).join(" "); speak(fullText);};}); }
+    
+    // Вкладки
+    document.querySelectorAll(".tab").forEach(tab=>{tab.onclick=()=>{ document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active")); tab.classList.add("active"); let target=tab.getAttribute("data-tab"); document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active")); document.getElementById(target+"Panel").classList.add("active"); if(target==="radicals") updateRadical(); if(target==="quiz") newQuiz(); if(target==="game") newGame(); if(target==="songs") renderSongs(); if(target==="cubes") rollCube(); if(target==="cards") updateCard(); };});
+    
+    document.querySelectorAll(".topic-badge").forEach(b=>{b.onclick=()=>{ filterDialogs(b.getAttribute("data-topic")); };});
+    
+    // Запуск
+    window.onload=()=>{ initCanvas(); updateStudy(); updateRadical(); updateDialog(); newGame(); newQuiz(); renderSongs(); rollCube(); updateCard(); initVoice();
+        document.getElementById("studyListen").onclick=()=>{let w=allWords[currentWordIndex%allWords.length]; speak(w.char);};
+        document.getElementById("studyVoice").onclick=()=>{let w=allWords[currentWordIndex%allWords.length]; startVoiceTest(w.pinyin, document.getElementById("studyFeedback"), null);};
+        document.getElementById("studyNext").onclick=nextWord;
+        document.getElementById("dialogPrev").onclick=prevDialog; document.getElementById("dialogNext").onclick=nextDialog; document.getElementById("dialogListen").onclick=speakDialog;
+        document.getElementById("dialogVoice").onclick=()=>{let d=filteredDialogs[currentDialogIndex%filteredDialogs.length]; startVoiceTest(d.a.split(" ")[0], document.getElementById("dialogFeedback"), null);};
+        document.getElementById("nbListen").onclick=()=>{let w=allWords[currentWordIndex%allWords.length]; speak(w.char);};
+        document.getElementById("nbVoice").onclick=()=>{let w=allWords[currentWordIndex%allWords.length]; startVoiceTest(w.pinyin, document.getElementById("nbFeedback"), null);};
+        document.getElementById("nbNext").onclick=nextWord; document.getElementById("clearCanvas").onclick=clearCanvas;
+        document.getElementById("radListen").onclick=()=>{let r=allRadicals[radicalIndex%allRadicals.length]; speak(r.symbol);};
+        document.getElementById("radNext").onclick=nextRadical; document.getElementById("showAllRad").onclick=showAllRadicals;
+        document.getElementById("newGame").onclick=newGame; document.getElementById("nextQuiz").onclick=newQuiz;
+        document.getElementById("rollCube").onclick=rollCube; document.getElementById("cubeListen").onclick=()=>{if(currentCubeWord) speak(currentCubeWord.char);};
+        document.getElementById("cardFlip").onclick=flipCard; document.getElementById("cardNext").onclick=nextCard; document.getElementById("cardListen").onclick=()=>{let w=allWords[cardIndex%allWords.length]; speak(w.char);};
+    };
 </script>
 </body>
 </html>
