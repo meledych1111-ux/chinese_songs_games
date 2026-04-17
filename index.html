@@ -1138,27 +1138,50 @@ function startVoice(py, feed) {
   if(isRec) { recognition.stop(); return; } 
   
   recognition.onresult = e => { 
-    const said = e.results[0][0].transcript.toLowerCase().trim().replace(/\s+/g, '');
-    const target = py.toLowerCase().trim().replace(/\s+/g, '');
+    const said = e.results[0][0].transcript.toLowerCase().trim();
+    const target = py.toLowerCase().trim();
     
-    // Убираем тоны, но сохраняем буквы
-    const removeTones = (s) => {
-      return s.replace(/[āáǎà]/g, 'a')
-              .replace(/[ēéěè]/g, 'e')
-              .replace(/[īíǐì]/g, 'i')
-              .replace(/[ōóǒò]/g, 'o')
-              .replace(/[ūúǔù]/g, 'u')
-              .replace(/[ǖǘǚǜ]/g, 'ü');
+    // Функция для удаления тонов (чтобы сравнивать без учёта тонов)
+    const removeTones = (str) => {
+      return str.replace(/[āáǎà]/g, 'a')
+                .replace(/[ēéěè]/g, 'e')
+                .replace(/[īíǐì]/g, 'i')
+                .replace(/[ōóǒò]/g, 'o')
+                .replace(/[ūúǔù]/g, 'u')
+                .replace(/[ǖǘǚǜ]/g, 'ü');
     };
     
     const saidClean = removeTones(said);
     const targetClean = removeTones(target);
     
-    // Точное сравнение
-    const correct = (saidClean === targetClean);
+    // ТОЛЬКО ТОЧНОЕ СОВПАДЕНИЕ!
+    let correct = false;
+    if (saidClean === targetClean) {
+      correct = true;
+    }
+    // Для слов с пробелами (например "ni hao")
+    else if (saidClean.split(' ').length === targetClean.split(' ').length) {
+      const saidWords = saidClean.split(' ');
+      const targetWords = targetClean.split(' ');
+      let allMatch = true;
+      for (let i = 0; i < saidWords.length; i++) {
+        if (saidWords[i] !== targetWords[i]) {
+          allMatch = false;
+          break;
+        }
+      }
+      if (allMatch) correct = true;
+    }
     
-    const message = correct ? "✅ Правильно! Отлично!" : "❌ Неправильно. Нужно: " + py;
-    if(feed) feed.innerHTML = message;
+    // Сообщение
+    if (feed) {
+      if (correct) {
+        feed.innerHTML = "✅ Правильно! Отлично!";
+        setTimeout(() => { if(feed) feed.innerHTML = ""; }, 2500);
+      } else {
+        feed.innerHTML = "❌ Неправильно. Нужно: " + py;
+      }
+    }
     
     isRec = false;
     document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec'));
