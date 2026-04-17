@@ -3,71 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>🇨🇳 Китайский с радикалами</title>
+    <title>🇨🇳 Китайский — полный тренажёр</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: linear-gradient(145deg, #c8e6f0, #ffe6cc); font-family: system-ui, 'Segoe UI'; padding: 16px; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .tabs { display: flex; flex-wrap: wrap; gap: 8px; background: #fff5e6; border-radius: 60px; padding: 8px; margin-bottom: 20px; }
-        .tab { padding: 8px 16px; border-radius: 50px; background: #f0e0c0; cursor: pointer; font-weight: bold; }
-        .tab.active { background: #ff914d; color: white; }
-        .panel { display: none; background: white; border-radius: 50px; padding: 20px; margin-bottom: 20px; }
+        body {
+            background: linear-gradient(135deg, #1a5f7a 0%, #f7d9a8 100%);
+            font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans CJK SC', system-ui;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .container { max-width: 650px; margin: 0 auto; }
+        
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: rgba(255,245,220,0.95);
+            border-radius: 60px;
+            padding: 8px;
+            margin-bottom: 20px;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .tab {
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 16px;
+            background: #e8d5b5;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .tab.active {
+            background: #ff7b2c;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Панели */
+        .panel { display: none; }
         .panel.active { display: block; }
-        .big-hanzi { font-size: 100px; text-align: center; font-weight: bold; }
-        .pinyin { font-size: 28px; text-align: center; color: #ff6b2c; }
-        .meaning { font-size: 24px; text-align: center; background: #eef4ff; display: inline-block; padding: 8px 20px; border-radius: 50px; margin: 10px auto; }
-        button { background: #ffaa66; border: none; padding: 12px 20px; border-radius: 50px; font-weight: bold; margin: 5px; cursor: pointer; }
-        .radical-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; max-height: 400px; overflow-y: auto; }
-        .radical-item { background: #fff3e0; border-radius: 30px; padding: 8px; text-align: center; font-size: 28px; }
-        .dialog-line { background: #fff8f0; padding: 12px; border-radius: 30px; margin: 10px 0; }
-        .feedback { background: #fff0cc; border-radius: 50px; padding: 12px; text-align: center; margin: 12px 0; }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="tabs">
-        <div class="tab active" data-tab="study">📖 Учить</div>
-        <div class="tab" data-tab="radicals">🔤 Радикалы</div>
-        <div class="tab" data-tab="dialogs">💬 Диалоги</div>
-        <div class="tab" data-tab="game">🎮 Игра</div>
-    </div>
-
-    <div id="studyPanel" class="panel active">
-        <div class="big-hanzi" id="studyHanzi">猫</div>
-        <div class="pinyin" id="studyPinyin">māo</div>
-        <div class="meaning" id="studyMeaning">кошка</div>
-        <div style="font-size: 60px; text-align: center;" id="studyEmoji">🐱</div>
-        <div style="text-align:center;">
-            <button id="listenBtn">🔊 Слушать</button>
-            <button id="nextBtn">🎲 Дальше</button>
-        </div>
-        <div id="studyFeedback" class="feedback">📚 Нажимай "Дальше" и учи слова</div>
-    </div>
-
-    <div id="radicalsPanel" class="panel">
-        <div class="radical-grid" id="radicalList"></div>
-    </div>
-
-    <div id="dialogsPanel" class="panel">
-        <div id="dialogContent"></div>
-        <button id="nextDialogBtn">🎲 Следующий диалог</button>
-    </div>
-
-    <div id="gamePanel" class="panel">
-        <div class="big-hanzi" id="gameHanzi">?</div>
-        <div id="gameOptions" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0;"></div>
-        <div id="gameFeedback" class="feedback">⭐ Нажми на правильный перевод</div>
-        <button id="newGameBtn">🔄 Новый вопрос</button>
-    </div>
-</div>
-
-<script>
-    const words = [
-        { hanzi:"猫", pinyin:"māo", meaning:"кошка", emoji:"🐱" },
-        { hanzi:"狗", pinyin:"gǒu", meaning:"собака", emoji:"🐶" },
-        { hanzi:"水", pinyin:"shuǐ", meaning:"вода", emoji:"💧" },
-        { hanzi:"吃", pinyin:"chī", meaning:"есть", emoji:"🍚" },
-        { hanzi:"家", pinyin:"jiā", meaning:"дом", emoji:"🏠" },
-        { hanzi:"妈妈", pinyin:"māma", meaning:"мама", emoji:"👩" },
-        { hanzi:"爸爸", pinyin:"bàba", meaning:"папа", emoji:"👨" },
-        { hanzi:"律师", pinyin:"lǜshī", meaning:"юрист", emoji:"⚖️
+        
+        /* Карточка слова */
+        .word-card {
+            background: white;
+            border-radius: 70px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .big-hanzi {
+            font-size: 130px;
+            font-weight: 800;
+            font-family: 'PingFang SC', 'Noto Sans CJK SC';
+            line-height: 1.2;
+            letter-spacing: 8px;
+            color: #2c3e4e;
+        }
+        .pinyin {
+            font-size: 34px;
+            color: #ff7b2c;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .meaning {
+            font-size: 28px;
+            background: #e8f0fe;
+            display: inline-block;
+            padding: 8px 30px;
+            border-radius: 50px;
+            margin: 10px 0;
+        }
+        .emoji-big {
+            font-size: 70px;
+            margin: 10px 0;
+        }
+        
+        /* Кнопки */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        button {
+            background: #ff914d;
+            border: none;
+            padding: 14px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 60px;
+            color: white;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        button:active { transform: scale(0.96); background: #e07a38; }
+        
+        /* Радикалы */
+        .radical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            max-height: 500px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 50px;
+            padding: 20px;
+        }
+        .radical-item {
+            background: #fff3e0;
+            border-radius: 30px;
+            padding: 12px 5px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .radical-item:active { transform: scale(0.95); background: #ffdd99; }
+        .radical-info {
+            background: #ffefd0;
+            border-radius: 40px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        /* Диалоги */
+        .dialog-card {
+            background: white;
+            border-radius: 50px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .question {
+            background: #e8f0fe;
+            border-radius: 35px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .answer {
+            background: #fff0cc;
+            border-radius: 35px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        /* Игра */
+        .game-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
