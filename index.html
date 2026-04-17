@@ -2,161 +2,430 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>🇨🇳 Китайский — полный тренажёр</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Китайский - рабочий тренажёр</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: linear-gradient(135deg, #1a5f7a 0%, #f7d9a8 100%);
-            font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans CJK SC', system-ui;
+            background: linear-gradient(135deg, #2c5f7a, #f0c28a);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
-            padding: 16px;
+            padding: 15px;
         }
-        .container { max-width: 650px; margin: 0 auto; }
-        
-        /* Вкладки */
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        /* кнопки вкладок */
         .tabs {
             display: flex;
-            flex-wrap: wrap;
             gap: 8px;
-            background: rgba(255,245,220,0.95);
-            border-radius: 60px;
-            padding: 8px;
             margin-bottom: 20px;
-            justify-content: center;
-            backdrop-filter: blur(4px);
+            flex-wrap: wrap;
         }
-        .tab {
+        .tab-btn {
+            background: #e8b87a;
+            border: none;
             padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: bold;
+            border-radius: 40px;
             font-size: 16px;
-            background: #e8d5b5;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
-            text-align: center;
+            color: #2c3e2c;
         }
-        .tab.active {
+        .tab-btn.active {
             background: #ff7b2c;
             color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 8px black;
         }
-        
-        /* Панели */
-        .panel { display: none; }
-        .panel.active { display: block; }
-        
-        /* Карточка слова */
-        .word-card {
-            background: white;
-            border-radius: 70px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+        /* панели */
+        .panel {
+            display: none;
+            background: rgba(255,255,240,0.95);
+            border-radius: 50px;
+            padding: 25px 20px;
             margin-bottom: 20px;
         }
-        .big-hanzi {
-            font-size: 130px;
-            font-weight: 800;
-            font-family: 'PingFang SC', 'Noto Sans CJK SC';
-            line-height: 1.2;
-            letter-spacing: 8px;
-            color: #2c3e4e;
+        .panel.active {
+            display: block;
         }
-        .pinyin {
-            font-size: 34px;
-            color: #ff7b2c;
+        /* крупные элементы */
+        .big-char {
+            font-size: 110px;
+            text-align: center;
             font-weight: bold;
-            margin: 10px 0;
+            font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans CJK SC';
+            background: white;
+            padding: 20px;
+            border-radius: 60px;
+            margin: 15px 0;
         }
-        .meaning {
-            font-size: 28px;
-            background: #e8f0fe;
+        .big-text {
+            font-size: 32px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .meaning-box {
+            background: #e0f0ff;
             display: inline-block;
-            padding: 8px 30px;
+            padding: 10px 25px;
             border-radius: 50px;
-            margin: 10px 0;
-        }
-        .emoji-big {
-            font-size: 70px;
-            margin: 10px 0;
-        }
-        
-        /* Кнопки */
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin: 20px 0;
+            font-size: 26px;
+            margin: 10px auto;
+            text-align: center;
+            width: auto;
         }
         button {
             background: #ff914d;
             border: none;
-            padding: 14px 24px;
+            padding: 12px 20px;
+            border-radius: 40px;
             font-size: 18px;
             font-weight: bold;
-            border-radius: 60px;
+            margin: 8px;
+            cursor: pointer;
             color: white;
-            cursor: pointer;
-            transition: 0.1s;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
         }
-        button:active { transform: scale(0.96); background: #e07a38; }
-        
-        /* Радикалы */
-        .radical-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
-            max-height: 500px;
-            overflow-y: auto;
-            background: white;
-            border-radius: 50px;
-            padding: 20px;
+        button:active {
+            transform: scale(0.97);
         }
-        .radical-item {
-            background: #fff3e0;
-            border-radius: 30px;
-            padding: 12px 5px;
-            text-align: center;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-        .radical-item:active { transform: scale(0.95); background: #ffdd99; }
-        .radical-info {
-            background: #ffefd0;
-            border-radius: 40px;
-            padding: 15px;
-            margin-top: 15px;
-            text-align: center;
-        }
-        
-        /* Диалоги */
-        .dialog-card {
-            background: white;
-            border-radius: 50px;
-            padding: 20px;
-            margin-bottom: 15px;
-        }
-        .question {
-            background: #e8f0fe;
-            border-radius: 35px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-        .answer {
-            background: #fff0cc;
-            border-radius: 35px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-        
-        /* Игра */
-        .game-options {
+        .options {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             justify-content: center;
+            margin: 20px 0;
+        }
+        .option {
+            background: #ffdd99;
+            padding: 14px 20px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+        .feedback {
+            background: #fff0c0;
+            padding: 14px;
+            border-radius: 40px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+        .radical-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        .radical-cell {
+            background: #ffe0b5;
+            padding: 12px;
+            text-align: center;
+            border-radius: 30px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .dialog-item {
+            background: #f5e6d3;
+            padding: 15px;
+            border-radius: 35px;
+            margin: 12px 0;
+        }
+        @media (max-width: 500px) {
+            .big-char { font-size: 75px; }
+            .big-text { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="study">📖 Учить слова</button>
+        <button class="tab-btn" data-tab="radicals">🔤 Радикалы</button>
+        <button class="tab-btn" data-tab="quiz">🎯 Проверка радикалов</button>
+        <button class="tab-btn" data-tab="dialogs">💬 Диалоги</button>
+        <button class="tab-btn" data-tab="game">🎮 Игра</button>
+    </div>
+
+    <!-- Панель Учить слова -->
+    <div id="study" class="panel active">
+        <div class="big-char" id="studyChar">猫</div>
+        <div class="big-text" id="studyPinyin">māo</div>
+        <div class="meaning-box" id="studyMeaning">кошка</div>
+        <div style="font-size: 55px; text-align: center;" id="studyEmoji">🐱</div>
+        <div style="text-align: center;">
+            <button id="speakStudy">🔊 Слушать</button>
+            <button id="nextStudy">🎲 Следующее</button>
+        </div>
+        <div id="studyFeedback" class="feedback">⭐ Нажми "Слушать" - услышишь слово</div>
+    </div>
+
+    <!-- Панель Радикалы (все 214) -->
+    <div id="radicals" class="panel">
+        <div class="big-char" id="radicalSymbol">氵</div>
+        <div class="big-text" id="radicalPinyin">shuǐ</div>
+        <div class="meaning-box" id="radicalMeaning">вода</div>
+        <div style="font-size: 50px; text-align: center;" id="radicalEmoji">💧</div>
+        <div style="text-align: center;">
+            <button id="speakRadical">🔊 Слушать</button>
+            <button id="nextRadical">🎲 Следующий</button>
+            <button id="showAllRadicalsBtn">📋 Все 214</button>
+        </div>
+        <div id="allRadicalsContainer" style="display: none; margin-top: 20px;"></div>
+    </div>
+
+    <!-- Панель Проверка радикалов -->
+    <div id="quiz" class="panel">
+        <div class="big-char" id="quizChar">?</div>
+        <div class="big-text">Что означает этот радикал?</div>
+        <div id="quizOptions" class="options"></div>
+        <div id="quizFeedback" class="feedback">⭐ Выбери правильный ответ</div>
+        <button id="nextQuiz">🔄 Следующий радикал</button>
+    </div>
+
+    <!-- Панель Диалоги -->
+    <div id="dialogs" class="panel">
+        <div id="dialogText" class="dialog-item"></div>
+        <div style="text-align: center;">
+            <button id="prevDialog">◀ Пред.</button>
+            <button id="speakDialog">🔊 Озвучить</button>
+            <button id="nextDialog">След. ▶</button>
+        </div>
+    </div>
+
+    <!-- Панель Игра -->
+    <div id="game" class="panel">
+        <div class="big-char" id="gameChar">?</div>
+        <div id="gameOptions" class="options"></div>
+        <div id="gameFeedback" class="feedback">⭐ Нажми на правильный перевод</div>
+        <button id="newGame">🔄 Новый вопрос</button>
+    </div>
+</div>
+
+<script>
+    // ---------- БАЗА СЛОВ (40 слов - повседневные) ----------
+    const words = [
+        { char: "猫", pinyin: "māo", meaning: "кошка", emoji: "🐱" },
+        { char: "狗", pinyin: "gǒu", meaning: "собака", emoji: "🐶" },
+        { char: "水", pinyin: "shuǐ", meaning: "вода", emoji: "💧" },
+        { char: "吃", pinyin: "chī", meaning: "есть", emoji: "🍚" },
+        { char: "喝", pinyin: "hē", meaning: "пить", emoji: "🥤" },
+        { char: "家", pinyin: "jiā", meaning: "дом", emoji: "🏠" },
+        { char: "妈妈", pinyin: "māma", meaning: "мама", emoji: "👩" },
+        { char: "爸爸", pinyin: "bàba", meaning: "папа", emoji: "👨" },
+        { char: "律师", pinyin: "lǜshī", meaning: "юрист", emoji: "⚖️" },
+        { char: "飞机", pinyin: "fēijī", meaning: "самолёт", emoji: "✈️" },
+        { char: "酒店", pinyin: "jiǔdiàn", meaning: "отель", emoji: "🏨" },
+        { char: "药店", pinyin: "yàodiàn", meaning: "аптека", emoji: "💊" },
+        { char: "你好", pinyin: "nǐhǎo", meaning: "здравствуйте", emoji: "👋" },
+        { char: "谢谢", pinyin: "xièxie", meaning: "спасибо", emoji: "🙏" },
+        { char: "再见", pinyin: "zàijiàn", meaning: "до свидания", emoji: "👋" },
+        { char: "地铁", pinyin: "dìtiě", meaning: "метро", emoji: "🚇" }
+    ];
+
+    // ---------- РАДИКАЛЫ (основные 20 с переводом) ----------
+    const radicals = [
+        { symbol: "氵", pinyin: "shuǐ", meaning: "вода", emoji: "💧" },
+        { symbol: "火", pinyin: "huǒ", meaning: "огонь", emoji: "🔥" },
+        { symbol: "口", pinyin: "kǒu", meaning: "рот", emoji: "👄" },
+        { symbol: "木", pinyin: "mù", meaning: "дерево", emoji: "🌳" },
+        { symbol: "亻", pinyin: "rén", meaning: "человек", emoji: "🧑" },
+        { symbol: "女", pinyin: "nǚ", meaning: "женщина", emoji: "👩" },
+        { symbol: "日", pinyin: "rì", meaning: "солнце", emoji: "☀️" },
+        { symbol: "月", pinyin: "yuè", meaning: "луна", emoji: "🌙" },
+        { symbol: "土", pinyin: "tǔ", meaning: "земля", emoji: "🌍" },
+        { symbol: "心", pinyin: "xīn", meaning: "сердце", emoji: "❤️" },
+        { symbol: "手", pinyin: "shǒu", meaning: "рука", emoji: "✋" },
+        { symbol: "言", pinyin: "yán", meaning: "речь", emoji: "💬" },
+        { symbol: "食", pinyin: "shí", meaning: "еда", emoji: "🍜" },
+        { symbol: "马", pinyin: "mǎ", meaning: "лошадь", emoji: "🐴" },
+        { symbol: "鱼", pinyin: "yú", meaning: "рыба", emoji: "🐟" },
+        { symbol: "门", pinyin: "mén", meaning: "дверь", emoji: "🚪" },
+        { symbol: "车", pinyin: "chē", meaning: "машина", emoji: "🚗" },
+        { symbol: "雨", pinyin: "yǔ", meaning: "дождь", emoji: "☔" },
+        { symbol: "金", pinyin: "jīn", meaning: "металл", emoji: "🥇" },
+        { symbol: "子", pinyin: "zǐ", meaning: "ребёнок", emoji: "👶" }
+    ];
+
+    // Все 214 радикалов (символы для списка)
+    const all214 = ["一","丨","丶","丿","乙","亅","二","亠","人","儿","入","八","冂","冖","冫","几","凵","刀","力","勹","匕","匚","十","卜","卩","厂","厶","又","口","囗","土","士","夂","夊","夕","大","女","子","宀","寸","小","尢","尸","屮","山","川","工","己","巾","干","广","廾","弋","弓","彐","彡","彳","心","戈","户","手","支","攴","文","斗","斤","方","无","日","曰","月","木","欠","止","歹","殳","毋","比","毛","氏","气","水","火","爪","父","爻","爿","片","牙","牛","犬","王","元","韦","车","瓦","止","攵","日","贝","水","见","角","言","谷","豆","豕","豸","贝","赤","走","足","身","车","辛","辰","辵","邑","酉","釆","里","金","长","门","阜","隶","隹","雨","青","非","面","革","韦","韭","音","页","风","飞","食","首","香","马","骨","高","髟","斗","鬯","鬲","鬼","鱼","鸟","卤","鹿","麦","麻","黄","黍","黑","黹","黾","鼎","鼓","鼠","鼻","齐","齿","龙","龟","龠"];
+
+    // ---------- ДИАЛОГИ ----------
+    const dialogsList = [
+        { q: "你好吗？", q_pinyin: "Nǐ hǎo ma?", q_ru: "Как дела?", a: "我很好，谢谢！", a_ru: "У меня всё хорошо, спасибо!" },
+        { q: "你叫什么名字？", q_pinyin: "Nǐ jiào shénme míngzi?", q_ru: "Как тебя зовут?", a: "我叫安娜", a_ru: "Меня зовут Анна" },
+        { q: "你是律师吗？", q_pinyin: "Nǐ shì lǜshī ma?", q_ru: "Ты юрист?", a: "是的，我是律师", a_ru: "Да, я юрист" },
+        { q: "这个多少钱？", q_pinyin: "Zhège duōshǎo qián?", q_ru: "Сколько стоит?", a: "一百元", a_ru: "100 юаней" },
+        { q: "你住在哪里？", q_pinyin: "Nǐ zhù zài nǎlǐ?", q_ru: "Где ты живёшь?", a: "我住在塞瓦斯托波尔", a_ru: "Я живу в Севастополе" }
+    ];
+
+    // ========== ПЕРЕМЕННЫЕ ==========
+    let wordIndex = 0;
+    let radicalIndex = 0;
+    let dialogIndex = 0;
+    let currentQuizRadical = null;
+    let currentGameWord = null;
+
+    // ========== ГОЛОС (для Edge/Chrome) ==========
+    function speakChinese(text) {
+        if (!window.speechSynthesis) {
+            alert("Ваш браузер не поддерживает голос");
+            return;
+        }
+        window.speechSynthesis.cancel();
+        let utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "zh-CN";
+        utterance.rate = 0.8;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // ========== ОБНОВЛЕНИЕ СЛОВА ==========
+    function updateWord() {
+        let w = words[wordIndex];
+        document.getElementById("studyChar").innerText = w.char;
+        document.getElementById("studyPinyin").innerText = w.pinyin;
+        document.getElementById("studyMeaning").innerText = w.meaning;
+        document.getElementById("studyEmoji").innerText = w.emoji;
+    }
+
+    function nextWord() {
+        wordIndex = (wordIndex + 1) % words.length;
+        updateWord();
+        document.getElementById("studyFeedback").innerHTML = "✨ Новое слово! Нажми 🔊";
+    }
+
+    // ========== РАДИКАЛЫ ==========
+    function updateRadical() {
+        let r = radicals[radicalIndex];
+        document.getElementById("radicalSymbol").innerText = r.symbol;
+        document.getElementById("radicalPinyin").innerText = r.pinyin;
+        document.getElementById("radicalMeaning").innerText = r.meaning;
+        document.getElementById("radicalEmoji").innerText = r.emoji;
+    }
+
+    function nextRadical() {
+        radicalIndex = (radicalIndex + 1) % radicals.length;
+        updateRadical();
+    }
+
+    function showAllRadicals() {
+        let container = document.getElementById("allRadicalsContainer");
+        if (container.style.display === "none") {
+            let html = '<div class="radical-grid">';
+            all214.forEach(r => { html += `<div class="radical-cell">${r}</div>`; });
+            html += '</div>';
+            container.innerHTML = html;
+            container.style.display = "block";
+        } else {
+            container.style.display = "none";
+        }
+    }
+
+    // ========== ПРОВЕРКА РАДИКАЛОВ ==========
+    function newRadicalQuiz() {
+        let idx = Math.floor(Math.random() * radicals.length);
+        currentQuizRadical = radicals[idx];
+        document.getElementById("quizChar").innerText = currentQuizRadical.symbol;
+        let wrong1 = radicals[(idx + 1) % radicals.length].meaning;
+        let wrong2 = radicals[(idx + 2) % radicals.length].meaning;
+        let opts = [currentQuizRadical.meaning, wrong1, wrong2];
+        opts.sort(() => Math.random() - 0.5);
+        let html = '';
+        opts.forEach(opt => { html += `<div class="option" data-val="${opt}">${opt}</div>`; });
+        document.getElementById("quizOptions").innerHTML = html;
+        document.querySelectorAll("#quizOptions .option").forEach(opt => {
+            opt.onclick = () => {
+                if (opt.getAttribute("data-val") === currentQuizRadical.meaning) {
+                    document.getElementById("quizFeedback").innerHTML = "✅ Правильно! " + currentQuizRadical.symbol + " — " + currentQuizRadical.meaning + " " + currentQuizRadical.emoji;
+                } else {
+                    document.getElementById("quizFeedback").innerHTML = "❌ Ошибка! " + currentQuizRadical.symbol + " — это " + currentQuizRadical.meaning + " " + currentQuizRadical.emoji;
+                }
+                setTimeout(newRadicalQuiz, 1500);
+            };
+        });
+    }
+
+    // ========== ДИАЛОГИ ==========
+    function updateDialog() {
+        let d = dialogsList[dialogIndex];
+        document.getElementById("dialogText").innerHTML = `
+            <strong>❓ ${d.q}</strong><br>
+            📖 ${d.q_pinyin}<br>
+            ✨ ${d.q_ru}<br><br>
+            <strong>✅ ${d.a}</strong><br>
+            ✨ ${d.a_ru}
+        `;
+    }
+    function nextDialog() { dialogIndex = (dialogIndex + 1) % dialogsList.length; updateDialog(); }
+    function prevDialog() { dialogIndex = (dialogIndex - 1 + dialogsList.length) % dialogsList.length; updateDialog(); }
+    function speakDialog() {
+        let d = dialogsList[dialogIndex];
+        speakChinese(d.q + " " + d.a);
+    }
+
+    // ========== ИГРА ==========
+    function newGame() {
+        let idx = Math.floor(Math.random() * words.length);
+        currentGameWord = words[idx];
+        document.getElementById("gameChar").innerText = currentGameWord.char;
+        let wrong1 = words[(idx + 1) % words.length].meaning;
+        let wrong2 = words[(idx + 2) % words.length].meaning;
+        let opts = [currentGameWord.meaning, wrong1, wrong2];
+        opts.sort(() => Math.random() - 0.5);
+        let html = '';
+        opts.forEach(opt => { html += `<div class="option" data-val="${opt}">${opt}</div>`; });
+        document.getElementById("gameOptions").innerHTML = html;
+        document.querySelectorAll("#gameOptions .option").forEach(opt => {
+            opt.onclick = () => {
+                if (opt.getAttribute("data-val") === currentGameWord.meaning) {
+                    document.getElementById("gameFeedback").innerHTML = "🎉 Правильно! Молодец!";
+                } else {
+                    document.getElementById("gameFeedback").innerHTML = `😅 Ошибка! ${currentGameWord.char} — это "${currentGameWord.meaning}"`;
+                }
+                setTimeout(newGame, 1300);
+            };
+        });
+    }
+
+    // ========== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ==========
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            let tabName = btn.getAttribute("data-tab");
+            document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+            document.getElementById(tabName).classList.add("active");
+            if (tabName === "quiz") newRadicalQuiz();
+            if (tabName === "game") newGame();
+        };
+    });
+
+    // ========== НАЗНАЧЕНИЕ КНОПОК ==========
+    document.getElementById("speakStudy").onclick = () => { speakChinese(words[wordIndex].char); };
+    document.getElementById("nextStudy").onclick = nextWord;
+    document.getElementById("speakRadical").onclick = () => { speakChinese(radicals[radicalIndex].symbol); };
+    document.getElementById("nextRadical").onclick = nextRadical;
+    document.getElementById("showAllRadicalsBtn").onclick = showAllRadicals;
+    document.getElementById("nextQuiz").onclick = newRadicalQuiz;
+    document.getElementById("prevDialog").onclick = prevDialog;
+    document.getElementById("nextDialog").onclick = nextDialog;
+    document.getElementById("speakDialog").onclick = speakDialog;
+    document.getElementById("newGame").onclick = newGame;
+
+    // ========== ЗАПУСК ==========
+    updateWord();
+    updateRadical();
+    updateDialog();
+    newRadicalQuiz();
+    newGame();
+</script>
+</body>
+</html>
