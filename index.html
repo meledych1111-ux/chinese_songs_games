@@ -209,13 +209,20 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
   <div id="notebookPanel" class="panel">
     <div class="card">
       <div class="big-char" id="nChar">水</div>
-      <canvas id="drawCanvas" width="340" height="340" class="tzg"></canvas>
-      <div class="btn-group">
-        <button id="nListen">🔊 Образец</button>
-        <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
-        <button id="nClear">🧽 Стереть</button>
-        <button id="nNext">🎲 Следующее</button>
-      </div>
+      <canvas id="drawCanvas" width="400" height="400" style="background:#fff; border:3px solid #8B4513; border-radius:8px; touch-action:none; cursor:crosshair;"></canvas>
+<div style="margin-top:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+  <button id="nClear" style="background:#f44336;">🧽 Очистить</button>
+  <button id="nGridBtn" style="background:#4caf50;">📐 Показать сетку</button>
+  <button id="nExample" style="background:#2196f3;">✍️ Образец</button>
+</div>
+<div id="strokeGuide" style="margin-top:15px; padding:12px; background:#f5f5f5; border-radius:12px;">
+  <strong>📖 Как писать:</strong> <span id="strokeInfo">Нажмите "Образец"</span>
+</div>
+<div class="btn-group">
+  <button id="nListen">🔊 Образец</button>
+  <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
+  <button id="nNext">🎲 Следующее</button>
+</div>
       <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
       <div class="assoc" id="nAssoc" style="margin-top:10px;"></div>
     </div>
