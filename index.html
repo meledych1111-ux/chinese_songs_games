@@ -1904,7 +1904,6 @@ function generateToneComparisons() {
   
   WORDS.forEach(word => {
     if (!word.p) return;
-    // Удаляем тоны из пиньиня (убираем ā á ǎ à ē é ě è ī í ǐ ì ō ó ǒ ò ū ú ǔ ù ǖ ǘ ǚ ǜ)
     let barePinyin = word.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     if (!groups.has(barePinyin)) groups.set(barePinyin, []);
     groups.get(barePinyin).push(word);
@@ -1913,7 +1912,18 @@ function generateToneComparisons() {
   const comparisons = [];
   for (let [pinyin, words] of groups.entries()) {
     if (words.length >= 2 && pinyin.length > 0) {
-      comparisons.push(words.slice(0, 5));
+      // Убираем дубликаты по иероглифу внутри группы
+      const uniqueWords = [];
+      const seenChars = new Set();
+      for (const word of words) {
+        if (!seenChars.has(word.c)) {
+          seenChars.add(word.c);
+          uniqueWords.push(word);
+        }
+      }
+      if (uniqueWords.length >= 2) {
+        comparisons.push(uniqueWords.slice(0, 5));
+      }
     }
   }
   
@@ -1949,7 +1959,6 @@ function generateToneComparisons() {
     `;
   }).join('');
 }
-
 function addTonesTab() {
   const tabsContainer = document.querySelector('.tabs');
   if (!tabsContainer) return;
