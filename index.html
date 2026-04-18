@@ -1107,13 +1107,16 @@ function renderDia() {
 
 function renderGram() {
   var html = '';
-  for(var i=0; i<GRAMMAR.length; i++) {
+  for(var i = 0; i < GRAMMAR.length; i++) {
     var g = GRAMMAR[i];
-    html += '<div class="grammar-card"><div class="g-title">'+g.title+'</div><div class="g-rule">'+g.rule+'</div><div class="example">'+g.ex.replace(/\n/g,'<br>')+'</div></div>';
+    html += '<div class="grammar-card">' +
+            '<div class="g-title">' + g.title + '</div>' +
+            '<div class="g-rule">' + g.rule + '</div>' +
+            '<div class="example">' + g.ex.replace(/\n/g, '<br>') + '</div>' +
+            '</div>';
   }
   document.getElementById('grammarBox').innerHTML = html;
 }
-
 function renderSongs() {
   var html = '';
   for(var i=0; i<SONGS.length; i++) {
