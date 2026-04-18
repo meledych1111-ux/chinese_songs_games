@@ -933,8 +933,9 @@ function startVoice(targetChar, targetPinyin, feedElement) {
   
   recognition.onresult = function(e) {
     var said = e.results[0][0].transcript.trim();
+    var originalSaid = said;
     
-    // Удаляем точку, запятую, восклицательный знак, вопросительный знак в конце
+    // Удаляем точку, запятую, восклицательный знак, вопросительный знак, точку с запятой, двоеточие в конце
     said = said.replace(/[.,!?;:。，！？；：]+$/, '');
     said = said.trim();
     
@@ -949,7 +950,7 @@ function startVoice(targetChar, targetPinyin, feedElement) {
       if(correct) {
         feedElement.innerHTML = "✅ Правильно! \"" + targetChar + "\" — отлично!";
       } else {
-        feedElement.innerHTML = "❌ Неправильно. Вы сказали: \"" + e.results[0][0].transcript + "\". Нужно: \"" + targetChar + "\" (" + targetPinyin + ")";
+        feedElement.innerHTML = "❌ Неправильно. Вы сказали: \"" + originalSaid + "\". Нужно: \"" + targetChar + "\" (" + targetPinyin + ")";
       }
       setTimeout(function() {
         if(feedElement) feedElement.innerHTML = "";
@@ -1234,14 +1235,17 @@ document.addEventListener('DOMContentLoaded', function() {
   updateUI();
   renderGrid();
   
+  // === СЛОВА ===
   document.getElementById('sListen').onclick = function() { speak(currentW.c); };
   document.getElementById('sVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('sFeedback')); };
   document.getElementById('sNext').onclick = nextWord;
   
+  // === ДИАЛОГИ ===
   document.getElementById('dPrev').onclick = prevDia;
   document.getElementById('dNext').onclick = nextDia;
   document.getElementById('dListen').onclick = speakDia;
   
+  // === РАДИКАЛЫ ===
   document.getElementById('rListen').onclick = function() { speak(currentRad.s); };
   document.getElementById('rVoice').onclick = function() { startVoice(currentRad.s, currentRad.p, document.getElementById('radicalDetail')); };
   document.getElementById('rNext').onclick = function() {
@@ -1253,14 +1257,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('rMeaning').textContent = currentRad.m;
     var detailDiv = document.getElementById('radicalDetail');
     detailDiv.style.display = 'block';
-    detailDiv.innerHTML = '<strong>'+currentRad.s+'</strong> — '+currentRad.p+'<br>'+currentRad.m+' '+(currentRad.e||'')+'<br><br><em>Примеры:</em> '+(currentRad.ex||'—');
+    detailDiv.innerHTML = '<strong>' + currentRad.s + '</strong> — ' + currentRad.p + '<br>' + currentRad.m + ' ' + (currentRad.e || '') + '<br><br><em>Примеры:</em> ' + (currentRad.ex || '—');
   };
   document.getElementById('rAll').onclick = function() {
     var grid = document.getElementById('radGrid');
-    if(grid.style.display === 'none') grid.style.display = 'grid';
-    else grid.style.display = 'none';
+    if(grid.style.display === 'none') {
+      grid.style.display = 'grid';
+    } else {
+      grid.style.display = 'none';
+    }
   };
   
+  // === ТЕТРАДЬ ===
   document.getElementById('nListen').onclick = function() { speak(currentW.c); };
   document.getElementById('nVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('nFeedback')); };
   document.getElementById('nNext').onclick = function() {
@@ -1275,6 +1283,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('nGridBtn').onclick = toggleGrid;
   document.getElementById('nExample').onclick = showExample;
   
+  // === КАРТОЧКИ ===
   document.getElementById('cFlip').onclick = flipCard;
   document.getElementById('cNext').onclick = function() {
     var idx = WORDS.indexOf(currentW);
@@ -1286,6 +1295,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('cListen').onclick = function() { speak(currentW.c); };
   document.getElementById('cVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('cFeedback')); };
   
+  // === КУБИКИ ===
   document.getElementById('cubeRoll').onclick = function() {
     var w = WORDS[Math.floor(Math.random() * WORDS.length)];
     document.getElementById('cubeRes').textContent = w.c;
@@ -1295,8 +1305,10 @@ document.addEventListener('DOMContentLoaded', function() {
     speak(document.getElementById('cubeRes').textContent);
   };
   
+  // === ИГРА ===
   document.getElementById('gNew').onclick = newGame;
   
+  // === ТАБЫ ===
   document.querySelectorAll('.tab').forEach(function(tab) {
     tab.onclick = function() {
       document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
@@ -1314,6 +1326,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   });
   
+  // === ФИЛЬТРЫ ===
   document.querySelectorAll('.fbtn').forEach(function(btn) {
     btn.onclick = function() {
       document.querySelectorAll('.fbtn').forEach(function(b) { b.classList.remove('active'); });
