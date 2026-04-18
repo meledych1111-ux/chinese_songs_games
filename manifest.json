@@ -1,7 +1,7 @@
 {
   "name": "Китайский с нуля",
   "short_name": "Китайский",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#4361ee",
   "background_color": "#f5d6a8"
