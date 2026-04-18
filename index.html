@@ -243,23 +243,25 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     </div>
   </div>
 
-<div id="cardsPanel" class="panel">
-  <div class="card">
-    <div class="big-char" id="cChar">水</div>
-    <div class="pinyin" id="cPinyin">shuǐ</div>
-    <div id="cBack" style="display:none;">
-      <div class="meaning" id="cMeaning">вода</div>
-      <div class="emoji" id="cBackEmoji" style="font-size:55px; margin:10px 0;">💧</div>
+  <div id="cardsPanel" class="panel">
+    <div class="card">
+      <div class="big-char" id="cChar">水</div>
+      <div class="emoji" id="cFrontEmoji" style="font-size:55px; margin:10px 0;">💧</div>
+      <div class="pinyin" id="cPinyin">shuǐ</div>
+      <div id="cBack" style="display:none;">
+        <div class="pinyin" id="cPinyinBack"></div>
+        <div class="meaning" id="cMeaning"></div>
+        <div class="emoji" id="cBackEmoji" style="font-size:55px; margin:10px 0;"></div>
+      </div>
+      <div class="btn-group">
+        <button id="cListen">🔊 Слушать</button>
+        <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
+        <button id="cFlip">🔄 Перевернуть</button>
+        <button id="cNext">🎲 Следующая</button>
+      </div>
+      <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
     </div>
-    <div class="btn-group">
-      <button id="cListen">🔊 Слушать</button>
-      <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
-      <button id="cFlip">🔄 Перевернуть</button>
-      <button id="cNext">🎲 Следующая</button>
-    </div>
-    <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
   </div>
-</div>
 
   <div id="cubesPanel" class="panel">
     <div class="card">
@@ -1134,66 +1136,21 @@ function speak(t) { if(!window.speechSynthesis) return; window.speechSynthesis.c
 function initVoice() { const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return false; recognition=new SR(); recognition.lang="zh-CN"; recognition.continuous=false; recognition.interimResults=false; return true; }
 
 function startVoice(py, feed) { 
-  if(!recognition && !initVoice()) { 
-    if(feed) feed.innerHTML = "❌ Голос не поддерживается"; 
-    return; 
-  } 
-  if(isRec) { 
-    recognition.stop(); 
-    return; 
-  }
-  
-  recognition.lang = "zh-CN";
-  recognition.interimResults = false;
-  
-  recognition.onresult = function(event) { 
-    var said = event.results[0][0].transcript.trim();
-    // ВАЖНО: сравниваем с ИЕРОГЛИФОМ, который передан в py!
-    var target = py.trim();
-    
-    console.log("=== РАСПОЗНАВАНИЕ ===");
-    console.log("Вы сказали:", said);
-    console.log("Ожидаемый иероглиф:", target);
-    
-    // ТОЧНОЕ СРАВНЕНИЕ иероглифов
-    var correct = (said === target);
-    
-    if(feed) {
-      if(correct) {
-        feed.innerHTML = "✅ Правильно! Молодец! 🎉";
-      } else {
-        feed.innerHTML = "❌ Неправильно!<br>📖 Нужно: " + target + "<br>🗣️ Вы сказали: " + said;
-      }
-      setTimeout(function() { 
-        if(feed) feed.innerHTML = ""; 
-      }, 3000);
-    }
-    
-    isRec = false;
-    var btns = document.querySelectorAll('.voice-btn');
-    for(var i = 0; i < btns.length; i++) {
-      btns[i].classList.remove('rec');
-    }
+  if(!recognition && !initVoice()) { if(feed) feed.innerHTML="❌ Голос не поддерживается"; return; } 
+  if(isRec) { recognition.stop(); return; } 
+  recognition.onresult=e=>{ 
+    const said = e.results[0][0].transcript.toLowerCase().trim().replace(/\s+/g, '');
+    const target = py.toLowerCase().trim().replace(/\s+/g, '');
+    const removeTones = (s) => s.replace(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/g, (m) => ({'ā':'a','á':'a','ǎ':'a','à':'a','ē':'e','é':'e','ě':'e','è':'e','ī':'i','í':'i','ǐ':'i','ì':'i','ō':'o','ó':'o','ǒ':'o','ò':'o','ū':'u','ú':'u','ǔ':'u','ù':'u','ǖ':'ü','ǘ':'ü','ǚ':'ü','ǜ':'ü'})[m] || m);
+    const correct = removeTones(said) === removeTones(target);
+    if(feed) feed.innerHTML = correct ? "✅ Правильно! Отлично!" : "❌ Неправильно. Нужно: " + py;
+    isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec'));
   }; 
-  
-  recognition.onend = function() { 
-    isRec = false; 
-    var btns = document.querySelectorAll('.voice-btn');
-    for(var i = 0; i < btns.length; i++) {
-      btns[i].classList.remove('rec');
-    }
-  }; 
-  
-  recognition.onerror = function(event) { 
-    console.log("Ошибка:", event.error);
-    if(feed) feed.innerHTML = "❌ Ошибка: " + event.error; 
-    isRec = false; 
-  }; 
-  
-  recognition.start(); 
-  isRec = true; 
-  if(feed) feed.innerHTML = "🎤 Слушаю... Произнесите иероглиф!"; 
+  recognition.onend=()=>{ isRec=false; document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('rec')); }; 
+  recognition.onerror=e=>{ if(feed) feed.innerHTML="❌ Ошибка: " + e.error; isRec=false; }; 
+  recognition.start(); isRec=true; if(feed) feed.innerHTML="🎤 Слушаю... Говорите!"; 
 }
+
 function openModal(w) { 
   const c=document.getElementById('modalContent'); 
   c.innerHTML=`<button class="close" onclick="closeModal()">×</button><div class="big-char">${w.c}</div><div class="pinyin">${colorP(w.p)}</div><div class="meaning">${w.m}</div><div class="emoji">${w.e||'📖'}</div><div class="badge">${CAT_NAMES[w.cat]||w.cat}</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>${w.a||'Практикуй произношение!'}</div><div class="btn-group"><button onclick="speak('${w.c}')">🔊 Слушать</button><button class="voice-btn" onclick="startVoice('${w.p}', document.getElementById('mFeed'))">🎙️ Проверить</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`; 
@@ -1246,24 +1203,8 @@ function renderSongs() {
 }
 
 function renderRads() { 
-  const g = document.getElementById('radGrid'); 
-  g.innerHTML = ''; 
-  RADICALS.forEach(r => { 
-    const d = document.createElement('div'); 
-    d.className = 'grid-item'; 
-    d.innerHTML = `<div class="ch">${r.s}</div><div class="info">${r.m}</div>`; 
-    d.onclick = () => { 
-      currentRad = r;  // ← ЭТА СТРОКА ДОБАВЛЕНА!
-      speak(r.s); 
-      document.getElementById('radicalDetail').style.display = 'block'; 
-      document.getElementById('radicalDetail').innerHTML = `<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e || ''}<br><br><em>Примеры:</em> ${r.ex}`; 
-      document.getElementById('rChar').textContent = r.s; 
-      document.getElementById('rPinyin').innerHTML = colorP(r.p); 
-      document.getElementById('rMeaning').textContent = r.m; 
-    }; 
-    g.appendChild(d); 
-  }); 
-}; g.appendChild(d); }); 
+  const g=document.getElementById('radGrid'); g.innerHTML=''; 
+  RADICALS.forEach(r=>{ const d=document.createElement('div'); d.className='grid-item'; d.innerHTML=`<div class="ch">${r.s}</div><div class="info">${r.m}</div>`; d.onclick=()=>{ speak(r.s); document.getElementById('radicalDetail').style.display='block'; document.getElementById('radicalDetail').innerHTML=`<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e||''}<br><br><em>Примеры:</em> ${r.ex}`; document.getElementById('rChar').textContent=r.s; document.getElementById('rPinyin').innerHTML=colorP(r.p); document.getElementById('rMeaning').textContent=r.m; }; g.appendChild(d); }); 
 }
 
 function newGame() { 
@@ -1329,30 +1270,30 @@ function updateUI() {
   document.getElementById('sCat').textContent = CAT_NAMES[currentW.cat] || currentW.cat; 
   document.getElementById('nChar').textContent = currentW.c; 
   document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...';
-  
-  // Карточки: лицевая сторона (только иероглиф и пиньинь)
+  // Карточки
   document.getElementById('cChar').textContent = currentW.c; 
+  document.getElementById('cFrontEmoji').textContent = currentW.e || '📖';
   document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
   document.getElementById('cPinyin').style.display = 'block';
-  
-  // Обратная сторона (перевод и эмодзи)
+  document.getElementById('cFrontEmoji').style.display = 'block';
   document.getElementById('cMeaning').textContent = currentW.m; 
+  document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p); 
   document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
-  
-  // Скрываем обратную сторону при смене слова
   document.getElementById('cBack').style.display = 'none'; 
 }
 
 function flipCard() { 
   const back = document.getElementById('cBack');
   const frontPinyin = document.getElementById('cPinyin');
-  
+  const frontEmoji = document.getElementById('cFrontEmoji');
   if (back.style.display === 'none') {
-    back.style.display = 'block';      // показываем обратную сторону
-    frontPinyin.style.display = 'none'; // скрываем пиньинь на лицевой
+    back.style.display = 'block';
+    frontPinyin.style.display = 'none';
+    frontEmoji.style.display = 'none';
   } else {
-    back.style.display = 'none';        // скрываем обратную сторону
-    frontPinyin.style.display = 'block'; // показываем пиньинь
+    back.style.display = 'none';
+    frontPinyin.style.display = 'block';
+    frontEmoji.style.display = 'block';
   }
 }
 
@@ -1365,8 +1306,8 @@ function nextCard() { currentW = WORDS[(WORDS.indexOf(currentW) + 1) % WORDS.len
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 document.addEventListener('DOMContentLoaded', ()=>{
   initCanvas(); initVoice(); updateUI(); renderGrid();
-  document.getElementById('sVoice').onclick=()=>startVoice(currentW.c, document.getElementById('sFeedback'));
-  document.getElementById('nVoice').onclick=()=>startVoice(currentW.c, document.getElementById('nFeedback'));
+  document.getElementById('sVoice').onclick=()=>startVoice(currentW.p, document.getElementById('sFeedback'));
+  document.getElementById('nVoice').onclick=()=>startVoice(currentW.p, document.getElementById('nFeedback'));
   
   document.querySelectorAll('.tab').forEach(tab=>{ tab.onclick=()=>{ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); tab.classList.add('active'); const p=tab.dataset.tab; document.querySelectorAll('.panel').forEach(panel=>panel.classList.remove('active')); document.getElementById(p+'Panel').classList.add('active'); if(p==='numbers') renderNums(); if(p==='colors') renderCols(); if(p==='dialogs') renderDia(); if(p==='grammar') renderGram(); if(p==='songs') renderSongs(); if(p==='radicals') renderRads(); if(p==='game') newGame(); }; });
   
@@ -1376,7 +1317,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('sListen').onclick=()=>speak(currentW.c);
   document.getElementById('sNext').onclick=nextWord;
   document.getElementById('dPrev').onclick=prevDia; document.getElementById('dNext').onclick=nextDia; document.getElementById('dListen').onclick=speakDia;
-  document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.s, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
+  document.getElementById('rListen').onclick=()=>speak(currentRad.s); document.getElementById('rVoice').onclick=()=>startVoice(currentRad.p, document.getElementById('radicalDetail')); document.getElementById('rNext').onclick=()=>{ currentRad=RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; updateUI(); }; document.getElementById('rAll').onclick=()=>{ const g=document.getElementById('radGrid'); g.style.display=g.style.display==='none'?'grid':'none'; };
   document.getElementById('nListen').onclick=()=>speak(currentW.c); document.getElementById('nClear').onclick=clearCanvas; document.getElementById('nNext').onclick=nextWord;
   document.getElementById('nGridBtn').onclick = toggleGrid;
   document.getElementById('nExample').onclick = showExample;
@@ -1385,7 +1326,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('cFlip').onclick=flipCard; 
   document.getElementById('cNext').onclick=nextCard; 
   document.getElementById('cListen').onclick=()=>speak(currentW.c);
-  document.getElementById('cVoice').onclick = () => startVoice(currentW.c, document.getElementById('cFeedback'));
+  document.getElementById('cVoice').onclick = () => startVoice(currentW.p, document.getElementById('cFeedback'));
   
   document.getElementById('cubeRoll').onclick=()=>{ const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent=w.c; speak(w.c); }; document.getElementById('cubeListen').onclick=()=>speak(document.getElementById('cubeRes').textContent);
   document.getElementById('gNew').onclick=newGame;
