@@ -1246,11 +1246,24 @@ function renderSongs() {
 }
 
 function renderRads() { 
-  const g=document.getElementById('radGrid'); g.innerHTML=''; 
-  RADICALS.forEach(r=>{ const d=document.createElement('div'); d.className='grid-item'; d.innerHTML=`<div class="ch">${r.s}</div><div class="info">${r.m}</div>`; d.onclick=()=>{ speak(r.s); document.getElementById('radicalDetail').style.display='block'; document.getElementById('radicalDetail').innerHTML=`<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e||''}<br><br><em>Примеры:</em> ${r.ex}`;                 document.getElementById('rChar').textContent = r.s;
-                document.getElementById('rPinyin').innerHTML = colorP(r.p);
-                document.getElementById('rMeaning').textContent = r.m;
-                document.getElementById('radicalDetail').innerHTML = `<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e || ''}<br><br><em>Примеры:</em> ${r.ex}`; }; g.appendChild(d); }); 
+  const g = document.getElementById('radGrid'); 
+  g.innerHTML = ''; 
+  RADICALS.forEach(r => { 
+    const d = document.createElement('div'); 
+    d.className = 'grid-item'; 
+    d.innerHTML = `<div class="ch">${r.s}</div><div class="info">${r.m}</div>`; 
+    d.onclick = () => { 
+      currentRad = r;  // ← ЭТА СТРОКА ДОБАВЛЕНА!
+      speak(r.s); 
+      document.getElementById('radicalDetail').style.display = 'block'; 
+      document.getElementById('radicalDetail').innerHTML = `<strong>${r.s}</strong> — ${r.p}<br>${r.m} ${r.e || ''}<br><br><em>Примеры:</em> ${r.ex}`; 
+      document.getElementById('rChar').textContent = r.s; 
+      document.getElementById('rPinyin').innerHTML = colorP(r.p); 
+      document.getElementById('rMeaning').textContent = r.m; 
+    }; 
+    g.appendChild(d); 
+  }); 
+}; g.appendChild(d); }); 
 }
 
 function newGame() { 
