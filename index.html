@@ -932,40 +932,54 @@ function startVoice(targetChar, targetPinyin, feedElement) {
   }
   
   recognition.onresult = function(e) {
-    var recognized = e.results[0][0].transcript.trim();
-    var recognizedClean = recognized.replace(/\s/g, '');
-    var expectedClean = targetChar.replace(/\s/g, '');
-    var isCorrect = (recognizedClean === expectedClean);
-    var feedbackMsg = "";
-    if(isCorrect) {
-      feedbackMsg = "✅ Правильно! \"" + targetChar + "\" — отлично!";
-    } else {
-      feedbackMsg = "❌ Неправильно. Вы сказали: \"" + recognized + "\". Нужно: \"" + targetChar + "\" (" + targetPinyin + ")";
+    var said = e.results[0][0].transcript.trim();
+    
+    // Удаляем точку, запятую, восклицательный знак, вопросительный знак в конце
+    said = said.replace(/[.,!?;:。，！？；：]+$/, '');
+    said = said.trim();
+    
+    var target = targetChar.trim();
+    
+    console.log("Распознано (очищено): '" + said + "'");
+    console.log("Ожидается: '" + target + "'");
+    
+    var correct = (said === target);
+    
+    if(feedElement) {
+      if(correct) {
+        feedElement.innerHTML = "✅ Правильно! \"" + targetChar + "\" — отлично!";
+      } else {
+        feedElement.innerHTML = "❌ Неправильно. Вы сказали: \"" + e.results[0][0].transcript + "\". Нужно: \"" + targetChar + "\" (" + targetPinyin + ")";
+      }
+      setTimeout(function() {
+        if(feedElement) feedElement.innerHTML = "";
+      }, 3000);
     }
-    if(feedElement) feedElement.innerHTML = feedbackMsg;
+    
     isRec = false;
     var btns = document.querySelectorAll('.voice-btn');
-    for(var i=0; i<btns.length; i++) btns[i].classList.remove('rec');
+    for(var i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('rec');
+    }
   };
   
   recognition.onend = function() {
     isRec = false;
     var btns = document.querySelectorAll('.voice-btn');
-    for(var i=0; i<btns.length; i++) btns[i].classList.remove('rec');
+    for(var i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('rec');
+    }
   };
   
   recognition.onerror = function(err) {
     if(feedElement) feedElement.innerHTML = "❌ Ошибка: " + err.error;
     isRec = false;
-    var btns = document.querySelectorAll('.voice-btn');
-    for(var i=0; i<btns.length; i++) btns[i].classList.remove('rec');
   };
   
   recognition.start();
   isRec = true;
   if(feedElement) feedElement.innerHTML = "🎤 Слушаю... Произнесите: \"" + targetChar + "\"";
 }
-
 function openModal(w) {
   var c = document.getElementById('modalContent');
   c.innerHTML = '<button class="close" onclick="closeModal()">×</button><div class="big-char">'+w.c+'</div><div class="pinyin">'+colorP(w.p)+'</div><div class="meaning">'+w.m+'</div><div class="emoji">'+(w.e||'📖')+'</div><div class="badge">'+(CAT_NAMES[w.cat]||w.cat)+'</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>'+(w.a||'Практикуй произношение!')+'</div><div class="btn-group"><button onclick="speak(\''+w.c+'\')">🔊 Слушать</button><button class="voice-btn" onclick="startVoice(\''+w.c+'\', \''+w.p+'\', document.getElementById(\'mFeed\'))">🎙️ Проверить</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>';
