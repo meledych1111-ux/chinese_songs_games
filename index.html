@@ -130,6 +130,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     <div class="tab" data-tab="cards">🃏 Карточки</div>
     <div class="tab" data-tab="cubes">🎲 Кубики</div>
     <div class="tab" data-tab="game">🎮 Игра</div>
+    <div class="tab" data-tab="radical-words">🔗 Слова по радикалам</div>
 </div>
 
   <div id="modal" class="modal"><div class="modal-content" id="modalContent"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
@@ -277,6 +278,14 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
         <button id="cubeRoll">🎲 Бросить</button>
         <button id="cubeListen">🔊 Слушать</button>
       </div>
+    </div>
+  </div>
+  <!-- НОВЫЙ РАЗДЕЛ: СЛОВА ПО РАДИКАЛАМ -->
+  <div id="radicalWordsPanel" class="panel">
+    <div class="card">
+      <h2 style="margin-bottom: 20px;">🔗 Слова по радикалам</h2>
+      <p style="margin-bottom: 16px;">🎯 Иероглифы, сгруппированные по общему ключу (радикалу). Нажми на слово — услышишь произношение.</p>
+      <div id="radicalWordsList" style="display: flex; flex-direction: column; gap: 24px;"></div>
     </div>
   </div>
 <!-- НОВЫЙ РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ И ОМОФОНОВ -->
@@ -2119,6 +2128,59 @@ function generateToneComparisons() {
     `;
   }).join('');
 }
+// ========== ГЕНЕРАЦИЯ СЛОВ ПО ВСЕМ РАДИКАЛАМ ==========
+function generateWordsByRadical() {
+  const container = document.getElementById('radicalWordsList');
+  if (!container) return;
+
+  let html = '';
+  let totalRadicalsWithWords = 0;
+  let totalWordsFound = 0;
+
+  // Проходим по ВСЕМ радикалам из вашего массива RADICALS
+  for (const radical of RADICALS) {
+    // Пропускаем радикалы без символа
+    if (!radical.s) continue;
+    
+    // Ищем слова, которые содержат этот радикал
+    const matchedWords = WORDS.filter(word => {
+      return word.c.includes(radical.s);
+    });
+
+    if (matchedWords.length === 0) continue;
+
+    totalRadicalsWithWords++;
+    totalWordsFound += matchedWords.length;
+    
+    // Эмодзи для радикала (если есть)
+    const radicalEmoji = radical.e || "🔑";
+
+    html += `
+      <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+        <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">
+          ${radicalEmoji} ${radical.s} — ${radical.m} (${matchedWords.length} слов)
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+          ${matchedWords.map(word => `
+            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: 0.1s; border: 1px solid rgba(0,0,0,0.05);">
+              <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '🔊'}</div>
+              <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
+              <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
+              <div style="font-size: 10px; color: #555;">${word.m}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  if (html === '') {
+    container.innerHTML = '<p style="text-align:center; padding: 40px;">📖 Слова по радикалам не найдены</p>';
+  } else {
+    container.innerHTML = html;
+    console.log(`Найдено ${totalRadicalsWithWords} радикалов с ${totalWordsFound} словами`);
+  }
+}
 function addTonesTab() {
   const tabsContainer = document.querySelector('.tabs');
   if (!tabsContainer) return;
@@ -2278,6 +2340,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if(p === 'songs') renderSongs();
       if(p === 'radicals') renderRads();
       if(p === 'game') newGame();
+      if(p === 'radical-words') generateWordsByRadical();  // ← ДОБАВИТЬ ЭТУ СТРОКУ
     };
   });
   
