@@ -2381,25 +2381,37 @@ document.addEventListener('DOMContentLoaded', function() {
   // === ИГРА ===
   document.getElementById('gNew').onclick = newGame;
   
-  // === ТАБЫ ===
-  document.querySelectorAll('.tab').forEach(function(tab) {
-    tab.onclick = function() {
-      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      var p = tab.dataset.tab;
-      document.querySelectorAll('.panel').forEach(function(panel) { panel.classList.remove('active'); });
-      document.getElementById(p + 'Panel').classList.add('active');
-      if(p === 'numbers') renderNums();
-      if(p === 'colors') renderCols();
-      if(p === 'dialogs') renderDia();
-      if(p === 'grammar') renderGram();
-      if(p === 'songs') renderSongs();
-      if(p === 'radicals') renderRads();
-      if(p === 'game') newGame();
-      if(p === 'radical-words') generateWordsByRadical();  // ← ДОБАВИТЬ ЭТУ СТРОКУ
-    };
-  });
-  
+// === ТАБЫ ===
+document.querySelectorAll('.tab').forEach(function(tab) {
+  tab.onclick = function() {
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    var p = tab.dataset.tab;
+    
+    // Скрываем все панели
+    document.querySelectorAll('.panel').forEach(function(panel) { 
+      panel.classList.remove('active'); 
+    });
+    
+    // Показываем нужную панель
+    var targetPanel = document.getElementById(p + 'Panel');
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+    } else {
+      console.error('Панель не найдена:', p + 'Panel');
+    }
+    
+    // Вызов функций для конкретных вкладок
+    if(p === 'numbers') renderNums();
+    if(p === 'colors') renderCols();
+    if(p === 'dialogs') renderDia();
+    if(p === 'grammar') renderGram();
+    if(p === 'songs') renderSongs();
+    if(p === 'radicals') renderRads();
+    if(p === 'game') newGame();
+    if(p === 'radical-words') generateWordsByRadical();
+  };
+});  
   // === ФИЛЬТРЫ ===
   document.querySelectorAll('.fbtn').forEach(function(btn) {
     btn.onclick = function() {
