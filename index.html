@@ -2129,9 +2129,32 @@ function generateToneComparisons() {
   }).join('');
 }
 // ========== ГЕНЕРАЦИЯ СЛОВ ПО ВСЕМ РАДИКАЛАМ ==========
+// ========== ГЕНЕРАЦИЯ СЛОВ ПО ВСЕМ РАДИКАЛАМ (ИСПРАВЛЕННАЯ) ==========
 function generateWordsByRadical() {
   const container = document.getElementById('radicalWordsList');
   if (!container) return;
+
+  // Словарь соответствий радикалов (разные формы одного ключа)
+  const radicalGroups = {
+    "水": ["水", "氵"],
+    "火": ["火", "灬"],
+    "手": ["手", "扌"],
+    "心": ["心", "忄"],
+    "人": ["人", "亻"],
+    "刀": ["刀", "刂"],
+    "衣": ["衣", "衤"],
+    "食": ["食", "饣"],
+    "言": ["言", "讠"],
+    "金": ["金", "钅"],
+    "车": ["车", "車"],
+    "门": ["门", "門"],
+    "风": ["风", "風"],
+    "鸟": ["鸟", "鳥"],
+    "鱼": ["鱼", "魚"],
+    "马": ["马", "馬"],
+    "草": ["草", "艹"],
+    "竹": ["竹", "⺮"]
+  };
 
   let html = '';
   let totalRadicalsWithWords = 0;
@@ -2139,12 +2162,35 @@ function generateWordsByRadical() {
 
   // Проходим по ВСЕМ радикалам из вашего массива RADICALS
   for (const radical of RADICALS) {
-    // Пропускаем радикалы без символа
     if (!radical.s) continue;
     
-    // Ищем слова, которые содержат этот радикал
+    // Получаем все формы этого радикала
+    let searchChars = [radical.s];
+    if (radicalGroups[radical.s]) {
+      searchChars = radicalGroups[radical.s];
+    }
+    // Также добавляем альтернативные формы для некоторых радикалов
+    if (radical.s === "氵") searchChars = ["水", "氵"];
+    if (radical.s === "灬") searchChars = ["火", "灬"];
+    if (radical.s === "扌") searchChars = ["手", "扌"];
+    if (radical.s === "忄") searchChars = ["心", "忄"];
+    if (radical.s === "亻") searchChars = ["人", "亻"];
+    if (radical.s === "刂") searchChars = ["刀", "刂"];
+    if (radical.s === "衤") searchChars = ["衣", "衤"];
+    if (radical.s === "饣") searchChars = ["食", "饣"];
+    if (radical.s === "讠") searchChars = ["言", "讠"];
+    if (radical.s === "钅") searchChars = ["金", "钅"];
+    if (radical.s === "艹") searchChars = ["草", "艹"];
+    if (radical.s === "⺮") searchChars = ["竹", "⺮"];
+    
+    // Ищем слова, которые содержат ЛЮБУЮ форму радикала
     const matchedWords = WORDS.filter(word => {
-      return word.c.includes(radical.s);
+      for (const ch of searchChars) {
+        if (word.c.includes(ch)) {
+          return true;
+        }
+      }
+      return false;
     });
 
     if (matchedWords.length === 0) continue;
@@ -2152,33 +2198,33 @@ function generateWordsByRadical() {
     totalRadicalsWithWords++;
     totalWordsFound += matchedWords.length;
     
-    // Эмодзи для радикала (если есть)
     const radicalEmoji = radical.e || "🔑";
 
     html += `
       <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-        <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">
+        <div style="font-size: 18px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">
           ${radicalEmoji} ${radical.s} — ${radical.m} (${matchedWords.length} слов)
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-          ${matchedWords.map(word => `
-            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: 0.1s; border: 1px solid rgba(0,0,0,0.05);">
-              <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '🔊'}</div>
-              <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
-              <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
-              <div style="font-size: 10px; color: #555;">${word.m}</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+          ${matchedWords.slice(0, 20).map(word => `
+            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 75px; padding: 6px 4px; background: white; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: 0.1s; border: 1px solid rgba(0,0,0,0.05);">
+              <div style="font-size: 28px; margin-bottom: 2px;">${word.e || '🔊'}</div>
+              <div style="font-size: 20px; font-weight: 800; margin: 2px 0;">${word.c}</div>
+              <div style="font-size: 10px; margin: 2px 0; font-weight: 600;">${colorP(word.p)}</div>
+              <div style="font-size: 9px; color: #555;">${word.m}</div>
             </div>
           `).join('')}
         </div>
+        ${matchedWords.length > 20 ? `<div style="text-align: center; margin-top: 8px; font-size: 11px; color: #888;">+ ещё ${matchedWords.length - 20} слов</div>` : ''}
       </div>
     `;
   }
 
   if (html === '') {
-    container.innerHTML = '<p style="text-align:center; padding: 40px;">📖 Слова по радикалам не найдены</p>';
+    container.innerHTML = '<p style="text-align:center; padding: 40px;">📖 Слова по радикалам не найдены. Проверьте, что в WORDS есть слова.</p>';
   } else {
     container.innerHTML = html;
-    console.log(`Найдено ${totalRadicalsWithWords} радикалов с ${totalWordsFound} словами`);
+    console.log(`✅ Найдено ${totalRadicalsWithWords} радикалов с ${totalWordsFound} словами`);
   }
 }
 function addTonesTab() {
