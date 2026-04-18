@@ -1,0 +1,19 @@
+{
+  "name": "Китайский с нуля",
+  "short_name": "Китайский",
+  "description": "Полный курс китайского языка: 500+ слов, иероглифы, диалоги, песни и игры",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#4361ee",
+  "background_color": "#f5d6a8",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
