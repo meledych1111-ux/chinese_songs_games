@@ -935,16 +935,29 @@ function startVoice(targetChar, targetPinyin, feedElement) {
     var said = e.results[0][0].transcript.trim();
     var originalSaid = said;
     
-    // Удаляем точку, запятую, восклицательный знак, вопросительный знак, точку с запятой, двоеточие в конце
-    said = said.replace(/[.,!?;:。，！？；：]+$/, '');
+    // УДАЛЯЕМ ВСЮ ПУНКТУАЦИЮ (для любого слова!)
+    // Точки, запятые, восклицательные, вопросительные, точки с запятой, двоеточия, кавычки, скобки
+    said = said.replace(/[.,!?;:()\[\]{}\'\"<>、。，！？；：""''「」『』【】《》]/g, '');
+    // Удаляем пробелы в начале и конце
     said = said.trim();
     
     var target = targetChar.trim();
     
-    console.log("Распознано (очищено): '" + said + "'");
+    console.log("Распознано (оригинал): '" + originalSaid + "'");
+    console.log("Распознано (без пунктуации): '" + said + "'");
     console.log("Ожидается: '" + target + "'");
     
+    // Сравниваем БЕЗ пунктуации
     var correct = (said === target);
+    
+    // Если не совпало, пробуем удалить все пробелы (для многословных фраз)
+    if(!correct) {
+      var saidNoSpaces = said.replace(/\s/g, '');
+      var targetNoSpaces = target.replace(/\s/g, '');
+      if(saidNoSpaces === targetNoSpaces) {
+        correct = true;
+      }
+    }
     
     if(feedElement) {
       if(correct) {
