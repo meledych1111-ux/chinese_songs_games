@@ -118,8 +118,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="tabs">
+<div class="tabs">
     <div class="tab active" data-tab="study">📖 Слова</div>
     <div class="tab" data-tab="numbers">🔢 Числа</div>
     <div class="tab" data-tab="colors">🎨 Цвета</div>
@@ -131,7 +130,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     <div class="tab" data-tab="cards">🃏 Карточки</div>
     <div class="tab" data-tab="cubes">🎲 Кубики</div>
     <div class="tab" data-tab="game">🎮 Игра</div>
-  </div>
+</div>
 
   <div id="modal" class="modal"><div class="modal-content" id="modalContent"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
 
@@ -280,7 +279,14 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
       </div>
     </div>
   </div>
-
+<!-- НОВЫЙ РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ И ОМОФОНОВ -->
+  <div id="tonesPanel" class="panel">
+    <div class="card">
+      <h2 style="margin-bottom: 20px; font-size: 24px;">🎵 Сравнение тонов</h2>
+      <p style="margin-bottom: 16px; font-size: 16px; opacity: 0.8;">🎯 Одинаковое произношение, разные тоны — меняется смысл! Нажми на любой блок, чтобы услышать.</p>
+     <div id="tonesComparison" style="display: flex; flex-direction: column; gap: 24px;"></div>
+    </div>
+  </div>
   <div id="gamePanel" class="panel">
     <div class="card">
       <div class="big-char" id="gChar">?</div>
@@ -1727,7 +1733,88 @@ function showExample() {
   ctx.restore();
   document.getElementById('strokeInfo').innerHTML = "Образец иероглифа <strong>" + currentW.c + "</strong> для обведения";
 }
+// ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ (АВТОМАТИЧЕСКИЙ) ==========
+function generateToneComparisons() {
+  const groups = new Map();
+  
+  WORDS.forEach(word => {
+    if (!word.p) return;
+    // Удаляем тоны из пиньиня (убираем ā á ǎ à ē é ě è ī í ǐ ì ō ó ǒ ò ū ú ǔ ù ǖ ǘ ǚ ǜ)
+    let barePinyin = word.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (!groups.has(barePinyin)) groups.set(barePinyin, []);
+    groups.get(barePinyin).push(word);
+  });
+  
+  const comparisons = [];
+  for (let [pinyin, words] of groups.entries()) {
+    if (words.length >= 2 && pinyin.length > 0) {
+      comparisons.push(words.slice(0, 5));
+    }
+  }
+  
+  comparisons.sort((a, b) => a[0].p.length - b[0].p.length);
+  const topComparisons = comparisons.slice(0, 30);
+  
+  const container = document.getElementById('tonesComparison');
+  if (!container) return;
+  
+  if (topComparisons.length === 0) {
+    container.innerHTML = '<p style="text-align:center; padding: 40px;">📖 Загружаю данные... Попробуйте обновить страницу</p>';
+    return;
+  }
+  
+  container.innerHTML = topComparisons.map(group => {
+    const basePinyin = group[0].p.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return `
+      <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+        <div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; letter-spacing: 1px;">
+          🎵 ${basePinyin}
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+          ${group.map(word => `
+            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); transition: all 0.1s ease; border: 1px solid rgba(0,0,0,0.05);">
+              <div style="font-size: 52px; margin-bottom: 6px;">${word.e || '🔊'}</div>
+              <div style="font-size: 34px; font-weight: 800; margin: 6px 0;">${word.c}</div>
+              <div style="font-size: 16px; margin: 6px 0; font-weight: 600;">${colorP(word.p)}</div>
+              <div style="font-size: 14px; color: #555; font-weight: 500;">${word.m}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
 
+function addTonesTab() {
+  const tabsContainer = document.querySelector('.tabs');
+  if (!tabsContainer) return;
+  if (document.querySelector('.tab[data-tab="tones"]')) return;
+  
+  const tonesTab = document.createElement('div');
+  tonesTab.className = 'tab';
+  tonesTab.setAttribute('data-tab', 'tones');
+  tonesTab.innerHTML = '🎯 Тоны';
+  tonesTab.onclick = () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tonesTab.classList.add('active');
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    const tonesPanel = document.getElementById('tonesPanel');
+    if (tonesPanel) tonesPanel.classList.add('active');
+    generateToneComparisons();
+  };
+  tabsContainer.appendChild(tonesTab);
+}
+
+// Запускаем добавление вкладки после загрузки страницы
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    addTonesTab();
+    generateToneComparisons();
+  });
+} else {
+  addTonesTab();
+  generateToneComparisons();
+}
 function newGame() {
   var w = WORDS[Math.floor(Math.random() * WORDS.length)];
   document.getElementById('gChar').textContent = w.c;
