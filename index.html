@@ -1145,30 +1145,28 @@ function startVoice(py, feed) {
   
   recognition.lang = "zh-CN";
   recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
   
   recognition.onresult = function(event) { 
     var said = event.results[0][0].transcript.trim();
-    var currentChar = currentW.c;        // Иероглиф на карточке
-    var currentPinyin = py;               // Пиньинь для подсказки
+    // ВАЖНО: сравниваем с ИЕРОГЛИФОМ, который передан в py!
+    var target = py.trim();
     
     console.log("=== РАСПОЗНАВАНИЕ ===");
     console.log("Вы сказали:", said);
-    console.log("На карточке:", currentChar);
-    console.log("Пиньинь:", currentPinyin);
+    console.log("Ожидаемый иероглиф:", target);
     
-    // Сравниваем то, что сказали, с тем, что на карточке
-    var correct = (said === currentChar);
+    // ТОЧНОЕ СРАВНЕНИЕ иероглифов
+    var correct = (said === target);
     
     if(feed) {
       if(correct) {
         feed.innerHTML = "✅ Правильно! Молодец! 🎉";
       } else {
-        feed.innerHTML = "❌ Неправильно!<br>📖 Нужно: " + currentChar + " (" + currentPinyin + ")<br>🗣️ Вы сказали: " + said;
+        feed.innerHTML = "❌ Неправильно!<br>📖 Нужно: " + target + "<br>🗣️ Вы сказали: " + said;
       }
       setTimeout(function() { 
         if(feed) feed.innerHTML = ""; 
-      }, 3500);
+      }, 3000);
     }
     
     isRec = false;
@@ -1354,8 +1352,8 @@ function nextCard() { currentW = WORDS[(WORDS.indexOf(currentW) + 1) % WORDS.len
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 document.addEventListener('DOMContentLoaded', ()=>{
   initCanvas(); initVoice(); updateUI(); renderGrid();
-  document.getElementById('sVoice').onclick=()=>startVoice(currentW.p, document.getElementById('sFeedback'));
-  document.getElementById('nVoice').onclick=()=>startVoice(currentW.p, document.getElementById('nFeedback'));
+  document.getElementById('sVoice').onclick=()=>startVoice(currentW.c, document.getElementById('sFeedback'));
+  document.getElementById('nVoice').onclick=()=>startVoice(currentW.c, document.getElementById('nFeedback'));
   
   document.querySelectorAll('.tab').forEach(tab=>{ tab.onclick=()=>{ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); tab.classList.add('active'); const p=tab.dataset.tab; document.querySelectorAll('.panel').forEach(panel=>panel.classList.remove('active')); document.getElementById(p+'Panel').classList.add('active'); if(p==='numbers') renderNums(); if(p==='colors') renderCols(); if(p==='dialogs') renderDia(); if(p==='grammar') renderGram(); if(p==='songs') renderSongs(); if(p==='radicals') renderRads(); if(p==='game') newGame(); }; });
   
@@ -1374,7 +1372,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('cFlip').onclick=flipCard; 
   document.getElementById('cNext').onclick=nextCard; 
   document.getElementById('cListen').onclick=()=>speak(currentW.c);
-  document.getElementById('cVoice').onclick = () => startVoice(currentW.p, document.getElementById('cFeedback'));
+  document.getElementById('cVoice').onclick = () => startVoice(currentW.c, document.getElementById('cFeedback'));
   
   document.getElementById('cubeRoll').onclick=()=>{ const w=WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent=w.c; speak(w.c); }; document.getElementById('cubeListen').onclick=()=>speak(document.getElementById('cubeRes').textContent);
   document.getElementById('gNew').onclick=newGame;
