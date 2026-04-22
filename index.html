@@ -940,55 +940,78 @@
       }
     }
 
-    // ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ (АВТОМАТИЧЕСКИЙ) ==========
-    function generateToneComparisons() {
-      const groups = new Map();
-      WORDS.forEach(word => {
-        if (!word.p) return;
-        let barePinyin = word.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        if (!groups.has(barePinyin)) groups.set(barePinyin, []);
-        groups.get(barePinyin).push(word);
-      });
+   // ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ (АВТОМАТИЧЕСКИЙ) ==========
+function generateToneComparisons() {
+  const groups = new Map();
+  WORDS.forEach(word => {
+    if (!word.p) return;
+    let barePinyin = word.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (!groups.has(barePinyin)) groups.set(barePinyin, []);
+    groups.get(barePinyin).push(word);
+  });
 
-      const comparisons = [];
-      for (let [pinyin, words] of groups.entries()) {
-        if (words.length >= 2 && pinyin.length > 0) {
-          const uniqueWords = [];
-          const seenChars = new Set();
-          for (const word of words) {
-            if (!seenChars.has(word.c)) {
-              seenChars.add(word.c);
-              uniqueWords.push(word);
-            }
-          }
-          if (uniqueWords.length >= 2) comparisons.push(uniqueWords.slice(0, 5));
+  const comparisons = [];
+  for (let [pinyin, words] of groups.entries()) {
+    if (words.length >= 2 && pinyin.length > 0) {
+      const uniqueWords = [];
+      const seenChars = new Set();
+      for (const word of words) {
+        if (!seenChars.has(word.c)) {
+          seenChars.add(word.c);
+          uniqueWords.push(word);
         }
       }
-
-      comparisons.sort((a, b) => a[0].p.length - b[0].p.length);
-      const topComparisons = comparisons.slice(0, 30);
-      const container = document.getElementById('tonesComparison');
-      if (!container) return;
-
-      container.innerHTML = topComparisons.map(group => {
-        const basePinyin = group[0].p.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        return `
-          <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-            <div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">🎵 ${basePinyin}</div>
-            <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
-              ${group.map(word => `
-                <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
-                  <div style="font-size: 52px; margin-bottom: 6px;">${word.e || '🔊'}</div>
-                  <div style="font-size: 34px; font-weight: 800; margin: 6px 0;">${word.c}</div>
-                  <div style="font-size: 16px; margin: 6px 0; font-weight: 600;">${colorP(word.p)}</div>
-                  <div style="font-size: 14px; color: #555;">${word.m}</div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      }).join('');
+      if (uniqueWords.length >= 2) comparisons.push(uniqueWords.slice(0, 5));
     }
+  }
+
+  comparisons.sort((a, b) => a[0].p.length - b[0].p.length);
+  const topComparisons = comparisons.slice(0, 30);
+  const container = document.getElementById('tonesComparison');
+  if (!container) return;
+
+  let html = topComparisons.map(group => {
+    const basePinyin = group[0].p.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return `
+      <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+        <div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">🎵 ${basePinyin}</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+          ${group.map(word => `
+            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+              <div style="font-size: 52px; margin-bottom: 6px;">${word.e || '🔊'}</div>
+              <div style="font-size: 34px; font-weight: 800; margin: 6px 0;">${word.c}</div>
+              <div style="font-size: 16px; margin: 6px 0; font-weight: 600;">${colorP(word.p)}</div>
+              <div style="font-size: 14px; color: #555;">${word.m}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // ДОБАВЛЯЕМ ВИДЕО ПО ПИНЬИНЬ В КОНЦЕ
+  html += `
+    <div style="margin-top: 40px;">
+      <hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #ff6b35, transparent);">
+      <h3 style="text-align: center; margin: 20px 0; color: #ff6b35;">🎬 ВИДЕО: ПРОИЗНОШЕНИЕ ПИНЬИНЬ</h3>
+    </div>
+    <div style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left: 5px solid #2e7d32; border-radius: 28px; padding: 20px; margin: 16px 0;">
+      <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+        <div style="font-size: 48px;">🎵</div>
+        <div style="flex: 1;">
+          <div style="font-size: 18px; font-weight: 800;">拼音韵母发音完整版</div>
+          <div style="font-size: 14px; color: #666;">#大班 #拼音 #幼小衔接 #一年级</div>
+          <div style="font-size: 13px; color: #888; margin-top: 5px;">Все финали китайского пиньинь с произношением</div>
+        </div>
+        <a href="https://www.xiaohongshu.com/explore/69e724a2000000001a02da93?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBt1RNvTgvLJ0jMEgA8pVHsdJMhwqYDvJutf3fbEurwQM%3D&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876503&share_id=c4d2754bc548433cbf40dac43b0bdd60" target="_blank" style="background: linear-gradient(135deg, #2e7d32, #43a047); color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 700; white-space: nowrap;">
+          🎬 Смотреть видео
+        </a>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
 
     function generateWordsByRadical() {
       const container = document.getElementById('radicalWordsList');
