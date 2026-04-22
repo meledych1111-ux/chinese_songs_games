@@ -193,6 +193,7 @@
     <div class="tab" data-tab="cards">🃏 Карточки</div>
     <div class="tab" data-tab="cubes">🎲 Кубики</div>
     <div class="tab" data-tab="game">🎮 Игра</div>
+    <div class="tab" data-tab="game">✍️Каллиграфия</div>
     <div class="tab" data-tab="radical-words">🔗 Слова по радикалам</div>
 </div>
 
@@ -374,6 +375,13 @@
         <h2 style="margin-bottom: 20px; font-size: 24px;">🎵 Сравнение тонов</h2>
         <p style="margin-bottom: 16px; font-size: 16px; opacity: 0.8;">🎯 Одинаковое произношение, разные тоны — меняется смысл! Нажми на любой блок, чтобы услышать.</p>
         <div id="tonesComparison" style="display: flex; flex-direction: column; gap: 24px;"></div>
+    </div>
+</div>
+<!-- НОВАЯ ПАНЕЛЬ ДЛЯ КАЛЛИГРАФИИ -->
+<div id="gamePanel" class="panel">
+    <div class="card">
+        <h2 style="margin-bottom: 20px; color: #4361ee;">✍️ Каллиграфия: как красиво писать иероглифы</h2>
+        <div id="writingVideosContainer"></div>
     </div>
 </div>
 <div id="gamePanel" class="panel">
@@ -1196,5 +1204,6 @@ function generateToneComparisons() {
 
 </script>
 <script src="pinyin-sounds.js"></script>
+<script src="writing-videos.js"></script>
 </body>
 </html>
