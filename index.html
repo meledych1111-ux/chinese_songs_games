@@ -2,19 +2,13 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<!-- ОСНОВНЫЕ МЕТА-ТЕГИ ДЛЯ PWA / WEB APP -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
 <meta name="theme-color" content="#4361ee">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Китайский курс">
-<meta name="application-name" content="Китайский курс">
-<meta name="mobile-web-app-capable" content="yes">
-<!-- ИКОНКА БЕЗ КАРТИНКИ -->
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
-<title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс (500+ слов)</title>
+<title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс</title>
 <style>
 :root {
   --primary: #4361ee; --primary-dark: #3a56d4;
@@ -26,27 +20,21 @@
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 body {
   background: linear-gradient(145deg, #1a5f7a 0%, #f5d6a8 100%);
-  font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', Roboto, Helvetica, Arial, sans-serif;
-  color: var(--text);
-  padding: 12px;
-  padding-top: env(safe-area-inset-top, 20px);
-  min-height: 100vh;
-  font-size: 18px;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text); padding: 12px; padding-top: env(safe-area-inset-top, 20px);
+  min-height: 100vh; font-size: 18px;
 }
-.container { max-width: 850px; margin: 0 auto; padding-bottom: 30px; }
+.container { max-width: 900px; margin: 0 auto; padding-bottom: 30px; }
 .tabs {
-  display: flex; flex-wrap: wrap; gap: 8px; background: rgba(255,255,255,0.95);
-  border-radius: 60px; padding: 10px; margin-bottom: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15); justify-content: center; backdrop-filter: blur(10px);
+  display: flex; flex-wrap: wrap; gap: 6px; background: rgba(255,255,255,0.95);
+  border-radius: 30px; padding: 8px; margin-bottom: 20px;
+  box-shadow: var(--shadow); justify-content: center; backdrop-filter: blur(10px);
 }
 .tab {
-  padding: 12px 14px; border-radius: 50px; font-weight: 700; font-size: 14px;
-  background: #eef2f7; cursor: pointer; transition: all 0.2s; text-align: center;
-  min-height: 44px; display: flex; align-items: center; justify-content: center; user-select: none;
-  flex: 0 0 auto;
+  padding: 10px 14px; border-radius: 20px; font-weight: 700; font-size: 13px;
+  background: #eef2f7; cursor: pointer; transition: 0.2s; white-space: nowrap;
 }
-.tab.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.02) translateY(-1px); box-shadow: 0 5px 12px rgba(67, 97, 238, 0.3); }
-.tab:active { transform: scale(0.96); }
+.tab.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.05); }
 
 .panel { display: none; animation: fade 0.3s ease; }
 .panel.active { display: block; }
@@ -54,264 +42,125 @@ body {
 
 .card {
   background: rgba(255,255,255,0.95); border-radius: var(--radius); padding: 24px 18px;
-  text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; backdrop-filter: blur(10px);
+  text-align: center; box-shadow: var(--shadow); margin-bottom: 20px;
 }
-.big-char { font-size: 96px; font-weight: 900; line-height: 1.1; margin: 12px 0; color: var(--primary-dark); text-shadow: 2px 2px 0 rgba(0,0,0,0.08); }
-.pinyin { font-size: 24px; font-weight: 700; margin: 8px 0; letter-spacing: 0.5px; }
-.pinyin .t1 { color: var(--t1); } .pinyin .t2 { color: var(--t2); }
-.pinyin .t3 { color: var(--t3); } .pinyin .t4 { color: var(--t4); }
-.pinyin .t5 { color: var(--t5); }
-.meaning { font-size: 22px; background: linear-gradient(135deg, #e3f2fd, #bbdefb); display: inline-block; padding: 10px 22px; border-radius: 50px; margin: 12px 0; font-weight: 700; }
-.emoji { font-size: 64px; margin: 10px 0; }
-.badge { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; padding: 6px 16px; border-radius: 25px; font-size: 13px; font-weight: 700; display: inline-block; }
+.big-char { font-size: 96px; font-weight: 900; color: var(--primary-dark); }
+.pinyin { font-size: 24px; font-weight: 700; margin: 8px 0; }
+.meaning { font-size: 22px; background: #e3f2fd; display: inline-block; padding: 10px 22px; border-radius: 50px; margin: 12px 0; font-weight: 700; }
 
-.btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 20px 0; }
+.btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 15px 0; }
 button, .btn {
-  background: linear-gradient(135deg, #ff9a44, #ff6b35); border: none; padding: 14px 22px; font-size: 16px; font-weight: 700;
-  border-radius: 50px; color: white; cursor: pointer; transition: all 0.2s; min-height: 52px;
-  box-shadow: 0 4px 12px rgba(255,107,53,0.3); text-transform: uppercase; letter-spacing: 0.3px;
-  -webkit-appearance: none; appearance: none;
+  background: linear-gradient(135deg, #ff9a44, #ff6b35); border: none; padding: 12px 20px;
+  font-size: 15px; font-weight: 700; border-radius: 50px; color: white; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255,107,53,0.2); transition: 0.2s;
 }
-button:active, .btn:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-.voice-btn { background: linear-gradient(135deg, #44aa77, #2d8a5c); box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3); }
-.voice-btn.rec { background: linear-gradient(135deg, #e74c3c, #c0392b); animation: pulse 1s infinite; }
-@keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.03); opacity: 0.9; } }
+button:active { transform: scale(0.95); }
 
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; backdrop-filter: blur(6px); }
-.modal.active { display: flex; }
-.modal-content { background: white; border-radius: 36px; padding: 24px; max-width: 92vw; max-height: 85vh; overflow-y: auto; width: 100%; position: relative; text-align: center; animation: slideUp 0.25s; }
-.close { position: absolute; top: 8px; right: 12px; font-size: 36px; cursor: pointer; color: #94a3b8; background: none; box-shadow: none; padding: 4px 12px; border-radius: 50%; line-height: 1; }
-.assoc { background: #fff8e1; border-radius: 22px; padding: 18px; margin: 16px 0; text-align: left; border-left: 5px solid #ffb300; font-size: 17px; line-height: 1.5; }
-
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 14px; margin: 20px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin: 20px 0; }
 .grid-item {
-  background: rgba(255,255,255,0.9); border-radius: 24px; padding: 16px 8px; text-align: center; cursor: pointer;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.08); transition: 0.15s; border: 2px solid transparent;
-  min-height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: white; border-radius: 20px; padding: 12px 8px; text-align: center; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid transparent;
 }
-.grid-item:active { transform: scale(0.96); background: rgba(255,255,255,1); }
-.grid-item .ch { font-size: 34px; font-weight: 800; margin: 6px 0; }
-.grid-item .info { font-size: 14px; color: var(--text-light); font-weight: 600; }
+.grid-item .ch { font-size: 32px; font-weight: 800; }
+.grid-item .info { font-size: 13px; color: var(--text-light); font-weight: 600; }
 
-.filter-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px 0; max-height: 140px; overflow-y: auto; padding: 6px; }
-.fbtn { padding: 10px 16px; background: rgba(255,255,255,0.9); border-radius: 35px; cursor: pointer; font-weight: 700; font-size: 13px; user-select: none; transition: 0.1s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-.fbtn.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.02); }
+.grammar-card { border-radius: 24px; padding: 18px; margin: 12px 0; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.song-card { background: white; border-radius: 24px; padding: 20px; margin: 15px 0; box-shadow: var(--shadow); }
+.song-title { font-weight: 800; font-size: 20px; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
 
-.dialog-card { background: rgba(255,255,255,0.92); border-radius: 32px; padding: 20px; margin: 14px 0; }
-.dialog-line { padding: 14px; margin: 8px 0; border-radius: 20px; font-size: 18px; font-weight: 600; }
-.q { background: #e3f2fd; color: #0d47a1; }
-.a { background: #fff3e0; color: #e65100; }
+canvas { background: white; border-radius: 15px; cursor: crosshair; touch-action: none; display: block; margin: 0 auto; border: 2px solid #ddd; }
 
-canvas { background: white; border-radius: 24px; display: block; margin: 18px auto; border: 3px solid #cbd5e1; cursor: crosshair; touch-action: none; width: 100%; height: auto; max-width: 400px; aspect-ratio: 1 / 1; }
-.song-card { background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; margin: 16px 0; }
-.song-title { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 14px; color: var(--primary-dark); }
-.grammar-card { border-radius: 24px; padding: 18px; margin: 12px 0; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.t1 { color: var(--t1); } .t2 { color: var(--t2); } .t3 { color: var(--t3); } .t4 { color: var(--t4); } .t5 { color: var(--t5); }
 
-@media (max-width: 650px) {
-  .big-char { font-size: 74px; }
-  .tab { font-size: 12px; padding: 10px 12px; }
-  .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  button, .btn { font-size: 14px; padding: 12px 18px; min-height: 48px; }
-  .dialog-line { font-size: 16px; }
-}
+#radicalHuntArea { position: relative; width: 100%; height: 450px; background: #fff; border-radius: 24px; border: 4px dashed var(--primary); overflow: hidden; margin: 20px 0; }
+.hunt-item { position: absolute; font-size: 40px; cursor: pointer; user-select: none; transition: 0.2s; padding: 10px; }
+
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; backdrop-filter: blur(5px); }
+.modal.active { display: flex; }
+.modal-content { background: white; border-radius: 30px; padding: 30px; max-width: 500px; width: 100%; position: relative; text-align: center; }
+.close { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; border: none; background: none; color: #aaa; }
 </style>
 </head>
 <body>
 <div class="container">
-<div class="tabs">
+  <div class="tabs">
     <div class="tab active" data-tab="study">📖 Слова</div>
     <div class="tab" data-tab="numbers">🔢 Числа</div>
     <div class="tab" data-tab="colors">🎨 Цвета</div>
     <div class="tab" data-tab="dialogs">💬 Диалоги</div>
     <div class="tab" data-tab="grammar">📚 Грамматика</div>
-    <div class="tab" data-tab="songs">🎵 Песни (20)</div>
+    <div class="tab" data-tab="songs">🎵 Песни</div>
     <div class="tab" data-tab="radicals">🔤 Радикалы</div>
+    <div class="tab" data-tab="radical-words">🔗 По ключам</div>
+    <div class="tab" data-tab="tones">🎯 Тоны</div>
     <div class="tab" data-tab="notebook">📓 Тетрадь</div>
-    <div class="tab" data-tab="cards">🃏 Карточки</div>
     <div class="tab" data-tab="cubes">🎲 Кубики</div>
     <div class="tab" data-tab="game">🎮 Игра</div>
-    <div class="tab" data-tab="radical-words">🔗 Слова по радикалам</div>
-    <div class="tab" data-tab="tones">🎯 Тоны</div>
-</div>
+    <div class="tab" data-tab="hunt">🎯 Охота</div>
+  </div>
 
-  <div id="modal" class="modal"><div class="modal-content" id="modalContent"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+  <div id="modal" class="modal"><div class="modal-content" id="modalContent"></div></div>
 
+  <!-- ПАНЕЛИ -->
   <div id="studyPanel" class="panel active">
     <div class="card">
       <div class="big-char" id="sChar">水</div>
       <div class="pinyin" id="sPinyin">shuǐ</div>
       <div class="meaning" id="sMeaning">вода</div>
-      <div class="emoji" id="sEmoji">💧</div>
-      <div class="badge" id="sCat">Природа</div>
+      <div class="emoji" id="sEmoji" style="font-size:50px;">💧</div>
+      <div id="sCat" style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:10px;">Природа</div>
     </div>
     <div class="btn-group">
       <button id="sListen">🔊 Слушать</button>
-      <button id="sVoice" class="voice-btn">🎙️ Проверить</button>
-      <button id="sNext">🎲 Следующее</button><button id="sRandom" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">🎲 Случайное слово</button>
+      <button id="sNext">🎲 След.</button>
+      <button id="sRandom" style="background:linear-gradient(135deg, #9b59b6, #8e44ad)">✨ Случайное</button>
     </div>
-    <div id="sFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
-    <div class="filter-row" id="wFilters">
-  <span class="fbtn active" data-cat="all">Все</span>
-  <span class="fbtn" data-cat="food">🍜 Еда</span>
-  <span class="fbtn" data-cat="home">🏠 Дом</span>
-  <span class="fbtn" data-cat="nature">🌿 Природа</span>
-  <span class="fbtn" data-cat="medicine">💊 Медицина</span>
-  <span class="fbtn" data-cat="family">👨‍👩‍👧 Семья</span>
-  <span class="fbtn" data-cat="transport">🚗 Транспорт</span>
-  <span class="fbtn" data-cat="numbers">🔢 Числа</span>
-  <span class="fbtn" data-cat="colors">🎨 Цвета</span>
-  <span class="fbtn" data-cat="animals">🐕 Животные</span>
-  <span class="fbtn" data-cat="places">🏛️ Места</span>
-  <span class="fbtn" data-cat="time">⏰ Время</span>
-  <span class="fbtn" data-cat="greetings">👋 Приветствия</span>
-  <span class="fbtn" data-cat="people">👥 Люди</span>
-  <span class="fbtn" data-cat="kitchen">🍳 Посуда</span>
-  <span class="fbtn" data-cat="clothes">👕 Одежда</span>
-  <span class="fbtn" data-cat="weather">🌤️ Погода</span>
-  <span class="fbtn" data-cat="verbs">🏃 Глаголы</span>
-  <span class="fbtn" data-cat="adjectives">📏 Прилагательные</span>
-  <span class="fbtn" data-cat="adverbs">📝 Наречия</span>
-  <span class="fbtn" data-cat="pronouns">👤 Местоимения</span>
-  <span class="fbtn" data-cat="questions">❓ Вопросы</span>
-  <span class="fbtn" data-cat="basics">👋 Основы</span>
-  <span class="fbtn" data-cat="shopping">🛍️ Покупки</span>
-  <span class="fbtn" data-cat="tech">💻 Технологии</span>
-  <span class="fbtn" data-cat="entertainment">🎬 Развлечения</span>
-  <span class="fbtn" data-cat="work">💼 Работа</span>
-  <span class="fbtn" data-cat="body">🧬 Части тела</span>
-  <span class="fbtn" data-cat="particles">🔤 Частицы</span>
-  <span class="fbtn" data-cat="conjunctions">🔗 Союзы</span>
-</div>
+    <div id="sFeedback" style="text-align:center; font-weight:bold; margin-bottom:10px;"></div>
+    <div class="filter-row btn-group" id="wFilters"></div>
     <div class="grid" id="wordGrid"></div>
   </div>
 
-  <div id="numbersPanel" class="panel">
-    <div class="card">
-      <h2 style="margin-bottom:18px;color:var(--primary);font-size:26px;font-weight:800;">🔢 Китайские числа</h2>
-      <div id="numGrid" class="grid"></div>
-    </div>
-  </div>
-
-  <div id="colorsPanel" class="panel">
-    <div class="card">
-      <h2 style="margin-bottom:18px;color:var(--accent);font-size:26px;font-weight:800;">🎨 Цвета</h2>
-      <div id="colorGrid" class="grid"></div>
-    </div>
-  </div>
-
+  <div id="numbersPanel" class="panel"><div class="card"><h2>🔢 Числа</h2><div id="numGrid" class="grid"></div></div></div>
+  <div id="colorsPanel" class="panel"><div class="card"><h2>🎨 Цвета</h2><div id="colorGrid" class="grid"></div></div></div>
   <div id="dialogsPanel" class="panel">
     <div class="card" id="dialogBox"></div>
-    <div class="btn-group">
-      <button id="dPrev">◀ Пред</button>
-      <button id="dListen">🔊 Слушать</button>
-      <button id="dNext">След ▶</button>
-    </div>
+    <div class="btn-group"><button id="dPrev">◀ Пред.</button><button id="dListen">🔊 Слушать</button><button id="dNext">След. ▶</button></div>
   </div>
-
-  <div id="grammarPanel" class="panel">
-    <div id="grammarBox"></div>
-  </div>
-
-  <div id="songsPanel" class="panel">
-    <div id="songsBox"></div>
-  </div>
-
+  <div id="grammarPanel" class="panel"><div id="grammarBox"></div></div>
+  <div id="songsPanel" class="panel"><div id="songsBox"></div></div>
+  
   <div id="radicalsPanel" class="panel">
-    <div class="card">
-      <div class="big-char" id="rChar">一</div>
-      <div class="pinyin" id="rPinyin">yī</div>
-      <div class="meaning" id="rMeaning">один/горизонталь</div>
-    </div>
-    <div class="btn-group">
-      <button id="rListen">🔊 Слушать</button>
-      <button id="rVoice" class="voice-btn">🎙️ Проверить</button>
-      <button id="rNext">🎲 Следующий</button>
-      <button id="rAll">📋 Все 214</button>
-    </div>
-    <div id="radicalDetail" class="assoc" style="display:none;"></div>
-    <div id="radGrid" class="grid"></div>
+    <div class="card"><div class="big-char" id="rChar">一</div><div class="pinyin" id="rPinyin">yī</div><div class="meaning" id="rMeaning">один</div></div>
+    <div class="btn-group"><button id="rListen">🔊 Слушать</button><button id="rNext">🎲 След.</button><button id="rAll">📋 Все 214</button></div>
+    <div id="radicalDetail" class="card" style="display:none; text-align:left; background:#fff8e1;"></div>
+    <div id="radGrid" class="grid" style="display:none;"></div>
   </div>
+
+  <div id="radical-wordsPanel" class="panel"><div class="card"><h2>🔗 Слова по радикалам</h2><div id="radicalWordsList"></div></div></div>
+  <div id="tonesPanel" class="panel"><div class="card"><h2>🎯 Сравнение тонов</h2><div id="tonesComparison"></div></div></div>
 
   <div id="notebookPanel" class="panel">
     <div class="card">
       <div class="big-char" id="nChar">水</div>
-      <canvas id="drawCanvas" width="400" height="400" style="background:#fff; border:3px solid #8B4513; border-radius:8px; touch-action:none; cursor:crosshair; box-shadow:0 4px 10px rgba(0,0,0,0.1);"></canvas>
-      <div style="margin-top:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-        <button id="nClear" style="background:#f44336; padding:10px 18px;">🧽 Очистить</button>
-        <button id="nGridBtn" style="background:#4caf50; padding:10px 18px;">📐 Показать сетку</button>
-        <button id="nExample" style="background:#2196f3; padding:10px 18px;">✍️ Образец</button>
-      </div>
-      <div id="strokeGuide" style="margin-top:15px; padding:12px; background:#f5f5f5; border-radius:12px; text-align:left;">
-        <strong>📖 Как писать:</strong> <span id="strokeInfo">Нажмите "Образец" чтобы увидеть иероглиф для обведения</span>
-      </div>
+      <canvas id="drawCanvas" width="400" height="400"></canvas>
       <div class="btn-group">
-        <button id="nListen">🔊 Слушать</button>
-        <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
-        <button id="nNext">🎲 Следующее</button><button id="nRandom" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">🎲 Случайное слово</button>
+        <button id="nClear" style="background:#f44336">🧽 Стереть</button>
+        <button id="nGridBtn" style="background:#4caf50">📐 Сетка</button>
+        <button id="nExample" style="background:#2196f3">✍️ Образец</button>
       </div>
-      <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
-      <div class="assoc" id="nAssoc" style="margin-top:10px;"></div>
+      <div class="btn-group"><button id="nNext">🎲 След.</button><button id="nRandom" style="background:linear-gradient(135deg, #9b59b6, #8e44ad)">✨ Случайное</button></div>
     </div>
   </div>
 
-  <div id="cardsPanel" class="panel">
-    <div class="card">
-      <div id="cFront">
-        <div class="big-char" id="cChar">水</div>
-        <div class="pinyin" id="cPinyin">shuǐ</div>
-      </div>
-      <div id="cBack" style="display:none;">
-        <div class="meaning" id="cMeaning">вода</div>
-        <div class="emoji" id="cBackEmoji" style="font-size:70px; margin:20px 0;">💧</div>
-        <div class="pinyin" id="cPinyinBack" style="font-size:20px; opacity:0.7;">shuǐ</div>
-      </div>
-      <div class="btn-group">
-        <button id="cListen">🔊 Слушать</button>
-        <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
-        <button id="cFlip">🔄 Перевернуть</button>
-        <button id="cNext">🎲 Следующая</button><button id="cRandom" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">🎲 Случайное слово</button>
-      </div>
-      <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
-    </div>
-  </div>
-
-  <div id="cubesPanel" class="panel">
-    <div class="card">
-      <div class="big-char" id="cubeRes">?</div>
-      <div class="btn-group">
-        <button id="cubeRoll">🎲 Бросить</button>
-        <button id="cubeListen">🔊 Слушать</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="radicalWordsPanel" class="panel">
-    <div class="card">
-      <h2 style="margin-bottom: 20px;">🔗 Слова по радикалам</h2>
-      <p style="margin-bottom: 16px;">🎯 Иероглифы, сгруппированные по общему ключу (радикалу).</p>
-      <div id="radicalWordsList" style="display: flex; flex-direction: column; gap: 24px;"></div>
-    </div>
-  </div>
-
-  <div id="tonesPanel" class="panel">
-    <div class="card">
-      <h2 style="margin-bottom: 20px; font-size: 24px;">🎵 Сравнение тонов</h2>
-      <p style="margin-bottom: 16px; font-size: 16px; opacity: 0.8;">🎯 Одинаковое произношение, разные тоны — меняется смысл!</p>
-     <div id="tonesComparison" style="display: flex; flex-direction: column; gap: 24px;"></div>
-    </div>
-  </div>
-
+  <div id="cubesPanel" class="panel"><div class="card"><div class="big-char" id="cubeRes">?</div><button id="cubeRoll" style="width:100%; margin-top:20px;">🎲 Бросить кубик</button></div></div>
   <div id="gamePanel" class="panel">
-    <div class="card">
-      <div class="big-char" id="gChar">?</div>
-      <div id="gOpts" class="btn-group"></div>
-      <div id="gFeed" style="text-align:center;margin:14px 0;font-size:18px;font-weight:700;"></div>
-      <button id="gNew">🔄 Новый вопрос</button>
-    </div>
+    <div class="card"><div class="big-char" id="gChar">?</div><div id="gOpts" class="btn-group"></div><div id="gFeed" style="margin:20px; font-weight:bold; font-size:24px;"></div><button id="gNew">🔄 Новый вопрос</button></div>
   </div>
-</div> <!-- .container end -->
+  <div id="huntPanel" class="panel">
+    <div class="card"><h2>🎯 Охота за радикалом</h2><p>Найди: <b id="targetRadicalDisplay" style="font-size:30px; color:var(--primary);">?</b></p><div id="radicalHuntArea"></div><div id="huntStats" style="font-weight:bold; font-size:20px;">Найдено: 0 / 0</div><button id="startHunt" style="margin-top:15px;">🔄 Новая игра</button></div>
+  </div>
+</div>
 
-<!-- ПОДКЛЮЧЕНИЕ ДАННЫХ -->
 <script src="data-words.js"></script>
 <script src="data-radicals.js"></script>
 <script src="data-dialogs.js"></script>
@@ -320,191 +169,85 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
 <script src="pinyin-sounds.js"></script>
 
 <script>
-// ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
-let currentW = WORDS[0];
-let currentRad = RADICALS[0];
-let currentDia = 0;
-let recognition = null;
-let isRec = false;
-let canvas = null, ctx = null, painting = false, gridEnabled = false;
+let currentW = WORDS[0], currentRad = RADICALS[0], currentDia = 0;
+let canvas, ctx, painting = false, gridEnabled = true;
 
-// ==================== ФУНКЦИИ ====================
 function speak(t) {
   if(!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
-  var u = new SpeechSynthesisUtterance(t);
-  u.lang = "zh-CN"; u.rate = 0.8;
+  const u = new SpeechSynthesisUtterance(t);
+  u.lang = "zh-CN"; u.rate = 0.75;
   window.speechSynthesis.speak(u);
 }
 
-function initVoice() {
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR) return false;
-  recognition = new SR();
-  recognition.lang = "zh-CN";
-  return true;
+function updateUI() {
+  const map = { sChar: currentW.c, sPinyin: colorP(currentW.p), sMeaning: currentW.m, sEmoji: currentW.e || '📖', sCat: CAT_NAMES[currentW.cat] || currentW.cat, nChar: currentW.c };
+  for (let id in map) { let el = document.getElementById(id); if (el) { if (id === 'sPinyin') el.innerHTML = map[id]; else el.textContent = map[id]; } }
 }
 
-function startVoice(targetChar, targetPinyin, feedElement) {
-  if(!recognition && !initVoice()) { if(feedElement) feedElement.innerHTML = "❌ Голос не поддерживается"; return; }
-  if(isRec) { recognition.stop(); return; }
-  
-  recognition.onresult = function(e) {
-    var said = e.results[0][0].transcript.trim().replace(/[.,!?;:()\[\]{}\\'"<>、。，！？；：""''「」『』【】《》]/g, '').trim();
-    var target = targetChar.trim();
-    var correct = (said === target) || (said.replace(/\s/g, '') === target.replace(/\s/g, ''));
-    
-    if(feedElement) {
-      if(correct) feedElement.innerHTML = "✅ Правильно! \"" + targetChar + "\"!";
-      else feedElement.innerHTML = "❌ Ошибка. Вы сказали: \"" + said + "\". Нужно: \"" + targetChar + "\" (" + targetPinyin + ")";
-      setTimeout(() => { if(feedElement) feedElement.innerHTML = ""; }, 3000);
-    }
-    isRec = false;
-    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec'));
-  };
-  
-  recognition.onend = () => { isRec = false; document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('rec')); };
-  recognition.onerror = (err) => { if(feedElement) feedElement.innerHTML = "❌ Ошибка: " + err.error; isRec = false; };
-  
-  recognition.start(); isRec = true;
-  if(feedElement) feedElement.innerHTML = "🎤 Слушаю... \"" + targetChar + "\"";
-}
+function setRandomWord() { currentW = WORDS[Math.floor(Math.random() * WORDS.length)]; updateUI(); clearCanvas(); }
 
 function openModal(w) {
-  var c = document.getElementById('modalContent');
-  c.innerHTML = '<button class="close" onclick="closeModal()">×</button><div class="big-char">'+w.c+'</div><div class="pinyin">'+colorP(w.p)+'</div><div class="meaning">'+w.m+'</div><div class="emoji">'+(w.e||'📖')+'</div><div class="badge">'+(CAT_NAMES[w.cat]||w.cat)+'</div><div class="assoc"><strong>🧠 Запомнить:</strong><br>'+(w.a||'Практикуй!')+'</div><div class="btn-group"><button onclick="speak(\''+w.c+'\')">🔊 Слушать</button><button class="voice-btn" onclick="startVoice(\''+w.c+'\', \''+w.p+'\', document.getElementById(\'mFeed\'))">🎙️ Проверить</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>';
+  const c = document.getElementById('modalContent');
+  c.innerHTML = `<button class="close" onclick="closeModal()">×</button><div class="big-char">${w.c}</div><div class="pinyin">${colorP(w.p)}</div><div class="meaning">${w.m}</div><div style="font-size:40px; margin:15px;">${w.e||'📖'}</div><p style="background:#fff3e1; padding:15px; border-radius:15px;">${w.a||'Практикуй!'}</p><button onclick="speak('${w.c}')" style="margin-top:15px; width:100%;">🔊 Слушать</button>`;
   document.getElementById('modal').classList.add('active');
 }
-
 function closeModal() { document.getElementById('modal').classList.remove('active'); }
 
 function renderGrid(cat = 'all') {
-  var g = document.getElementById('wordGrid'); g.innerHTML = '';
-  var list = (cat==='all') ? WORDS : WORDS.filter(w => w.cat===cat);
+  const g = document.getElementById('wordGrid'); g.innerHTML = '';
+  const list = (cat==='all') ? WORDS : WORDS.filter(w => w.cat===cat);
   list.forEach(w => {
-    var d = document.createElement('div'); d.className = 'grid-item';
-    d.innerHTML = '<div class="ch">'+w.c+'</div><div class="info">'+w.m+'</div>';
-    d.onclick = () => openModal(w);
-    g.appendChild(d);
+    const d = document.createElement('div'); d.className = 'grid-item';
+    d.innerHTML = `<div class="ch">${w.c}</div><div class="info">${w.m}</div>`;
+    d.onclick = () => openModal(w); g.appendChild(d);
   });
 }
 
+function renderFilters() {
+  const f = document.getElementById('wFilters'); f.innerHTML = '<button class="btn active" data-cat="all">Все</button>';
+  for(let key in CAT_NAMES) {
+    const btn = document.createElement('button'); btn.className = 'btn'; btn.textContent = CAT_NAMES[key]; btn.onclick = function() {
+      document.querySelectorAll('#wFilters button').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderGrid(key);
+    };
+    f.appendChild(btn);
+  }
+}
+
 function renderNums() {
-  var g = document.getElementById('numGrid'); g.innerHTML = '';
+  const g = document.getElementById('numGrid'); g.innerHTML = '';
   [...numbers.basic, ...numbers.teens, ...numbers.tens].forEach(n => {
-    var d = document.createElement('div'); d.className = 'grid-item';
-    d.innerHTML = '<div class="ch">'+n.c+'</div><div class="info">'+n.m+'</div>';
-    d.onclick = () => speak(n.c);
-    g.appendChild(d);
+    const d = document.createElement('div'); d.className = 'grid-item'; d.innerHTML = `<div class="ch">${n.c}</div><div class="info">${n.m}</div>`;
+    d.onclick = () => speak(n.c); g.appendChild(d);
   });
 }
 
 function renderCols() {
-  var g = document.getElementById('colorGrid'); g.innerHTML = '';
+  const g = document.getElementById('colorGrid'); g.innerHTML = '';
   colors.forEach(c => {
-    var d = document.createElement('div'); d.className = 'grid-item'; d.style.borderColor = c.color;
-    d.innerHTML = '<div style="width:50px;height:50px;border-radius:12px;background:'+c.color+';margin:6px auto;border:'+(c.color==='#ffffff'?'2px solid #ccc':'none')+'"></div><div class="ch" style="font-size:22px;">'+c.char+'</div><div class="info">'+c.ru+'</div>';
-    d.onclick = () => speak(c.char);
-    g.appendChild(d);
+    const d = document.createElement('div'); d.className = 'grid-item'; d.style.borderColor = c.color;
+    d.innerHTML = `<div style="width:30px; height:30px; background:${c.color}; border-radius:50%; margin:0 auto 5px; border:1px solid #ccc;"></div><div class="ch" style="font-size:20px;">${c.char}</div><div class="info">${c.ru}</div>`;
+    d.onclick = () => speak(c.char); g.appendChild(d);
   });
 }
 
-function renderDia() {
-  var b = document.getElementById("dialogBox"); var d = DIALOGS[currentDia];
-  b.innerHTML = '<div class="dialog-card"><div class="dialog-line q"><strong>❓ CN:</strong> '+d.q+'<br><small>'+d.qp+'</small><br><small>'+d.rq+'</small></div><div class="dialog-line a"><strong>✅ Ans:</strong> '+d.a+'<br><small>'+d.ap+'</small><br><small>'+d.ra+'</small></div></div>';
-}
-
-function renderGram() {
-  const container = document.getElementById('grammarBox');
-  if(!container) return;
-  
-  let html = '';
-  let currentBlock = '';
-  
+function renderGrammar() {
+  let html = '', currentBlock = '';
   GRAMMAR.forEach(g => {
-    // Добавляем заголовок блока, если он изменился
     if (g.block !== currentBlock) {
       currentBlock = g.block;
-      html += `<h2 style="margin: 24px 0 12px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); text-align: center; font-size: 26px;">${currentBlock}</h2>`;
+      html += `<h2 style="margin:30px 0 15px; color:#fff; text-align:center; text-shadow:2px 2px 4px rgba(0,0,0,0.5); background:var(--primary); border-radius:50px; padding:10px;">${currentBlock}</h2>`;
     }
-    
-    html += `
-      <div class="grammar-card" style="background-color: ${g.color || '#fff'}; border-left: 8px solid rgba(0,0,0,0.1);">
-        <div class="g-title" style="font-weight: 800; font-size: 20px; color: var(--text); margin-bottom: 8px;">${g.title}</div>
-        <div class="g-rule" style="font-size: 17px; line-height: 1.4; color: #444; margin-bottom: 12px;">${g.rule}</div>
-        <div class="example" style="background: rgba(255,255,255,0.5); padding: 10px; border-radius: 12px; font-family: monospace; font-size: 16px; color: #000;">
-          ${g.ex.replace(/\n/g, '<br>')}
-        </div>
-      </div>
-    `;
+    html += `<div class="grammar-card" style="background:${g.color}"><h3>${g.title}</h3><p>${g.rule}</p><div style="margin-top:12px; padding:10px; background:rgba(255,255,255,0.6); border-radius:12px; font-weight:bold; color:#e67e22;">${g.ex.replace(/\n/g,'<br>')}</div></div>`;
   });
-  
-  container.innerHTML = html;
+  document.getElementById('grammarBox').innerHTML = html;
 }
 
 function renderSongs() {
   document.getElementById('songsBox').innerHTML = SONGS.map(s => {
-    let lines = s.lines.map(l => `<div style="margin-bottom:5px;"><b>${l.ch}</b><br><small>${l.py}</small></div>`).join('');
-    return `<div class="song-card"><div class="song-title">${s.title}</div>${lines}<button class="btn" style="width:100%;margin-top:10px" onclick="speak('${s.lines.map(l=>l.ch).join(' ').replace(/'/g,"\\'")}')">🎵 Спеть</button></div>`;
+    let lines = s.lines.map(l => `<div style="margin-bottom:8px;"><b>${l.ch}</b><br><small>${l.py}</small><br><i style="color:#666">${l.ru}</i></div>`).join('');
+    return `<div class="song-card"><div class="song-title">${s.title}</div>${lines}<button style="width:100%;" onclick="speak('${s.lines.map(l=>l.ch).join(' ').replace(/'/g,"\\'")}')">🎵 Спеть</button></div>`;
   }).join('');
-}
-
-function renderRads() {
-  var g = document.getElementById('radGrid'); g.innerHTML = '';
-  RADICALS.forEach(r => {
-    var d = document.createElement('div'); d.className = 'grid-item';
-    d.innerHTML = `<div class="ch">${r.s}</div><div class="info">${r.m}</div>`;
-    d.onclick = () => {
-      speak(r.s); var det = document.getElementById('radicalDetail'); det.style.display = 'block';
-      det.innerHTML = `<strong>${r.s}</strong> — ${r.p}<br>${r.m}<br><br><em>Примеры:</em> ${r.ex||'—'}`;
-      document.getElementById('rChar').textContent = r.s;
-      document.getElementById('rPinyin').innerHTML = colorP(r.p);
-      document.getElementById('rMeaning').textContent = r.m;
-      currentRad = r;
-    };
-    g.appendChild(d);
-  });
-}
-
-function updateUI() {
-  const map = { sChar: currentW.c, sPinyin: colorP(currentW.p), sMeaning: currentW.m, sEmoji: currentW.e || '📖', sCat: CAT_NAMES[currentW.cat] || currentW.cat, nChar: currentW.c, nAssoc: currentW.a || '...', cChar: currentW.c, cPinyin: colorP(currentW.p), cMeaning: currentW.m, cBackEmoji: currentW.e || '📖', cPinyinBack: colorP(currentW.p) };
-  for (let id in map) { let el = document.getElementById(id); if (el) { if (id.includes('Pinyin') || id === 'nAssoc') el.innerHTML = map[id]; else el.textContent = map[id]; } }
-  document.getElementById('cFront').style.display = 'block'; document.getElementById('cBack').style.display = 'none';
-}
-
-function flipCard() {
-  var f = document.getElementById('cFront'), b = document.getElementById('cBack');
-  if(f.style.display === 'none') { f.style.display = 'block'; b.style.display = 'none'; }
-  else { f.style.display = 'none'; b.style.display = 'block'; }
-}
-
-function nextWord() { currentW = WORDS[(WORDS.indexOf(currentW) + 1) % WORDS.length]; updateUI(); }
-function prevDia() { currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length; renderDia(); }
-function nextDia() { currentDia = (currentDia + 1) % DIALOGS.length; renderDia(); }
-function speakDia() { speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); }
-
-function initCanvas() {
-  canvas = document.getElementById('drawCanvas'); if(!canvas) return;
-  ctx = canvas.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.strokeStyle = '#333'; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  const getPos = (e) => { var r = canvas.getBoundingClientRect(); var cx = e.clientX || e.touches[0].clientX, cy = e.clientY || e.touches[0].clientY; return {x: (cx - r.left) * canvas.width / r.width, y: (cy - r.top) * canvas.height / r.height}; };
-  const start = (e) => { e.preventDefault(); painting=true; var p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
-  const draw = (e) => { if(!painting) return; e.preventDefault(); var p=getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
-  const end = () => painting=false;
-  canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', end);
-  canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', draw, {passive:false}); canvas.addEventListener('touchend', end);
-}
-function clearCanvas() { if(ctx) { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); if(gridEnabled) drawTianzige(); } }
-function drawTianzige() {
-  if(!ctx || !canvas) return; var w = canvas.width, h = canvas.height; ctx.save(); ctx.strokeStyle = "#aaa"; ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.moveTo(w/2,0); ctx.lineTo(w/2,h); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0,h/2); ctx.lineTo(w,h/2); ctx.stroke();
-  ctx.strokeStyle = "#666"; ctx.lineWidth = 2; ctx.beginPath(); ctx.rect(0,0,w,h); ctx.stroke(); ctx.restore();
-}
-function toggleGrid() { gridEnabled = !gridEnabled; if(gridEnabled) drawTianzige(); else clearCanvas(); }
-function showExample() {
-  var w = canvas.width, h = canvas.height; ctx.save(); ctx.globalAlpha = 0.35; ctx.font = "bold " + (h * 0.6) + "px system-ui";
-  ctx.fillStyle = "#ff9800"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(currentW.c, w/2, h/2); ctx.restore();
-  document.getElementById('strokeInfo').innerHTML = "Образец <strong>" + currentW.c + "</strong>";
 }
 
 function generateToneComparisons() {
@@ -515,131 +258,144 @@ function generateToneComparisons() {
     if (!groups.has(bare)) groups.set(bare, []);
     groups.get(bare).push(word);
   });
-  const container = document.getElementById('tonesComparison'); if (!container) return;
   let html = '';
   for (let [pinyin, words] of groups.entries()) {
     const unique = Array.from(new Set(words.map(w => w.c))).map(c => words.find(w => w.c === c));
     if (unique.length >= 2) {
-      html += `<div style="background:rgba(255,255,255,0.92); border-radius:28px; padding:20px; box-shadow:0 6px 20px rgba(0,0,0,0.1); margin-bottom:20px;">
-        <div style="font-size:22px; font-weight:bold; color:#4361ee; margin-bottom:16px; text-align:center;">🎵 ${pinyin}</div>
-        <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center;">
-          ${unique.slice(0,5).map(word => `<div onclick="speak('${word.c}')" style="cursor:pointer; text-align:center; min-width:100px; padding:14px 10px; background:white; border-radius:24px; box-shadow:0 2px 10px rgba(0,0,0,0.08);">
-              <div style="font-size:52px;">${word.e || '🔊'}</div>
-              <div style="font-size:34px; font-weight:800;">${word.c}</div>
-              <div style="font-size:16px;">${colorP(word.p)}</div>
-              <div style="font-size:14px; color:#555;">${word.m}</div>
-            </div>`).join('')}
-        </div>
-      </div>`;
+      html += `<div class="card" style="text-align:left;"><h3>🎵 Звук: ${pinyin}</h3><div style="display:flex; flex-wrap:wrap; gap:10px;">
+          ${unique.map(w => `<div onclick="speak('${w.c}')" style="cursor:pointer; background:#fff; padding:10px; border-radius:15px; border:1px solid #eee; text-align:center; min-width:85px;">
+            <div style="font-size:24px; font-weight:bold;">${w.c}</div><div style="font-size:14px;">${colorP(w.p)}</div><div style="font-size:12px; color:#666;">${w.m}</div>
+          </div>`).join('')}</div></div>`;
     }
   }
-  container.innerHTML = html || '<p style="text-align:center;">📖 Нет данных</p>';
+  document.getElementById('tonesComparison').innerHTML = html || 'Загрузка...';
 }
 
 function generateWordsByRadical() {
-  const container = document.getElementById('radicalWordsList'); if (!container) return;
   let html = '';
-  for (const r of RADICALS) {
-    if (!r.s) continue;
-    let matched = [];
-    if (r.ex) { const chars = r.ex.match(/([一-龯])/g) || []; matched = WORDS.filter(w => chars.includes(w.c)); }
-    if (matched.length === 0 && r.s.length === 1) matched = WORDS.filter(w => w.c.includes(r.s));
-    if (matched.length === 0) continue;
-    html += `<div style="background:rgba(255,255,255,0.95); border-radius:28px; padding:20px; margin-bottom:20px; box-shadow:0 6px 20px rgba(0,0,0,0.1);">
-        <div style="font-size:20px; font-weight:bold; color:#4361ee; margin-bottom:16px; text-align:center; border-bottom:2px solid #4361ee;">
-          ${r.e || "🔑"} ${r.s} — ${r.m} (${matched.length})
-        </div>
-        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
-          ${matched.slice(0, 30).map(w => `<div onclick="speak('${w.c}')" style="cursor:pointer; text-align:center; min-width:85px; padding:8px 5px; background:white; border-radius:16px; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
-              <div style="font-size:34px;">${w.e || '🔊'}</div>
-              <div style="font-size:24px; font-weight:800;">${w.c}</div>
-              <div style="font-size:12px;">${colorP(word.p)}</div>
-              <div style="font-size:10px; color:#555;">${w.m}</div>
-            </div>`).join('')}
-        </div>
-      </div>`;
-  }
-  container.innerHTML = html || '<p style="text-align:center;">📖 Нет данных</p>';
+  RADICALS.forEach(r => {
+    if (!r.s) return;
+    const regex = /([一-龯])/g;
+    const chars = r.ex ? (r.ex.match(regex) || []) : [];
+    const matched = WORDS.filter(w => chars.includes(w.c) || w.c.includes(r.s));
+    if (matched.length > 0) {
+      html += `<div class="card" style="text-align:left;"><h3 style="color:var(--primary);">Ключ ${r.s} (${r.m})</h3><div class="grid">
+          ${matched.slice(0,15).map(w => `<div class="grid-item" onclick="openModal(${JSON.stringify(w).replace(/"/g, '&quot;')})"><b>${w.c}</b><br><small>${w.m}</small></div>`).join('')}
+        </div></div>`;
+    }
+  });
+  document.getElementById('radicalWordsList').innerHTML = html || 'Нет данных';
 }
 
+function renderDia() {
+  const b = document.getElementById("dialogBox"), d = DIALOGS[currentDia];
+  b.innerHTML = `<h3>Диалог ${currentDia+1} / ${DIALOGS.length}</h3>
+    <div style="background:#e3f2fd; padding:15px; border-radius:15px; margin:15px 0; text-align:left;"><b>${d.q}</b><br><small>${d.qp}</small><br><i>${d.rq}</i></div>
+    <div style="background:#fff3e0; padding:15px; border-radius:15px; margin:15px 0; text-align:left;"><b>${d.a}</b><br><small>${d.ap}</small><br><i>${d.ra}</i></div>`;
+}
+
+function initCanvas() {
+  canvas = document.getElementById('drawCanvas'); ctx = canvas.getContext('2d');
+  canvas.width = 400; canvas.height = 400;
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 5; ctx.lineCap = 'round';
+  const getPos = (e) => { const r = canvas.getBoundingClientRect(); const cx = e.clientX || e.touches[0].clientX, cy = e.clientY || e.touches[0].clientY; return {x: (cx - r.left) * 400 / r.width, y: (cy - r.top) * 400 / r.height}; };
+  canvas.addEventListener('mousedown', (e) => { painting=true; ctx.beginPath(); const p=getPos(e); ctx.moveTo(p.x, p.y); });
+  canvas.addEventListener('mousemove', (e) => { if(painting) { const p=getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); } });
+  canvas.addEventListener('mouseup', () => painting=false);
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); painting=true; ctx.beginPath(); const p=getPos(e); ctx.moveTo(p.x, p.y); }, {passive:false});
+  canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if(painting) { const p=getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); } }, {passive:false});
+  canvas.addEventListener('touchend', () => painting=false);
+  clearCanvas();
+}
+function clearCanvas() { ctx.fillStyle='#fff'; ctx.fillRect(0,0,400,400); if(gridEnabled) drawRiceGrid(); }
+function drawRiceGrid() {
+  ctx.save(); ctx.strokeStyle = "#ffcdd2"; ctx.lineWidth = 1; ctx.setLineDash([5, 5]);
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(400,400); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(400,0); ctx.lineTo(0,400); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(200,0); ctx.lineTo(200,400); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,200); ctx.lineTo(400,200); ctx.stroke();
+  ctx.restore();
+}
+function showExample() {
+  ctx.save(); ctx.globalAlpha = 0.15; ctx.font = "bold 300px system-ui"; ctx.fillStyle = "#ff9800"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText(currentW.c, 200, 200); ctx.restore();
+}
+
+let huntTarget = '', foundCount = 0, totalToFind = 0;
+function startHunt() {
+  const area = document.getElementById('radicalHuntArea'); area.innerHTML = '';
+  const rad = RADICALS[Math.floor(Math.random() * RADICALS.length)];
+  huntTarget = rad.s; document.getElementById('targetRadicalDisplay').textContent = huntTarget + " (" + rad.m + ")";
+  foundCount = 0; totalToFind = 0;
+  for(let i=0; i<35; i++) {
+    const isTarget = Math.random() > 0.8;
+    const char = isTarget ? huntTarget : RADICALS[Math.floor(Math.random() * RADICALS.length)].s;
+    if(isTarget) totalToFind++;
+    const el = document.createElement('div'); el.className = 'hunt-item'; el.textContent = char;
+    el.style.left = Math.random() * 85 + "%"; el.style.top = Math.random() * 85 + "%";
+    el.onclick = function() {
+      if(this.textContent === huntTarget) {
+        this.style.color = 'var(--success)'; this.style.transform = 'scale(1.4)';
+        if(!this.dataset.found) { foundCount++; this.dataset.found = true; updateHuntStats(); }
+      } else { this.style.color = 'var(--error)'; }
+    };
+    area.appendChild(el);
+  }
+  if(totalToFind === 0) startHunt(); updateHuntStats();
+}
+function updateHuntStats() { document.getElementById('huntStats').textContent = `Найдено: ${foundCount} / ${totalToFind}`; if(foundCount === totalToFind && totalToFind > 0) { speak("Победа!"); setTimeout(() => alert("🎉 Ты нашел все радикалы!"), 200); } }
+
 function newGame() {
-  var w = WORDS[Math.floor(Math.random() * WORDS.length)];
+  const w = WORDS[Math.floor(Math.random() * WORDS.length)];
   document.getElementById('gChar').textContent = w.c;
-  var opts = [w.m];
-  for(var i=1; i<=2; i++) opts.push(WORDS[(WORDS.indexOf(w) + i) % WORDS.length].m);
+  let opts = [w.m]; while(opts.length < 3) { let r = WORDS[Math.floor(Math.random()*WORDS.length)].m; if(!opts.includes(r)) opts.push(r); }
   opts.sort(() => Math.random() - 0.5);
-  var o = document.getElementById('gOpts'); o.innerHTML = '';
+  const o = document.getElementById('gOpts'); o.innerHTML = '';
   opts.forEach(opt => {
-    var btn = document.createElement('button'); btn.textContent = opt; btn.className = 'btn'; btn.style.flex = '1';
+    const btn = document.createElement('button'); btn.textContent = opt; btn.style.flex = "1";
     btn.onclick = () => {
-      var f = document.getElementById('gFeed');
-      if(opt === w.m) { f.innerHTML = '✅ Правильно!'; f.style.color = '#2e7d32'; }
-      else { f.innerHTML = '❌ Ошибка! ' + w.c + ' = ' + w.m; f.style.color = '#c62828'; }
-      setTimeout(newGame, 1800);
+      const f = document.getElementById('gFeed');
+      if(opt === w.m) { f.innerHTML = "✅ Верно!"; f.style.color = "green"; setTimeout(newGame, 1500); }
+      else { f.innerHTML = "❌ Ошибка! " + w.c + " = " + w.m; f.style.color = "red"; }
     };
     o.appendChild(btn);
   });
 }
 
-function setRandomWord() {
-  currentW = WORDS[Math.floor(Math.random() * WORDS.length)];
-  updateUI(); clearCanvas();
-  document.getElementById('strokeInfo').innerHTML = 'Нажмите "Образец"';
-  ['sFeedback', 'nFeedback', 'cFeedback'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerHTML = ''; });
-  console.log('🎲 Случайное слово: ' + currentW.c);
-}
-
-// ==================== ИНИЦИАЛИЗАЦИЯ ====================
-document.addEventListener('DOMContentLoaded', function() {
-  initCanvas(); initVoice(); updateUI(); renderGrid();
-  
+document.addEventListener('DOMContentLoaded', () => {
+  renderFilters(); renderGrid(); initCanvas(); renderGrammar(); updateUI();
   document.getElementById('sListen').onclick = () => speak(currentW.c);
-  document.getElementById('sVoice').onclick = () => startVoice(currentW.c, currentW.p, document.getElementById('sFeedback'));
-  document.getElementById('sNext').onclick = nextWord;
+  document.getElementById('sNext').onclick = () => { currentW = WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); };
   document.getElementById('sRandom').onclick = setRandomWord;
   document.getElementById('dPrev').onclick = prevDia;
   document.getElementById('dNext').onclick = nextDia;
   document.getElementById('dListen').onclick = speakDia;
-  document.getElementById('rListen').onclick = () => speak(currentRad.s);
-  document.getElementById('rVoice').onclick = () => startVoice(currentRad.s, currentRad.p, document.getElementById('radicalDetail'));
-  document.getElementById('rNext').onclick = () => {
-    currentRad = RADICALS[(RADICALS.indexOf(currentRad) + 1) % RADICALS.length];
-    document.getElementById('rChar').textContent = currentRad.s;
-    document.getElementById('rPinyin').innerHTML = colorP(currentRad.p);
-    document.getElementById('rMeaning').textContent = currentRad.m;
-    var det = document.getElementById('radicalDetail'); det.style.display = 'block';
-    det.innerHTML = `<strong>${currentRad.s}</strong> — ${currentRad.p}<br>${currentRad.m} ${currentRad.e||''}<br><br><em>Примеры:</em> ${currentRad.ex||'—'}`;
-  };
-  document.getElementById('rAll').onclick = () => { var g = document.getElementById('radGrid'); g.style.display = (g.style.display === 'none') ? 'grid' : 'none'; };
-  document.getElementById('nListen').onclick = () => speak(currentW.c);
-  document.getElementById('nVoice').onclick = () => startVoice(currentW.c, currentW.p, document.getElementById('nFeedback'));
-  document.getElementById('nNext').onclick = () => { nextWord(); clearCanvas(); };
+  document.getElementById('rNext').onclick = () => { currentRad = RADICALS[(RADICALS.indexOf(currentRad)+1)%RADICALS.length]; document.getElementById('rChar').textContent = currentRad.s; document.getElementById('rPinyin').textContent = currentRad.p; document.getElementById('rMeaning').textContent = currentRad.m; };
+  document.getElementById('rAll').onclick = () => { const g = document.getElementById('radGrid'); g.style.display = g.style.display==='none'?'grid':'none'; renderRads(); };
+  document.getElementById('nNext').onclick = () => { currentW = WORDS[(WORDS.indexOf(currentW)+1)%WORDS.length]; updateUI(); clearCanvas(); };
   document.getElementById('nRandom').onclick = setRandomWord;
   document.getElementById('nClear').onclick = clearCanvas;
-  document.getElementById('nGridBtn').onclick = toggleGrid;
+  document.getElementById('nGridBtn').onclick = () => { gridEnabled = !gridEnabled; clearCanvas(); };
   document.getElementById('nExample').onclick = showExample;
-  document.getElementById('cFlip').onclick = flipCard;
-  document.getElementById('cNext').onclick = () => { nextWord(); document.getElementById('cFeedback').innerHTML = ''; };
-  document.getElementById('cRandom').onclick = setRandomWord;
-  document.getElementById('cListen').onclick = () => speak(currentW.c);
-  document.getElementById('cVoice').onclick = () => startVoice(currentW.c, currentW.p, document.getElementById('cFeedback'));
-  document.getElementById('cubeRoll').onclick = () => { let w = WORDS[Math.floor(Math.random() * WORDS.length)]; document.getElementById('cubeRes').textContent = w.c; speak(w.c); };
-  document.getElementById('cubeListen').onclick = () => speak(document.getElementById('cubeRes').textContent);
+  document.getElementById('cubeRoll').onclick = () => { const w = WORDS[Math.floor(Math.random()*WORDS.length)]; document.getElementById('cubeRes').textContent = w.c; speak(w.c); };
+  document.getElementById('startHunt').onclick = startHunt;
   document.getElementById('gNew').onclick = newGame;
-  
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.onclick = function() {
-      var p = this.dataset.tab;
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); this.classList.add('active');
-      document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
-      var panelId = (p === 'radical-words') ? 'radicalWordsPanel' : p + 'Panel';
-      if (document.getElementById(panelId)) document.getElementById(panelId).classList.add('active');
-      if(p === 'numbers') renderNums(); if(p === 'colors') renderCols(); if(p === 'dialogs') renderDia();
-      if(p === 'grammar') renderGram(); if(p === 'songs') renderSongs(); if(p === 'radicals') renderRads();
-      if(p === 'game') newGame(); if(p === 'radical-words') generateWordsByRadical(); if(p === 'tones') generateToneComparisons();
+
+  document.querySelectorAll('.tab').forEach(t => {
+    t.onclick = function() {
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active')); this.classList.add('active');
+      document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+      const pId = this.dataset.tab + "Panel"; if(document.getElementById(pId)) document.getElementById(pId).classList.add('active');
+      if(this.dataset.tab === 'numbers') renderNums();
+      if(this.dataset.tab === 'colors') renderCols();
+      if(this.dataset.tab === 'dialogs') renderDia();
+      if(this.dataset.tab === 'songs') renderSongs();
+      if(this.dataset.tab === 'radical-words') generateWordsByRadical();
+      if(this.dataset.tab === 'tones') generateToneComparisons();
+      if(this.dataset.tab === 'hunt') startHunt();
+      if(this.dataset.tab === 'game') newGame();
     };
   });
-  document.querySelectorAll('.fbtn').forEach(btn => { btn.onclick = function() { document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderGrid(btn.dataset.cat); }; });
 });
 </script>
 </body>
