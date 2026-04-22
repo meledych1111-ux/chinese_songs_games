@@ -146,7 +146,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     <div class="btn-group">
       <button id="sListen">🔊 Слушать</button>
       <button id="sVoice" class="voice-btn">🎙️ Проверить</button>
-      <button id="sNext">🎲 Следующее</button>
+      <button id="sNext">🎲 Следующее</button><button id="sRandom" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">🎲 Случайное слово</button>
     </div>
     <div id="sFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
     <div class="filter-row" id="wFilters">
@@ -246,7 +246,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
       <div class="btn-group">
         <button id="nListen">🔊 Слушать</button>
         <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
-        <button id="nNext">🎲 Следующее</button>
+        <button id="nNext">🎲 Следующее</button><button id="nRandom" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">🎲 Случайное слово</button>
       </div>
       <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
       <div class="assoc" id="nAssoc" style="margin-top:10px;"></div>
@@ -268,7 +268,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
         <button id="cListen">🔊 Слушать</button>
         <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
         <button id="cFlip">🔄 Перевернуть</button>
-        <button id="cNext">🎲 Следующая</button>
+        <button id="cNext">🎲 Следующая</button><button id="cRandom" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">🎲 Случайное слово</button>
       </div>
       <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
     </div>
@@ -2612,6 +2612,73 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-<script src="pinyin-sounds.js"></script>
-  </body>
+<script src="pinyin-sounds.js">
+  // ========== СЛУЧАЙНОЕ СЛОВО ДЛЯ ВСЕХ ПАНЕЛЕЙ ==========
+  function setRandomWord() {
+    const randomIndex = Math.floor(Math.random() * WORDS.length);
+    currentW = WORDS[randomIndex];
+    
+    // Обновляем панель "Слова" (studyPanel)
+    const sChar = document.getElementById('sChar');
+    const sPinyin = document.getElementById('sPinyin');
+    const sMeaning = document.getElementById('sMeaning');
+    const sEmoji = document.getElementById('sEmoji');
+    const sCat = document.getElementById('sCat');
+    if (sChar) sChar.textContent = currentW.c;
+    if (sPinyin) sPinyin.innerHTML = colorP(currentW.p);
+    if (sMeaning) sMeaning.textContent = currentW.m;
+    if (sEmoji) sEmoji.textContent = currentW.e || '📖';
+    if (sCat) sCat.textContent = CAT_NAMES[currentW.cat] || currentW.cat;
+    
+    // Обновляем панель "Тетрадь" (notebookPanel)
+    const nChar = document.getElementById('nChar');
+    const nAssoc = document.getElementById('nAssoc');
+    if (nChar) nChar.textContent = currentW.c;
+    if (nAssoc) nAssoc.innerHTML = currentW.a || 'Ассоциация появится здесь...';
+    
+    // Обновляем панель "Карточки" (cardsPanel)
+    const cChar = document.getElementById('cChar');
+    const cPinyin = document.getElementById('cPinyin');
+    const cMeaning = document.getElementById('cMeaning');
+    const cBackEmoji = document.getElementById('cBackEmoji');
+    const cPinyinBack = document.getElementById('cPinyinBack');
+    if (cChar) cChar.textContent = currentW.c;
+    if (cPinyin) cPinyin.innerHTML = colorP(currentW.p);
+    if (cMeaning) cMeaning.textContent = currentW.m;
+    if (cBackEmoji) cBackEmoji.textContent = currentW.e || '📖';
+    if (cPinyinBack) cPinyinBack.innerHTML = colorP(currentW.p);
+    
+    // Сбрасываем canvas в тетради
+    const canvas = document.getElementById('drawCanvas');
+    if (canvas && canvas.getContext) {
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (window.gridEnabled) {
+        drawTianzige();
+      }
+    }
+    document.getElementById('strokeInfo').innerHTML = 'Нажмите "Образец" чтобы увидеть иероглиф для обведения';
+    
+    // Сбрасываем карточку в режим "лицом"
+    const cFront = document.getElementById('cFront');
+    const cBack = document.getElementById('cBack');
+    if (cFront && cBack) {
+      cFront.style.display = 'block';
+      cBack.style.display = 'none';
+    }
+    
+    // Очищаем фидбеки
+    const sFeedback = document.getElementById('sFeedback');
+    const nFeedback = document.getElementById('nFeedback');
+    const cFeedback = document.getElementById('cFeedback');
+    if (sFeedback) sFeedback.innerHTML = '';
+    if (nFeedback) nFeedback.innerHTML = '';
+    if (cFeedback) cFeedback.innerHTML = '';
+    
+    console.log('🎲 Случайное слово: ' + currentW.c + ' (' + currentW.m + ')');
+  }
+
+</script>
+</body>
 </html>
