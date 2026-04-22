@@ -20,3 +20,45 @@ const SONGS = [
   {title:"🐟 小鱼의梦 (Рыбка)", lines:[{ch:"小鱼小鱼游游游", py:"xiǎo yú xiǎo yú yóu yóu yóu", ru:"Рыбка, рыбка, плыви-плыви"},{ch:"游到水里做个梦", py:"yóu dào shuǐ lǐ zuò gè mèng", ru:"Плыви в воде и мечтай"},{ch:"梦见自己长翅膀", py:"mèngjiàn zìjǐ zhǎng chìbǎng", ru:"Приснилось, что выросли крылья"},{ch:"飞到天上去玩耍", py:"fēi dào tiān shàng qù wánshuǎ", ru:"Полететь в небо играть"}]},
   {title:"🌙 月亮代表我的心 (Луна)", lines:[{ch:"你问我爱你有多深", py:"nǐ wèn wǒ ài nǐ yǒu duō shēn", ru:"Ты спрашиваешь, как сильно я тебя люблю"},{ch:"我爱你有几分", py:"wǒ ài nǐ yǒu jǐ fēn", ru:"Насколько велика моя любовь"},{ch:"我的情也真，我的爱也真", py:"wǒ de qíng yě zhēn, wǒ de ài yě zhēn", ru:"Мои чувства искренни, моя любовь праведная"},{ch:"月亮代表我的心", py:"yuèliang dàibiǎo wǒ de xīn", ru:"Луна представляет моё сердце"}]}
 ];
+// ========== ДОБАВЛЕНИЕ ВИДЕОУРОКОВ (ПЕСНИ-ССЫЛКИ) ==========
+const VIDEO_SONGS = [
+  {emoji:"📜", title:"绝句 (Цзюэцзюй) — Ду Фу", url:"https://www.rednote.com/explore/69e724a2000000001a02da93", desc:"Классическое стихотворение эпохи Тан"},
+  {emoji:"📚", title:"劝学 (Побуждение к учению)", url:"https://www.rednote.com/explore/69d9d24d0000000023016749", desc:"О важности усердной учёбы"},
+  {emoji:"🌸", title:"梅花 (Цветы сливы) — Ван Аньши", url:"https://www.rednote.com/explore/69d8af97000000001e00ecc5", desc:"О благородстве и стойкости"},
+  {emoji:"📖", title:"幼小阶段古诗词全集（十一）", url:"https://www.rednote.com/explore/69e0808c0000000020038749", desc:"Сборник классических стихов"},
+  {emoji:"👋", title:"赠汪伦 (Прощание с Ван Луном)", url:"https://www.rednote.com/explore/69dcab49000000001e00ce9b", desc:"Ли Бо о дружбе"},
+  {emoji:"📜", title:"三字经 (3) — Троесловие", url:"https://www.rednote.com/explore/685bed09000000002400f2c2", desc:"Классика с пояснениями"},
+  {emoji:"📚", title:"三字经 (2) — Троесловие", url:"https://www.rednote.com/explore/6857908c0000000022030714", desc:"Продолжение изучения"}
+];
+
+// Переопределяем renderSongs чтобы добавить видеоуроки
+const originalRenderSongs = renderSongs;
+renderSongs = function() {
+  // Сначала показываем обычные песни
+  originalRenderSongs();
+
+  // Добавляем раздел с видеоуроками
+  let html = '<div style="margin: 30px 0 20px 0;"><hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #ff6b35, transparent);"><h3 style="text-align: center; margin: 20px 0; color: #ff6b35;">🎬 ВИДЕОУРОКИ И СТИХИ</h3></div>';
+
+  for(let i = 0; i < VIDEO_SONGS.length; i++) {
+    let v = VIDEO_SONGS[i];
+    html += `
+      <div class="song-card" style="background: linear-gradient(135deg, #fff8f0, #fff); border-left: 5px solid #ff6b35;">
+        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+          <div style="font-size: 48px;">${v.emoji}</div>
+          <div style="flex: 1;">
+            <div class="song-title" style="font-size: 18px; margin-bottom: 8px; text-align: left;">${v.title}</div>
+            <div style="font-size: 14px; color: #666;">${v.desc}</div>
+          </div>
+          <a href="${v.url}" target="_blank" rel="noopener noreferrer"
+             style="background: linear-gradient(135deg, #ff6b35, #ff9a44); color: white; padding: 12px 24px; border-radius: 40px; text-decoration: none; font-weight: 700; font-size: 14px;">
+            🎬 Смотреть
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  document.getElementById('songsBox').innerHTML += html;
+};
+
