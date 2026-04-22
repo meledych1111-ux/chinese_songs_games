@@ -268,17 +268,30 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     <div class="card">
       <div class="big-char" id="nChar">水</div>
       <canvas id="drawCanvas" width="400" height="400" style="background:#fff; border:3px solid #8B4513; border-radius:8px; touch-action:none; cursor:crosshair; box-shadow:0 4px 10px rgba(0,0,0,0.1);"></canvas>
+      
+      <!-- НАСТРОЙКИ КИСТИ И ПРОВЕРКА -->
+      <div style="margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 15px; background: #fdf2e9; padding: 10px; border-radius: 15px; border: 1px solid #e2d1c3; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>🖌️ Толщина:</span>
+          <input type="range" id="nWeight" min="1" max="25" value="6" style="cursor: pointer; width: 120px;">
+          <span id="nWeightVal" style="font-weight: bold; min-width: 20px;">6</span>
+        </div>
+        <button id="nVerify" style="background: linear-gradient(135deg, #673ab7, #512da8); padding: 10px 20px; font-size: 14px; min-height: 44px;">🎯 Проверить точность</button>
+      </div>
+
       <div style="margin-top:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
         <button id="nClear" style="background:#f44336; padding:10px 18px;">🧽 Очистить</button>
         <button id="nGridBtn" style="background:#4caf50; padding:10px 18px;">📐 Показать сетку</button>
         <button id="nExample" style="background:#2196f3; padding:10px 18px;">✍️ Образец</button>
       </div>
+      
       <div id="strokeGuide" style="margin-top:15px; padding:12px; background:#f5f5f5; border-radius:12px; text-align:left;">
         <strong>📖 Как писать:</strong> <span id="strokeInfo">Нажмите "Образец" чтобы увидеть иероглиф для обведения</span>
       </div>
+      
       <div class="btn-group">
         <button id="nListen">🔊 Слушать</button>
-        <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
+        <button id="nVoice" class="voice-btn">🎙️ Голос</button>
         <button id="nNext">🎲 Следующее</button>
         <button id="nRandom" class="random-btn">✨ Случайное</button>
       </div>
@@ -450,21 +463,12 @@ function startVoice(targetChar, targetPinyin, feedElement) {
     var originalSaid = said;
     
     // УДАЛЯЕМ ВСЮ ПУНКТУАЦИЮ (для любого слова!)
-    // Точки, запятые, восклицательные, вопросительные, точки с запятой, двоеточия, кавычки, скобки
     said = said.replace(/[.,!?;:()\[\]{}\'\"<>、。，！？；：""''「」『』【】《》]/g, '');
-    // Удаляем пробелы в начале и конце
     said = said.trim();
     
     var target = targetChar.trim();
-    
-    console.log("Распознано (оригинал): '" + originalSaid + "'");
-    console.log("Распознано (без пунктуации): '" + said + "'");
-    console.log("Ожидается: '" + target + "'");
-    
-    // Сравниваем БЕЗ пунктуации
     var correct = (said === target);
     
-    // Если не совпало, пробуем удалить все пробелы (для многословных фраз)
     if(!correct) {
       var saidNoSpaces = said.replace(/\s/g, '');
       var targetNoSpaces = target.replace(/\s/g, '');
@@ -477,7 +481,7 @@ function startVoice(targetChar, targetPinyin, feedElement) {
       if(correct) {
         feedElement.innerHTML = "✅ Правильно! \"" + targetChar + "\" — отлично!";
       } else {
-        feedElement.innerHTML = "❌ Неправильно. Вы сказали: \"" + originalSaid + "\". Нужно: \"" + targetChar + "\" (" + targetPinyin + ")";
+        feedElement.innerHTML = "❌ Неправильно. Вы сказали: \"" + originalSaid + "\". Нужно: \"" + targetChar + "\"";
       }
       setTimeout(function() {
         if(feedElement) feedElement.innerHTML = "";
@@ -508,6 +512,7 @@ function startVoice(targetChar, targetPinyin, feedElement) {
   isRec = true;
   if(feedElement) feedElement.innerHTML = "🎤 Слушаю... Произнесите: \"" + targetChar + "\"";
 }
+
 function openModal(w) {
   var c = document.getElementById('modalContent');
   c.innerHTML = '<button class="close" onclick="closeModal()">×</button><div class="big-char">'+w.c+'</div><div class="pinyin">'+colorP(w.p)+'</div><div class="meaning">'+w.m+'</div><div class="emoji">'+(w.e||'📖')+'</div><div class="badge">'+(CAT_NAMES[w.cat]||w.cat)+'</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>'+(w.a||'Практикуй произношение!')+'</div><div class="btn-group"><button onclick="speak(\''+w.c+'\')">🔊 Слушать</button><button class="voice-btn" onclick="startVoice(\''+w.c+'\', \''+w.p+'\', document.getElementById(\'mFeed\'))">🎙️ Проверить</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>';
@@ -577,6 +582,7 @@ function renderGram() {
   }
   document.getElementById('grammarBox').innerHTML = html;
 }
+
 function renderSongs() {
   var html = '';
   for(var i=0; i<SONGS.length; i++) {
@@ -651,6 +657,8 @@ function nextWord() {
   var nextIdx = (idx + 1) % WORDS.length;
   currentW = WORDS[nextIdx];
   updateUI();
+  if (ctx) clearCanvas();
+  document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
 }
 
 function randomWord() {
@@ -660,22 +668,32 @@ function randomWord() {
   document.getElementById('cFeedback').innerHTML = '';
   document.getElementById('sFeedback').innerHTML = '';
   document.getElementById('nFeedback').innerHTML = '';
+  document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
 }
 
 function prevDia() { currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length; renderDia(); }
 function nextDia() { currentDia = (currentDia + 1) % DIALOGS.length; renderDia(); }
 function speakDia() { speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); }
 
+// ==================== ЛОГИКА ТЕТРАДИ (CANVAS) ====================
 function initCanvas() {
   canvas = document.getElementById('drawCanvas');
   if(!canvas) return;
-  ctx = canvas.getContext('2d');
+  ctx = canvas.getContext('2d', { willReadFrequently: true });
+  
   ctx.fillStyle = '#fff';
   ctx.fillRect(0,0,canvas.width,canvas.height);
+  
   ctx.strokeStyle = '#333';
-  ctx.lineWidth = 5;
+  ctx.lineWidth = document.getElementById('nWeight').value;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+  
+  // Обработка ползунка толщины
+  document.getElementById('nWeight').oninput = function() {
+    ctx.lineWidth = this.value;
+    document.getElementById('nWeightVal').textContent = this.value;
+  };
   
   function getPos(e) {
     var rect = canvas.getBoundingClientRect();
@@ -686,13 +704,7 @@ function initCanvas() {
     return {x: x * canvas.width / rect.width, y: y * canvas.height / rect.height};
   }
   
-  function start(e) { 
-    e.preventDefault(); 
-    painting=true; 
-    var p=getPos(e); 
-    ctx.beginPath(); 
-    ctx.moveTo(p.x, p.y); 
-  }
+  function start(e) { e.preventDefault(); painting=true; var p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
   function draw(e) { 
     if(!painting) return; 
     e.preventDefault(); 
@@ -700,10 +712,7 @@ function initCanvas() {
     ctx.lineTo(p.x, p.y); 
     ctx.stroke(); 
   }
-  function end(e) { 
-    painting=false; 
-    ctx.closePath(); 
-  }
+  function end(e) { painting=false; ctx.closePath(); }
   
   canvas.addEventListener('mousedown', start);
   canvas.addEventListener('mousemove', draw);
@@ -725,27 +734,40 @@ function drawTianzige() {
   if(!ctx || !canvas) return;
   var w = canvas.width, h = canvas.height;
   ctx.save();
-  ctx.strokeStyle = "#aaa";
-  ctx.lineWidth = 1.5;
+  
+  // Основной крест (пунктир)
+  ctx.setLineDash([5, 5]);
+  ctx.strokeStyle = "#d4b5b0";
+  ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(w/2,0); ctx.lineTo(w/2,h); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(0,h/2); ctx.lineTo(w,h/2); ctx.stroke();
-  ctx.strokeStyle = "#666";
-  ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.rect(0,0,w,h); ctx.stroke();
+  
+  // Диагонали (мелкий пунктир)
+  ctx.setLineDash([2, 4]);
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(w,h); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(w,0); ctx.lineTo(0,h); ctx.stroke();
+  
+  // Рамка (сплошная)
+  ctx.setLineDash([]);
+  ctx.strokeStyle = "#8B4513";
+  ctx.lineWidth = 3;
+  ctx.strokeRect(0,0,w,h);
+  
   ctx.restore();
 }
 
 function toggleGrid() {
   gridEnabled = !gridEnabled;
   clearCanvas();
+  document.getElementById('nGridBtn').textContent = gridEnabled ? "🚫 Скрыть сетку" : "📐 Показать сетку";
 }
 
 function showExample() {
   clearCanvas();
   var w = canvas.width, h = canvas.height;
   ctx.save();
-  ctx.globalAlpha = 0.25;
-  ctx.font = "bold " + (h * 0.7) + "px 'Noto Sans CJK SC', 'Segoe UI', system-ui";
+  ctx.globalAlpha = 0.2;
+  ctx.font = "bold " + (h * 0.75) + "px 'Noto Sans CJK SC', system-ui";
   ctx.fillStyle = "#ff6b35";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -753,10 +775,65 @@ function showExample() {
   ctx.restore();
   document.getElementById('strokeInfo').innerHTML = "Обведите иероглиф <strong>" + currentW.c + "</strong> по контуру";
 }
+
+// ========== ФУНКЦИЯ ПРОВЕРКИ НАПИСАНИЯ ==========
+function verifyWriting() {
+  if(!ctx || !canvas) return;
+  
+  // 1. Создаем временный холст с идеальным текстом
+  const offCanvas = document.createElement('canvas');
+  offCanvas.width = canvas.width;
+  offCanvas.height = canvas.height;
+  const offCtx = offCanvas.getContext('2d');
+  
+  offCtx.fillStyle = 'white';
+  offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+  offCtx.fillStyle = 'black';
+  offCtx.font = "bold " + (canvas.height * 0.75) + "px 'Noto Sans CJK SC', system-ui";
+  offCtx.textAlign = 'center';
+  offCtx.textBaseline = 'middle';
+  offCtx.fillText(currentW.c, offCanvas.width/2, offCanvas.height/2);
+  
+  // 2. Получаем данные пикселей
+  const userImg = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  const targetImg = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height).data;
+  
+  let match = 0;
+  let totalTarget = 0;
+  let errors = 0;
+
+  for (let i = 0; i < targetImg.length; i += 4) {
+    const isTarget = targetImg[i] < 200; // Черный пиксель в шаблоне
+    const isUser = userImg[i] < 200 && userImg[i+1] < 200 && userImg[i+2] < 200; // Черный/темный у юзера
+    
+    if (isTarget) {
+      totalTarget++;
+      if (isUser) match++;
+    } else if (isUser) {
+      errors++; // Юзер нарисовал там, где не надо
+    }
+  }
+  
+  const score = Math.round((match / totalTarget) * 100);
+  const penalty = Math.round((errors / totalTarget) * 50); // Штраф за лишние линии
+  const finalScore = Math.max(0, score - penalty);
+  
+  const feed = document.getElementById('nFeedback');
+  if (finalScore > 85) {
+    feed.innerHTML = "🌟 Великолепно! Точность: " + finalScore + "%";
+    feed.style.color = "#2ecc71";
+  } else if (finalScore > 50) {
+    feed.innerHTML = "👍 Хорошо, но старайся точнее. Точность: " + finalScore + "%";
+    feed.style.color = "#f1c40f";
+  } else {
+    feed.innerHTML = "❌ Попробуй еще раз. Точность: " + finalScore + "%";
+    feed.style.color = "#e74c3c";
+  }
+}
+
 // ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ (АВТОМАТИЧЕСКИЙ) ==========
 function generateToneComparisons() {
   const groups = new Map();
-  
   WORDS.forEach(word => {
     if (!word.p) return;
     let barePinyin = word.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -767,7 +844,6 @@ function generateToneComparisons() {
   const comparisons = [];
   for (let [pinyin, words] of groups.entries()) {
     if (words.length >= 2 && pinyin.length > 0) {
-      // Убираем дубликаты по иероглифу внутри группы
       const uniqueWords = [];
       const seenChars = new Set();
       for (const word of words) {
@@ -776,37 +852,27 @@ function generateToneComparisons() {
           uniqueWords.push(word);
         }
       }
-      if (uniqueWords.length >= 2) {
-        comparisons.push(uniqueWords.slice(0, 5));
-      }
+      if (uniqueWords.length >= 2) comparisons.push(uniqueWords.slice(0, 5));
     }
   }
   
   comparisons.sort((a, b) => a[0].p.length - b[0].p.length);
   const topComparisons = comparisons.slice(0, 30);
-  
   const container = document.getElementById('tonesComparison');
   if (!container) return;
-  
-  if (topComparisons.length === 0) {
-    container.innerHTML = '<p style="text-align:center; padding: 40px;">📖 Загружаю данные... Попробуйте обновить страницу</p>';
-    return;
-  }
   
   container.innerHTML = topComparisons.map(group => {
     const basePinyin = group[0].p.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return `
       <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-        <div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; letter-spacing: 1px;">
-          🎵 ${basePinyin}
-        </div>
+        <div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">🎵 ${basePinyin}</div>
         <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
           ${group.map(word => `
-            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); transition: all 0.1s ease; border: 1px solid rgba(0,0,0,0.05);">
+            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
               <div style="font-size: 52px; margin-bottom: 6px;">${word.e || '🔊'}</div>
               <div style="font-size: 34px; font-weight: 800; margin: 6px 0;">${word.c}</div>
               <div style="font-size: 16px; margin: 6px 0; font-weight: 600;">${colorP(word.p)}</div>
-              <div style="font-size: 14px; color: #555; font-weight: 500;">${word.m}</div>
+              <div style="font-size: 14px; color: #555;">${word.m}</div>
             </div>
           `).join('')}
         </div>
@@ -814,56 +880,31 @@ function generateToneComparisons() {
     `;
   }).join('');
 }
-// ========== ГЕНЕРАЦИЯ СЛОВ ПО ВСЕМ РАДИКАЛАМ ==========
-// ========== ГЕНЕРАЦИЯ СЛОВ ПО РАДИКАЛАМ (ПОЛНАЯ ВЕРСИЯ) ==========
-// ========== ГЕНЕРАЦИЯ СЛОВ ПО РАДИКАЛАМ (ПОЛНАЯ ВЕРСИЯ) ==========
+
 function generateWordsByRadical() {
   const container = document.getElementById('radicalWordsList');
   if (!container) return;
-
   let html = '';
-  let totalRadicalsWithWords = 0;
-  let totalWordsFound = 0;
-
-  // Проходим по ВСЕМ радикалам из вашего массива RADICALS
   for (const radical of RADICALS) {
     if (!radical.s) continue;
-    
     let matchedWords = [];
-    
-    // Если у радикала есть примеры (ex), используем их для поиска
     if (radical.ex && radical.ex.length > 0) {
-      // Извлекаем иероглифы из примеров (формат: "河 (hé - река)、海 (hǎi - море)")
       const regex = /([一-龯])/g;
       const charsInExamples = radical.ex.match(regex) || [];
-      
-      // Ищем слова, которые есть в примерах радикала
-      matchedWords = WORDS.filter(word => {
-        return charsInExamples.includes(word.c);
-      });
+      matchedWords = WORDS.filter(word => charsInExamples.includes(word.c));
     }
-    
-    // Если по примерам не нашли, пробуем найти слова по вхождению символа радикала
     if (matchedWords.length === 0 && radical.s.length === 1) {
       matchedWords = WORDS.filter(word => word.c.includes(radical.s));
     }
-
     if (matchedWords.length === 0) continue;
-
-    totalRadicalsWithWords++;
-    totalWordsFound += matchedWords.length;
-    
-    const radicalEmoji = radical.e || "🔑";
-    const displayWords = matchedWords.slice(0, 30);
-
     html += `
       <div style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
         <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; border-bottom: 2px solid #4361ee; padding-bottom: 8px;">
-          ${radicalEmoji} ${radical.s} — ${radical.m} (${matchedWords.length} слов)
+          ${radical.e || "🔑"} ${radical.s} — ${radical.m} (${matchedWords.length} слов)
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-          ${displayWords.map(word => `
-            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: 0.1s; border: 1px solid rgba(0,0,0,0.05);">
+          ${matchedWords.slice(0, 30).map(word => `
+            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
               <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '🔊'}</div>
               <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
               <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
@@ -871,23 +912,15 @@ function generateWordsByRadical() {
             </div>
           `).join('')}
         </div>
-        ${matchedWords.length > 30 ? `<div style="text-align: center; margin-top: 10px; font-size: 12px; color: #888;">+ ещё ${matchedWords.length - 30} слов</div>` : ''}
       </div>
     `;
   }
-
-  if (html === '') {
-    container.innerHTML = '<p style="text-align:center; padding: 40px;">📖 Слова по радикалам не найдены.</p>';
-  } else {
-    container.innerHTML = html;
-    console.log(`✅ Найдено ${totalRadicalsWithWords} радикалов с ${totalWordsFound} словами`);
-  }
+  container.innerHTML = html || '<p style="text-align:center;">📖 Слова не найдены.</p>';
 }
+
 function addTonesTab() {
   const tabsContainer = document.querySelector('.tabs');
-  if (!tabsContainer) return;
-  if (document.querySelector('.tab[data-tab="tones"]')) return;
-  
+  if (!tabsContainer || document.querySelector('.tab[data-tab="tones"]')) return;
   const tonesTab = document.createElement('div');
   tonesTab.className = 'tab';
   tonesTab.setAttribute('data-tab', 'tones');
@@ -896,55 +929,32 @@ function addTonesTab() {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tonesTab.classList.add('active');
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    const tonesPanel = document.getElementById('tonesPanel');
-    if (tonesPanel) tonesPanel.classList.add('active');
+    document.getElementById('tonesPanel').classList.add('active');
     generateToneComparisons();
   };
   tabsContainer.appendChild(tonesTab);
 }
 
-// Запускаем добавление вкладки после загрузки страницы
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    addTonesTab();
-    generateToneComparisons();
-  });
-} else {
-  addTonesTab();
-  generateToneComparisons();
-}
 function newGame() {
   var w = WORDS[Math.floor(Math.random() * WORDS.length)];
   document.getElementById('gChar').textContent = w.c;
   var opts = [w.m];
-  for(var i=1; i<=2; i++) {
-    var other = WORDS[(WORDS.indexOf(w) + i) % WORDS.length];
-    opts.push(other.m);
-  }
+  for(var i=1; i<=2; i++) opts.push(WORDS[(WORDS.indexOf(w) + i) % WORDS.length].m);
   opts.sort(function(){ return Math.random() - 0.5; });
   var o = document.getElementById('gOpts');
   o.innerHTML = '';
-  for(var i=0; i<opts.length; i++) {
-    var opt = opts[i];
+  opts.forEach(opt => {
     var btn = document.createElement('button');
     btn.textContent = opt;
-    btn.style.flex = '1';
     btn.className = 'btn';
-    btn.onclick = (function(optVal){
-      return function(){
-        var feed = document.getElementById('gFeed');
-        if(optVal === w.m) {
-          feed.innerHTML = '✅ Правильно!';
-          feed.style.color = '#2e7d32';
-        } else {
-          feed.innerHTML = '❌ Ошибка! ' + w.c + ' = ' + w.m;
-          feed.style.color = '#c62828';
-        }
-        setTimeout(newGame, 1800);
-      };
-    })(opt);
+    btn.onclick = function(){
+      var feed = document.getElementById('gFeed');
+      if(opt === w.m) { feed.innerHTML = '✅ Правильно!'; feed.style.color = '#2e7d32'; } 
+      else { feed.innerHTML = '❌ Ошибка! ' + w.c + ' = ' + w.m; feed.style.color = '#c62828'; }
+      setTimeout(newGame, 1800);
+    };
     o.appendChild(btn);
-  }
+  });
 }
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
@@ -953,107 +963,55 @@ document.addEventListener('DOMContentLoaded', function() {
   initVoice();
   updateUI();
   renderGrid();
+  addTonesTab();
   
-  // === СЛОВА ===
+  // Кнопки слов
   document.getElementById('sListen').onclick = function() { speak(currentW.c); };
   document.getElementById('sVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('sFeedback')); };
   document.getElementById('sNext').onclick = nextWord;
   document.getElementById('sRandom').onclick = randomWord;
   
-  // === ДИАЛОГИ ===
+  // Кнопки диалогов
   document.getElementById('dPrev').onclick = prevDia;
   document.getElementById('dNext').onclick = nextDia;
   document.getElementById('dListen').onclick = speakDia;
   
-  // === РАДИКАЛЫ ===
-  document.getElementById('rListen').onclick = function() { speak(currentRad.s); };
-  document.getElementById('rVoice').onclick = function() { startVoice(currentRad.s, currentRad.p, document.getElementById('radicalDetail')); };
-  document.getElementById('rNext').onclick = function() {
-    var idx = RADICALS.indexOf(currentRad);
-    var nextIdx = (idx + 1) % RADICALS.length;
-    currentRad = RADICALS[nextIdx];
-    document.getElementById('rChar').textContent = currentRad.s;
-    document.getElementById('rPinyin').innerHTML = colorP(currentRad.p);
-    document.getElementById('rMeaning').textContent = currentRad.m;
-    var detailDiv = document.getElementById('radicalDetail');
-    detailDiv.style.display = 'block';
-    detailDiv.innerHTML = '<strong>' + currentRad.s + '</strong> — ' + currentRad.p + '<br>' + currentRad.m + ' ' + (currentRad.e || '') + '<br><br><em>Примеры:</em> ' + (currentRad.ex || '—');
-  };
-  document.getElementById('rAll').onclick = function() {
-    var grid = document.getElementById('radGrid');
-    if(grid.style.display === 'none') {
-      grid.style.display = 'grid';
-    } else {
-      grid.style.display = 'none';
-    }
-  };
-  
-  // === ТЕТРАДЬ ===
+  // Тетрадь
   document.getElementById('nListen').onclick = function() { speak(currentW.c); };
   document.getElementById('nVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('nFeedback')); };
-  document.getElementById('nNext').onclick = function() {
-    var idx = WORDS.indexOf(currentW);
-    var nextIdx = (idx + 1) % WORDS.length;
-    currentW = WORDS[nextIdx];
-    updateUI();
-    clearCanvas();
-    document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
-  };
+  document.getElementById('nNext').onclick = nextWord;
   document.getElementById('nClear').onclick = clearCanvas;
   document.getElementById('nGridBtn').onclick = toggleGrid;
   document.getElementById('nExample').onclick = showExample;
   document.getElementById('nRandom').onclick = randomWord;
+  document.getElementById('nVerify').onclick = verifyWriting;
   
-  // === КАРТОЧКИ ===
+  // Карточки
   document.getElementById('cFlip').onclick = flipCard;
-  document.getElementById('cNext').onclick = function() {
-    var idx = WORDS.indexOf(currentW);
-    var nextIdx = (idx + 1) % WORDS.length;
-    currentW = WORDS[nextIdx];
-    updateUI();
-    document.getElementById('cFeedback').innerHTML = '';
-  };
+  document.getElementById('cNext').onclick = function() { nextWord(); document.getElementById('cFeedback').innerHTML = ''; };
   document.getElementById('cListen').onclick = function() { speak(currentW.c); };
   document.getElementById('cVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('cFeedback')); };
   document.getElementById('cRandom').onclick = randomWord;
-  
-  // === КУБИКИ ===
+
+  // Игра и Кубики
+  document.getElementById('gNew').onclick = newGame;
   document.getElementById('cubeRoll').onclick = function() {
     var w = WORDS[Math.floor(Math.random() * WORDS.length)];
     document.getElementById('cubeRes').textContent = w.c;
     speak(w.c);
   };
-  document.getElementById('cubeListen').onclick = function() {
-    speak(document.getElementById('cubeRes').textContent);
-  };
   
-  // === ИГРА ===
-  document.getElementById('gNew').onclick = newGame;
-  
-  // === ТАБЫ ===
+  // Табы
   document.querySelectorAll('.tab').forEach(function(tab) {
     tab.onclick = function() {
       var p = this.dataset.tab;
-      
-      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       this.classList.add('active');
+      document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
       
-      document.querySelectorAll('.panel').forEach(function(panel) { panel.classList.remove('active'); });
-      
-      // Определяем ID панели (для radical-words особый случай)
-      var panelId;
-      if (p === 'radical-words') {
-        panelId = 'radicalWordsPanel';
-      } else {
-        panelId = p + 'Panel';
-      }
-      
-      var targetPanel = document.getElementById(panelId);
-      if (targetPanel) {
-        targetPanel.classList.add('active');
-      } else {
-        console.error('Панель не найдена:', panelId);
-      }
+      var targetId = (p === 'radical-words') ? 'radicalWordsPanel' : p + 'Panel';
+      var targetPanel = document.getElementById(targetId);
+      if (targetPanel) targetPanel.classList.add('active');
       
       if(p === 'numbers') renderNums();
       if(p === 'colors') renderCols();
@@ -1065,10 +1023,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if(p === 'radical-words') generateWordsByRadical();
     };
   });
-  // === ФИЛЬТРЫ ===
-  document.querySelectorAll('.fbtn').forEach(function(btn) {
+
+  // Фильтры
+  document.querySelectorAll('.fbtn').forEach(btn => {
     btn.onclick = function() {
-      document.querySelectorAll('.fbtn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderGrid(btn.dataset.cat);
     };
