@@ -32,12 +32,16 @@ const VIDEO_LINKS = [
   {emoji:"📚", title:"三字经 (2) — Троесловие", url:"https://www.rednote.com/explore/6857908c0000000022030714", desc:"Продолжение изучения"}
 ];
 
-// Функция для добавления видеоуроков (не переопределяет, а дополняет)
+// Функция для добавления видеоуроков
 function addVideoLessons() {
   let songsBox = document.getElementById('songsBox');
   if(!songsBox) return;
 
-  let html = '<div style="margin: 40px 0 20px 0;"><hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #ff6b35, transparent);"><h3 style="text-align: center; margin: 20px 0; color: #ff6b35;">🎬 ВИДЕОУРОКИ И СТИХИ</h3></div>';
+  // ПРОВЕРКА: Если заголовок видео уже есть, выходим (чтобы не добавлять по 10 раз)
+  if (document.getElementById('video-lessons-title')) return;
+
+  // Добавили id="video-lessons-title" для заголовка
+  let html = '<div style="margin: 40px 0 20px 0;"><hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #ff6b35, transparent);"><h3 id="video-lessons-title" style="text-align: center; margin: 20px 0; color: #ff6b35;">🎬 ВИДЕОУРОКИ И СТИХИ</h3></div>';
 
   for(let v of VIDEO_LINKS) {
     html += `
@@ -59,9 +63,18 @@ function addVideoLessons() {
   songsBox.innerHTML += html;
 }
 
-// Ждем загрузки страницы и добавляем видеоуроки
+// СЛУШАТЕЛЬ СОБЫТИЙ: Перехватываем клик по вкладке "Песни"
+document.addEventListener('click', (e) => {
+  const tab = e.target.closest('.tab');
+  if (tab && tab.dataset.tab === 'songs') {
+    // Ждем 150мс, пока основной скрипт в index.html очистит блок и нарисует песни
+    setTimeout(addVideoLessons, 150);
+  }
+});
+
+// Запуск при самой первой загрузке страницы
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', addVideoLessons);
+  document.addEventListener('DOMContentLoaded', () => setTimeout(addVideoLessons, 500));
 } else {
-  addVideoLessons();
+  setTimeout(addVideoLessons, 500);
 }
