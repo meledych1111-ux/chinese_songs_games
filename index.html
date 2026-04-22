@@ -777,15 +777,17 @@ function showExample() {
 }
 
 // ========== ФУНКЦИЯ ПРОВЕРКИ НАПИСАНИЯ ==========
+// Находим функцию verifyWriting и заменяем её на улучшенную версию:
+
 function verifyWriting() {
   if(!ctx || !canvas) return;
-  
-  // 1. Создаем временный холст с идеальным текстом
+
+  // 1. Создаем эталон на невидимом холсте
   const offCanvas = document.createElement('canvas');
   offCanvas.width = canvas.width;
   offCanvas.height = canvas.height;
   const offCtx = offCanvas.getContext('2d');
-  
+
   offCtx.fillStyle = 'white';
   offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
   offCtx.fillStyle = 'black';
@@ -793,40 +795,58 @@ function verifyWriting() {
   offCtx.textAlign = 'center';
   offCtx.textBaseline = 'middle';
   offCtx.fillText(currentW.c, offCanvas.width/2, offCanvas.height/2);
-  
-  // 2. Получаем данные пикселей
+
+  // 2. Сравниваем данные
   const userImg = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
   const targetImg = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height).data;
-  
+
   let match = 0;
   let totalTarget = 0;
-  let errors = 0;
+  let totalUser = 0;
 
   for (let i = 0; i < targetImg.length; i += 4) {
-    const isTarget = targetImg[i] < 200; // Черный пиксель в шаблоне
-    const isUser = userImg[i] < 200 && userImg[i+1] < 200 && userImg[i+2] < 200; // Черный/темный у юзера
-    
+    const isTarget = targetImg[i] < 128; // Пиксель эталона
+    // Только темные пиксели кисти пользователя (игнорируем светлую сетку)
+    const isUser = userImg[i] < 100 && userImg[i+1] < 100 && userImg[i+2] < 100;
+
     if (isTarget) {
       totalTarget++;
       if (isUser) match++;
-    } else if (isUser) {
-      errors++; // Юзер нарисовал там, где не надо
     }
+    if (isUser) totalUser++;
   }
-  
-  const score = Math.round((match / totalTarget) * 100);
-  const penalty = Math.round((errors / totalTarget) * 50); // Штраф за лишние линии
-  const finalScore = Math.max(0, score - penalty);
-  
+
+  if (totalUser < 20) {
+    document.getElementById('nFeedback').innerHTML = "🖋️ Сначала напишите иероглиф!";
+    return;
+  }
+
+  // Насколько линии пользователя попали в цель
+  const precision = match / totalUser;
+  // Насколько иероглиф заполнен
+  const recall = match / totalTarget;
+
+  const brushWidth = parseInt(document.getElementById('nWeight').value);
+  // Оцениваем "идеальную" толщину эталонного шрифта (~15% от высоты)
+  const estimatedTargetWidth = (canvas.height * 0.75) * 0.15;
+  const widthRatio = Math.max(0.1, Math.min(1, brushWidth / estimatedTargetWidth));
+
+  // КОРРЕКЦИЯ: если кисть тонкая, мы не ждем покрытия в 100%
+  // Мы считаем покрытие достаточным, если оно пропорционально толщине кисти
+  const adjustedRecall = Math.min(1, recall / (widthRatio * 0.8));
+
+  // Итоговый балл: 70% за точность (не вышли за край) + 30% за завершенность (написали всё)
+  const finalScore = Math.round((precision * 0.7 + adjustedRecall * 0.3) * 100);
+
   const feed = document.getElementById('nFeedback');
-  if (finalScore > 85) {
-    feed.innerHTML = "🌟 Великолепно! Точность: " + finalScore + "%";
+  if (finalScore > 80) {
+    feed.innerHTML = "🌟 Отлично! Точность: " + finalScore + "%";
     feed.style.color = "#2ecc71";
   } else if (finalScore > 50) {
-    feed.innerHTML = "👍 Хорошо, но старайся точнее. Точность: " + finalScore + "%";
+    feed.innerHTML = "👍 Хорошо! Точность: " + finalScore + "%";
     feed.style.color = "#f1c40f";
   } else {
-    feed.innerHTML = "❌ Попробуй еще раз. Точность: " + finalScore + "%";
+    feed.innerHTML = "❌ Нужно точнее. Точность: " + finalScore + "%";
     feed.style.color = "#e74c3c";
   }
 }
