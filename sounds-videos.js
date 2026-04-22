@@ -58,14 +58,14 @@ const SOUNDS_VIDEOS = [
     {
         emoji: "🔊",
         title: "复韵母iu的拼读",
-        description: "Практика чтения финали -iu. #拼音 #自然拼读 #拼音天天练",
+        description: "Практика чтения финали -iu",
         tags: "#拼音 #自然拼读 #拼音天天练 #幼小衔接拼音",
         url: "https://www.xiaohongshu.com/explore/663eda82000000001e037a72?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CB5zJ_LyvPqNCl1ltzVT3Qigd8ZME-gOGpko015PqiZTI=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776896198&share_id=4a93cc30d8204fca8205e355a3a6fcac"
     },
     {
         emoji: "📖",
         title: "一年级上册语文第一单元:二类生字组词",
-        description: "Словарный запас для 1 класса,第一单元: составление слов",
+        description: "Словарный запас для 1 класса, составление слов",
         tags: "#一年级语文 #二类生字组词",
         url: "https://www.xiaohongshu.com/explore/6792f31d000000002a000964?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBpg-WsJWeWEws0F2RyYTuf6rgK-Ctf9hV6FrjP2Jfzz4=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776896290&share_id=2b62df36c882480b827819d4e68232dd"
     },
@@ -77,58 +77,76 @@ const SOUNDS_VIDEOS = [
         url: "https://www.xiaohongshu.com/explore/676fe5590000000013001680?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBiM1lb7C7rp38bfcweQ3ugmFMojmWye7njL-Hk4TQKow=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776896350&share_id=ea7926000f884e6fba70577b3f4a545d"
     }
 ];
-    function renderSoundsVideos() {
-        const container = document.getElementById('soundsVideosContainer');
-        if (!container) return;
-        let html = `<div class="card">
-            <h2 style="margin-bottom: 20px; color: #4361ee;">📢 Изучение звуков (видео)</h2>
-            <div class="writing-videos-grid">`;
-        for (let v of SOUNDS_VIDEOS) {
-            html += `
-                <div class="writing-video-card">
-                    <div class="writing-video-content">
-                        <div class="writing-video-emoji">${v.emoji}</div>
-                        <div class="writing-video-info">
-                            <div class="writing-video-title">${v.title}</div>
-                            <div class="writing-video-tags">${v.tags}</div>
-                            <div class="writing-video-desc">${v.description}</div>
-                        </div>
-                        <a href="${v.url}" target="_blank" class="writing-video-btn">🎬 Слушать звуки</a>
+
+function renderSoundsVideos() {
+    const container = document.getElementById('soundsVideosContainer');
+    if (!container) return;
+
+    let html = `<div class="card">
+        <h2 style="margin-bottom: 20px; color: #4361ee;">📢 Изучение звуков (видео)</h2>
+        <div class="writing-videos-grid">`;
+
+    for (let v of SOUNDS_VIDEOS) {
+        html += `
+            <div class="writing-video-card">
+                <div class="writing-video-content">
+                    <div class="writing-video-emoji">${v.emoji}</div>
+                    <div class="writing-video-info">
+                        <div class="writing-video-title">${v.title}</div>
+                        <div class="writing-video-tags">${v.tags}</div>
+                        <div class="writing-video-desc">${v.description}</div>
                     </div>
-                </div>`;
+                    <a href="${v.url}" target="_blank" class="writing-video-btn">🎬 Смотреть</a>
+                </div>
+            </div>`;
+    }
+
+    html += `</div></div>`;
+    container.innerHTML = html;
+}
+
+// Добавляем вкладку и панель
+function initSoundsVideos() {
+    // Добавляем стили (если ещё нет)
+    if (!document.getElementById('writing-videos-styles')) {
+        const style = document.createElement('style');
+        style.id = 'writing-videos-styles';
+        style.textContent = `
+            .writing-videos-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
+            .writing-video-card { background: linear-gradient(135deg, #fff8f0, #ffffff); border-left: 6px solid #ff6b35; border-radius: 24px; padding: 18px; transition: transform 0.2s; }
+            .writing-video-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+            .writing-video-content { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+            .writing-video-emoji { font-size: 48px; }
+            .writing-video-info { flex: 1; }
+            .writing-video-title { font-size: 18px; font-weight: 800; color: #2c3e50; margin-bottom: 6px; }
+            .writing-video-tags { font-size: 12px; color: #ff6b35; margin-bottom: 6px; }
+            .writing-video-desc { font-size: 13px; color: #666; }
+            .writing-video-btn { background: linear-gradient(135deg, #ff6b35, #ff9a44); color: white; padding: 10px 22px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 14px; white-space: nowrap; display: inline-block; }
+            .writing-video-btn:hover { transform: scale(1.03); }
+            @media (max-width: 550px) { .writing-video-content { flex-direction: column; text-align: center; } .writing-video-btn { width: 100%; text-align: center; } }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Создаём панель
+    if (!document.getElementById('sounds-vPanel')) {
+        const container = document.querySelector('.container');
+        if (container) {
+            const panel = document.createElement('div');
+            panel.id = 'sounds-vPanel';
+            panel.className = 'panel';
+            panel.innerHTML = '<div id="soundsVideosContainer"></div>';
+            container.appendChild(panel);
         }
-        html += `</div></div>`;
-        container.innerHTML = html;
     }
+}
 
-    function addTab() {
-        const tabsContainer = document.querySelector('.tabs');
-        if (!tabsContainer || tabsContainer.querySelector('[data-tab="sounds-v"]')) return;
-        const newTab = document.createElement('div');
-        newTab.className = 'tab';
-        newTab.setAttribute('data-tab', 'sounds-v');
-        newTab.innerHTML = '📢 Звуки';
-        tabsContainer.appendChild(newTab);
-    }
+// Запускаем инициализацию
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSoundsVideos);
+} else {
+    initSoundsVideos();
+}
 
-    function createPanel() {
-        if (document.getElementById('sounds-vPanel')) return;
-        const panel = document.createElement('div');
-        panel.id = 'sounds-vPanel';
-        panel.className = 'panel';
-        panel.innerHTML = '<div id="soundsVideosContainer"></div>';
-        document.body.appendChild(panel); // Добавляем прямо в body
-    }
-
-    function init() {
-        addTab();
-        createPanel();
-        // Вкладка будет работать через основной скрипт index.html
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else { init(); }
-
-    window.renderSoundsVideos = renderSoundsVideos; // Экспортируем функцию
-})();
+// Экспортируем функцию для вызова из index.html
+window.renderSoundsVideos = renderSoundsVideos;
