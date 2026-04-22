@@ -148,6 +148,36 @@
           .g-title { font-size: 19px; }
           .g-rule { font-size: 15px; }
         }
+        .video-card {
+  background: linear-gradient(135deg, #fff8f0, #ffffff) !important;
+  border-left: 6px solid #ff6b35 !important;
+  padding: 15px !important;
+}
+.video-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
+}
+.video-emoji { font-size: 40px; }
+.video-info { flex: 1; }
+.video-name { font-size: 18px; font-weight: 800; color: #2c3e50; }
+.video-desc { font-size: 13px; color: #666; margin-top: 4px; }
+.video-btn {
+  background: linear-gradient(135deg, #ff6b35, #ff9a44);
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+@media (max-width: 500px) {
+  .video-content { flex-direction: column; text-align: center; }
+  .video-btn { width: 100%; text-align: center; }
+}
     </style>
 </head>
 <body>
@@ -616,20 +646,47 @@
     }
 
     function renderSongs() {
-      var html = '';
-      for(var i=0; i<SONGS.length; i++) {
-        var s = SONGS[i];
-        var linesHtml = '';
-        for(var j=0; j<s.lines.length; j++) {
-          var l = s.lines[j];
-          linesHtml += '<div class="song-line"><div class="song-cn">'+l.ch+'</div><div class="song-py">'+l.py+'</div><div class="song-ru">'+l.ru+'</div></div>';
-        }
-        var songText = '';
-        for(var k=0; k<s.lines.length; k++) songText += s.lines[k].ch + ' ';
-        html += '<div class="song-card"><div class="song-title">'+s.title+'</div>'+linesHtml+'<button class="btn" style="width:100%;margin-top:12px" onclick="speak(\''+songText.replace(/'/g,"\\'")+'\')">🎵 Спеть</button></div>';
-      }
-      document.getElementById('songsBox').innerHTML = html;
+  var html = '';
+  // 1. Сначала отрисовываем обычные песни из SONGS
+  for(var i=0; i<SONGS.length; i++) {
+    var s = SONGS[i];
+    var linesHtml = '';
+    for(var j=0; j<s.lines.length; j++) {
+      var l = s.lines[j];
+      linesHtml += '<div class="song-line"><div class="song-cn">'+l.ch+'</div><div class="song-py">'+l.py+'</div><div class="song-ru">'+l.ru+'</div></div>';
     }
+    var songText = '';
+    for(var k=0; k<s.lines.length; k++) songText += s.lines[k].ch + ' ';
+    html += '<div class="song-card"><div class="song-title">'+s.title+'</div>'+linesHtml+'<button class="btn" style="width:100%;margin-top:12px" onclick="speak(\''+songText.replace(/'/g,"\\'")+'\')">🎵 Спеть</button></div>';
+  }
+
+  // 2. Затем добавляем блок видеоуроков из VIDEO_LINKS
+  if (typeof VIDEO_LINKS !== 'undefined' && VIDEO_LINKS.length > 0) {
+    html += `
+      <div style="margin: 40px 0 20px 0;">
+        <hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #ff6b35, transparent);">
+        <h3 style="text-align: center; margin: 20px 0; color: #ff6b35;">🎬 ВИДЕОУРОКИ И СТИХИ</h3>
+      </div>
+    `;
+
+    for(let v of VIDEO_LINKS) {
+      html += `
+        <div class="song-card video-card">
+          <div class="video-content">
+            <div class="video-emoji">${v.emoji}</div>
+            <div class="video-info">
+              <div class="video-name">${v.title}</div>
+              <div class="video-desc">${v.desc}</div>
+            </div>
+            <a href="${v.url}" target="_blank" class="video-btn">Смотреть</a>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  document.getElementById('songsBox').innerHTML = html;
+}
 
     function renderRads() {
       var grid = document.getElementById('radGrid');
