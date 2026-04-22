@@ -1,10 +1,10 @@
 // ==========================================
 // Модуль: Сравнение звуков пиньинь
-// Только an/en и r/l
+// ДОБАВЛЯЕТ ВКЛАДКУ В ВЕРХНЕЕ МЕНЮ
 // ==========================================
 
 (function() {
-  // Данные для сравнения звуков (только 2)
+  // Данные для сравнения звуков
   const SOUND_COMPARISONS = [
     {
       title: 'Сравнение an / en',
@@ -18,27 +18,18 @@
     }
   ];
 
-  // Функция озвучивания (заглушка, если понадобится)
-  function speak(text, rate = 0.75) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'zh-CN';
-    utterance.rate = rate;
-    window.speechSynthesis.speak(utterance);
-  }
-
-  // Рендер карточек сравнения
+  // Функция рендера карточек
   function renderComparisons(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
     let html = `
-      <div class="pinyin-comparisons-section">
-        <h3 class="comparisons-title">🎧 Сравнение похожих звуков</h3>
+      <div class="card">
+        <h2 style="margin-bottom: 20px;">🔊 Сравнение похожих звуков</h2>
+        <p style="margin-bottom: 16px; color: #555;">🎯 Нажмите на кнопку, чтобы открыть видеоурок. Видео откроется в новой вкладке.</p>
         <div class="comparisons-grid">
     `;
-    
+
     SOUND_COMPARISONS.forEach(item => {
       html += `
         <div class="comparison-card">
@@ -47,98 +38,106 @@
           <a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="comparison-link">
             🎬 Смотреть видео
           </a>
+          <div style="font-size: 11px; color: #999; margin-top: 12px;">🌐 RedNote (возможен VPN)</div>
         </div>
       `;
     });
-    
+
     html += `</div></div>`;
     container.innerHTML = html;
   }
 
-  // Добавляем кнопку в фильтры
-  function addPinyinFilterButton() {
-    const filterBar = document.querySelector('.filter-bar, .filters, .buttons-container, .fbtn-container');
-    if (!filterBar) {
-      console.warn('Контейнер фильтров не найден');
+  // ===== 1. ДОБАВЛЯЕМ ВКЛАДКУ В ВЕРХНЕЕ МЕНЮ =====
+  function addTabToMainMenu() {
+    const tabsContainer = document.querySelector('.tabs');
+    if (!tabsContainer) {
+      console.error('❌ Контейнер .tabs не найден');
       return;
     }
-    if (filterBar.querySelector('[data-cat="pinyin"]')) return;
-    
-    const btn = document.createElement('span');
-    btn.className = 'fbtn';
-    btn.setAttribute('data-cat', 'pinyin');
-    btn.textContent = '🔊 Сравнение звуков';
-    filterBar.appendChild(btn);
+
+    // Проверяем, нет ли уже такой вкладки
+    if (tabsContainer.querySelector('[data-tab="pinyin-sounds"]')) return;
+
+    const newTab = document.createElement('div');
+    newTab.className = 'tab';
+    newTab.setAttribute('data-tab', 'pinyin-sounds');
+    newTab.textContent = '🔊 Звуки пиньинь';
+    tabsContainer.appendChild(newTab);
+    console.log('✅ Вкладка "Звуки пиньинь" добавлена в главное меню');
   }
 
-  // Создаём контейнер
-  function createPinyinContainer() {
-    if (document.getElementById('pinyinContainer')) return;
-    const container = document.createElement('div');
-    container.id = 'pinyinContainer';
-    container.style.display = 'none';
-    
-    const wordsContainer = document.getElementById('wordsContainer') || document.getElementById('cardsContainer');
-    if (wordsContainer?.parentNode) {
-      wordsContainer.parentNode.insertBefore(container, wordsContainer.nextSibling);
+  // ===== 2. СОЗДАЁМ ПАНЕЛЬ ДЛЯ ЭТОЙ ВКЛАДКИ =====
+  function createPanelForTab() {
+    if (document.getElementById('pinyinSoundsPanel')) return;
+
+    const panel = document.createElement('div');
+    panel.id = 'pinyinSoundsPanel';
+    panel.className = 'panel';
+    panel.style.display = 'none';
+    panel.innerHTML = '<div id="pinyinSoundsContainer"></div>';
+
+    // Вставляем после панели studyPanel или в конец body
+    const studyPanel = document.getElementById('studyPanel');
+    if (studyPanel && studyPanel.parentNode) {
+      studyPanel.parentNode.insertBefore(panel, studyPanel.nextSibling);
     } else {
-      document.body.appendChild(container);
+      document.body.appendChild(panel);
     }
+    console.log('✅ Панель pinyinSoundsPanel создана');
   }
 
-  // Переключение вкладок
-  function setupFilterHandler() {
-    const buttons = document.querySelectorAll('[data-cat]');
-    buttons.forEach(btn => {
-      btn.removeEventListener('click', window._pinyinHandler);
-      const handler = function() {
-        const cat = this.getAttribute('data-cat');
-        const wordsContainer = document.getElementById('wordsContainer') || document.getElementById('cardsContainer');
-        const pinyinContainer = document.getElementById('pinyinContainer');
-        
-        if (cat === 'pinyin') {
-          if (wordsContainer) wordsContainer.style.display = 'none';
-          if (pinyinContainer) {
-            pinyinContainer.style.display = 'block';
-            renderComparisons('pinyinContainer');
-          }
-        } else {
-          if (wordsContainer) wordsContainer.style.display = 'block';
-          if (pinyinContainer) pinyinContainer.style.display = 'none';
-          if (typeof window.filterWordsByCategory === 'function') {
-            window.filterWordsByCategory(cat);
-          } else if (typeof window.renderWordsByCategory === 'function') {
-            window.renderWordsByCategory(cat);
-          }
+  // ===== 3. ИНТЕГРИРУЕМ С СУЩЕСТВУЮЩЕЙ СИСТЕМОЙ ПЕРЕКЛЮЧЕНИЯ ТАБОВ =====
+  function integrateWithExistingTabs() {
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+
+    tabs.forEach(tab => {
+      // Удаляем старый обработчик, если он был
+      const oldHandler = tab._pinyinTabHandler;
+      if (oldHandler) {
+        tab.removeEventListener('click', oldHandler);
+      }
+
+      // Создаём новый обработчик
+      const handler = function(e) {
+        const tabId = this.getAttribute('data-tab');
+
+        // Скрываем все панели
+        panels.forEach(panel => panel.classList.remove('active'));
+
+        // Показываем нужную панель
+        const targetPanel = document.getElementById(`${tabId}Panel`);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
         }
+
+        // Если это наша вкладка — рендерим содержимое
+        if (tabId === 'pinyin-sounds') {
+          renderComparisons('pinyinSoundsContainer');
+        }
+
+        // Обновляем активный класс для табов
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
       };
-      btn.addEventListener('click', handler);
-      btn._pinyinHandler = handler;
+
+      tab.addEventListener('click', handler);
+      tab._pinyinTabHandler = handler;
     });
+    console.log('✅ Навигация по вкладкам обновлена');
   }
 
-  // Стили
+  // ===== СТИЛИ =====
   function addStyles() {
     if (document.getElementById('pinyin-styles')) return;
     const style = document.createElement('style');
     style.id = 'pinyin-styles';
     style.textContent = `
-      .pinyin-comparisons-section {
-        margin: 20px;
-        padding: 24px;
-        background: #f8f9fc;
-        border-radius: 28px;
-      }
-      .comparisons-title {
-        font-size: 24px;
-        text-align: center;
-        margin-bottom: 24px;
-        color: #2c3e66;
-      }
       .comparisons-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 20px;
+        margin-top: 20px;
       }
       .comparison-card {
         background: white;
@@ -180,13 +179,13 @@
     document.head.appendChild(style);
   }
 
-  // Инициализация
+  // ===== ЗАПУСК =====
   function init() {
     addStyles();
-    createPinyinContainer();
-    addPinyinFilterButton();
-    setupFilterHandler();
-    console.log('✅ Модуль "Сравнение звуков" загружен');
+    addTabToMainMenu();        // Добавляем вкладку в .tabs
+    createPanelForTab();       // Создаём панель
+    integrateWithExistingTabs(); // Настраиваем переключение
+    console.log('✅ Модуль "Сравнение звуков" полностью загружен');
   }
 
   if (document.readyState === 'loading') {
