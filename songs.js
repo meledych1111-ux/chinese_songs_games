@@ -29,22 +29,17 @@ const SONGS = [
      url: "https://www.xiaohongshu.com/explore/69e724a2000000001a02da93?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBt1RNvTgvLJ0jMEgA8pVHsdJMhwqYDvJutf3fbEurwQM%3D&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876503&share_id=c4d2754bc548433cbf40dac43b0bdd60",
      desc: "Классическое стихотворение эпохи Тан"
    },
-   {
-     emoji: "📚",
-     title: "劝学 (Побуждение к учению)",
-     url: "https://www.xiaohongshu.com/explore/69d9d24d0000000023016749?xsec_token=ABw1dWfdBOwhkLx6MYeWqVIUXG9qhlKROtmnqaHSnGY8o=&xsec_source=pc_user",
-     desc: "О важности усердной учёбы"
-   },
+
    {
      emoji: "🌸",
      title: "梅花 (Цветы сливы) — Ван Аньши",
-     url: "https://www.xiaohongshu.com/explore/69d8af97000000001e00ecc5?xsec_token=ABJ1XhhZu8MBf5VeZQvzlBetX0_zLL490cVC3yaYy9W-Y=&xsec_source=pc_user",
+     url: "https://www.xiaohongshu.com/explore/69d8af97000000001e00ecc5?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBsFAZP54Ip-psHl4OQBDnAPJDlCcyMS0nrnp3fCPxRS8=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876543&share_id=1d01d6084a5448d7a442e63eeb97bf7e",
      desc: "О благородстве и стойкости"
    },
    {
      emoji: "📖",
      title: "幼小阶段古诗词全集（十一）",
-     url: "https://www.xiaohongshu.com/explore/69e0808c0000000020038749?xsec_token=ABMHiHmw6RUonJyI9U_B0aNrCRJi2ZLZorZLZW3NxW__8=&xsec_source=pc_user",
+     url: "https://www.xiaohongshu.com/explore/69e0808c0000000020038749?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBfxspWIrIgj8LQ8cZniejYzpma7_ZXx9uHIsj4IwyhM4=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876516&share_id=7d5d76b146d84c6fa1b071894fe1eb15",
      desc: "Сборник классических стихов"
    },
    {
@@ -55,14 +50,14 @@ const SONGS = [
    },
    {
      emoji: "📜",
-     title: "三字经 (3) — Троесловие",
-     url: "https://www.xiaohongshu.com/explore/685bed09000000002400f2c2?xsec_token=ABpHa1u6kHhGnyemonvX_YzlrcLCyoPjLq6CoZVoAbcck=&xsec_source=pc_user",
+     title: "三字经 (Часть 3) — Троесловие",
+     url: "https://www.xiaohongshu.com/explore/6857908c0000000022030714?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBDfooP4PYevDPI1bOzFEYdmZuApQ1tlO4vfJxPp3_0eI=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876590&share_id=5138b31e1f2e47b999cc8517d7caf5e5",
      desc: "Классика с пояснениями"
    },
    {
      emoji: "📚",
-     title: "三字经 (2) — Троесловие",
-     url: "https://www.xiaohongshu.com/explore/6857908c0000000022030714?xsec_token=ABNYOZl-tyW2BoSACKO-__ZVpOChTP79iFcMRtGuxTt3k=&xsec_source=pc_user",
+     title: "三字经 (Часть 2) — Троесловие",
+     url: "https://www.xiaohongshu.com/explore/68514a73000000002001c454?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&noteAttributes=goods&xsec_token=CBG8b149wWXns9ebJhzd-_2cJ3JXP8YK8658GO4qGZq2s=&author_share=1&back_chain_id=goods_video_share&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876601&share_id=f51a7b078bb6480e8520fc1807a701dd",
      desc: "Продолжение изучения"
    }
  ];
