@@ -978,7 +978,7 @@ function newGame() {
 }
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { setTimeout(function() { if(typeof generateToneComparisons === "function") generateToneComparisons(); }, 500);
   initCanvas();
   initVoice();
   updateUI();
