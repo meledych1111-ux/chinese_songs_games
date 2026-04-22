@@ -1,298 +1,298 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<!-- ОСНОВНЫЕ МЕТА-ТЕГИ ДЛЯ PWA / WEB APP -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-<meta name="theme-color" content="#4361ee">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Китайский курс">
-<meta name="application-name" content="Китайский курс">
-<meta name="mobile-web-app-capable" content="yes">
-<!-- ИКОНКА БЕЗ КАРТИНКИ: используем data:image/svg+xml + эмодзи -->
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
-<link rel="manifest" href="manifest.json">
-<title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс (500+ слов)</title>
+    <meta charset="UTF-8">
+    <!-- ОСНОВНЫЕ МЕТА-ТЕГИ ДЛЯ PWA / WEB APP -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="theme-color" content="#4361ee">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Китайский курс">
+    <meta name="application-name" content="Китайский курс">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- ИКОНКА БЕЗ КАРТИНКИ: используем data:image/svg+xml + эмодзи -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
+    <link rel="manifest" href="manifest.json">
+    <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс (500+ слов)</title>
     <!-- ПОДКЛЮЧЕНИЕ ДАННЫХ -->
     <script src="songs.js">
-function selectWordByIndex(idx, tab) {
-  if(!WORDS[idx]) {
-    console.error('Слово не найдено, индекс:', idx);
-    return;
-  }
-  
-  currentW = WORDS[idx];
-  updateUI();
-  
-  if(ctx) clearCanvas();
-  closeModal();
-  switchTab(tab);
-  
-  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
-  let f = document.getElementById(feedId);
-  if(f) { 
-    f.innerHTML = "✅ Слово выбрано!"; 
-    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
-  }
-  
-  if(tab === 'cards') {
-    let cFront = document.getElementById('cFront');
-    let cBack = document.getElementById('cBack');
-    if(cFront) cFront.style.display = 'block';
-    if(cBack) cBack.style.display = 'none';
-  }
-}
+        function selectWordByIndex(idx, tab) {
+          if(!WORDS[idx]) {
+            console.error('Слово не найдено, индекс:', idx);
+            return;
+          }
 
-</script>
+          currentW = WORDS[idx];
+          updateUI();
+
+          if(ctx) clearCanvas();
+          closeModal();
+          switchTab(tab);
+
+          let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+          let f = document.getElementById(feedId);
+          if(f) {
+            f.innerHTML = "✅ Слово выбрано!";
+            setTimeout(() => { if(f) f.innerHTML = ""; }, 2000);
+          }
+
+          if(tab === 'cards') {
+            let cFront = document.getElementById('cFront');
+            let cBack = document.getElementById('cBack');
+            if(cFront) cFront.style.display = 'block';
+            if(cBack) cBack.style.display = 'none';
+          }
+        }
+
+    </script>
     <script src="WORDS.js">
-function selectWordByIndex(idx, tab) {
-  if(!WORDS[idx]) {
-    console.error('Слово не найдено, индекс:', idx);
-    return;
-  }
-  
-  currentW = WORDS[idx];
-  updateUI();
-  
-  if(ctx) clearCanvas();
-  closeModal();
-  switchTab(tab);
-  
-  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
-  let f = document.getElementById(feedId);
-  if(f) { 
-    f.innerHTML = "✅ Слово выбрано!"; 
-    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
-  }
-  
-  if(tab === 'cards') {
-    let cFront = document.getElementById('cFront');
-    let cBack = document.getElementById('cBack');
-    if(cFront) cFront.style.display = 'block';
-    if(cBack) cBack.style.display = 'none';
-  }
-}
+        function selectWordByIndex(idx, tab) {
+          if(!WORDS[idx]) {
+            console.error('Слово не найдено, индекс:', idx);
+            return;
+          }
 
-</script>
+          currentW = WORDS[idx];
+          updateUI();
+
+          if(ctx) clearCanvas();
+          closeModal();
+          switchTab(tab);
+
+          let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+          let f = document.getElementById(feedId);
+          if(f) {
+            f.innerHTML = "✅ Слово выбрано!";
+            setTimeout(() => { if(f) f.innerHTML = ""; }, 2000);
+          }
+
+          if(tab === 'cards') {
+            let cFront = document.getElementById('cFront');
+            let cBack = document.getElementById('cBack');
+            if(cFront) cFront.style.display = 'block';
+            if(cBack) cBack.style.display = 'none';
+          }
+        }
+
+    </script>
     <script src="GRAMMAR.js">
-function selectWordByIndex(idx, tab) {
-  if(!WORDS[idx]) {
-    console.error('Слово не найдено, индекс:', idx);
-    return;
-  }
-  
-  currentW = WORDS[idx];
-  updateUI();
-  
-  if(ctx) clearCanvas();
-  closeModal();
-  switchTab(tab);
-  
-  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
-  let f = document.getElementById(feedId);
-  if(f) { 
-    f.innerHTML = "✅ Слово выбрано!"; 
-    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
-  }
-  
-  if(tab === 'cards') {
-    let cFront = document.getElementById('cFront');
-    let cBack = document.getElementById('cBack');
-    if(cFront) cFront.style.display = 'block';
-    if(cBack) cBack.style.display = 'none';
-  }
-}
+        function selectWordByIndex(idx, tab) {
+          if(!WORDS[idx]) {
+            console.error('Слово не найдено, индекс:', idx);
+            return;
+          }
 
-</script>
+          currentW = WORDS[idx];
+          updateUI();
+
+          if(ctx) clearCanvas();
+          closeModal();
+          switchTab(tab);
+
+          let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+          let f = document.getElementById(feedId);
+          if(f) {
+            f.innerHTML = "✅ Слово выбрано!";
+            setTimeout(() => { if(f) f.innerHTML = ""; }, 2000);
+          }
+
+          if(tab === 'cards') {
+            let cFront = document.getElementById('cFront');
+            let cBack = document.getElementById('cBack');
+            if(cFront) cFront.style.display = 'block';
+            if(cBack) cBack.style.display = 'none';
+          }
+        }
+
+    </script>
     <script src="DIALOGS.js">
-function selectWordByIndex(idx, tab) {
-  if(!WORDS[idx]) {
-    console.error('Слово не найдено, индекс:', idx);
-    return;
-  }
-  
-  currentW = WORDS[idx];
-  updateUI();
-  
-  if(ctx) clearCanvas();
-  closeModal();
-  switchTab(tab);
-  
-  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
-  let f = document.getElementById(feedId);
-  if(f) { 
-    f.innerHTML = "✅ Слово выбрано!"; 
-    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
-  }
-  
-  if(tab === 'cards') {
-    let cFront = document.getElementById('cFront');
-    let cBack = document.getElementById('cBack');
-    if(cFront) cFront.style.display = 'block';
-    if(cBack) cBack.style.display = 'none';
-  }
-}
+        function selectWordByIndex(idx, tab) {
+          if(!WORDS[idx]) {
+            console.error('Слово не найдено, индекс:', idx);
+            return;
+          }
 
-</script>
+          currentW = WORDS[idx];
+          updateUI();
+
+          if(ctx) clearCanvas();
+          closeModal();
+          switchTab(tab);
+
+          let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+          let f = document.getElementById(feedId);
+          if(f) {
+            f.innerHTML = "✅ Слово выбрано!";
+            setTimeout(() => { if(f) f.innerHTML = ""; }, 2000);
+          }
+
+          if(tab === 'cards') {
+            let cFront = document.getElementById('cFront');
+            let cBack = document.getElementById('cBack');
+            if(cFront) cFront.style.display = 'block';
+            if(cBack) cBack.style.display = 'none';
+          }
+        }
+
+    </script>
     <script src="RADICALS.js">
-function selectWordByIndex(idx, tab) {
-  if(!WORDS[idx]) {
-    console.error('Слово не найдено, индекс:', idx);
-    return;
-  }
-  
-  currentW = WORDS[idx];
-  updateUI();
-  
-  if(ctx) clearCanvas();
-  closeModal();
-  switchTab(tab);
-  
-  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
-  let f = document.getElementById(feedId);
-  if(f) { 
-    f.innerHTML = "✅ Слово выбрано!"; 
-    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
-  }
-  
-  if(tab === 'cards') {
-    let cFront = document.getElementById('cFront');
-    let cBack = document.getElementById('cBack');
-    if(cFront) cFront.style.display = 'block';
-    if(cBack) cBack.style.display = 'none';
-  }
-}
+        function selectWordByIndex(idx, tab) {
+          if(!WORDS[idx]) {
+            console.error('Слово не найдено, индекс:', idx);
+            return;
+          }
 
-</script>
+          currentW = WORDS[idx];
+          updateUI();
+
+          if(ctx) clearCanvas();
+          closeModal();
+          switchTab(tab);
+
+          let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+          let f = document.getElementById(feedId);
+          if(f) {
+            f.innerHTML = "✅ Слово выбрано!";
+            setTimeout(() => { if(f) f.innerHTML = ""; }, 2000);
+          }
+
+          if(tab === 'cards') {
+            let cFront = document.getElementById('cFront');
+            let cBack = document.getElementById('cBack');
+            if(cFront) cFront.style.display = 'block';
+            if(cBack) cBack.style.display = 'none';
+          }
+        }
+
+    </script>
 
     <style>
-:root {
-  --primary: #4361ee; --primary-dark: #3a56d4;
-  --accent: #ff6b35; --success: #2ecc71; --error: #e74c3c;
-  --text: #2c3e50; --text-light: #7f8c8d;
-  --radius: 28px; --shadow: 0 12px 35px rgba(0,0,0,0.15);
-  --t1: #e53935; --t2: #1e88e5; --t3: #43a047; --t4: #fdd835; --t5: #7f8c8d;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body {
-  background: linear-gradient(145deg, #1a5f7a 0%, #f5d6a8 100%);
-  font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', Roboto, Helvetica, Arial, sans-serif;
-  color: var(--text);
-  padding: 12px;
-  padding-top: env(safe-area-inset-top, 20px);
-  min-height: 100vh;
-  font-size: 18px;
-}
-.container { max-width: 850px; margin: 0 auto; padding-bottom: 30px; }
-/* Исправлено: табы не ломаются на узких экранах */
-.tabs {
-  display: flex; flex-wrap: wrap; gap: 8px; background: rgba(255,255,255,0.95);
-  border-radius: 60px; padding: 10px; margin-bottom: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15); justify-content: center; backdrop-filter: blur(10px);
-}
-.tab {
-  padding: 12px 14px; border-radius: 50px; font-weight: 700; font-size: 14px;
-  background: #eef2f7; cursor: pointer; transition: all 0.2s; text-align: center;
-  min-height: 44px; display: flex; align-items: center; justify-content: center; user-select: none;
-  flex: 0 0 auto;
-}
-.tab.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.02) translateY(-1px); box-shadow: 0 5px 12px rgba(67, 97, 238, 0.3); }
-.tab:active { transform: scale(0.96); }
+        :root {
+          --primary: #4361ee; --primary-dark: #3a56d4;
+          --accent: #ff6b35; --success: #2ecc71; --error: #e74c3c;
+          --text: #2c3e50; --text-light: #7f8c8d;
+          --radius: 28px; --shadow: 0 12px 35px rgba(0,0,0,0.15);
+          --t1: #e53935; --t2: #1e88e5; --t3: #43a047; --t4: #fdd835; --t5: #7f8c8d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+          background: linear-gradient(145deg, #1a5f7a 0%, #f5d6a8 100%);
+          font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', Roboto, Helvetica, Arial, sans-serif;
+          color: var(--text);
+          padding: 12px;
+          padding-top: env(safe-area-inset-top, 20px);
+          min-height: 100vh;
+          font-size: 18px;
+        }
+        .container { max-width: 850px; margin: 0 auto; padding-bottom: 30px; }
+        /* Исправлено: табы не ломаются на узких экранах */
+        .tabs {
+          display: flex; flex-wrap: wrap; gap: 8px; background: rgba(255,255,255,0.95);
+          border-radius: 60px; padding: 10px; margin-bottom: 20px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.15); justify-content: center; backdrop-filter: blur(10px);
+        }
+        .tab {
+          padding: 12px 14px; border-radius: 50px; font-weight: 700; font-size: 14px;
+          background: #eef2f7; cursor: pointer; transition: all 0.2s; text-align: center;
+          min-height: 44px; display: flex; align-items: center; justify-content: center; user-select: none;
+          flex: 0 0 auto;
+        }
+        .tab.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.02) translateY(-1px); box-shadow: 0 5px 12px rgba(67, 97, 238, 0.3); }
+        .tab:active { transform: scale(0.96); }
 
-.panel { display: none; animation: fade 0.3s ease; }
-.panel.active { display: block; }
-@keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .panel { display: none; animation: fade 0.3s ease; }
+        .panel.active { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.card {
-  background: rgba(255,255,255,0.95); border-radius: var(--radius); padding: 24px 18px;
-  text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; backdrop-filter: blur(10px);
-}
-.big-char { font-size: 96px; font-weight: 900; line-height: 1.1; margin: 12px 0; color: var(--primary-dark); text-shadow: 2px 2px 0 rgba(0,0,0,0.08); }
-.pinyin { font-size: 24px; font-weight: 700; margin: 8px 0; letter-spacing: 0.5px; }
-.pinyin .t1 { color: var(--t1); } .pinyin .t2 { color: var(--t2); }
-.pinyin .t3 { color: var(--t3); } .pinyin .t4 { color: var(--t4); }
-.pinyin .t5 { color: var(--t5); }
-.meaning { font-size: 22px; background: linear-gradient(135deg, #e3f2fd, #bbdefb); display: inline-block; padding: 10px 22px; border-radius: 50px; margin: 12px 0; font-weight: 700; }
-.emoji { font-size: 64px; margin: 10px 0; }
-.badge { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; padding: 6px 16px; border-radius: 25px; font-size: 13px; font-weight: 700; display: inline-block; }
+        .card {
+          background: rgba(255,255,255,0.95); border-radius: var(--radius); padding: 24px 18px;
+          text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; backdrop-filter: blur(10px);
+        }
+        .big-char { font-size: 96px; font-weight: 900; line-height: 1.1; margin: 12px 0; color: var(--primary-dark); text-shadow: 2px 2px 0 rgba(0,0,0,0.08); }
+        .pinyin { font-size: 24px; font-weight: 700; margin: 8px 0; letter-spacing: 0.5px; }
+        .pinyin .t1 { color: var(--t1); } .pinyin .t2 { color: var(--t2); }
+        .pinyin .t3 { color: var(--t3); } .pinyin .t4 { color: var(--t4); }
+        .pinyin .t5 { color: var(--t5); }
+        .meaning { font-size: 22px; background: linear-gradient(135deg, #e3f2fd, #bbdefb); display: inline-block; padding: 10px 22px; border-radius: 50px; margin: 12px 0; font-weight: 700; }
+        .emoji { font-size: 64px; margin: 10px 0; }
+        .badge { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; padding: 6px 16px; border-radius: 25px; font-size: 13px; font-weight: 700; display: inline-block; }
 
-.btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 20px 0; }
-button, .btn {
-  background: linear-gradient(135deg, #ff9a44, #ff6b35); border: none; padding: 14px 22px; font-size: 16px; font-weight: 700;
-  border-radius: 50px; color: white; cursor: pointer; transition: all 0.2s; min-height: 52px;
-  box-shadow: 0 4px 12px rgba(255,107,53,0.3); text-transform: uppercase; letter-spacing: 0.3px;
-  -webkit-appearance: none; appearance: none;
-}
-button:active, .btn:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-.voice-btn { background: linear-gradient(135deg, #44aa77, #2d8a5c); box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3); }
-.voice-btn.rec { background: linear-gradient(135deg, #e74c3c, #c0392b); animation: pulse 1s infinite; }
-@keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.03); opacity: 0.9; } }
+        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 20px 0; }
+        button, .btn {
+          background: linear-gradient(135deg, #ff9a44, #ff6b35); border: none; padding: 14px 22px; font-size: 16px; font-weight: 700;
+          border-radius: 50px; color: white; cursor: pointer; transition: all 0.2s; min-height: 52px;
+          box-shadow: 0 4px 12px rgba(255,107,53,0.3); text-transform: uppercase; letter-spacing: 0.3px;
+          -webkit-appearance: none; appearance: none;
+        }
+        button:active, .btn:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .voice-btn { background: linear-gradient(135deg, #44aa77, #2d8a5c); box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3); }
+        .voice-btn.rec { background: linear-gradient(135deg, #e74c3c, #c0392b); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.03); opacity: 0.9; } }
 
-/* КНОПКА СЛУЧАЙНОГО СЛОВА */
-.random-btn { background: linear-gradient(135deg, #6b44ff, #4361ee); box-shadow: 0 4px 12px rgba(107, 68, 255, 0.3); }
+        /* КНОПКА СЛУЧАЙНОГО СЛОВА */
+        .random-btn { background: linear-gradient(135deg, #6b44ff, #4361ee); box-shadow: 0 4px 12px rgba(107, 68, 255, 0.3); }
 
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; backdrop-filter: blur(6px); }
-.modal.active { display: flex; }
-.modal-content { background: white; border-radius: 36px; padding: 24px; max-width: 92vw; max-height: 85vh; overflow-y: auto; width: 100%; position: relative; text-align: center; animation: slideUp 0.25s; }
-.close { position: absolute; top: 8px; right: 12px; font-size: 36px; cursor: pointer; color: #94a3b8; background: none; box-shadow: none; padding: 4px 12px; border-radius: 50%; line-height: 1; }
-.assoc { background: #fff8e1; border-radius: 22px; padding: 18px; margin: 16px 0; text-align: left; border-left: 5px solid #ffb300; font-size: 17px; line-height: 1.5; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; backdrop-filter: blur(6px); }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 36px; padding: 24px; max-width: 92vw; max-height: 85vh; overflow-y: auto; width: 100%; position: relative; text-align: center; animation: slideUp 0.25s; }
+        .close { position: absolute; top: 8px; right: 12px; font-size: 36px; cursor: pointer; color: #94a3b8; background: none; box-shadow: none; padding: 4px 12px; border-radius: 50%; line-height: 1; }
+        .assoc { background: #fff8e1; border-radius: 22px; padding: 18px; margin: 16px 0; text-align: left; border-left: 5px solid #ffb300; font-size: 17px; line-height: 1.5; }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 14px; margin: 20px 0; }
-.grid-item {
-  background: rgba(255,255,255,0.9); border-radius: 24px; padding: 16px 8px; text-align: center; cursor: pointer;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.08); transition: 0.15s; border: 2px solid transparent;
-  min-height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-}
-.grid-item:active { transform: scale(0.96); background: rgba(255,255,255,1); }
-.grid-item .ch { font-size: 34px; font-weight: 800; margin: 6px 0; }
-.grid-item .info { font-size: 14px; color: var(--text-light); font-weight: 600; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 14px; margin: 20px 0; }
+        .grid-item {
+          background: rgba(255,255,255,0.9); border-radius: 24px; padding: 16px 8px; text-align: center; cursor: pointer;
+          box-shadow: 0 5px 12px rgba(0,0,0,0.08); transition: 0.15s; border: 2px solid transparent;
+          min-height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .grid-item:active { transform: scale(0.96); background: rgba(255,255,255,1); }
+        .grid-item .ch { font-size: 34px; font-weight: 800; margin: 6px 0; }
+        .grid-item .info { font-size: 14px; color: var(--text-light); font-weight: 600; }
 
-.filter-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px 0; max-height: 140px; overflow-y: auto; padding: 6px; }
-.fbtn { padding: 10px 16px; background: rgba(255,255,255,0.9); border-radius: 35px; cursor: pointer; font-weight: 700; font-size: 13px; user-select: none; transition: 0.1s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-.fbtn.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.02); }
+        .filter-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px 0; max-height: 140px; overflow-y: auto; padding: 6px; }
+        .fbtn { padding: 10px 16px; background: rgba(255,255,255,0.9); border-radius: 35px; cursor: pointer; font-weight: 700; font-size: 13px; user-select: none; transition: 0.1s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .fbtn.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.02); }
 
-.dialog-card { background: rgba(255,255,255,0.92); border-radius: 32px; padding: 20px; margin: 14px 0; }
-.dialog-line { padding: 14px; margin: 8px 0; border-radius: 20px; font-size: 18px; font-weight: 600; }
-.q { background: #e3f2fd; color: #0d47a1; }
-.a { background: #fff3e0; color: #e65100; }
+        .dialog-card { background: rgba(255,255,255,0.92); border-radius: 32px; padding: 20px; margin: 14px 0; }
+        .dialog-line { padding: 14px; margin: 8px 0; border-radius: 20px; font-size: 18px; font-weight: 600; }
+        .q { background: #e3f2fd; color: #0d47a1; }
+        .a { background: #fff3e0; color: #e65100; }
 
-canvas { background: white; border-radius: 24px; display: block; margin: 18px auto; border: 3px solid #cbd5e1; cursor: crosshair; touch-action: none; width: 100%; height: auto; max-width: 400px; aspect-ratio: 1 / 1; }
-.song-card { background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; margin: 16px 0; }
-.song-title { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 14px; color: var(--primary-dark); }
+        canvas { background: white; border-radius: 24px; display: block; margin: 18px auto; border: 3px solid #cbd5e1; cursor: crosshair; touch-action: none; width: 100%; height: auto; max-width: 400px; aspect-ratio: 1 / 1; }
+        .song-card { background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; margin: 16px 0; }
+        .song-title { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 14px; color: var(--primary-dark); }
 
-/* ОБНОВЛЕННЫЕ СТИЛИ ГРАММАТИКИ ДЛЯ ДЕТЕЙ */
-.grammar-card {
-  background: white; border-radius: 30px; padding: 22px; margin: 20px 0;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-left: 12px solid #4361ee;
-  transition: transform 0.2s; text-align: left; position: relative; overflow: hidden;
-}
-.grammar-card:nth-child(5n+1) { border-left-color: #4361ee; background: #f0f3ff; }
-.grammar-card:nth-child(5n+2) { border-left-color: #f72585; background: #fff0f6; }
-.grammar-card:nth-child(5n+3) { border-left-color: #4cc9f0; background: #f0faff; }
-.grammar-card:nth-child(5n+4) { border-left-color: #ff9f1c; background: #fff8f0; }
-.grammar-card:nth-child(5n+5) { border-left-color: #2ec4b6; background: #f0fdfa; }
+        /* ОБНОВЛЕННЫЕ СТИЛИ ГРАММАТИКИ ДЛЯ ДЕТЕЙ */
+        .grammar-card {
+          background: white; border-radius: 30px; padding: 22px; margin: 20px 0;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-left: 12px solid #4361ee;
+          transition: transform 0.2s; text-align: left; position: relative; overflow: hidden;
+        }
+        .grammar-card:nth-child(5n+1) { border-left-color: #4361ee; background: #f0f3ff; }
+        .grammar-card:nth-child(5n+2) { border-left-color: #f72585; background: #fff0f6; }
+        .grammar-card:nth-child(5n+3) { border-left-color: #4cc9f0; background: #f0faff; }
+        .grammar-card:nth-child(5n+4) { border-left-color: #ff9f1c; background: #fff8f0; }
+        .grammar-card:nth-child(5n+5) { border-left-color: #2ec4b6; background: #f0fdfa; }
 
-.g-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; color: #1e293b; display: flex; align-items: center; gap: 10px; }
-.g-rule { font-size: 17px; line-height: 1.6; color: #475569; margin-bottom: 15px; font-weight: 600; }
-.g-ex {
-  background: rgba(255,255,255,0.8); padding: 15px; border-radius: 20px;
-  font-family: inherit; font-size: 17px; border: 2px dashed rgba(0,0,0,0.1);
-  color: #1e293b; line-height: 1.5;
-}
-.g-ex b { color: var(--primary); font-weight: 800; }
+        .g-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; color: #1e293b; display: flex; align-items: center; gap: 10px; }
+        .g-rule { font-size: 17px; line-height: 1.6; color: #475569; margin-bottom: 15px; font-weight: 600; }
+        .g-ex {
+          background: rgba(255,255,255,0.8); padding: 15px; border-radius: 20px;
+          font-family: inherit; font-size: 17px; border: 2px dashed rgba(0,0,0,0.1);
+          color: #1e293b; line-height: 1.5;
+        }
+        .g-ex b { color: var(--primary); font-weight: 800; }
 
-@media (max-width: 650px) {
-  .big-char { font-size: 74px; }
-  .tab { font-size: 12px; padding: 10px 12px; }
-  .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  button, .btn { font-size: 14px; padding: 12px 18px; min-height: 48px; }
-  .dialog-line { font-size: 16px; }
-  .g-title { font-size: 19px; }
-  .g-rule { font-size: 15px; }
-}
-</style>
+        @media (max-width: 650px) {
+          .big-char { font-size: 74px; }
+          .tab { font-size: 12px; padding: 10px 12px; }
+          .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+          button, .btn { font-size: 14px; padding: 12px 18px; min-height: 48px; }
+          .dialog-line { font-size: 16px; }
+          .g-title { font-size: 19px; }
+          .g-rule { font-size: 15px; }
+        }
+    </style>
 </head>
 <body>
 <div class="tabs">
@@ -310,986 +310,986 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
     <div class="tab" data-tab="radical-words">🔗 Слова по радикалам</div>
 </div>
 
-  <div id="modal" class="modal"><div class="modal-content" id="modalContent"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<div id="modal" class="modal"><div class="modal-content" id="modalContent"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
 
-  <div id="studyPanel" class="panel active">
+<div id="studyPanel" class="panel active">
     <div class="card">
-      <div class="big-char" id="sChar">水</div>
-      <div class="pinyin" id="sPinyin">shuǐ</div>
-      <div class="meaning" id="sMeaning">вода</div>
-      <div class="emoji" id="sEmoji">💧</div>
-      <div class="badge" id="sCat">Природа</div>
+        <div class="big-char" id="sChar">水</div>
+        <div class="pinyin" id="sPinyin">shuǐ</div>
+        <div class="meaning" id="sMeaning">вода</div>
+        <div class="emoji" id="sEmoji">💧</div>
+        <div class="badge" id="sCat">Природа</div>
     </div>
     <div class="btn-group">
-      <button id="sListen">🔊 Слушать</button>
-      <button id="sVoice" class="voice-btn">🎙️ Проверить</button>
-      <button id="sNext">🎲 Следующее</button>
-      <button id="sRandom" class="random-btn">✨ Случайное</button>
+        <button id="sListen">🔊 Слушать</button>
+        <button id="sVoice" class="voice-btn">🎙️ Проверить</button>
+        <button id="sNext">🎲 Следующее</button>
+        <button id="sRandom" class="random-btn">✨ Случайное</button>
     </div>
     <div id="sFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
     <div class="filter-row" id="wFilters">
-  <span class="fbtn active" data-cat="all">Все</span>
-  <span class="fbtn" data-cat="food">🍜 Еда</span>
-  <span class="fbtn" data-cat="home">🏠 Дом</span>
-  <span class="fbtn" data-cat="nature">🌿 Природа</span>
-  <span class="fbtn" data-cat="medicine">💊 Медицина</span>
-  <span class="fbtn" data-cat="family">👨‍👩‍👧 Семья</span>
-  <span class="fbtn" data-cat="transport">🚗 Транспорт</span>
-  <span class="fbtn" data-cat="numbers">🔢 Числа</span>
-  <span class="fbtn" data-cat="colors">🎨 Цвета</span>
-  <span class="fbtn" data-cat="animals">🐕 Животные</span>
-  <span class="fbtn" data-cat="places">🏛️ Места</span>
-  <span class="fbtn" data-cat="time">⏰ Время</span>
-  <span class="fbtn" data-cat="greetings">👋 Приветствия</span>
-  <span class="fbtn" data-cat="people">👥 Люди</span>
-  <span class="fbtn" data-cat="kitchen">🍳 Посуда</span>
-  <span class="fbtn" data-cat="clothes">👕 Одежда</span>
-  <span class="fbtn" data-cat="weather">🌤️ Погода</span>
-  <span class="fbtn" data-cat="verbs">🏃 Глаголы</span>
-  <span class="fbtn" data-cat="adjectives">📏 Прилагательные</span>
-  <span class="fbtn" data-cat="adverbs">📝 Наречия</span>
-  <span class="fbtn" data-cat="pronouns">👤 Местоимения</span>
-  <span class="fbtn" data-cat="questions">❓ Вопросы</span>
-  <span class="fbtn" data-cat="basics">👋 Основы</span>
-  <span class="fbtn" data-cat="shopping">🛍️ Покупки</span>
-  <span class="fbtn" data-cat="tech">💻 Технологии</span>
-  <span class="fbtn" data-cat="entertainment">🎬 Развлечения</span>
-  <span class="fbtn" data-cat="work">💼 Работа</span>
-  <span class="fbtn" data-cat="body">🧬 Части тела</span>
-  <span class="fbtn" data-cat="particles">🔤 Частицы</span>
-  <span class="fbtn" data-cat="conjunctions">🔗 Союзы</span>
-</div>
+        <span class="fbtn active" data-cat="all">Все</span>
+        <span class="fbtn" data-cat="food">🍜 Еда</span>
+        <span class="fbtn" data-cat="home">🏠 Дом</span>
+        <span class="fbtn" data-cat="nature">🌿 Природа</span>
+        <span class="fbtn" data-cat="medicine">💊 Медицина</span>
+        <span class="fbtn" data-cat="family">👨‍👩‍👧 Семья</span>
+        <span class="fbtn" data-cat="transport">🚗 Транспорт</span>
+        <span class="fbtn" data-cat="numbers">🔢 Числа</span>
+        <span class="fbtn" data-cat="colors">🎨 Цвета</span>
+        <span class="fbtn" data-cat="animals">🐕 Животные</span>
+        <span class="fbtn" data-cat="places">🏛️ Места</span>
+        <span class="fbtn" data-cat="time">⏰ Время</span>
+        <span class="fbtn" data-cat="greetings">👋 Приветствия</span>
+        <span class="fbtn" data-cat="people">👥 Люди</span>
+        <span class="fbtn" data-cat="kitchen">🍳 Посуда</span>
+        <span class="fbtn" data-cat="clothes">👕 Одежда</span>
+        <span class="fbtn" data-cat="weather">🌤️ Погода</span>
+        <span class="fbtn" data-cat="verbs">🏃 Глаголы</span>
+        <span class="fbtn" data-cat="adjectives">📏 Прилагательные</span>
+        <span class="fbtn" data-cat="adverbs">📝 Наречия</span>
+        <span class="fbtn" data-cat="pronouns">👤 Местоимения</span>
+        <span class="fbtn" data-cat="questions">❓ Вопросы</span>
+        <span class="fbtn" data-cat="basics">👋 Основы</span>
+        <span class="fbtn" data-cat="shopping">🛍️ Покупки</span>
+        <span class="fbtn" data-cat="tech">💻 Технологии</span>
+        <span class="fbtn" data-cat="entertainment">🎬 Развлечения</span>
+        <span class="fbtn" data-cat="work">💼 Работа</span>
+        <span class="fbtn" data-cat="body">🧬 Части тела</span>
+        <span class="fbtn" data-cat="particles">🔤 Частицы</span>
+        <span class="fbtn" data-cat="conjunctions">🔗 Союзы</span>
+    </div>
     <div class="grid" id="wordGrid"></div>
-  </div>
+</div>
 
-  <div id="numbersPanel" class="panel">
+<div id="numbersPanel" class="panel">
     <div class="card">
-      <h2 style="margin-bottom:18px;color:var(--primary);font-size:26px;font-weight:800;">🔢 Китайские числа</h2>
-      <div id="numGrid" class="grid"></div>
+        <h2 style="margin-bottom:18px;color:var(--primary);font-size:26px;font-weight:800;">🔢 Китайские числа</h2>
+        <div id="numGrid" class="grid"></div>
     </div>
-  </div>
+</div>
 
-  <div id="colorsPanel" class="panel">
+<div id="colorsPanel" class="panel">
     <div class="card">
-      <h2 style="margin-bottom:18px;color:var(--accent);font-size:26px;font-weight:800;">🎨 Цвета</h2>
-      <div id="colorGrid" class="grid"></div>
+        <h2 style="margin-bottom:18px;color:var(--accent);font-size:26px;font-weight:800;">🎨 Цвета</h2>
+        <div id="colorGrid" class="grid"></div>
     </div>
-  </div>
+</div>
 
-  <div id="dialogsPanel" class="panel">
+<div id="dialogsPanel" class="panel">
     <div class="card" id="dialogBox"></div>
     <div class="btn-group">
-      <button id="dPrev">◀ Пред</button>
-      <button id="dListen">🔊 Слушать</button>
-      <button id="dNext">След ▶</button>
+        <button id="dPrev">◀ Пред</button>
+        <button id="dListen">🔊 Слушать</button>
+        <button id="dNext">След ▶</button>
     </div>
-  </div>
+</div>
 
-  <div id="grammarPanel" class="panel">
+<div id="grammarPanel" class="panel">
     <div class="card" id="grammarBox" style="background:transparent;box-shadow:none;padding:0;"></div>
-  </div>
+</div>
 
-  <div id="songsPanel" class="panel">
+<div id="songsPanel" class="panel">
     <div id="songsBox"></div>
-  </div>
+</div>
 
-  <div id="radicalsPanel" class="panel">
+<div id="radicalsPanel" class="panel">
     <div class="card">
-      <div class="big-char" id="rChar">一</div>
-      <div class="pinyin" id="rPinyin">yī</div>
-      <div class="meaning" id="rMeaning">один/горизонталь</div>
+        <div class="big-char" id="rChar">一</div>
+        <div class="pinyin" id="rPinyin">yī</div>
+        <div class="meaning" id="rMeaning">один/горизонталь</div>
     </div>
     <div class="btn-group">
-      <button id="rListen">🔊 Слушать</button>
-      <button id="rVoice" class="voice-btn">🎙️ Проверить</button>
-      <button id="rNext">🎲 Следующий</button>
-      <button id="rAll">📋 Все 214</button>
+        <button id="rListen">🔊 Слушать</button>
+        <button id="rVoice" class="voice-btn">🎙️ Проверить</button>
+        <button id="rNext">🎲 Следующий</button>
+        <button id="rAll">📋 Все 214</button>
     </div>
     <div id="radicalDetail" class="assoc" style="display:none;"></div>
     <div id="radGrid" class="grid"></div>
-  </div>
+</div>
 
-  <div id="notebookPanel" class="panel">
+<div id="notebookPanel" class="panel">
     <div class="card">
-      <div class="big-char" id="nChar">水</div>
-      <canvas id="drawCanvas" width="400" height="400" style="background:#fff; border:3px solid #8B4513; border-radius:8px; touch-action:none; cursor:crosshair; box-shadow:0 4px 10px rgba(0,0,0,0.1);"></canvas>
-      
-      <!-- НАСТРОЙКИ КИСТИ И ПРОВЕРКА -->
-      <div style="margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 15px; background: #fdf2e9; padding: 10px; border-radius: 15px; border: 1px solid #e2d1c3; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span>🖌️ Толщина:</span>
-          <input type="range" id="nWeight" min="1" max="25" value="6" style="cursor: pointer; width: 120px;">
-          <span id="nWeightVal" style="font-weight: bold; min-width: 20px;">6</span>
+        <div class="big-char" id="nChar">水</div>
+        <canvas id="drawCanvas" width="400" height="400" style="background:#fff; border:3px solid #8B4513; border-radius:8px; touch-action:none; cursor:crosshair; box-shadow:0 4px 10px rgba(0,0,0,0.1);"></canvas>
+
+        <!-- НАСТРОЙКИ КИСТИ И ПРОВЕРКА -->
+        <div style="margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 15px; background: #fdf2e9; padding: 10px; border-radius: 15px; border: 1px solid #e2d1c3; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span>🖌️ Толщина:</span>
+                <input type="range" id="nWeight" min="1" max="25" value="6" style="cursor: pointer; width: 120px;">
+                <span id="nWeightVal" style="font-weight: bold; min-width: 20px;">6</span>
+            </div>
+            <button id="nVerify" style="background: linear-gradient(135deg, #673ab7, #512da8); padding: 10px 20px; font-size: 14px; min-height: 44px;">🎯 Проверить точность</button>
         </div>
-        <button id="nVerify" style="background: linear-gradient(135deg, #673ab7, #512da8); padding: 10px 20px; font-size: 14px; min-height: 44px;">🎯 Проверить точность</button>
-      </div>
 
-      <div style="margin-top:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-        <button id="nClear" style="background:#f44336; padding:10px 18px;">🧽 Очистить</button>
-        <button id="nGridBtn" style="background:#4caf50; padding:10px 18px;">📐 Показать сетку</button>
-        <button id="nExample" style="background:#2196f3; padding:10px 18px;">✍️ Образец</button>
-      </div>
-      
-      <div id="strokeGuide" style="margin-top:15px; padding:12px; background:#f5f5f5; border-radius:12px; text-align:left;">
-        <strong>📖 Как писать:</strong> <span id="strokeInfo">Нажмите "Образец" чтобы увидеть иероглиф для обведения</span>
-      </div>
-      
-      <div class="btn-group">
-        <button id="nListen">🔊 Слушать</button>
-        <button id="nVoice" class="voice-btn">🎙️ Голос</button>
-        <button id="nNext">🎲 Следующее</button>
-        <button id="nRandom" class="random-btn">✨ Случайное</button>
-      </div>
-      <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
-      <div class="assoc" id="nAssoc" style="margin-top:10px;"></div>
-    </div>
-  </div>
+        <div style="margin-top:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <button id="nClear" style="background:#f44336; padding:10px 18px;">🧽 Очистить</button>
+            <button id="nGridBtn" style="background:#4caf50; padding:10px 18px;">📐 Показать сетку</button>
+            <button id="nExample" style="background:#2196f3; padding:10px 18px;">✍️ Образец</button>
+        </div>
 
-  <div id="cardsPanel" class="panel">
-    <div class="card">
-      <div id="cFront">
-        <div class="big-char" id="cChar">水</div>
-        <div class="pinyin" id="cPinyin">shuǐ</div>
-      </div>
-      <div id="cBack" style="display:none;">
-        <div class="meaning" id="cMeaning">вода</div>
-        <div class="emoji" id="cBackEmoji" style="font-size:70px; margin:20px 0;">💧</div>
-        <div class="pinyin" id="cPinyinBack" style="font-size:20px; opacity:0.7;">shuǐ</div>
-      </div>
-      <div class="btn-group">
-        <button id="cListen">🔊 Слушать</button>
-        <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
-        <button id="cFlip">🔄 Перевернуть</button>
-        <button id="cNext">🎲 Следующая</button>
-        <button id="cRandom" class="random-btn">✨ Случайное</button>
-      </div>
-      <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
-    </div>
-  </div>
+        <div id="strokeGuide" style="margin-top:15px; padding:12px; background:#f5f5f5; border-radius:12px; text-align:left;">
+            <strong>📖 Как писать:</strong> <span id="strokeInfo">Нажмите "Образец" чтобы увидеть иероглиф для обведения</span>
+        </div>
 
-  <div id="cubesPanel" class="panel">
-    <div class="card">
-      <div class="big-char" id="cubeRes">?</div>
-      <div class="btn-group">
-        <button id="cubeRoll">🎲 Бросить</button>
-        <button id="cubeListen">🔊 Слушать</button>
-      </div>
+        <div class="btn-group">
+            <button id="nListen">🔊 Слушать</button>
+            <button id="nVoice" class="voice-btn">🎙️ Голос</button>
+            <button id="nNext">🎲 Следующее</button>
+            <button id="nRandom" class="random-btn">✨ Случайное</button>
+        </div>
+        <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
+        <div class="assoc" id="nAssoc" style="margin-top:10px;"></div>
     </div>
-  </div>
-  <!-- НОВЫЙ РАЗДЕЛ: СЛОВА ПО РАДИКАЛАМ -->
-  <div id="radicalWordsPanel" class="panel">
+</div>
+
+<div id="cardsPanel" class="panel">
     <div class="card">
-      <h2 style="margin-bottom: 20px;">🔗 Слова по радикалам</h2>
-      <p style="margin-bottom: 16px;">🎯 Иероглифы, сгруппированные по общему ключу (радикалу). Нажми на слово — услышишь произношение.</p>
-      <div id="radicalWordsList" style="display: flex; flex-direction: column; gap: 24px;"></div>
+        <div id="cFront">
+            <div class="big-char" id="cChar">水</div>
+            <div class="pinyin" id="cPinyin">shuǐ</div>
+        </div>
+        <div id="cBack" style="display:none;">
+            <div class="meaning" id="cMeaning">вода</div>
+            <div class="emoji" id="cBackEmoji" style="font-size:70px; margin:20px 0;">💧</div>
+            <div class="pinyin" id="cPinyinBack" style="font-size:20px; opacity:0.7;">shuǐ</div>
+        </div>
+        <div class="btn-group">
+            <button id="cListen">🔊 Слушать</button>
+            <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
+            <button id="cFlip">🔄 Перевернуть</button>
+            <button id="cNext">🎲 Следующая</button>
+            <button id="cRandom" class="random-btn">✨ Случайное</button>
+        </div>
+        <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
     </div>
-  </div>
+</div>
+
+<div id="cubesPanel" class="panel">
+    <div class="card">
+        <div class="big-char" id="cubeRes">?</div>
+        <div class="btn-group">
+            <button id="cubeRoll">🎲 Бросить</button>
+            <button id="cubeListen">🔊 Слушать</button>
+        </div>
+    </div>
+</div>
+<!-- НОВЫЙ РАЗДЕЛ: СЛОВА ПО РАДИКАЛАМ -->
+<div id="radicalWordsPanel" class="panel">
+    <div class="card">
+        <h2 style="margin-bottom: 20px;">🔗 Слова по радикалам</h2>
+        <p style="margin-bottom: 16px;">🎯 Иероглифы, сгруппированные по общему ключу (радикалу). Нажми на слово — услышишь произношение.</p>
+        <div id="radicalWordsList" style="display: flex; flex-direction: column; gap: 24px;"></div>
+    </div>
+</div>
 <!-- НОВЫЙ РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ И ОМОФОНОВ -->
-  <div id="tonesPanel" class="panel">
+<div id="tonesPanel" class="panel">
     <div class="card">
-      <h2 style="margin-bottom: 20px; font-size: 24px;">🎵 Сравнение тонов</h2>
-      <p style="margin-bottom: 16px; font-size: 16px; opacity: 0.8;">🎯 Одинаковое произношение, разные тоны — меняется смысл! Нажми на любой блок, чтобы услышать.</p>
-     <div id="tonesComparison" style="display: flex; flex-direction: column; gap: 24px;"></div>
+        <h2 style="margin-bottom: 20px; font-size: 24px;">🎵 Сравнение тонов</h2>
+        <p style="margin-bottom: 16px; font-size: 16px; opacity: 0.8;">🎯 Одинаковое произношение, разные тоны — меняется смысл! Нажми на любой блок, чтобы услышать.</p>
+        <div id="tonesComparison" style="display: flex; flex-direction: column; gap: 24px;"></div>
     </div>
-  </div>
-  <div id="gamePanel" class="panel">
+</div>
+<div id="gamePanel" class="panel">
     <div class="card">
-      <div class="big-char" id="gChar">?</div>
-      <div id="gOpts" class="btn-group"></div>
-      <div id="gFeed" style="text-align:center;margin:14px 0;font-size:18px;font-weight:700;"></div>
-      <button id="gNew">🔄 Новый вопрос</button>
+        <div class="big-char" id="gChar">?</div>
+        <div id="gOpts" class="btn-group"></div>
+        <div id="gFeed" style="text-align:center;margin:14px 0;font-size:18px;font-weight:700;"></div>
+        <button id="gNew">🔄 Новый вопрос</button>
     </div>
-  </div>
+</div>
 </div>
 
 <script>
-// ==================== ДАННЫЕ ====================
-const CAT_NAMES = {
-  numbers:"🔢 Числа",
-  greetings:"👋 Приветствия", 
-  people:"👥 Люди",
-  family:"👨‍👩‍👧 Семья",
-  food:"🍜 Еда",
-  kitchen:"🍳 Посуда",
-  clothes:"👕 Одежда",
-  colors:"🎨 Цвета",
-  nature:"🌿 Природа",
-  weather:"🌤️ Погода",
-  animals:"🐕 Животные",
-  home:"🏠 Дом",
-  transport:"🚗 Транспорт",
-  places:"🏛️ Места",
-  verbs:"🏃 Глаголы",
-  adjectives:"📏 Прилагательные",
-  adverbs:"📝 Наречия",
-  pronouns:"👤 Местоимения",
-  questions:"❓ Вопросы",
-  time:"⏰ Время",
-  basics:"👋 Основы",
-  medicine:"💊 Медицина"
-};
+    // ==================== ДАННЫЕ ====================
+    const CAT_NAMES = {
+      numbers:"🔢 Числа",
+      greetings:"👋 Приветствия",
+      people:"👥 Люди",
+      family:"👨‍👩‍👧 Семья",
+      food:"🍜 Еда",
+      kitchen:"🍳 Посуда",
+      clothes:"👕 Одежда",
+      colors:"🎨 Цвета",
+      nature:"🌿 Природа",
+      weather:"🌤️ Погода",
+      animals:"🐕 Животные",
+      home:"🏠 Дом",
+      transport:"🚗 Транспорт",
+      places:"🏛️ Места",
+      verbs:"🏃 Глаголы",
+      adjectives:"📏 Прилагательные",
+      adverbs:"📝 Наречия",
+      pronouns:"👤 Местоимения",
+      questions:"❓ Вопросы",
+      time:"⏰ Время",
+      basics:"👋 Основы",
+      medicine:"💊 Медицина"
+    };
 
-const TONES = {'ā':'t1','á':'t2','ǎ':'t3','à':'t4','ē':'t1','é':'t2','ě':'t3','è':'t4','ī':'t1','í':'t2','ǐ':'t3','ì':'t4','ō':'t1','ó':'t2','ǒ':'t3','ò':'t4','ū':'t1','ú':'t2','ǔ':'t3','ù':'t4','ǖ':'t1','ǘ':'t2','ǚ':'t3','ǜ':'t4'};
-function colorP(p){
-  if(!p) return '';
-  return p.split(' ').map(function(w){
-    var t='t5';
-    for(var c in TONES){
-      if(w.includes(c)){
-        t=TONES[c];
-        break;
+    const TONES = {'ā':'t1','á':'t2','ǎ':'t3','à':'t4','ē':'t1','é':'t2','ě':'t3','è':'t4','ī':'t1','í':'t2','ǐ':'t3','ì':'t4','ō':'t1','ó':'t2','ǒ':'t3','ò':'t4','ū':'t1','ú':'t2','ǔ':'t3','ù':'t4','ǖ':'t1','ǘ':'t2','ǚ':'t3','ǜ':'t4'};
+    function colorP(p){
+      if(!p) return '';
+      return p.split(' ').map(function(w){
+        var t='t5';
+        for(var c in TONES){
+          if(w.includes(c)){
+            t=TONES[c];
+            break;
+          }
+        }
+        return '<span class="'+t+'">'+w+'</span>';
+      }).join(' ');
+    }
+
+    const numbers = {
+      basic: [{c:"一",p:"yī",m:"один"},{c:"二",p:"èr",m:"два"},{c:"三",p:"sān",m:"три"},{c:"四",p:"sì",m:"четыре"},{c:"五",p:"wǔ",m:"пять"},{c:"六",p:"liù",m:"шесть"},{c:"七",p:"qī",m:"семь"},{c:"八",p:"bā",m:"восемь"},{c:"九",p:"jiǔ",m:"девять"},{c:"十",p:"shí",m:"десять"}],
+      teens: [{c:"十一",p:"shí yī",m:"11"},{c:"十二",p:"shí èr",m:"12"},{c:"十三",p:"shí sān",m:"13"},{c:"十四",p:"shí sì",m:"14"},{c:"十五",p:"shí wǔ",m:"15"}],
+      tens: [{c:"二十",p:"èr shí",m:"20"},{c:"三十",p:"sān shí",m:"30"},{c:"四十",p:"sì shí",m:"40"},{c:"五十",p:"wǔ shí",m:"50"}]
+    };
+
+    const colors = [
+      {char:"红色", py:"hóng sè", ru:"красный", color:"#e53935"},
+      {char:"蓝色", py:"lán sè", ru:"синий", color:"#1e88e5"},
+      {char:"绿色", py:"lǜ sè", ru:"зелёный", color:"#43a047"},
+      {char:"黄色", py:"huáng sè", ru:"жёлтый", color:"#fdd835"},
+      {char:"白色", py:"bái sè", ru:"белый", color:"#ffffff"},
+      {char:"黑色", py:"hēi sè", ru:"чёрный", color:"#212121"},
+      {char:"紫色", py:"zǐ sè", ru:"фиолетовый", color:"#8e24aa"},
+      {char:"橙色", py:"chéng sè", ru:"оранжевый", color:"#fb8c00"}
+    ];
+
+
+    // ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+    let currentW = WORDS[0];
+    let currentRad = RADICALS[0];
+    let currentDia = 0;
+    let recognition = null;
+    let isRec = false;
+    let canvas = null;
+    let ctx = null;
+    let painting = false;
+    let gridEnabled = false;
+
+    // ==================== ФУНКЦИИ ====================
+    function speak(t) {
+      if(!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(t);
+      u.lang = "zh-CN";
+      u.rate = 0.8;
+      window.speechSynthesis.speak(u);
+    }
+
+    function initVoice() {
+      var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if(!SR) return false;
+      recognition = new SR();
+      recognition.lang = "zh-CN";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      return true;
+    }
+
+    function startVoice(targetChar, targetPinyin, feedElement) {
+      if(!recognition && !initVoice()) {
+        if(feedElement) feedElement.innerHTML = "❌ Голос не поддерживается";
+        return;
       }
-    }
-    return '<span class="'+t+'">'+w+'</span>';
-  }).join(' ');
-}
-
-const numbers = {
-  basic: [{c:"一",p:"yī",m:"один"},{c:"二",p:"èr",m:"два"},{c:"三",p:"sān",m:"три"},{c:"四",p:"sì",m:"четыре"},{c:"五",p:"wǔ",m:"пять"},{c:"六",p:"liù",m:"шесть"},{c:"七",p:"qī",m:"семь"},{c:"八",p:"bā",m:"восемь"},{c:"九",p:"jiǔ",m:"девять"},{c:"十",p:"shí",m:"десять"}],
-  teens: [{c:"十一",p:"shí yī",m:"11"},{c:"十二",p:"shí èr",m:"12"},{c:"十三",p:"shí sān",m:"13"},{c:"十四",p:"shí sì",m:"14"},{c:"十五",p:"shí wǔ",m:"15"}],
-  tens: [{c:"二十",p:"èr shí",m:"20"},{c:"三十",p:"sān shí",m:"30"},{c:"四十",p:"sì shí",m:"40"},{c:"五十",p:"wǔ shí",m:"50"}]
-};
-
-const colors = [
-  {char:"红色", py:"hóng sè", ru:"красный", color:"#e53935"},
-  {char:"蓝色", py:"lán sè", ru:"синий", color:"#1e88e5"},
-  {char:"绿色", py:"lǜ sè", ru:"зелёный", color:"#43a047"},
-  {char:"黄色", py:"huáng sè", ru:"жёлтый", color:"#fdd835"},
-  {char:"白色", py:"bái sè", ru:"белый", color:"#ffffff"},
-  {char:"黑色", py:"hēi sè", ru:"чёрный", color:"#212121"},
-  {char:"紫色", py:"zǐ sè", ru:"фиолетовый", color:"#8e24aa"},
-  {char:"橙色", py:"chéng sè", ru:"оранжевый", color:"#fb8c00"}
-];
-
-
-// ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
-let currentW = WORDS[0];
-let currentRad = RADICALS[0];
-let currentDia = 0;
-let recognition = null;
-let isRec = false;
-let canvas = null;
-let ctx = null;
-let painting = false;
-let gridEnabled = false;
-
-// ==================== ФУНКЦИИ ====================
-function speak(t) {
-  if(!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  var u = new SpeechSynthesisUtterance(t);
-  u.lang = "zh-CN";
-  u.rate = 0.8;
-  window.speechSynthesis.speak(u);
-}
-
-function initVoice() {
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR) return false;
-  recognition = new SR();
-  recognition.lang = "zh-CN";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  return true;
-}
-
-function startVoice(targetChar, targetPinyin, feedElement) {
-  if(!recognition && !initVoice()) {
-    if(feedElement) feedElement.innerHTML = "❌ Голос не поддерживается";
-    return;
-  }
-  if(isRec) {
-    recognition.stop();
-    return;
-  }
-  
-  recognition.onresult = function(e) {
-    var said = e.results[0][0].transcript.trim();
-    var originalSaid = said;
-    
-    // УДАЛЯЕМ ВСЮ ПУНКТУАЦИЮ (для любого слова!)
-    said = said.replace(/[.,!?;:()\[\]{}\'\"<>、。，！？；：""''「」『』【】《》]/g, '');
-    said = said.trim();
-    
-    var target = targetChar.trim();
-    var correct = (said === target);
-    
-    if(!correct) {
-      var saidNoSpaces = said.replace(/\s/g, '');
-      var targetNoSpaces = target.replace(/\s/g, '');
-      if(saidNoSpaces === targetNoSpaces) {
-        correct = true;
+      if(isRec) {
+        recognition.stop();
+        return;
       }
-    }
-    
-    if(feedElement) {
-      if(correct) {
-        feedElement.innerHTML = "✅ Правильно! \"" + targetChar + "\" — отлично!";
-      } else {
-        feedElement.innerHTML = "❌ Неправильно. Вы сказали: \"" + originalSaid + "\". Нужно: \"" + targetChar + "\"";
-      }
-      setTimeout(function() {
-        if(feedElement) feedElement.innerHTML = "";
-      }, 3000);
-    }
-    
-    isRec = false;
-    var btns = document.querySelectorAll('.voice-btn');
-    for(var i = 0; i < btns.length; i++) {
-      btns[i].classList.remove('rec');
-    }
-  };
-  
-  recognition.onend = function() {
-    isRec = false;
-    var btns = document.querySelectorAll('.voice-btn');
-    for(var i = 0; i < btns.length; i++) {
-      btns[i].classList.remove('rec');
-    }
-  };
-  
-  recognition.onerror = function(err) {
-    if(feedElement) feedElement.innerHTML = "❌ Ошибка: " + err.error;
-    isRec = false;
-  };
-  
-  recognition.start();
-  isRec = true;
-  if(feedElement) feedElement.innerHTML = "🎤 Слушаю... Произнесите: \"" + targetChar + "\"";
-}
 
+      recognition.onresult = function(e) {
+        var said = e.results[0][0].transcript.trim();
+        var originalSaid = said;
 
-function openModal(w) {
-  if(!w) return;
-  let idx = -1;
-  for(let i = 0; i < WORDS.length; i++) {
-    if(WORDS[i].c === w.c) {
-      idx = i;
-      break;
-    }
-  }
-  if(idx === -1) return;
-  
-  const modal = document.getElementById('modal');
-  const modalContent = document.getElementById('modalContent');
-  if(!modal || !modalContent) return;
-  
-  modalContent.innerHTML = `
-    <button class="close" onclick="closeModal()">×</button>
-    <div class="big-char">${w.c}</div>
-    <div class="pinyin">${colorP(w.p)}</div>
-    <div class="meaning">${w.m}</div>
-    <div class="emoji">${w.e || '📖'}</div>
-    <div class="badge">${CAT_NAMES[w.cat] || w.cat}</div>
-    <div class="assoc"><strong>🧠 Как запомнить:</strong><br>${w.a || 'Практикуй произношение!'}</div>
-    <div class="btn-group">
-      <button onclick="speak('${w.c}')">🔊 Слушать</button>
-      <button onclick="selectWordByIndex(${idx}, 'notebook')" style="background:var(--success)">📓 В тетрадь</button>
-      <button onclick="selectWordByIndex(${idx}, 'cards')" style="background:var(--primary)">🃏 В карточки</button>
-    </div>
-    <div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`;
-  modal.classList.add('active');
-}
+        // УДАЛЯЕМ ВСЮ ПУНКТУАЦИЮ (для любого слова!)
+        said = said.replace(/[.,!?;:()\[\]{}\'\"<>、。，！？；：""''「」『』【】《》]/g, '');
+        said = said.trim();
 
+        var target = targetChar.trim();
+        var correct = (said === target);
 
+        if(!correct) {
+          var saidNoSpaces = said.replace(/\s/g, '');
+          var targetNoSpaces = target.replace(/\s/g, '');
+          if(saidNoSpaces === targetNoSpaces) {
+            correct = true;
+          }
+        }
 
-function closeModal() { 
-  let modal = document.getElementById('modal');
-  if(modal) modal.classList.remove('active'); 
-}
+        if(feedElement) {
+          if(correct) {
+            feedElement.innerHTML = "✅ Правильно! \"" + targetChar + "\" — отлично!";
+          } else {
+            feedElement.innerHTML = "❌ Неправильно. Вы сказали: \"" + originalSaid + "\". Нужно: \"" + targetChar + "\"";
+          }
+          setTimeout(function() {
+            if(feedElement) feedElement.innerHTML = "";
+          }, 3000);
+        }
 
-
-function renderGrid(cat) {
-  if(cat === undefined) cat = 'all';
-  var g = document.getElementById('wordGrid');
-  g.innerHTML = '';
-  var list = (cat==='all') ? WORDS : WORDS.filter(function(w){ return w.cat===cat; });
-  for(var i=0; i<list.length; i++) {
-    var w = list[i];
-    var d = document.createElement('div');
-    d.className = 'grid-item';
-    d.innerHTML = '<div class="ch">'+w.c+'</div><div class="info">'+w.m+'</div>';
-    d.onclick = (function(word){ return function(){ openModal(word); }; })(w);
-    g.appendChild(d);
-  }
-}
-
-function renderNums() {
-  var g = document.getElementById('numGrid');
-  g.innerHTML = '';
-  var allNums = numbers.basic.concat(numbers.teens).concat(numbers.tens);
-  for(var i=0; i<allNums.length; i++) {
-    var n = allNums[i];
-    var d = document.createElement('div');
-    d.className = 'grid-item';
-    d.innerHTML = '<div class="ch">'+n.c+'</div><div class="info">'+n.m+'</div>';
-    d.onclick = (function(c){ return function(){ speak(c); }; })(n.c);
-    g.appendChild(d);
-  }
-}
-
-function renderCols() {
-  var g = document.getElementById('colorGrid');
-  g.innerHTML = '';
-  for(var i=0; i<colors.length; i++) {
-    var c = colors[i];
-    var d = document.createElement('div');
-    d.className = 'grid-item';
-    d.style.borderColor = c.color;
-    d.innerHTML = '<div style="width:50px;height:50px;border-radius:12px;background:'+c.color+';margin:6px auto;border:'+(c.color==='#ffffff'?'2px solid #ccc':'none')+'"></div><div class="ch" style="font-size:22px;">'+c.char+'</div><div class="info">'+c.ru+'</div>';
-    d.onclick = (function(ch){ return function(){ speak(ch); }; })(c.char);
-    g.appendChild(d);
-  }
-}
-
-function renderDia() {
-  var b = document.getElementById("dialogBox");
-  var d = DIALOGS[currentDia];
-  b.innerHTML = '<div class="dialog-card"><div class="dialog-line q"><strong>❓ Китайский:</strong> '+d.q+'<br><small>📖 Пиньинь: '+d.qp+'</small><br><small>🇷🇺 Перевод: '+(d.rq || "—")+'</small></div><div class="dialog-line a"><strong>✅ Ответ:</strong> '+d.a+'<br><small>📖 Пиньинь: '+d.ap+'</small><br><small>🇷🇺 Перевод: '+(d.ra || "—")+'</small></div></div>';
-}
-
-function renderGram() {
-  var html = '';
-  for(var i = 0; i < GRAMMAR.length; i++) {
-    var g = GRAMMAR[i];
-    html += '<div class="grammar-card">' +
-            '<div class="g-title">' + g.title + '</div>' +
-            '<div class="g-rule">' + g.rule + '</div>' +
-            '<div class="g-ex">' + g.ex.replace(/\n/g, '<br>').replace(/\((.*?)\)/g, '<b>($1)</b>') + '</div>' +
-            '</div>';
-  }
-  document.getElementById('grammarBox').innerHTML = html;
-}
-
-function renderSongs() {
-  var html = '';
-  for(var i=0; i<SONGS.length; i++) {
-    var s = SONGS[i];
-    var linesHtml = '';
-    for(var j=0; j<s.lines.length; j++) {
-      var l = s.lines[j];
-      linesHtml += '<div class="song-line"><div class="song-cn">'+l.ch+'</div><div class="song-py">'+l.py+'</div><div class="song-ru">'+l.ru+'</div></div>';
-    }
-    var songText = '';
-    for(var k=0; k<s.lines.length; k++) songText += s.lines[k].ch + ' ';
-    html += '<div class="song-card"><div class="song-title">'+s.title+'</div>'+linesHtml+'<button class="btn" style="width:100%;margin-top:12px" onclick="speak(\''+songText.replace(/'/g,"\\'")+'\')">🎵 Спеть</button></div>';
-  }
-  document.getElementById('songsBox').innerHTML = html;
-}
-
-function renderRads() {
-  var grid = document.getElementById('radGrid');
-  grid.innerHTML = '';
-  for(var i=0; i<RADICALS.length; i++) {
-    var r = RADICALS[i];
-    var div = document.createElement('div');
-    div.className = 'grid-item';
-    div.innerHTML = '<div class="ch">'+r.s+'</div><div class="info">'+r.m+'</div>';
-    div.onclick = (function(rad){
-      return function() {
-        speak(rad.s);
-        var detailDiv = document.getElementById('radicalDetail');
-        detailDiv.style.display = 'block';
-        detailDiv.innerHTML = '<strong>'+rad.s+'</strong> — '+rad.p+'<br>'+rad.m+' '+(rad.e||'')+'<br><br><em>Примеры:</em> '+(rad.ex||'—');
-        document.getElementById('rChar').textContent = rad.s;
-        document.getElementById('rPinyin').innerHTML = colorP(rad.p);
-        document.getElementById('rMeaning').textContent = rad.m;
-        currentRad = rad;
+        isRec = false;
+        var btns = document.querySelectorAll('.voice-btn');
+        for(var i = 0; i < btns.length; i++) {
+          btns[i].classList.remove('rec');
+        }
       };
-    })(r);
-    grid.appendChild(div);
-  }
-}
 
-function updateUI() {
-  document.getElementById('sChar').textContent = currentW.c;
-  document.getElementById('sPinyin').innerHTML = colorP(currentW.p);
-  document.getElementById('sMeaning').textContent = currentW.m;
-  document.getElementById('sEmoji').textContent = currentW.e || '📖';
-  document.getElementById('sCat').textContent = CAT_NAMES[currentW.cat] || currentW.cat;
-  document.getElementById('nChar').textContent = currentW.c;
-  document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...';
-  document.getElementById('cChar').textContent = currentW.c;
-  document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
-  document.getElementById('cMeaning').textContent = currentW.m;
-  document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
-  document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p);
-  document.getElementById('cFront').style.display = 'block';
-  document.getElementById('cBack').style.display = 'none';
-}
+      recognition.onend = function() {
+        isRec = false;
+        var btns = document.querySelectorAll('.voice-btn');
+        for(var i = 0; i < btns.length; i++) {
+          btns[i].classList.remove('rec');
+        }
+      };
 
-function flipCard() {
-  var front = document.getElementById('cFront');
-  var back = document.getElementById('cBack');
-  if(front.style.display === 'none') {
-    front.style.display = 'block';
-    back.style.display = 'none';
-  } else {
-    front.style.display = 'none';
-    back.style.display = 'block';
-  }
-}
+      recognition.onerror = function(err) {
+        if(feedElement) feedElement.innerHTML = "❌ Ошибка: " + err.error;
+        isRec = false;
+      };
 
-function nextWord() {
-  var idx = WORDS.indexOf(currentW);
-  var nextIdx = (idx + 1) % WORDS.length;
-  currentW = WORDS[nextIdx];
-  updateUI();
-  if (ctx) clearCanvas();
-  document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
-}
-
-function randomWord() {
-  currentW = WORDS[Math.floor(Math.random() * WORDS.length)];
-  updateUI();
-  if (ctx) clearCanvas();
-  document.getElementById('cFeedback').innerHTML = '';
-  document.getElementById('sFeedback').innerHTML = '';
-  document.getElementById('nFeedback').innerHTML = '';
-  document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
-}
-
-function prevDia() { currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length; renderDia(); }
-function nextDia() { currentDia = (currentDia + 1) % DIALOGS.length; renderDia(); }
-function speakDia() { speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); }
-
-// ==================== ЛОГИКА ТЕТРАДИ (CANVAS) ====================
-function initCanvas() {
-  canvas = document.getElementById('drawCanvas');
-  if(!canvas) return;
-  ctx = canvas.getContext('2d', { willReadFrequently: true });
-  
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  
-  ctx.strokeStyle = '#333';
-  ctx.lineWidth = document.getElementById('nWeight').value;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  
-  // Обработка ползунка толщины
-  document.getElementById('nWeight').oninput = function() {
-    ctx.lineWidth = this.value;
-    document.getElementById('nWeightVal').textContent = this.value;
-  };
-  
-  function getPos(e) {
-    var rect = canvas.getBoundingClientRect();
-    var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-    var clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
-    var x = clientX - rect.left;
-    var y = clientY - rect.top;
-    return {x: x * canvas.width / rect.width, y: y * canvas.height / rect.height};
-  }
-  
-  function start(e) { e.preventDefault(); painting=true; var p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
-  function draw(e) { 
-    if(!painting) return; 
-    e.preventDefault(); 
-    var p=getPos(e); 
-    ctx.lineTo(p.x, p.y); 
-    ctx.stroke(); 
-  }
-  function end(e) { painting=false; ctx.closePath(); }
-  
-  canvas.addEventListener('mousedown', start);
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseup', end);
-  canvas.addEventListener('touchstart', start, {passive:false});
-  canvas.addEventListener('touchmove', draw, {passive:false});
-  canvas.addEventListener('touchend', end);
-}
-
-function clearCanvas() { 
-  if(ctx) { 
-    ctx.fillStyle='#fff'; 
-    ctx.fillRect(0,0,canvas.width,canvas.height); 
-    if(gridEnabled) drawTianzige();
-  } 
-}
-
-function drawTianzige() {
-  if(!ctx || !canvas) return;
-  var w = canvas.width, h = canvas.height;
-  ctx.save();
-  
-  // Основной крест (пунктир)
-  ctx.setLineDash([5, 5]);
-  ctx.strokeStyle = "#d4b5b0";
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(w/2,0); ctx.lineTo(w/2,h); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(0,h/2); ctx.lineTo(w,h/2); ctx.stroke();
-  
-  // Диагонали (мелкий пунктир)
-  ctx.setLineDash([2, 4]);
-  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(w,h); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(w,0); ctx.lineTo(0,h); ctx.stroke();
-  
-  // Рамка (сплошная)
-  ctx.setLineDash([]);
-  ctx.strokeStyle = "#8B4513";
-  ctx.lineWidth = 3;
-  ctx.strokeRect(0,0,w,h);
-  
-  ctx.restore();
-}
-
-function toggleGrid() {
-  gridEnabled = !gridEnabled;
-  clearCanvas();
-  document.getElementById('nGridBtn').textContent = gridEnabled ? "🚫 Скрыть сетку" : "📐 Показать сетку";
-}
-
-function showExample() {
-  clearCanvas();
-  var w = canvas.width, h = canvas.height;
-  ctx.save();
-  ctx.globalAlpha = 0.2;
-  ctx.font = "bold " + (h * 0.75) + "px 'Noto Sans CJK SC', system-ui";
-  ctx.fillStyle = "#ff6b35";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(currentW.c, w/2, h/2);
-  ctx.restore();
-  document.getElementById('strokeInfo').innerHTML = "Обведите иероглиф <strong>" + currentW.c + "</strong> по контуру";
-}
-
-// ========== ФУНКЦИЯ ПРОВЕРКИ НАПИСАНИЯ ==========
-// Находим функцию verifyWriting и заменяем её на улучшенную версию:
-
-function verifyWriting() {
-  if(!ctx || !canvas) return;
-
-  // 1. Создаем эталон на невидимом холсте
-  const offCanvas = document.createElement('canvas');
-  offCanvas.width = canvas.width;
-  offCanvas.height = canvas.height;
-  const offCtx = offCanvas.getContext('2d');
-
-  offCtx.fillStyle = 'white';
-  offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
-  offCtx.fillStyle = 'black';
-  offCtx.font = "bold " + (canvas.height * 0.75) + "px 'Noto Sans CJK SC', system-ui";
-  offCtx.textAlign = 'center';
-  offCtx.textBaseline = 'middle';
-  offCtx.fillText(currentW.c, offCanvas.width/2, offCanvas.height/2);
-
-  // 2. Сравниваем данные
-  const userImg = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  const targetImg = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height).data;
-
-  let match = 0;
-  let totalTarget = 0;
-  let totalUser = 0;
-
-  for (let i = 0; i < targetImg.length; i += 4) {
-    const isTarget = targetImg[i] < 128; // Пиксель эталона
-    // Только темные пиксели кисти пользователя (игнорируем светлую сетку)
-    const isUser = userImg[i] < 100 && userImg[i+1] < 100 && userImg[i+2] < 100;
-
-    if (isTarget) {
-      totalTarget++;
-      if (isUser) match++;
+      recognition.start();
+      isRec = true;
+      if(feedElement) feedElement.innerHTML = "🎤 Слушаю... Произнесите: \"" + targetChar + "\"";
     }
-    if (isUser) totalUser++;
-  }
 
-  if (totalUser < 20) {
-    document.getElementById('nFeedback').innerHTML = "🖋️ Сначала напишите иероглиф!";
-    return;
-  }
 
-  // Насколько линии пользователя попали в цель
-  const precision = match / totalUser;
-  // Насколько иероглиф заполнен
-  const recall = match / totalTarget;
-
-  const brushWidth = parseInt(document.getElementById('nWeight').value);
-  // Оцениваем "идеальную" толщину эталонного шрифта (~15% от высоты)
-  const estimatedTargetWidth = (canvas.height * 0.75) * 0.15;
-  const widthRatio = Math.max(0.1, Math.min(1, brushWidth / estimatedTargetWidth));
-
-  // КОРРЕКЦИЯ: если кисть тонкая, мы не ждем покрытия в 100%
-  // Мы считаем покрытие достаточным, если оно пропорционально толщине кисти
-  const adjustedRecall = Math.min(1, recall / (widthRatio * 0.8));
-
-  // Итоговый балл: 70% за точность (не вышли за край) + 30% за завершенность (написали всё)
-  const finalScore = Math.round((precision * 0.7 + adjustedRecall * 0.3) * 100);
-
-  const feed = document.getElementById('nFeedback');
-  if (finalScore > 80) {
-    feed.innerHTML = "🌟 Отлично! Точность: " + finalScore + "%";
-    feed.style.color = "#2ecc71";
-  } else if (finalScore > 50) {
-    feed.innerHTML = "👍 Хорошо! Точность: " + finalScore + "%";
-    feed.style.color = "#f1c40f";
-  } else {
-    feed.innerHTML = "❌ Нужно точнее. Точность: " + finalScore + "%";
-    feed.style.color = "#e74c3c";
-  }
-}
-
-// ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ (АВТОМАТИЧЕСКИЙ) ==========
-function generateToneComparisons() {
-  const groups = new Map();
-  WORDS.forEach(word => {
-    if (!word.p) return;
-    let barePinyin = word.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    if (!groups.has(barePinyin)) groups.set(barePinyin, []);
-    groups.get(barePinyin).push(word);
-  });
-  
-  const comparisons = [];
-  for (let [pinyin, words] of groups.entries()) {
-    if (words.length >= 2 && pinyin.length > 0) {
-      const uniqueWords = [];
-      const seenChars = new Set();
-      for (const word of words) {
-        if (!seenChars.has(word.c)) {
-          seenChars.add(word.c);
-          uniqueWords.push(word);
+    function openModal(w) {
+      if(!w) return;
+      let idx = -1;
+      for(let i = 0; i < WORDS.length; i++) {
+        if(WORDS[i].c === w.c) {
+          idx = i;
+          break;
         }
       }
-      if (uniqueWords.length >= 2) comparisons.push(uniqueWords.slice(0, 5));
+      if(idx === -1) return;
+
+      const modal = document.getElementById('modal');
+      const modalContent = document.getElementById('modalContent');
+      if(!modal || !modalContent) return;
+
+      modalContent.innerHTML = `
+        <button class="close" onclick="closeModal()">×</button>
+        <div class="big-char">${w.c}</div>
+        <div class="pinyin">${colorP(w.p)}</div>
+        <div class="meaning">${w.m}</div>
+        <div class="emoji">${w.e || '📖'}</div>
+        <div class="badge">${CAT_NAMES[w.cat] || w.cat}</div>
+        <div class="assoc"><strong>🧠 Как запомнить:</strong><br>${w.a || 'Практикуй произношение!'}</div>
+        <div class="btn-group">
+          <button onclick="speak('${w.c}')">🔊 Слушать</button>
+          <button onclick="selectWordByIndex(${idx}, 'notebook')" style="background:var(--success)">📓 В тетрадь</button>
+          <button onclick="selectWordByIndex(${idx}, 'cards')" style="background:var(--primary)">🃏 В карточки</button>
+        </div>
+        <div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`;
+      modal.classList.add('active');
     }
-  }
-  
-  comparisons.sort((a, b) => a[0].p.length - b[0].p.length);
-  const topComparisons = comparisons.slice(0, 30);
-  const container = document.getElementById('tonesComparison');
-  if (!container) return;
-  
-  container.innerHTML = topComparisons.map(group => {
-    const basePinyin = group[0].p.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return `
-      <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-        <div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">🎵 ${basePinyin}</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
-          ${group.map(word => `
-            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
-              <div style="font-size: 52px; margin-bottom: 6px;">${word.e || '🔊'}</div>
-              <div style="font-size: 34px; font-weight: 800; margin: 6px 0;">${word.c}</div>
-              <div style="font-size: 16px; margin: 6px 0; font-weight: 600;">${colorP(word.p)}</div>
-              <div style="font-size: 14px; color: #555;">${word.m}</div>
+
+
+
+    function closeModal() {
+      let modal = document.getElementById('modal');
+      if(modal) modal.classList.remove('active');
+    }
+
+
+    function renderGrid(cat) {
+      if(cat === undefined) cat = 'all';
+      var g = document.getElementById('wordGrid');
+      g.innerHTML = '';
+      var list = (cat==='all') ? WORDS : WORDS.filter(function(w){ return w.cat===cat; });
+      for(var i=0; i<list.length; i++) {
+        var w = list[i];
+        var d = document.createElement('div');
+        d.className = 'grid-item';
+        d.innerHTML = '<div class="ch">'+w.c+'</div><div class="info">'+w.m+'</div>';
+        d.onclick = (function(word){ return function(){ openModal(word); }; })(w);
+        g.appendChild(d);
+      }
+    }
+
+    function renderNums() {
+      var g = document.getElementById('numGrid');
+      g.innerHTML = '';
+      var allNums = numbers.basic.concat(numbers.teens).concat(numbers.tens);
+      for(var i=0; i<allNums.length; i++) {
+        var n = allNums[i];
+        var d = document.createElement('div');
+        d.className = 'grid-item';
+        d.innerHTML = '<div class="ch">'+n.c+'</div><div class="info">'+n.m+'</div>';
+        d.onclick = (function(c){ return function(){ speak(c); }; })(n.c);
+        g.appendChild(d);
+      }
+    }
+
+    function renderCols() {
+      var g = document.getElementById('colorGrid');
+      g.innerHTML = '';
+      for(var i=0; i<colors.length; i++) {
+        var c = colors[i];
+        var d = document.createElement('div');
+        d.className = 'grid-item';
+        d.style.borderColor = c.color;
+        d.innerHTML = '<div style="width:50px;height:50px;border-radius:12px;background:'+c.color+';margin:6px auto;border:'+(c.color==='#ffffff'?'2px solid #ccc':'none')+'"></div><div class="ch" style="font-size:22px;">'+c.char+'</div><div class="info">'+c.ru+'</div>';
+        d.onclick = (function(ch){ return function(){ speak(ch); }; })(c.char);
+        g.appendChild(d);
+      }
+    }
+
+    function renderDia() {
+      var b = document.getElementById("dialogBox");
+      var d = DIALOGS[currentDia];
+      b.innerHTML = '<div class="dialog-card"><div class="dialog-line q"><strong>❓ Китайский:</strong> '+d.q+'<br><small>📖 Пиньинь: '+d.qp+'</small><br><small>🇷🇺 Перевод: '+(d.rq || "—")+'</small></div><div class="dialog-line a"><strong>✅ Ответ:</strong> '+d.a+'<br><small>📖 Пиньинь: '+d.ap+'</small><br><small>🇷🇺 Перевод: '+(d.ra || "—")+'</small></div></div>';
+    }
+
+    function renderGram() {
+      var html = '';
+      for(var i = 0; i < GRAMMAR.length; i++) {
+        var g = GRAMMAR[i];
+        html += '<div class="grammar-card">' +
+                '<div class="g-title">' + g.title + '</div>' +
+                '<div class="g-rule">' + g.rule + '</div>' +
+                '<div class="g-ex">' + g.ex.replace(/\n/g, '<br>').replace(/\((.*?)\)/g, '<b>($1)</b>') + '</div>' +
+                '</div>';
+      }
+      document.getElementById('grammarBox').innerHTML = html;
+    }
+
+    function renderSongs() {
+      var html = '';
+      for(var i=0; i<SONGS.length; i++) {
+        var s = SONGS[i];
+        var linesHtml = '';
+        for(var j=0; j<s.lines.length; j++) {
+          var l = s.lines[j];
+          linesHtml += '<div class="song-line"><div class="song-cn">'+l.ch+'</div><div class="song-py">'+l.py+'</div><div class="song-ru">'+l.ru+'</div></div>';
+        }
+        var songText = '';
+        for(var k=0; k<s.lines.length; k++) songText += s.lines[k].ch + ' ';
+        html += '<div class="song-card"><div class="song-title">'+s.title+'</div>'+linesHtml+'<button class="btn" style="width:100%;margin-top:12px" onclick="speak(\''+songText.replace(/'/g,"\\'")+'\')">🎵 Спеть</button></div>';
+      }
+      document.getElementById('songsBox').innerHTML = html;
+    }
+
+    function renderRads() {
+      var grid = document.getElementById('radGrid');
+      grid.innerHTML = '';
+      for(var i=0; i<RADICALS.length; i++) {
+        var r = RADICALS[i];
+        var div = document.createElement('div');
+        div.className = 'grid-item';
+        div.innerHTML = '<div class="ch">'+r.s+'</div><div class="info">'+r.m+'</div>';
+        div.onclick = (function(rad){
+          return function() {
+            speak(rad.s);
+            var detailDiv = document.getElementById('radicalDetail');
+            detailDiv.style.display = 'block';
+            detailDiv.innerHTML = '<strong>'+rad.s+'</strong> — '+rad.p+'<br>'+rad.m+' '+(rad.e||'')+'<br><br><em>Примеры:</em> '+(rad.ex||'—');
+            document.getElementById('rChar').textContent = rad.s;
+            document.getElementById('rPinyin').innerHTML = colorP(rad.p);
+            document.getElementById('rMeaning').textContent = rad.m;
+            currentRad = rad;
+          };
+        })(r);
+        grid.appendChild(div);
+      }
+    }
+
+    function updateUI() {
+      document.getElementById('sChar').textContent = currentW.c;
+      document.getElementById('sPinyin').innerHTML = colorP(currentW.p);
+      document.getElementById('sMeaning').textContent = currentW.m;
+      document.getElementById('sEmoji').textContent = currentW.e || '📖';
+      document.getElementById('sCat').textContent = CAT_NAMES[currentW.cat] || currentW.cat;
+      document.getElementById('nChar').textContent = currentW.c;
+      document.getElementById('nAssoc').innerHTML = currentW.a || 'Ассоциация появится здесь...';
+      document.getElementById('cChar').textContent = currentW.c;
+      document.getElementById('cPinyin').innerHTML = colorP(currentW.p);
+      document.getElementById('cMeaning').textContent = currentW.m;
+      document.getElementById('cBackEmoji').textContent = currentW.e || '📖';
+      document.getElementById('cPinyinBack').innerHTML = colorP(currentW.p);
+      document.getElementById('cFront').style.display = 'block';
+      document.getElementById('cBack').style.display = 'none';
+    }
+
+    function flipCard() {
+      var front = document.getElementById('cFront');
+      var back = document.getElementById('cBack');
+      if(front.style.display === 'none') {
+        front.style.display = 'block';
+        back.style.display = 'none';
+      } else {
+        front.style.display = 'none';
+        back.style.display = 'block';
+      }
+    }
+
+    function nextWord() {
+      var idx = WORDS.indexOf(currentW);
+      var nextIdx = (idx + 1) % WORDS.length;
+      currentW = WORDS[nextIdx];
+      updateUI();
+      if (ctx) clearCanvas();
+      document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
+    }
+
+    function randomWord() {
+      currentW = WORDS[Math.floor(Math.random() * WORDS.length)];
+      updateUI();
+      if (ctx) clearCanvas();
+      document.getElementById('cFeedback').innerHTML = '';
+      document.getElementById('sFeedback').innerHTML = '';
+      document.getElementById('nFeedback').innerHTML = '';
+      document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
+    }
+
+    function prevDia() { currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length; renderDia(); }
+    function nextDia() { currentDia = (currentDia + 1) % DIALOGS.length; renderDia(); }
+    function speakDia() { speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); }
+
+    // ==================== ЛОГИКА ТЕТРАДИ (CANVAS) ====================
+    function initCanvas() {
+      canvas = document.getElementById('drawCanvas');
+      if(!canvas) return;
+      ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = document.getElementById('nWeight').value;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // Обработка ползунка толщины
+      document.getElementById('nWeight').oninput = function() {
+        ctx.lineWidth = this.value;
+        document.getElementById('nWeightVal').textContent = this.value;
+      };
+
+      function getPos(e) {
+        var rect = canvas.getBoundingClientRect();
+        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        var clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+        var x = clientX - rect.left;
+        var y = clientY - rect.top;
+        return {x: x * canvas.width / rect.width, y: y * canvas.height / rect.height};
+      }
+
+      function start(e) { e.preventDefault(); painting=true; var p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
+      function draw(e) {
+        if(!painting) return;
+        e.preventDefault();
+        var p=getPos(e);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+      function end(e) { painting=false; ctx.closePath(); }
+
+      canvas.addEventListener('mousedown', start);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', end);
+      canvas.addEventListener('touchstart', start, {passive:false});
+      canvas.addEventListener('touchmove', draw, {passive:false});
+      canvas.addEventListener('touchend', end);
+    }
+
+    function clearCanvas() {
+      if(ctx) {
+        ctx.fillStyle='#fff';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        if(gridEnabled) drawTianzige();
+      }
+    }
+
+    function drawTianzige() {
+      if(!ctx || !canvas) return;
+      var w = canvas.width, h = canvas.height;
+      ctx.save();
+
+      // Основной крест (пунктир)
+      ctx.setLineDash([5, 5]);
+      ctx.strokeStyle = "#d4b5b0";
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(w/2,0); ctx.lineTo(w/2,h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0,h/2); ctx.lineTo(w,h/2); ctx.stroke();
+
+      // Диагонали (мелкий пунктир)
+      ctx.setLineDash([2, 4]);
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(w,h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w,0); ctx.lineTo(0,h); ctx.stroke();
+
+      // Рамка (сплошная)
+      ctx.setLineDash([]);
+      ctx.strokeStyle = "#8B4513";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(0,0,w,h);
+
+      ctx.restore();
+    }
+
+    function toggleGrid() {
+      gridEnabled = !gridEnabled;
+      clearCanvas();
+      document.getElementById('nGridBtn').textContent = gridEnabled ? "🚫 Скрыть сетку" : "📐 Показать сетку";
+    }
+
+    function showExample() {
+      clearCanvas();
+      var w = canvas.width, h = canvas.height;
+      ctx.save();
+      ctx.globalAlpha = 0.2;
+      ctx.font = "bold " + (h * 0.75) + "px 'Noto Sans CJK SC', system-ui";
+      ctx.fillStyle = "#ff6b35";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(currentW.c, w/2, h/2);
+      ctx.restore();
+      document.getElementById('strokeInfo').innerHTML = "Обведите иероглиф <strong>" + currentW.c + "</strong> по контуру";
+    }
+
+    // ========== ФУНКЦИЯ ПРОВЕРКИ НАПИСАНИЯ ==========
+    // Находим функцию verifyWriting и заменяем её на улучшенную версию:
+
+    function verifyWriting() {
+      if(!ctx || !canvas) return;
+
+      // 1. Создаем эталон на невидимом холсте
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = canvas.width;
+      offCanvas.height = canvas.height;
+      const offCtx = offCanvas.getContext('2d');
+
+      offCtx.fillStyle = 'white';
+      offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+      offCtx.fillStyle = 'black';
+      offCtx.font = "bold " + (canvas.height * 0.75) + "px 'Noto Sans CJK SC', system-ui";
+      offCtx.textAlign = 'center';
+      offCtx.textBaseline = 'middle';
+      offCtx.fillText(currentW.c, offCanvas.width/2, offCanvas.height/2);
+
+      // 2. Сравниваем данные
+      const userImg = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      const targetImg = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height).data;
+
+      let match = 0;
+      let totalTarget = 0;
+      let totalUser = 0;
+
+      for (let i = 0; i < targetImg.length; i += 4) {
+        const isTarget = targetImg[i] < 128; // Пиксель эталона
+        // Только темные пиксели кисти пользователя (игнорируем светлую сетку)
+        const isUser = userImg[i] < 100 && userImg[i+1] < 100 && userImg[i+2] < 100;
+
+        if (isTarget) {
+          totalTarget++;
+          if (isUser) match++;
+        }
+        if (isUser) totalUser++;
+      }
+
+      if (totalUser < 20) {
+        document.getElementById('nFeedback').innerHTML = "🖋️ Сначала напишите иероглиф!";
+        return;
+      }
+
+      // Насколько линии пользователя попали в цель
+      const precision = match / totalUser;
+      // Насколько иероглиф заполнен
+      const recall = match / totalTarget;
+
+      const brushWidth = parseInt(document.getElementById('nWeight').value);
+      // Оцениваем "идеальную" толщину эталонного шрифта (~15% от высоты)
+      const estimatedTargetWidth = (canvas.height * 0.75) * 0.15;
+      const widthRatio = Math.max(0.1, Math.min(1, brushWidth / estimatedTargetWidth));
+
+      // КОРРЕКЦИЯ: если кисть тонкая, мы не ждем покрытия в 100%
+      // Мы считаем покрытие достаточным, если оно пропорционально толщине кисти
+      const adjustedRecall = Math.min(1, recall / (widthRatio * 0.8));
+
+      // Итоговый балл: 70% за точность (не вышли за край) + 30% за завершенность (написали всё)
+      const finalScore = Math.round((precision * 0.7 + adjustedRecall * 0.3) * 100);
+
+      const feed = document.getElementById('nFeedback');
+      if (finalScore > 80) {
+        feed.innerHTML = "🌟 Отлично! Точность: " + finalScore + "%";
+        feed.style.color = "#2ecc71";
+      } else if (finalScore > 50) {
+        feed.innerHTML = "👍 Хорошо! Точность: " + finalScore + "%";
+        feed.style.color = "#f1c40f";
+      } else {
+        feed.innerHTML = "❌ Нужно точнее. Точность: " + finalScore + "%";
+        feed.style.color = "#e74c3c";
+      }
+    }
+
+    // ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ (АВТОМАТИЧЕСКИЙ) ==========
+    function generateToneComparisons() {
+      const groups = new Map();
+      WORDS.forEach(word => {
+        if (!word.p) return;
+        let barePinyin = word.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        if (!groups.has(barePinyin)) groups.set(barePinyin, []);
+        groups.get(barePinyin).push(word);
+      });
+
+      const comparisons = [];
+      for (let [pinyin, words] of groups.entries()) {
+        if (words.length >= 2 && pinyin.length > 0) {
+          const uniqueWords = [];
+          const seenChars = new Set();
+          for (const word of words) {
+            if (!seenChars.has(word.c)) {
+              seenChars.add(word.c);
+              uniqueWords.push(word);
+            }
+          }
+          if (uniqueWords.length >= 2) comparisons.push(uniqueWords.slice(0, 5));
+        }
+      }
+
+      comparisons.sort((a, b) => a[0].p.length - b[0].p.length);
+      const topComparisons = comparisons.slice(0, 30);
+      const container = document.getElementById('tonesComparison');
+      if (!container) return;
+
+      container.innerHTML = topComparisons.map(group => {
+        const basePinyin = group[0].p.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        return `
+          <div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+            <div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">🎵 ${basePinyin}</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+              ${group.map(word => `
+                <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                  <div style="font-size: 52px; margin-bottom: 6px;">${word.e || '🔊'}</div>
+                  <div style="font-size: 34px; font-weight: 800; margin: 6px 0;">${word.c}</div>
+                  <div style="font-size: 16px; margin: 6px 0; font-weight: 600;">${colorP(word.p)}</div>
+                  <div style="font-size: 14px; color: #555;">${word.m}</div>
+                </div>
+              `).join('')}
             </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
+          </div>
+        `;
+      }).join('');
+    }
 
-function generateWordsByRadical() {
-  const container = document.getElementById('radicalWordsList');
-  if (!container) return;
-  let html = '';
-  for (const radical of RADICALS) {
-    if (!radical.s) continue;
-    let matchedWords = [];
-    if (radical.ex && radical.ex.length > 0) {
-      const regex = /([一-龯])/g;
-      const charsInExamples = radical.ex.match(regex) || [];
-      matchedWords = WORDS.filter(word => charsInExamples.includes(word.c));
-    }
-    if (matchedWords.length === 0 && radical.s.length === 1) {
-      matchedWords = WORDS.filter(word => word.c.includes(radical.s));
-    }
-    if (matchedWords.length === 0) continue;
-    html += `
-      <div style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-        <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; border-bottom: 2px solid #4361ee; padding-bottom: 8px;">
-          ${radical.e || "🔑"} ${radical.s} — ${radical.m} (${matchedWords.length} слов)
-        </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-          ${matchedWords.slice(0, 30).map(word => `
-            <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-              <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '🔊'}</div>
-              <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
-              <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
-              <div style="font-size: 10px; color: #555;">${word.m}</div>
+    function generateWordsByRadical() {
+      const container = document.getElementById('radicalWordsList');
+      if (!container) return;
+      let html = '';
+      for (const radical of RADICALS) {
+        if (!radical.s) continue;
+        let matchedWords = [];
+        if (radical.ex && radical.ex.length > 0) {
+          const regex = /([一-龯])/g;
+          const charsInExamples = radical.ex.match(regex) || [];
+          matchedWords = WORDS.filter(word => charsInExamples.includes(word.c));
+        }
+        if (matchedWords.length === 0 && radical.s.length === 1) {
+          matchedWords = WORDS.filter(word => word.c.includes(radical.s));
+        }
+        if (matchedWords.length === 0) continue;
+        html += `
+          <div style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+            <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; border-bottom: 2px solid #4361ee; padding-bottom: 8px;">
+              ${radical.e || "🔑"} ${radical.s} — ${radical.m} (${matchedWords.length} слов)
             </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
-  container.innerHTML = html || '<p style="text-align:center;">📖 Слова не найдены.</p>';
-}
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+              ${matchedWords.slice(0, 30).map(word => `
+                <div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                  <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '🔊'}</div>
+                  <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
+                  <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
+                  <div style="font-size: 10px; color: #555;">${word.m}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      container.innerHTML = html || '<p style="text-align:center;">📖 Слова не найдены.</p>';
+    }
 
-function addTonesTab() {
-  const tabsContainer = document.querySelector('.tabs');
-  if (!tabsContainer || document.querySelector('.tab[data-tab="tones"]')) return;
-  const tonesTab = document.createElement('div');
-  tonesTab.className = 'tab';
-  tonesTab.setAttribute('data-tab', 'tones');
-  tonesTab.innerHTML = '🎯 Тоны';
-  tonesTab.onclick = () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tonesTab.classList.add('active');
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tonesPanel').classList.add('active');
-    generateToneComparisons();
-  };
-  tabsContainer.appendChild(tonesTab);
-}
+    function addTonesTab() {
+      const tabsContainer = document.querySelector('.tabs');
+      if (!tabsContainer || document.querySelector('.tab[data-tab="tones"]')) return;
+      const tonesTab = document.createElement('div');
+      tonesTab.className = 'tab';
+      tonesTab.setAttribute('data-tab', 'tones');
+      tonesTab.innerHTML = '🎯 Тоны';
+      tonesTab.onclick = () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tonesTab.classList.add('active');
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('tonesPanel').classList.add('active');
+        generateToneComparisons();
+      };
+      tabsContainer.appendChild(tonesTab);
+    }
 
-function newGame() {
-  var w = WORDS[Math.floor(Math.random() * WORDS.length)];
-  document.getElementById('gChar').textContent = w.c;
-  var opts = [w.m];
-  for(var i=1; i<=2; i++) opts.push(WORDS[(WORDS.indexOf(w) + i) % WORDS.length].m);
-  opts.sort(function(){ return Math.random() - 0.5; });
-  var o = document.getElementById('gOpts');
-  o.innerHTML = '';
-  opts.forEach(opt => {
-    var btn = document.createElement('button');
-    btn.textContent = opt;
-    btn.className = 'btn';
-    btn.onclick = function(){
-      var feed = document.getElementById('gFeed');
-      if(opt === w.m) { feed.innerHTML = '✅ Правильно!'; feed.style.color = '#2e7d32'; } 
-      else { feed.innerHTML = '❌ Ошибка! ' + w.c + ' = ' + w.m; feed.style.color = '#c62828'; }
-      setTimeout(newGame, 1800);
-    };
-    o.appendChild(btn);
-  });
-}
+    function newGame() {
+      var w = WORDS[Math.floor(Math.random() * WORDS.length)];
+      document.getElementById('gChar').textContent = w.c;
+      var opts = [w.m];
+      for(var i=1; i<=2; i++) opts.push(WORDS[(WORDS.indexOf(w) + i) % WORDS.length].m);
+      opts.sort(function(){ return Math.random() - 0.5; });
+      var o = document.getElementById('gOpts');
+      o.innerHTML = '';
+      opts.forEach(opt => {
+        var btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.className = 'btn';
+        btn.onclick = function(){
+          var feed = document.getElementById('gFeed');
+          if(opt === w.m) { feed.innerHTML = '✅ Правильно!'; feed.style.color = '#2e7d32'; }
+          else { feed.innerHTML = '❌ Ошибка! ' + w.c + ' = ' + w.m; feed.style.color = '#c62828'; }
+          setTimeout(newGame, 1800);
+        };
+        o.appendChild(btn);
+      });
+    }
 
-// ==================== ИНИЦИАЛИЗАЦИЯ ====================
-document.addEventListener('DOMContentLoaded', function() { setTimeout(function() { if(typeof generateToneComparisons === "function") generateToneComparisons(); }, 500);
-  initCanvas();
-  initVoice();
-  updateUI();
-  renderGrid();
-  addTonesTab();
-  
-  // Кнопки слов
-  document.getElementById('sListen').onclick = function() { speak(currentW.c); };
-  document.getElementById('sVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('sFeedback')); };
-  document.getElementById('sNext').onclick = nextWord;
-  document.getElementById('sRandom').onclick = randomWord;
-  
-  // Кнопки диалогов
-  document.getElementById('dPrev').onclick = prevDia;
-  document.getElementById('dNext').onclick = nextDia;
-  document.getElementById('dListen').onclick = speakDia;
-  
-  // Тетрадь
-  document.getElementById('nListen').onclick = function() { speak(currentW.c); };
-  document.getElementById('nVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('nFeedback')); };
-  document.getElementById('nNext').onclick = nextWord;
-  document.getElementById('nClear').onclick = clearCanvas;
-  document.getElementById('nGridBtn').onclick = toggleGrid;
-  document.getElementById('nExample').onclick = showExample;
-  document.getElementById('nRandom').onclick = randomWord;
-  document.getElementById('nVerify').onclick = verifyWriting;
-  
-  // Карточки
-  document.getElementById('cFlip').onclick = flipCard;
-  document.getElementById('cNext').onclick = function() { nextWord(); document.getElementById('cFeedback').innerHTML = ''; };
-  document.getElementById('cListen').onclick = function() { speak(currentW.c); };
-  document.getElementById('cVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('cFeedback')); };
-  document.getElementById('cRandom').onclick = randomWord;
+    // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(function() { if(typeof generateToneComparisons === "function") generateToneComparisons(); }, 500);
+      initCanvas();
+      initVoice();
+      updateUI();
+      renderGrid();
+      addTonesTab();
 
-  // Игра и Кубики
-  document.getElementById('gNew').onclick = newGame;
-  document.getElementById('cubeRoll').onclick = function() {
-    var w = WORDS[Math.floor(Math.random() * WORDS.length)];
-    document.getElementById('cubeRes').textContent = w.c;
-    speak(w.c);
-  };
-  
-  // Табы
-  document.querySelectorAll('.tab').forEach(function(tab) {
-    tab.onclick = function() {
-      var p = this.dataset.tab;
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-      document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
-      
-      var targetId = (p === 'radical-words') ? 'radicalWordsPanel' : p + 'Panel';
-      var targetPanel = document.getElementById(targetId);
-      if (targetPanel) targetPanel.classList.add('active');
-      
-      if(p === 'numbers') renderNums();
-      if(p === 'colors') renderCols();
-      if(p === 'dialogs') renderDia();
-      if(p === 'grammar') renderGram();
-      if(p === 'songs') renderSongs();
-      if(p === 'radicals') renderRads();
-      if(p === 'game') newGame();
-      if(p === 'radical-words') generateWordsByRadical();
-    };
-  });
+      // Кнопки слов
+      document.getElementById('sListen').onclick = function() { speak(currentW.c); };
+      document.getElementById('sVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('sFeedback')); };
+      document.getElementById('sNext').onclick = nextWord;
+      document.getElementById('sRandom').onclick = randomWord;
 
-  // Фильтры
-  document.querySelectorAll('.fbtn').forEach(btn => {
-    btn.onclick = function() {
-      document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderGrid(btn.dataset.cat);
-    };
-  });
-});
+      // Кнопки диалогов
+      document.getElementById('dPrev').onclick = prevDia;
+      document.getElementById('dNext').onclick = nextDia;
+      document.getElementById('dListen').onclick = speakDia;
 
-function selectWordByIndex(idx, tab) {
-  if(!WORDS[idx]) {
-    console.error('Слово не найдено, индекс:', idx);
-    return;
-  }
-  
-  currentW = WORDS[idx];
-  updateUI();
-  
-  if(ctx) clearCanvas();
-  closeModal();
-  switchTab(tab);
-  
-  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
-  let f = document.getElementById(feedId);
-  if(f) { 
-    f.innerHTML = "✅ Слово выбрано!"; 
-    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
-  }
-  
-  if(tab === 'cards') {
-    let cFront = document.getElementById('cFront');
-    let cBack = document.getElementById('cBack');
-    if(cFront) cFront.style.display = 'block';
-    if(cBack) cBack.style.display = 'none';
-  }
-}
+      // Тетрадь
+      document.getElementById('nListen').onclick = function() { speak(currentW.c); };
+      document.getElementById('nVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('nFeedback')); };
+      document.getElementById('nNext').onclick = nextWord;
+      document.getElementById('nClear').onclick = clearCanvas;
+      document.getElementById('nGridBtn').onclick = toggleGrid;
+      document.getElementById('nExample').onclick = showExample;
+      document.getElementById('nRandom').onclick = randomWord;
+      document.getElementById('nVerify').onclick = verifyWriting;
+
+      // Карточки
+      document.getElementById('cFlip').onclick = flipCard;
+      document.getElementById('cNext').onclick = function() { nextWord(); document.getElementById('cFeedback').innerHTML = ''; };
+      document.getElementById('cListen').onclick = function() { speak(currentW.c); };
+      document.getElementById('cVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('cFeedback')); };
+      document.getElementById('cRandom').onclick = randomWord;
+
+      // Игра и Кубики
+      document.getElementById('gNew').onclick = newGame;
+      document.getElementById('cubeRoll').onclick = function() {
+        var w = WORDS[Math.floor(Math.random() * WORDS.length)];
+        document.getElementById('cubeRes').textContent = w.c;
+        speak(w.c);
+      };
+
+      // Табы
+      document.querySelectorAll('.tab').forEach(function(tab) {
+        tab.onclick = function() {
+          var p = this.dataset.tab;
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
+
+          var targetId = (p === 'radical-words') ? 'radicalWordsPanel' : p + 'Panel';
+          var targetPanel = document.getElementById(targetId);
+          if (targetPanel) targetPanel.classList.add('active');
+
+          if(p === 'numbers') renderNums();
+          if(p === 'colors') renderCols();
+          if(p === 'dialogs') renderDia();
+          if(p === 'grammar') renderGram();
+          if(p === 'songs') renderSongs();
+          if(p === 'radicals') renderRads();
+          if(p === 'game') newGame();
+          if(p === 'radical-words') generateWordsByRadical();
+        };
+      });
+
+      // Фильтры
+      document.querySelectorAll('.fbtn').forEach(btn => {
+        btn.onclick = function() {
+          document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderGrid(btn.dataset.cat);
+        };
+      });
+    });
+
+    function selectWordByIndex(idx, tab) {
+      if(!WORDS[idx]) {
+        console.error('Слово не найдено, индекс:', idx);
+        return;
+      }
+
+      currentW = WORDS[idx];
+      updateUI();
+
+      if(ctx) clearCanvas();
+      closeModal();
+      switchTab(tab);
+
+      let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+      let f = document.getElementById(feedId);
+      if(f) {
+        f.innerHTML = "✅ Слово выбрано!";
+        setTimeout(() => { if(f) f.innerHTML = ""; }, 2000);
+      }
+
+      if(tab === 'cards') {
+        let cFront = document.getElementById('cFront');
+        let cBack = document.getElementById('cBack');
+        if(cFront) cFront.style.display = 'block';
+        if(cBack) cBack.style.display = 'none';
+      }
+    }
 
 </script>
 <script src="pinyin-sounds.js">
-function selectWordByIndex(idx, tab) {
-  if(!WORDS[idx]) {
-    console.error('Слово не найдено, индекс:', idx);
-    return;
-  }
-  
-  currentW = WORDS[idx];
-  updateUI();
-  
-  if(ctx) clearCanvas();
-  closeModal();
-  switchTab(tab);
-  
-  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
-  let f = document.getElementById(feedId);
-  if(f) { 
-    f.innerHTML = "✅ Слово выбрано!"; 
-    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
-  }
-  
-  if(tab === 'cards') {
-    let cFront = document.getElementById('cFront');
-    let cBack = document.getElementById('cBack');
-    if(cFront) cFront.style.display = 'block';
-    if(cBack) cBack.style.display = 'none';
-  }
-}
+    function selectWordByIndex(idx, tab) {
+      if(!WORDS[idx]) {
+        console.error('Слово не найдено, индекс:', idx);
+        return;
+      }
+
+      currentW = WORDS[idx];
+      updateUI();
+
+      if(ctx) clearCanvas();
+      closeModal();
+      switchTab(tab);
+
+      let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+      let f = document.getElementById(feedId);
+      if(f) {
+        f.innerHTML = "✅ Слово выбрано!";
+        setTimeout(() => { if(f) f.innerHTML = ""; }, 2000);
+      }
+
+      if(tab === 'cards') {
+        let cFront = document.getElementById('cFront');
+        let cBack = document.getElementById('cBack');
+        if(cFront) cFront.style.display = 'block';
+        if(cBack) cBack.style.display = 'none';
+      }
+    }
 
 </script>
-  </body>
+</body>
 </html>
