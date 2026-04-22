@@ -18,6 +18,7 @@
     <!-- ПОДКЛЮЧЕНИЕ ДАННЫХ -->
     <script src="songs.js"></script>
     <script src="WORDS.js"></script>
+    <script src="GRAMMAR.js"></script>
   <style>
 :root {
   --primary: #4361ee; --primary-dark: #3a56d4;
@@ -109,7 +110,27 @@ button:active, .btn:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(
 canvas { background: white; border-radius: 24px; display: block; margin: 18px auto; border: 3px solid #cbd5e1; cursor: crosshair; touch-action: none; width: 100%; height: auto; max-width: 400px; aspect-ratio: 1 / 1; }
 .song-card { background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; margin: 16px 0; }
 .song-title { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 14px; color: var(--primary-dark); }
-.grammar-card { background: #e8f5e9; border-radius: 24px; padding: 18px; margin: 16px 0; text-align: left; border-left: 6px solid #2e7d32; }
+
+/* ОБНОВЛЕННЫЕ СТИЛИ ГРАММАТИКИ ДЛЯ ДЕТЕЙ */
+.grammar-card {
+  background: white; border-radius: 30px; padding: 22px; margin: 20px 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-left: 12px solid #4361ee;
+  transition: transform 0.2s; text-align: left; position: relative; overflow: hidden;
+}
+.grammar-card:nth-child(5n+1) { border-left-color: #4361ee; background: #f0f3ff; }
+.grammar-card:nth-child(5n+2) { border-left-color: #f72585; background: #fff0f6; }
+.grammar-card:nth-child(5n+3) { border-left-color: #4cc9f0; background: #f0faff; }
+.grammar-card:nth-child(5n+4) { border-left-color: #ff9f1c; background: #fff8f0; }
+.grammar-card:nth-child(5n+5) { border-left-color: #2ec4b6; background: #f0fdfa; }
+
+.g-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; color: #1e293b; display: flex; align-items: center; gap: 10px; }
+.g-rule { font-size: 17px; line-height: 1.6; color: #475569; margin-bottom: 15px; font-weight: 600; }
+.g-ex {
+  background: rgba(255,255,255,0.8); padding: 15px; border-radius: 20px;
+  font-family: inherit; font-size: 17px; border: 2px dashed rgba(0,0,0,0.1);
+  color: #1e293b; line-height: 1.5;
+}
+.g-ex b { color: var(--primary); font-weight: 800; }
 
 @media (max-width: 650px) {
   .big-char { font-size: 74px; }
@@ -117,6 +138,8 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
   .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
   button, .btn { font-size: 14px; padding: 12px 18px; min-height: 48px; }
   .dialog-line { font-size: 16px; }
+  .g-title { font-size: 19px; }
+  .g-rule { font-size: 15px; }
 }
 </style>
 </head>
@@ -211,7 +234,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
   </div>
 
   <div id="grammarPanel" class="panel">
-    <div class="card" id="grammarBox"></div>
+    <div class="card" id="grammarBox" style="background:transparent;box-shadow:none;padding:0;"></div>
   </div>
 
   <div id="songsPanel" class="panel">
@@ -540,7 +563,7 @@ function renderGram() {
     html += '<div class="grammar-card">' +
             '<div class="g-title">' + g.title + '</div>' +
             '<div class="g-rule">' + g.rule + '</div>' +
-            '<div class="example">' + g.ex.replace(/\n/g, '<br>') + '</div>' +
+            '<div class="g-ex">' + g.ex.replace(/\n/g, '<br>').replace(/\((.*?)\)/g, '<b>($1)</b>') + '</div>' +
             '</div>';
   }
   document.getElementById('grammarBox').innerHTML = html;
