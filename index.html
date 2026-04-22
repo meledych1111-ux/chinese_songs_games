@@ -85,6 +85,9 @@ button:active, .btn:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(
 .voice-btn.rec { background: linear-gradient(135deg, #e74c3c, #c0392b); animation: pulse 1s infinite; }
 @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.03); opacity: 0.9; } }
 
+/* КНОПКА СЛУЧАЙНОГО СЛОВА */
+.random-btn { background: linear-gradient(135deg, #6b44ff, #4361ee); box-shadow: 0 4px 12px rgba(107, 68, 255, 0.3); }
+
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; backdrop-filter: blur(6px); }
 .modal.active { display: flex; }
 .modal-content { background: white; border-radius: 36px; padding: 24px; max-width: 92vw; max-height: 85vh; overflow-y: auto; width: 100%; position: relative; text-align: center; animation: slideUp 0.25s; }
@@ -176,6 +179,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
       <button id="sListen">🔊 Слушать</button>
       <button id="sVoice" class="voice-btn">🎙️ Проверить</button>
       <button id="sNext">🎲 Следующее</button>
+      <button id="sRandom" class="random-btn">✨ Случайное</button>
     </div>
     <div id="sFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
     <div class="filter-row" id="wFilters">
@@ -276,6 +280,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
         <button id="nListen">🔊 Слушать</button>
         <button id="nVoice" class="voice-btn">🎙️ Проверить</button>
         <button id="nNext">🎲 Следующее</button>
+        <button id="nRandom" class="random-btn">✨ Случайное</button>
       </div>
       <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
       <div class="assoc" id="nAssoc" style="margin-top:10px;"></div>
@@ -298,6 +303,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
         <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
         <button id="cFlip">🔄 Перевернуть</button>
         <button id="cNext">🎲 Следующая</button>
+        <button id="cRandom" class="random-btn">✨ Случайное</button>
       </div>
       <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
     </div>
@@ -647,6 +653,15 @@ function nextWord() {
   updateUI();
 }
 
+function randomWord() {
+  currentW = WORDS[Math.floor(Math.random() * WORDS.length)];
+  updateUI();
+  if (ctx) clearCanvas();
+  document.getElementById('cFeedback').innerHTML = '';
+  document.getElementById('sFeedback').innerHTML = '';
+  document.getElementById('nFeedback').innerHTML = '';
+}
+
 function prevDia() { currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length; renderDia(); }
 function nextDia() { currentDia = (currentDia + 1) % DIALOGS.length; renderDia(); }
 function speakDia() { speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); }
@@ -922,6 +937,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sListen').onclick = function() { speak(currentW.c); };
   document.getElementById('sVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('sFeedback')); };
   document.getElementById('sNext').onclick = nextWord;
+  document.getElementById('sRandom').onclick = randomWord;
   
   // === ДИАЛОГИ ===
   document.getElementById('dPrev').onclick = prevDia;
@@ -965,6 +981,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('nClear').onclick = clearCanvas;
   document.getElementById('nGridBtn').onclick = toggleGrid;
   document.getElementById('nExample').onclick = showExample;
+  document.getElementById('nRandom').onclick = randomWord;
   
   // === КАРТОЧКИ ===
   document.getElementById('cFlip').onclick = flipCard;
@@ -977,6 +994,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   document.getElementById('cListen').onclick = function() { speak(currentW.c); };
   document.getElementById('cVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('cFeedback')); };
+  document.getElementById('cRandom').onclick = randomWord;
   
   // === КУБИКИ ===
   document.getElementById('cubeRoll').onclick = function() {
