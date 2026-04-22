@@ -138,10 +138,10 @@
         }
         .g-ex b { color: var(--primary); font-weight: 800; }
 
-        @media (max-width: 650px) {
-          .big-char { font-size: 74px; }
+        @media (max-width: 650px) {.big-char { font-size: 74px; }
           .tab { font-size: 12px; padding: 10px 12px; }
-          .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+          /* Убираем жесткие 3 колонки, делаем адаптивно и компактно */
+          .grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
           button, .btn { font-size: 14px; padding: 12px 18px; min-height: 48px; }
           .dialog-line { font-size: 16px; }
           .g-title { font-size: 19px; }
