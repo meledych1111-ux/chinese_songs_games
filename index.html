@@ -800,7 +800,7 @@
       var w = canvas.width, h = canvas.height;
       ctx.save();
       ctx.globalAlpha = 0.2;
-      ctx.font = "bold " + (h * 0.75) + "px 'Noto Sans CJK SC', system-ui";
+      ctx.font = "bold " + (h * 0.45) + "px 'Noto Sans CJK SC', system-ui";
       ctx.fillStyle = "#ff6b35";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -824,7 +824,7 @@
       offCtx.fillStyle = 'white';
       offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
       offCtx.fillStyle = 'black';
-      offCtx.font = "bold " + (canvas.height * 0.75) + "px 'Noto Sans CJK SC', system-ui";
+      offCtx.font = "bold " + (canvas.height * 0.45) + "px 'Noto Sans CJK SC', system-ui";
       offCtx.textAlign = 'center';
       offCtx.textBaseline = 'middle';
       offCtx.fillText(currentW.c, offCanvas.width/2, offCanvas.height/2);
@@ -861,7 +861,7 @@
 
       const brushWidth = parseInt(document.getElementById('nWeight').value);
       // Оцениваем "идеальную" толщину эталонного шрифта (~15% от высоты)
-      const estimatedTargetWidth = (canvas.height * 0.75) * 0.15;
+      const estimatedTargetWidth = (canvas.height * 0.45) * 0.15;
       const widthRatio = Math.max(0.1, Math.min(1, brushWidth / estimatedTargetWidth));
 
       // КОРРЕКЦИЯ: если кисть тонкая, мы не ждем покрытия в 100%
