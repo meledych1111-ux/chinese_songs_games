@@ -82,9 +82,8 @@ function renderSoundsVideos() {
     const container = document.getElementById('soundsVideosContainer');
     if (!container) return;
 
-    let html = `<div class="card">
-        <h2 style="margin-bottom: 20px; color: #4361ee;">📢 Изучение звуков (видео)</h2>
-        <div class="writing-videos-grid">`;
+    // Генерируем только сетку видео, так как заголовок и карточка уже есть в index.html
+    let html = `<div class="writing-videos-grid">`;
 
     for (let v of SOUNDS_VIDEOS) {
         html += `
@@ -96,18 +95,18 @@ function renderSoundsVideos() {
                         <div class="writing-video-tags">${v.tags}</div>
                         <div class="writing-video-desc">${v.description}</div>
                     </div>
-                    <a href="${v.url}" target="_blank" class="writing-video-btn">🎬 Смотреть</a>
+                    <a href="${v.url}" target="_blank" class="writing-video-btn">🎬 Слушать звуки</a>
                 </div>
             </div>`;
     }
 
-    html += `</div></div>`;
+    html += `</div>`;
     container.innerHTML = html;
 }
 
-// Добавляем вкладку и панель
+// Инициализация модуля
 function initSoundsVideos() {
-    // Добавляем стили (если ещё нет)
+    // 1. Добавляем стили (если ещё нет)
     if (!document.getElementById('writing-videos-styles')) {
         const style = document.createElement('style');
         style.id = 'writing-videos-styles';
@@ -128,20 +127,23 @@ function initSoundsVideos() {
         document.head.appendChild(style);
     }
 
-    // Создаём панель
+    // 2. Создаём панель, если её ещё нет в index.html
     if (!document.getElementById('sounds-vPanel')) {
-        const container = document.querySelector('.container');
-        if (container) {
-            const panel = document.createElement('div');
-            panel.id = 'sounds-vPanel';
-            panel.className = 'panel';
-            panel.innerHTML = '<div id="soundsVideosContainer"></div>';
-            container.appendChild(panel);
-        }
+        const panel = document.createElement('div');
+        panel.id = 'sounds-vPanel';
+        panel.className = 'panel';
+        // Сразу добавляем оформление карточки и заголовок
+        panel.innerHTML = `
+            <div class="card">
+                <h2 style="margin-bottom: 20px; color: #4361ee;">📢 Изучение звуков (видео)</h2>
+                <div id="soundsVideosContainer"></div>
+            </div>
+        `;
+        document.body.appendChild(panel);
     }
 }
 
-// Запускаем инициализацию
+// Запуск при загрузке
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSoundsVideos);
 } else {
