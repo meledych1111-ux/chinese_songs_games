@@ -21,13 +21,48 @@ const SONGS = [
   {title:"🌙 月亮代表我的心 (Луна)", lines:[{ch:"你问我爱你有多深", py:"nǐ wèn wǒ ài nǐ yǒu duō shēn", ru:"Ты спрашиваешь, как сильно я тебя люблю"},{ch:"我爱你有几分", py:"wǒ ài nǐ yǒu jǐ fēn", ru:"Насколько велика моя любовь"},{ch:"我的情也真，我的爱也真", py:"wǒ de qíng yě zhēn, wǒ de ài yě zhēn", ru:"Мои чувства искренни, моя любовь prawdziwa"},{ch:"月亮代表我的心", py:"yuèliang dàibiǎo wǒ de xīn", ru:"Луна представляет моё сердце"}]}
 ];
 
- // Видеоуроки
-  const VIDEO_LINKS = [
-    {emoji:"📜", title:"绝句 (Цзюэцзюй) — Ду Фу", url:"https://www.xiaohongshu.com/explore/69e724a2000000001a02da93?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBt1RNvTgvLJ0jMEgA8pVHsdJMhwqYDvJutf3fbEurwQM%3D&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876503&share_id=c4d2754bc548433cbf40dac43b0bdd60", desc:"Классическое стихотворение эпохи Тан"},
-    {emoji:"📚", title:"劝学 (Побуждение к учению)", url:"https://www.xiaohongshu.com/explore/69d9d24d0000000023016749?xsec_token=ABw1dWfdBOwhkLx6MYeWqVIUXG9qhlKROtmnqaHSnGY8o=&xsec_source=pc_user", desc:"О важности усердной учёбы"},
-    {emoji:"🌸", title:"梅花 (Цветы сливы) — Ван Аньши", url:"https://www.xiaohongshu.com/explore/69d8af97000000001e00ecc5?xsec_token=ABJ1XhhZu8MBf5VeZQvzlBetX0_zLL490cVC3yaYy9W-Y=&xsec_source=pc_user", desc:"О благородстве и стойкости"},
-    {emoji:"📖", title:"幼小阶段古诗词全集（十一）", url:"https://www.xiaohongshu.com/explore/69e0808c0000000020038749?xsec_token=ABMHiHmw6RUonJyI9U_B0aNrCRJi2ZLZorZLZW3NxW__8=&xsec_source=pc_user", desc:"Сборник классических стихов"},
-    {emoji:"👋", title:"赠汪伦 (Прощание с Ван Луном)", url:"https://www.xiaohongshu.com/explore/69dcab49000000001e00ce9b?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBHX6cBi7C6hNd5u8VYFMI4a9cPpBO23BGPip5KSRd-Xs=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876430&share_id=4c116ed74d5743009fcf344346ef6830", desc:"Ли Бо о дружбе"},
-    {emoji:"📜", title:"三字经 (3) — Троесловие", url:"https://www.xiaohongshu.com/explore/685bed09000000002400f2c2?xsec_token=ABpHa1u6kHhGnyemonvX_YzlrcLCyoPjLq6CoZVoAbcck=&xsec_source=pc_user", desc:"Классика с пояснениями"},
-    {emoji:"📚", title:"三字经 (2) — Троесловие", url:"https://www.xiaohongshu.com/explore/6857908c0000000022030714?xsec_token=ABNYOZl-tyW2BoSACKO-__ZVpOChTP79iFcMRtGuxTt3k=&xsec_source=pc_user", desc:"Продолжение изучения"}
-  ];
+ // Видеоуроки (ПОЛНЫЕ ссылки)
+ const VIDEO_LINKS = [
+   {
+     emoji: "📜",
+     title: "绝句 (Цзюэцзюй) — Ду Фу",
+     url: "https://www.xiaohongshu.com/explore/69e724a2000000001a02da93?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBt1RNvTgvLJ0jMEgA8pVHsdJMhwqYDvJutf3fbEurwQM%3D&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876503&share_id=c4d2754bc548433cbf40dac43b0bdd60",
+     desc: "Классическое стихотворение эпохи Тан"
+   },
+   {
+     emoji: "📚",
+     title: "劝学 (Побуждение к учению)",
+     url: "https://www.xiaohongshu.com/explore/69d9d24d0000000023016749?xsec_token=ABw1dWfdBOwhkLx6MYeWqVIUXG9qhlKROtmnqaHSnGY8o=&xsec_source=pc_user",
+     desc: "О важности усердной учёбы"
+   },
+   {
+     emoji: "🌸",
+     title: "梅花 (Цветы сливы) — Ван Аньши",
+     url: "https://www.xiaohongshu.com/explore/69d8af97000000001e00ecc5?xsec_token=ABJ1XhhZu8MBf5VeZQvzlBetX0_zLL490cVC3yaYy9W-Y=&xsec_source=pc_user",
+     desc: "О благородстве и стойкости"
+   },
+   {
+     emoji: "📖",
+     title: "幼小阶段古诗词全集（十一）",
+     url: "https://www.xiaohongshu.com/explore/69e0808c0000000020038749?xsec_token=ABMHiHmw6RUonJyI9U_B0aNrCRJi2ZLZorZLZW3NxW__8=&xsec_source=pc_user",
+     desc: "Сборник классических стихов"
+   },
+   {
+     emoji: "👋",
+     title: "赠汪伦 (Прощание с Ван Луном)",
+     url: "https://www.xiaohongshu.com/explore/69dcab49000000001e00ce9b?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBHX6cBi7C6hNd5u8VYFMI4a9cPpBO23BGPip5KSRd-Xs=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876430&share_id=4c116ed74d5743009fcf344346ef6830",
+     desc: "Ли Бо о дружбе"
+   },
+   {
+     emoji: "📜",
+     title: "三字经 (3) — Троесловие",
+     url: "https://www.xiaohongshu.com/explore/685bed09000000002400f2c2?xsec_token=ABpHa1u6kHhGnyemonvX_YzlrcLCyoPjLq6CoZVoAbcck=&xsec_source=pc_user",
+     desc: "Классика с пояснениями"
+   },
+   {
+     emoji: "📚",
+     title: "三字经 (2) — Троесловие",
+     url: "https://www.xiaohongshu.com/explore/6857908c0000000022030714?xsec_token=ABNYOZl-tyW2BoSACKO-__ZVpOChTP79iFcMRtGuxTt3k=&xsec_source=pc_user",
+     desc: "Продолжение изучения"
+   }
+ ];
