@@ -16,11 +16,156 @@
 <link rel="manifest" href="manifest.json">
 <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс (500+ слов)</title>
     <!-- ПОДКЛЮЧЕНИЕ ДАННЫХ -->
-    <script src="songs.js"></script>
-    <script src="WORDS.js"></script>
-    <script src="GRAMMAR.js"></script>
-    <script src="DIALOGS.js"></script>
-    <script src="RADICALS.js"></script>
+    <script src="songs.js">
+function selectWordByIndex(idx, tab) {
+  if(!WORDS[idx]) {
+    console.error('Слово не найдено, индекс:', idx);
+    return;
+  }
+  
+  currentW = WORDS[idx];
+  updateUI();
+  
+  if(ctx) clearCanvas();
+  closeModal();
+  switchTab(tab);
+  
+  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+  let f = document.getElementById(feedId);
+  if(f) { 
+    f.innerHTML = "✅ Слово выбрано!"; 
+    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
+  }
+  
+  if(tab === 'cards') {
+    let cFront = document.getElementById('cFront');
+    let cBack = document.getElementById('cBack');
+    if(cFront) cFront.style.display = 'block';
+    if(cBack) cBack.style.display = 'none';
+  }
+}
+
+</script>
+    <script src="WORDS.js">
+function selectWordByIndex(idx, tab) {
+  if(!WORDS[idx]) {
+    console.error('Слово не найдено, индекс:', idx);
+    return;
+  }
+  
+  currentW = WORDS[idx];
+  updateUI();
+  
+  if(ctx) clearCanvas();
+  closeModal();
+  switchTab(tab);
+  
+  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+  let f = document.getElementById(feedId);
+  if(f) { 
+    f.innerHTML = "✅ Слово выбрано!"; 
+    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
+  }
+  
+  if(tab === 'cards') {
+    let cFront = document.getElementById('cFront');
+    let cBack = document.getElementById('cBack');
+    if(cFront) cFront.style.display = 'block';
+    if(cBack) cBack.style.display = 'none';
+  }
+}
+
+</script>
+    <script src="GRAMMAR.js">
+function selectWordByIndex(idx, tab) {
+  if(!WORDS[idx]) {
+    console.error('Слово не найдено, индекс:', idx);
+    return;
+  }
+  
+  currentW = WORDS[idx];
+  updateUI();
+  
+  if(ctx) clearCanvas();
+  closeModal();
+  switchTab(tab);
+  
+  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+  let f = document.getElementById(feedId);
+  if(f) { 
+    f.innerHTML = "✅ Слово выбрано!"; 
+    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
+  }
+  
+  if(tab === 'cards') {
+    let cFront = document.getElementById('cFront');
+    let cBack = document.getElementById('cBack');
+    if(cFront) cFront.style.display = 'block';
+    if(cBack) cBack.style.display = 'none';
+  }
+}
+
+</script>
+    <script src="DIALOGS.js">
+function selectWordByIndex(idx, tab) {
+  if(!WORDS[idx]) {
+    console.error('Слово не найдено, индекс:', idx);
+    return;
+  }
+  
+  currentW = WORDS[idx];
+  updateUI();
+  
+  if(ctx) clearCanvas();
+  closeModal();
+  switchTab(tab);
+  
+  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+  let f = document.getElementById(feedId);
+  if(f) { 
+    f.innerHTML = "✅ Слово выбрано!"; 
+    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
+  }
+  
+  if(tab === 'cards') {
+    let cFront = document.getElementById('cFront');
+    let cBack = document.getElementById('cBack');
+    if(cFront) cFront.style.display = 'block';
+    if(cBack) cBack.style.display = 'none';
+  }
+}
+
+</script>
+    <script src="RADICALS.js">
+function selectWordByIndex(idx, tab) {
+  if(!WORDS[idx]) {
+    console.error('Слово не найдено, индекс:', idx);
+    return;
+  }
+  
+  currentW = WORDS[idx];
+  updateUI();
+  
+  if(ctx) clearCanvas();
+  closeModal();
+  switchTab(tab);
+  
+  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+  let f = document.getElementById(feedId);
+  if(f) { 
+    f.innerHTML = "✅ Слово выбрано!"; 
+    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
+  }
+  
+  if(tab === 'cards') {
+    let cFront = document.getElementById('cFront');
+    let cBack = document.getElementById('cBack');
+    if(cFront) cFront.style.display = 'block';
+    if(cBack) cBack.style.display = 'none';
+  }
+}
+
+</script>
 
     <style>
 :root {
@@ -513,13 +658,46 @@ function startVoice(targetChar, targetPinyin, feedElement) {
   if(feedElement) feedElement.innerHTML = "🎤 Слушаю... Произнесите: \"" + targetChar + "\"";
 }
 
+
 function openModal(w) {
-  var c = document.getElementById('modalContent');
-  c.innerHTML = '<button class="close" onclick="closeModal()">×</button><div class="big-char">'+w.c+'</div><div class="pinyin">'+colorP(w.p)+'</div><div class="meaning">'+w.m+'</div><div class="emoji">'+(w.e||'📖')+'</div><div class="badge">'+(CAT_NAMES[w.cat]||w.cat)+'</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>'+(w.a||'Практикуй произношение!')+'</div><div class="btn-group"><button onclick="speak(\''+w.c+'\')">🔊 Слушать</button><button class="voice-btn" onclick="startVoice(\''+w.c+'\', \''+w.p+'\', document.getElementById(\'mFeed\'))">🎙️ Проверить</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>';
-  document.getElementById('modal').classList.add('active');
+  if(!w) return;
+  let idx = -1;
+  for(let i = 0; i < WORDS.length; i++) {
+    if(WORDS[i].c === w.c) {
+      idx = i;
+      break;
+    }
+  }
+  if(idx === -1) return;
+  
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modalContent');
+  if(!modal || !modalContent) return;
+  
+  modalContent.innerHTML = `
+    <button class="close" onclick="closeModal()">×</button>
+    <div class="big-char">${w.c}</div>
+    <div class="pinyin">${colorP(w.p)}</div>
+    <div class="meaning">${w.m}</div>
+    <div class="emoji">${w.e || '📖'}</div>
+    <div class="badge">${CAT_NAMES[w.cat] || w.cat}</div>
+    <div class="assoc"><strong>🧠 Как запомнить:</strong><br>${w.a || 'Практикуй произношение!'}</div>
+    <div class="btn-group">
+      <button onclick="speak('${w.c}')">🔊 Слушать</button>
+      <button onclick="selectWordByIndex(${idx}, 'notebook')" style="background:var(--success)">📓 В тетрадь</button>
+      <button onclick="selectWordByIndex(${idx}, 'cards')" style="background:var(--primary)">🃏 В карточки</button>
+    </div>
+    <div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`;
+  modal.classList.add('active');
 }
 
-function closeModal() { document.getElementById('modal').classList.remove('active'); }
+
+
+function closeModal() { 
+  let modal = document.getElementById('modal');
+  if(modal) modal.classList.remove('active'); 
+}
+
 
 function renderGrid(cat) {
   if(cat === undefined) cat = 'all';
@@ -1053,7 +1231,65 @@ document.addEventListener('DOMContentLoaded', function() { setTimeout(function()
     };
   });
 });
+
+function selectWordByIndex(idx, tab) {
+  if(!WORDS[idx]) {
+    console.error('Слово не найдено, индекс:', idx);
+    return;
+  }
+  
+  currentW = WORDS[idx];
+  updateUI();
+  
+  if(ctx) clearCanvas();
+  closeModal();
+  switchTab(tab);
+  
+  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+  let f = document.getElementById(feedId);
+  if(f) { 
+    f.innerHTML = "✅ Слово выбрано!"; 
+    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
+  }
+  
+  if(tab === 'cards') {
+    let cFront = document.getElementById('cFront');
+    let cBack = document.getElementById('cBack');
+    if(cFront) cFront.style.display = 'block';
+    if(cBack) cBack.style.display = 'none';
+  }
+}
+
 </script>
-<script src="pinyin-sounds.js"></script>
+<script src="pinyin-sounds.js">
+function selectWordByIndex(idx, tab) {
+  if(!WORDS[idx]) {
+    console.error('Слово не найдено, индекс:', idx);
+    return;
+  }
+  
+  currentW = WORDS[idx];
+  updateUI();
+  
+  if(ctx) clearCanvas();
+  closeModal();
+  switchTab(tab);
+  
+  let feedId = (tab === 'notebook') ? 'nFeedback' : 'cFeedback';
+  let f = document.getElementById(feedId);
+  if(f) { 
+    f.innerHTML = "✅ Слово выбрано!"; 
+    setTimeout(() => { if(f) f.innerHTML = ""; }, 2000); 
+  }
+  
+  if(tab === 'cards') {
+    let cFront = document.getElementById('cFront');
+    let cBack = document.getElementById('cBack');
+    if(cFront) cFront.style.display = 'block';
+    if(cBack) cBack.style.display = 'none';
+  }
+}
+
+</script>
   </body>
 </html>
