@@ -1,10 +1,9 @@
 // ==========================================
 // Модуль: Сравнение звуков пиньинь
-// ДОБАВЛЯЕТ ВКЛАДКУ В ВЕРХНЕЕ МЕНЮ
+// БЕЗ КОНФЛИКТОВ с основным кодом
 // ==========================================
 
 (function() {
-  // Данные для сравнения звуков
   const SOUND_COMPARISONS = [
     {
       title: 'Сравнение an / en',
@@ -18,44 +17,31 @@
     }
   ];
 
-  // Функция рендера карточек
   function renderComparisons(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
-
-    let html = `
+    container.innerHTML = `
       <div class="card">
-        <h2 style="margin-bottom: 20px;">🔊 Сравнение похожих звуков</h2>
-        <p style="margin-bottom: 16px; color: #555;">🎯 Нажмите на кнопку, чтобы открыть видеоурок. Видео откроется в новой вкладке.</p>
+        <h2 style="margin-bottom:20px;">🔊 Сравнение похожих звуков</h2>
+        <p style="margin-bottom:16px;color:#555;">🎯 Нажмите на кнопку, чтобы открыть видеоурок.</p>
         <div class="comparisons-grid">
-    `;
-
-    SOUND_COMPARISONS.forEach(item => {
-      html += `
-        <div class="comparison-card">
-          <div class="comparison-title">${item.title}</div>
-          <div class="comparison-desc">${item.description}</div>
-          <a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="comparison-link">
-            🎬 Смотреть видео
-          </a>
-          <div style="font-size: 11px; color: #999; margin-top: 12px;">🌐 RedNote (возможен VPN)</div>
+          ${SOUND_COMPARISONS.map(item => `
+            <div class="comparison-card">
+              <div class="comparison-title">${item.title}</div>
+              <div class="comparison-desc">${item.description}</div>
+              <a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="comparison-link">🎬 Смотреть видео</a>
+              <div style="font-size:11px;color:#999;margin-top:12px;">🌐 RedNote (возможен VPN)</div>
+            </div>
+          `).join('')}
         </div>
-      `;
-    });
-
-    html += `</div></div>`;
-    container.innerHTML = html;
+      </div>
+    `;
   }
 
-  // ===== 1. ДОБАВЛЯЕМ ВКЛАДКУ В ВЕРХНЕЕ МЕНЮ =====
-  function addTabToMainMenu() {
+  // Добавляем вкладку в главное меню
+  function addTab() {
     const tabsContainer = document.querySelector('.tabs');
-    if (!tabsContainer) {
-      console.error('❌ Контейнер .tabs не найден');
-      return;
-    }
-
-    // Проверяем, нет ли уже такой вкладки
+    if (!tabsContainer) return;
     if (tabsContainer.querySelector('[data-tab="pinyin-sounds"]')) return;
 
     const newTab = document.createElement('div');
@@ -63,71 +49,66 @@
     newTab.setAttribute('data-tab', 'pinyin-sounds');
     newTab.textContent = '🔊 Звуки пиньинь';
     tabsContainer.appendChild(newTab);
-    console.log('✅ Вкладка "Звуки пиньинь" добавлена в главное меню');
+    console.log('✅ Вкладка добавлена');
   }
 
-  // ===== 2. СОЗДАЁМ ПАНЕЛЬ ДЛЯ ЭТОЙ ВКЛАДКИ =====
-  function createPanelForTab() {
+  // Создаём панель (без инлайн-стилей!)
+  function createPanel() {
     if (document.getElementById('pinyinSoundsPanel')) return;
 
     const panel = document.createElement('div');
     panel.id = 'pinyinSoundsPanel';
-    panel.className = 'panel';
-    panel.style.display = 'none';
+    panel.className = 'panel'; // только класс, без style.display
     panel.innerHTML = '<div id="pinyinSoundsContainer"></div>';
 
-    // Вставляем после панели studyPanel или в конец body
     const studyPanel = document.getElementById('studyPanel');
-    if (studyPanel && studyPanel.parentNode) {
+    if (studyPanel?.parentNode) {
       studyPanel.parentNode.insertBefore(panel, studyPanel.nextSibling);
     } else {
       document.body.appendChild(panel);
     }
-    console.log('✅ Панель pinyinSoundsPanel создана');
+    console.log('✅ Панель создана');
   }
 
-  // ===== 3. ИНТЕГРИРУЕМ С СУЩЕСТВУЮЩЕЙ СИСТЕМОЙ ПЕРЕКЛЮЧЕНИЯ ТАБОВ =====
-  function integrateWithExistingTabs() {
-    const tabs = document.querySelectorAll('.tab');
-    const panels = document.querySelectorAll('.panel');
+  // ДОБАВЛЯЕМ ОБРАБОТЧИК ТОЛЬКО ДЛЯ НАШЕЙ ВКЛАДКИ (не трогаем остальные)
+  function setupOurTabOnly() {
+    const ourTab = document.querySelector('[data-tab="pinyin-sounds"]');
+    if (!ourTab) return;
 
-    tabs.forEach(tab => {
-      // Удаляем старый обработчик, если он был
-      const oldHandler = tab._pinyinTabHandler;
-      if (oldHandler) {
-        tab.removeEventListener('click', oldHandler);
+    // Удаляем возможный старый обработчик
+    if (ourTab._ourHandler) {
+      ourTab.removeEventListener('click', ourTab._ourHandler);
+    }
+
+    const handler = function(e) {
+      e.preventDefault();
+      e.stopPropagation(); // НЕ даём основному обработчику сработать
+
+      // Скрываем все панели через классы (как в основном коде)
+      document.querySelectorAll('.panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+
+      // Показываем нашу панель
+      const ourPanel = document.getElementById('pinyinSoundsPanel');
+      if (ourPanel) {
+        ourPanel.classList.add('active');
+        renderComparisons('pinyinSoundsContainer');
       }
 
-      // Создаём новый обработчик
-      const handler = function(e) {
-        const tabId = this.getAttribute('data-tab');
+      // Обновляем активный класс у вкладок
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      ourTab.classList.add('active');
+    };
 
-        // Скрываем все панели
-        panels.forEach(panel => panel.classList.remove('active'));
-
-        // Показываем нужную панель
-        const targetPanel = document.getElementById(`${tabId}Panel`);
-        if (targetPanel) {
-          targetPanel.classList.add('active');
-        }
-
-        // Если это наша вкладка — рендерим содержимое
-        if (tabId === 'pinyin-sounds') {
-          renderComparisons('pinyinSoundsContainer');
-        }
-
-        // Обновляем активный класс для табов
-        tabs.forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-      };
-
-      tab.addEventListener('click', handler);
-      tab._pinyinTabHandler = handler;
-    });
-    console.log('✅ Навигация по вкладкам обновлена');
+    ourTab.addEventListener('click', handler);
+    ourTab._ourHandler = handler;
+    console.log('✅ Обработчик для вкладки настроен');
   }
 
-  // ===== СТИЛИ =====
+  // Стили (добавляем только свои, не трогая существующие)
   function addStyles() {
     if (document.getElementById('pinyin-styles')) return;
     const style = document.createElement('style');
@@ -179,18 +160,21 @@
     document.head.appendChild(style);
   }
 
-  // ===== ЗАПУСК =====
-  function init() {
-    addStyles();
-    addTabToMainMenu();        // Добавляем вкладку в .tabs
-    createPanelForTab();       // Создаём панель
-    integrateWithExistingTabs(); // Настраиваем переключение
-    console.log('✅ Модуль "Сравнение звуков" полностью загружен');
+  // Ждём, пока основной код index.html полностью загрузится и создаст свои обработчики
+  function waitForMainCode() {
+    // Даём основному коду время на инициализацию
+    setTimeout(() => {
+      addStyles();
+      addTab();
+      createPanel();
+      setupOurTabOnly();
+      console.log('✅ Модуль "Сравнение звуков" загружен (без конфликтов)');
+    }, 500);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', waitForMainCode);
   } else {
-    init();
+    waitForMainCode();
   }
 })();
