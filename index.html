@@ -97,23 +97,9 @@
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 14px; margin: 20px 0; }
         .grid-item {
-          background: rgba(255,255,255,0.9);
-          border-radius: 24px;
-          padding: 12px 5px; /* Уменьшили отступы */
-          text-align: center;
-          cursor: pointer;
-          box-shadow: 0 5px 12px rgba(0,0,0,0.08);
-          transition: 0.15s;
-          border: 2px solid transparent;
-          min-height: 100px; /* Сделали чуть ниже */
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-
-          /* ГЛАВНОЕ ИСПРАВЛЕНИЕ: */
-          max-width: 130px; /* Ограничиваем ширину, чтобы они не растягивались */
-          margin: 0 auto;    /* Центрируем блоки в сетке */
+          background: rgba(255,255,255,0.9); border-radius: 24px; padding: 16px 8px; text-align: center; cursor: pointer;
+          box-shadow: 0 5px 12px rgba(0,0,0,0.08); transition: 0.15s; border: 2px solid transparent;
+          min-height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .grid-item:active { transform: scale(0.96); background: rgba(255,255,255,1); }
         .grid-item .ch { font-size: 34px; font-weight: 800; margin: 6px 0; }
