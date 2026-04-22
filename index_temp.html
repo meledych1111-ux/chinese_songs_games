@@ -4,118 +4,115 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс (500+ слов)</title>
-    <!-- ЗАГРУЗКА ДАННЫХ ПЕРЕД СКРИПТАМИ -->
-      <script src="songs.js"></script>
-      <script src="pinyin-sounds.js"></script>
-    <style>
-        :root {
-          --primary: #4361ee; --primary-dark: #3a56d4;
-          --accent: #ff6b35; --success: #2ecc71; --error: #e74c3c;
-          --text: #2c3e50; --text-light: #7f8c8d;
-          --radius: 28px; --shadow: 0 12px 35px rgba(0,0,0,0.15);
-          --t1: #e53935; --t2: #1e88e5; --t3: #43a047; --t4: #fdd835; --t5: #7f8c8d;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-          background: linear-gradient(145deg, #1a5f7a 0%, #f5d6a8 100%);
-          font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans CJK', system-ui;
-          color: var(--text); padding: 12px; min-height: 100vh; font-size: 18px;
-        }
-        .container { max-width: 850px; margin: 0 auto; padding-bottom: 30px; }
+<style>
+:root {
+  --primary: #4361ee; --primary-dark: #3a56d4;
+  --accent: #ff6b35; --success: #2ecc71; --error: #e74c3c;
+  --text: #2c3e50; --text-light: #7f8c8d;
+  --radius: 28px; --shadow: 0 12px 35px rgba(0,0,0,0.15);
+  --t1: #e53935; --t2: #1e88e5; --t3: #43a047; --t4: #fdd835; --t5: #7f8c8d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  background: linear-gradient(145deg, #1a5f7a 0%, #f5d6a8 100%);
+  font-family: 'Segoe UI', 'PingFang SC', 'Noto Sans CJK', system-ui;
+  color: var(--text); padding: 12px; min-height: 100vh; font-size: 18px;
+}
+.container { max-width: 850px; margin: 0 auto; padding-bottom: 30px; }
 
-        .tabs {
-          display: flex; flex-wrap: wrap; gap: 12px; background: rgba(255,255,255,0.95);
-          border-radius: 60px; padding: 14px; margin-bottom: 20px;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.15); justify-content: center; backdrop-filter: blur(10px);
-        }
-        .tab {
-          padding: 14px 18px; border-radius: 50px; font-weight: 800; font-size: 15px;
-          background: #eef2f7; cursor: pointer; transition: all 0.25s; text-align: center;
-          min-height: 50px; display: flex; align-items: center; justify-content: center; user-select: none;
-        }
-        .tab.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.05) translateY(-2px); box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3); }
-        .tab:hover { transform: translateY(-2px); }
+.tabs {
+  display: flex; flex-wrap: wrap; gap: 12px; background: rgba(255,255,255,0.95);
+  border-radius: 60px; padding: 14px; margin-bottom: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15); justify-content: center; backdrop-filter: blur(10px);
+}
+.tab {
+  padding: 14px 18px; border-radius: 50px; font-weight: 800; font-size: 15px;
+  background: #eef2f7; cursor: pointer; transition: all 0.25s; text-align: center;
+  min-height: 50px; display: flex; align-items: center; justify-content: center; user-select: none;
+}
+.tab.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.05) translateY(-2px); box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3); }
+.tab:hover { transform: translateY(-2px); }
 
-        .panel { display: none; animation: fade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .panel.active { display: block; }
-        @keyframes fade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.panel { display: none; animation: fade 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.panel.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card {
-          background: rgba(255,255,255,0.95); border-radius: var(--radius); padding: 28px 22px;
-          text-align: center; box-shadow: var(--shadow); margin-bottom: 22px; backdrop-filter: blur(10px);
-        }
-        .big-char { font-size: 110px; font-weight: 900; line-height: 1.1; margin: 18px 0; color: var(--primary-dark); text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
-        .pinyin { font-size: 26px; font-weight: 700; margin: 10px 0; letter-spacing: 1px; }
-        .pinyin .t1 { color: var(--t1); } .pinyin .t2 { color: var(--t2); }
-        .pinyin .t3 { color: var(--t3); } .pinyin .t4 { color: var(--t4); }
-        .pinyin .t5 { color: var(--t5); }
-        .meaning { font-size: 24px; background: linear-gradient(135deg, #e3f2fd, #bbdefb); display: inline-block; padding: 12px 24px; border-radius: 50px; margin: 12px 0; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .emoji { font-size: 70px; margin: 15px 0; }
-        .badge { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; padding: 8px 18px; border-radius: 25px; font-size: 14px; font-weight: 700; display: inline-block; margin: 8px 0; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+.card {
+  background: rgba(255,255,255,0.95); border-radius: var(--radius); padding: 28px 22px;
+  text-align: center; box-shadow: var(--shadow); margin-bottom: 22px; backdrop-filter: blur(10px);
+}
+.big-char { font-size: 110px; font-weight: 900; line-height: 1.1; margin: 18px 0; color: var(--primary-dark); text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
+.pinyin { font-size: 26px; font-weight: 700; margin: 10px 0; letter-spacing: 1px; }
+.pinyin .t1 { color: var(--t1); } .pinyin .t2 { color: var(--t2); }
+.pinyin .t3 { color: var(--t3); } .pinyin .t4 { color: var(--t4); }
+.pinyin .t5 { color: var(--t5); }
+.meaning { font-size: 24px; background: linear-gradient(135deg, #e3f2fd, #bbdefb); display: inline-block; padding: 12px 24px; border-radius: 50px; margin: 12px 0; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.emoji { font-size: 70px; margin: 15px 0; }
+.badge { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; padding: 8px 18px; border-radius: 25px; font-size: 14px; font-weight: 700; display: inline-block; margin: 8px 0; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
 
-        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 25px 0; }
-        button, .btn {
-          background: linear-gradient(135deg, #ff9a44, #ff6b35); border: none; padding: 16px 24px; font-size: 17px; font-weight: 700;
-          border-radius: 50px; color: white; cursor: pointer; transition: all 0.25s; min-height: 54px;
-          box-shadow: 0 5px 15px rgba(255,107,53,0.3); text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        button:hover, .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,107,53,0.4); }
-        button:active, .btn:active { transform: scale(0.95); }
-        .voice-btn { background: linear-gradient(135deg, #44aa77, #2d8a5c); box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3); }
-        .voice-btn.rec { background: linear-gradient(135deg, #e74c3c, #c0392b); animation: pulse 1s infinite; }
-        @keyframes pulse { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } }
+.btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 25px 0; }
+button, .btn {
+  background: linear-gradient(135deg, #ff9a44, #ff6b35); border: none; padding: 16px 24px; font-size: 17px; font-weight: 700;
+  border-radius: 50px; color: white; cursor: pointer; transition: all 0.25s; min-height: 54px;
+  box-shadow: 0 5px 15px rgba(255,107,53,0.3); text-transform: uppercase; letter-spacing: 0.5px;
+}
+button:hover, .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,107,53,0.4); }
+button:active, .btn:active { transform: scale(0.95); }
+.voice-btn { background: linear-gradient(135deg, #44aa77, #2d8a5c); box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3); }
+.voice-btn.rec { background: linear-gradient(135deg, #e74c3c, #c0392b); animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } }
 
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; backdrop-filter: blur(5px); }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 32px; padding: 28px; max-width: 92vw; max-height: 88vh; overflow-y: auto; width: 100%; position: relative; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.3s; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .close { position: absolute; top: 12px; right: 16px; font-size: 34px; cursor: pointer; color: #94a3b8; background: none; box-shadow: none; padding: 8px; border-radius: 50%; transition: 0.2s; }
-        .close:hover { color: #333; background: #f0f0f0; }
-        .assoc { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-radius: 22px; padding: 20px; margin: 16px 0; text-align: left; border-left: 6px solid #ffb300; font-size: 18px; line-height: 1.6; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; backdrop-filter: blur(5px); }
+.modal.active { display: flex; }
+.modal-content { background: white; border-radius: 32px; padding: 28px; max-width: 92vw; max-height: 88vh; overflow-y: auto; width: 100%; position: relative; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.3s; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.close { position: absolute; top: 12px; right: 16px; font-size: 34px; cursor: pointer; color: #94a3b8; background: none; box-shadow: none; padding: 8px; border-radius: 50%; transition: 0.2s; }
+.close:hover { color: #333; background: #f0f0f0; }
+.assoc { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-radius: 22px; padding: 20px; margin: 16px 0; text-align: left; border-left: 6px solid #ffb300; font-size: 18px; line-height: 1.6; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 16px; margin: 24px 0; }
-        .grid-item {
-          background: rgba(255,255,255,0.9); border-radius: 24px; padding: 20px 12px; text-align: center; cursor: pointer;
-          box-shadow: 0 6px 16px rgba(0,0,0,0.08); transition: all 0.25s; border: 3px solid transparent; min-height: 120px;
-          display: flex; flex-direction: column; align-items: center; justify-content: center; user-select: none; backdrop-filter: blur(5px);
-        }
-        .grid-item:active { transform: scale(0.93); }
-        .grid-item:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .grid-item .ch { font-size: 36px; font-weight: 800; margin: 8px 0; }
-        .grid-item .info { font-size: 15px; color: var(--text-light); font-weight: 600; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 16px; margin: 24px 0; }
+.grid-item {
+  background: rgba(255,255,255,0.9); border-radius: 24px; padding: 20px 12px; text-align: center; cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08); transition: all 0.25s; border: 3px solid transparent; min-height: 120px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; user-select: none; backdrop-filter: blur(5px);
+}
+.grid-item:active { transform: scale(0.93); }
+.grid-item:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+.grid-item .ch { font-size: 36px; font-weight: 800; margin: 8px 0; }
+.grid-item .info { font-size: 15px; color: var(--text-light); font-weight: 600; }
 
-        .filter-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 16px 0; }
-        .fbtn { padding: 12px 18px; background: rgba(255,255,255,0.9); border-radius: 35px; cursor: pointer; margin: 6px; font-weight: 700; font-size: 15px; user-select: none; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .fbtn.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.05); }
+.filter-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 16px 0; }
+.fbtn { padding: 12px 18px; background: rgba(255,255,255,0.9); border-radius: 35px; cursor: pointer; margin: 6px; font-weight: 700; font-size: 15px; user-select: none; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.fbtn.active { background: linear-gradient(135deg, #4361ee, #764ba2); color: white; transform: scale(1.05); }
 
-        .dialog-card { background: rgba(255,255,255,0.9); border-radius: 32px; padding: 22px; margin: 14px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-        .dialog-line { padding: 16px; margin: 10px 0; border-radius: 20px; font-size: 20px; font-weight: 600; }
-        .q { background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: #0d47a1; }
-        .a { background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; }
+.dialog-card { background: rgba(255,255,255,0.9); border-radius: 32px; padding: 22px; margin: 14px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.dialog-line { padding: 16px; margin: 10px 0; border-radius: 20px; font-size: 20px; font-weight: 600; }
+.q { background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: #0d47a1; }
+.a { background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; }
 
-        canvas { background: white; border-radius: 24px; display: block; margin: 18px auto; border: 4px solid #cbd5e1; cursor: crosshair; touch-action: none; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .tzg { background-image: linear-gradient(to right, #cbd5e1 2px, transparent 2px), linear-gradient(to bottom, #cbd5e1 2px, transparent 2px), linear-gradient(45deg, transparent 48%, #cbd5e1 49%, #cbd5e1 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, #cbd5e1 49%, #cbd5e1 51%, transparent 52%); background-size: 50% 50%; }
+canvas { background: white; border-radius: 24px; display: block; margin: 18px auto; border: 4px solid #cbd5e1; cursor: crosshair; touch-action: none; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.tzg { background-image: linear-gradient(to right, #cbd5e1 2px, transparent 2px), linear-gradient(to bottom, #cbd5e1 2px, transparent 2px), linear-gradient(45deg, transparent 48%, #cbd5e1 49%, #cbd5e1 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, #cbd5e1 49%, #cbd5e1 51%, transparent 52%); background-size: 50% 50%; }
 
-        .song-card { background: rgba(255,255,255,0.9); border-radius: 28px; padding: 22px; margin: 16px 0; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .song-title { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 18px; color: var(--primary-dark); text-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
-        .song-line { background: #f8f9fa; padding: 14px; margin: 10px 0; border-radius: 16px; text-align: left; border-left: 4px solid var(--primary); }
-        .song-cn { font-size: 22px; font-weight: 700; color: var(--text); }
-        .song-py { color: #666; font-size: 16px; margin: 4px 0; font-weight: 600; }
-        .song-ru { color: #888; font-size: 15px; font-style: italic; }
+.song-card { background: rgba(255,255,255,0.9); border-radius: 28px; padding: 22px; margin: 16px 0; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.song-title { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 18px; color: var(--primary-dark); text-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
+.song-line { background: #f8f9fa; padding: 14px; margin: 10px 0; border-radius: 16px; text-align: left; border-left: 4px solid var(--primary); }
+.song-cn { font-size: 22px; font-weight: 700; color: var(--text); }
+.song-py { color: #666; font-size: 16px; margin: 4px 0; font-weight: 600; }
+.song-ru { color: #888; font-size: 15px; font-style: italic; }
 
-        .grammar-card { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-radius: 24px; padding: 20px; margin: 16px 0; text-align: left; border-left: 6px solid #2e7d32; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-        .g-title { font-size: 22px; font-weight: 800; color: #1b5e20; margin-bottom: 12px; }
-        .g-rule { margin-bottom: 14px; font-size: 17px; line-height: 1.5; }
-        .example { background: white; padding: 14px; margin: 10px 0; border-radius: 14px; font-size: 18px; font-weight: 600; white-space: pre-wrap; line-height: 1.5; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+.grammar-card { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-radius: 24px; padding: 20px; margin: 16px 0; text-align: left; border-left: 6px solid #2e7d32; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.g-title { font-size: 22px; font-weight: 800; color: #1b5e20; margin-bottom: 12px; }
+.g-rule { margin-bottom: 14px; font-size: 17px; line-height: 1.5; }
+.example { background: white; padding: 14px; margin: 10px 0; border-radius: 14px; font-size: 18px; font-weight: 600; white-space: pre-wrap; line-height: 1.5; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
 
-        @media (max-width: 650px) {
-          .big-char { font-size: 90px; }
-          .tab { font-size: 14px; padding: 12px 14px; min-height: 46px; }
-          .grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-          .btn, button { font-size: 15px; padding: 14px 20px; }
-          .dialog-line { font-size: 18px; }
-          .song-cn { font-size: 20px; }
-        }
+@media (max-width: 650px) {
+  .big-char { font-size: 90px; }
+  .tab { font-size: 14px; padding: 12px 14px; min-height: 46px; }
+  .grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .btn, button { font-size: 15px; padding: 14px 20px; }
+  .dialog-line { font-size: 18px; }
+  .song-cn { font-size: 20px; }
+}
 </style>
 </head>
 <body>
@@ -943,6 +940,28 @@ const GRAMMAR = [
   {title:"П24. Разделитель апостроф", rule:"Апостроф ставится между слогами, чтобы избежать путаницы.", ex:"西安 Xī'ān (Сиань) — не xian\n皮袄 pí'ǎo (шуба) — не piao"}
 ];
 
+const SONGS = [
+  {title:"🐯 两只老虎 (Два тигра)", lines:[{ch:"两只老虎，两只老虎", py:"liǎng zhī lǎohǔ, liǎng zhī lǎohǔ", ru:"Два тигра, два тигра"},{ch:"跑得快，跑得快", py:"pǎo de kuài, pǎo de kuài", ru:"Бегут быстро, бегут быстро"},{ch:"一只没有耳朵", py:"yī zhī méiyǒu ěrduo", ru:"Один без ушей"},{ch:"一只没有尾巴", py:"yī zhī méiyǒu wěiba", ru:"Один без хвоста"},{ch:"真奇怪，真奇怪", py:"zhēn qíguài, zhēn qíguài", ru:"Как странно, как странно"}]},
+  {title:"⭐ 小星星 (Маленькая звёздочка)", lines:[{ch:"一闪一闪亮晶晶", py:"yī shǎn yī shǎn liàng jīngjīng", ru:"Мерцай, мерцай, ярко свети"},{ch:"满天都是小星星", py:"mǎn tiān dōu shì xiǎo xīngxīng", ru:"Всё небо в маленьких звёздах"},{ch:"挂在天上放光明", py:"guà zài tiān shàng fàng guāngmíng", ru:"Висишь на небе, сияя ярко"},{ch:"好像许多小眼睛", py:"hǎoxiàng xǔduō xiǎo yǎnjing", ru:"Как много маленьких глазок"}]},
+  {title:"👋 你好歌 (Приветствие)", lines:[{ch:"你好，你好", py:"nǐ hǎo, nǐ hǎo", ru:"Здравствуй, здравствуй"},{ch:"早上好，下午好", py:"zǎoshang hǎo, xiàwǔ hǎo", ru:"Доброе утро, добрый день"},{ch:"谢谢你，不客气", py:"xièxie nǐ, bú kèqi", ru:"Спасибо тебе, не за что"},{ch:"再见，明天见", py:"zàijiàn, míngtiān jiàn", ru:"До свидания, до завтра"}]},
+  {title:"🔢 数字歌 (Числа)", lines:[{ch:"一二三，三二一", py:"yī èr sān, sān èr yī", ru:"Раз два три, три два один"},{ch:"四五六，七八九", py:"sì wǔ liù, qī bā jiǔ", ru:"Четыре пять шесть, семь восемь девять"},{ch:"十", py:"shí", ru:"Десять"},{ch:"数数真有趣", py:"shǔ shǔ zhēn yǒuqù", ru:"Считать так интересно"}]},
+  {title:"🎨 颜色歌 (Цвета)", lines:[{ch:"红色红色红苹果", py:"hóngsè hóngsè hóng píngguǒ", ru:"Красный, красный, красное яблоко"},{ch:"蓝色蓝色蓝天空", py:"lánsè lánsè lán tiānkōng", ru:"Синий, синий, синее небо"},{ch:"绿色绿色绿草地", py:"lǜsè lǜsè lǜ cǎodì", ru:"Зелёный, зелёный, зелёная трава"},{ch:"黄色黄色黄香蕉", py:"huángsè huángsè huáng xiāngjiāo", ru:"Жёлтый, жёлтый, жёлтый банан"}]},
+  {title:"👨‍👩‍👧 家庭歌 (Семья)", lines:[{ch:"爸爸妈妈我爱你", py:"bàba māma wǒ ài nǐ", ru:"Папа, мама, я люблю вас"},{ch:"哥哥姐姐对我好", py:"gēge jiějie duì wǒ hǎo", ru:"Старший брат и сестра добры ко мне"},{ch:"我们是一家人", py:"wǒmen shì yī jiā rén", ru:"Мы одна семья"},{ch:"幸福快乐在一起", py:"xìngfú kuàilè zài yīqǐ", ru:"Счастливы и радостны вместе"}]},
+  {title:"🐰 小兔子乖乖 (Зайчик)", lines:[{ch:"小兔子乖乖，把门开开", py:"xiǎo tùzi guāiguāi, bǎ mén kāikāi", ru:"Зайчик послушный, открой дверь"},{ch:"快点开开，我要进来", py:"kuài diǎn kāikāi, wǒ yào jìnlái", ru:"Открой скорее, я хочу войти"},{ch:"不开不开我不开", py:"bù kāi bù kāi wǒ bù kāi", ru:"Не открою, не открою, я не открою"},{ch:"妈妈没回来", py:"māma méi huílái", ru:"Мама ещё не вернулась"}]},
+  {title:"🦆 数鸭子 (Утки)", lines:[{ch:"门前大桥下，游过一群鸭", py:"mén qián dàqiáo xià, yóu guò yī qún yā", ru:"Под мостом у ворот плывёт стая уток"},{ch:"快来快来数一数", py:"kuài lái kuài lái shǔ yī shǔ", ru:"Давай скорее посчитаем"},{ch:"二四六七八", py:"èr sì liù qī bā", ru:"Два четыре шесть семь восемь"},{ch:"嘎嘎嘎嘎真呀真多呀", py:"gā gā gā gā zhēn ya zhēn duō ya", ru:"Кря-кря-кря-кря, правда их много!"}]},
+  {title:"🎒 上学歌 (Школа)", lines:[{ch:"太阳当空照，花儿对我笑", py:"tàiyáng dāngkōng zhào, huā er duì wǒ xiào", ru:"Солнце светит в небе, цветы улыбаются мне"},{ch:"小鸟说早早早", py:"xiǎo niǎo shuō zǎo zǎo zǎo", ru:"Птички говорят: доброе утро"},{ch:"你为什么背上小书包", py:"nǐ wèishénme bèi shàng xiǎo shūbāo", ru:"Почему ты несёшь маленький рюкзак?"},{ch:"我去上学校", py:"wǒ qù shàng xuéxiào", ru:"Я иду в школу"}]},
+  {title:"🥕 拔萝卜 (Репка)", lines:[{ch:"拔萝卜拔萝卜，嗨吆嗨吆拔萝卜", py:"bá luóbo bá luóbo, hāi yō hāi yō bá luóbo", ru:"Тяни репку, тяни репку, эй-йо, эй-йо, тяни репку"},{ch:"老婆婆快快来，一起来帮忙", py:"lǎo pópo kuài kuài lái, yīqǐ lái bāngmáng", ru:"Бабушка, иди скорее, помогай вместе с нами"},{ch:"拔萝卜拔萝卜，嗨吆嗨吆拔不动", py:"bá luóbo bá luóbo, hāi yō hāi yō bá bú dòng", ru:"Тяни репку, тяни репку, эй-йо, эй-йо, не вытянуть"},{ch:"小花猫快快来，一起来帮忙", py:"xiǎo huāmāo kuài kuài lái, yīqǐ lái bāngmáng", ru:"Котёнок, иди скорее, помогай вместе с нами"}]},
+  {title:"🎂 生日快乐 (ДР)", lines:[{ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"},{ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"},{ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"},{ch:"祝你生日快乐", py:"zhù nǐ shēngrì kuàilè", ru:"Желаю тебе счастливого дня рождения"}]},
+  {title:"🎉 新年好 (Новый год)", lines:[{ch:"新年好呀新年好", py:"xīnnián hǎo ya xīnnián hǎo", ru:"С Новым годом, с Новым годом"},{ch:"祝贺大家新年好", py:"zhùhè dàjiā xīnnián hǎo", ru:"Поздравляю всех с Новым годом"},{ch:"我们唱歌我们跳舞", py:"wǒmen chànggē wǒmen tiàowǔ", ru:"Мы поём, мы танцуем"},{ch:"祝贺大家新年好", py:"zhùhè dàjiā xīnnián hǎo", ru:"Поздравляю всех с Новым годом"}]},
+  {title:"🐱 小猫咪 (Котёнок)", lines:[{ch:"小猫咪小猫咪", py:"xiǎo māomī xiǎo māomī", ru:"Котёнок, котёнок"},{ch:"喵喵喵", py:"miāo miāo miāo", ru:"Мяу мяу мяу"},{ch:"你在哪里呀", py:"nǐ zài nǎlǐ ya", ru:"Где ты?"},{ch:"我在这里呀", py:"wǒ zài zhèlǐ ya", ru:"Я здесь!"}]},
+  {title:"🚣 让我们荡起双桨 (Грести)", lines:[{ch:"让我们荡起双桨", py:"ràng wǒmen dàng qǐ shuāngjiǎng", ru:"Давайте возьмём вёсла"},{ch:"小船儿推开波浪", py:"xiǎo chuán er tuī kāi bōlàng", ru:"Лодочка раздвигает волны"},{ch:"海面倒映着美丽的白塔", py:"hǎimiàn dàoyìng zhe měilì de bái tǎ", ru:"На море отражается красивая белая башня"},{ch:"四周环绕着绿树红墙", py:"sìzhōu huánrào zhe lǜ shù hóng qiáng", ru:"Вокруг зелёные деревья и красные стены"}]},
+  {title:"🌸 春天在哪里 (Весна)", lines:[{ch:"春天在哪里呀", py:"chūntiān zài nǎlǐ ya", ru:"Где же весна?"},{ch:"春天在那青翠的山林里", py:"chūntiān zài nà qīngcuì de shānlín lǐ", ru:"Весна в зелёных горах и лесах"},{ch:"这里有红花呀这里有绿草", py:"zhèlǐ yǒu hónghuā ya zhèlǐ yǒu lǜcǎo", ru:"Здесь красные цветы, здесь зелёная трава"},{ch:"还有那会唱歌的小黄鹂", py:"hái yǒu nà huì chànggē de xiǎo huánglí", ru:"И ещё маленькие иволги, которые поют"}]},
+  {title:"🎈 找朋友 (Друг)", lines:[{ch:"找呀找呀找朋友", py:"zhǎo ya zhǎo ya zhǎo péngyou", ru:"Ищу, ищу, ищу друга"},{ch:"找到一个好朋友", py:"zhǎo dào yīgè hǎo péngyou", ru:"Нашёл хорошего друга"},{ch:"敬个礼呀握握手", py:"jìng gè lǐ ya wò wò shǒu", ru:"Отдам честь и пожму руку"},{ch:"你是我的好朋友", py:"nǐ shì wǒ de hǎo péngyou", ru:"Ты мой хороший друг"}]},
+  {title:"🐴 小毛驴 (Осёл)", lines:[{ch:"我有一只小毛驴", py:"wǒ yǒu yī zhī xiǎo máolǘ", ru:"У меня есть маленький осёл"},{ch:"我从来也不骑", py:"wǒ cónglái yě bù qí", ru:"Я никогда на нём не езжу"},{ch:"有一天我心血来潮", py:"yǒu yītiān wǒ xīnxuèláicháo", ru:"Однажды мне захотелось"},{ch:"骑着去赶集", py:"qí zhe qù gǎnjí", ru:"Поехать на рынок верхом"}]},
+  {title:"🎵 童年 (Детство)", lines:[{ch:"池塘边的榕树上", py:"chítáng biān de róngshù shàng", ru:"На фикусе у пруда"},{ch:"知了在声声叫着夏天", py:"zhīliǎo zài shēngshēng jiào zhe xiàtiān", ru:"Цикады стрекочут о лете"},{ch:"操场边的秋千上", py:"cāochǎng biān de qiūqiān shàng", ru:"На качелях у спортплощадки"},{ch:"只有蝴蝶停在上面", py:"zhǐyǒu húdié tíng zài shàngmiàn", ru:"Только бабочки сидят"}]},
+  {title:"🐟 小鱼的梦 (Рыбка)", lines:[{ch:"小鱼小鱼游游游", py:"xiǎo yú xiǎo yú yóu yóu yóu", ru:"Рыбка, рыбка, плыви-плыви"},{ch:"游到水里做个梦", py:"yóu dào shuǐ lǐ zuò gè mèng", ru:"Плыви в воде и мечтай"},{ch:"梦见自己长翅膀", py:"mèngjiàn zìjǐ zhǎng chìbǎng", ru:"Приснилось, что выросли крылья"},{ch:"飞到天上去玩耍", py:"fēi dào tiān shàng qù wánshuǎ", ru:"Полететь в небо играть"}]},
+  {title:"🌙 月亮代表我的心 (Луна)", lines:[{ch:"你问我爱你有多深", py:"nǐ wèn wǒ ài nǐ yǒu duō shēn", ru:"Ты спрашиваешь, как сильно я тебя люблю"},{ch:"我爱你有几分", py:"wǒ ài nǐ yǒu jǐ fēn", ru:"Насколько велика моя любовь"},{ch:"我的情也真，我的爱也真", py:"wǒ de qíng yě zhēn, wǒ de ài yě zhēn", ru:"Мои чувства искренни, моя любовь prawdziwa"},{ch:"月亮代表我的心", py:"yuèliang dàibiǎo wǒ de xīn", ru:"Луна представляет моё сердце"}]}
+];
 
 const RADICALS = [
   {s:"一",p:"yī",m:"один/горизонталь",e:"1️⃣",ex:"王、丁、七"},
