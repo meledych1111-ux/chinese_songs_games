@@ -1,6 +1,6 @@
 // ==========================================
 // Модуль: Сравнение звуков пиньинь
-// БЕЗ КОНФЛИКТОВ с основным кодом
+// ТОЛЬКО ВКЛАДКА В ВЕРХНЕМ МЕНЮ (без фильтров)
 // ==========================================
 
 (function() {
@@ -41,7 +41,10 @@
   // Добавляем вкладку в главное меню
   function addTab() {
     const tabsContainer = document.querySelector('.tabs');
-    if (!tabsContainer) return;
+    if (!tabsContainer) {
+      console.error('❌ Контейнер .tabs не найден');
+      return;
+    }
     if (tabsContainer.querySelector('[data-tab="pinyin-sounds"]')) return;
 
     const newTab = document.createElement('div');
@@ -49,16 +52,16 @@
     newTab.setAttribute('data-tab', 'pinyin-sounds');
     newTab.textContent = '🔊 Звуки пиньинь';
     tabsContainer.appendChild(newTab);
-    console.log('✅ Вкладка добавлена');
+    console.log('✅ Вкладка "Звуки пиньинь" добавлена в .tabs');
   }
 
-  // Создаём панель (без инлайн-стилей!)
+  // Создаём панель
   function createPanel() {
     if (document.getElementById('pinyinSoundsPanel')) return;
 
     const panel = document.createElement('div');
     panel.id = 'pinyinSoundsPanel';
-    panel.className = 'panel'; // только класс, без style.display
+    panel.className = 'panel';
     panel.innerHTML = '<div id="pinyinSoundsContainer"></div>';
 
     const studyPanel = document.getElementById('studyPanel');
@@ -67,27 +70,26 @@
     } else {
       document.body.appendChild(panel);
     }
-    console.log('✅ Панель создана');
+    console.log('✅ Панель pinyinSoundsPanel создана');
   }
 
-  // ДОБАВЛЯЕМ ОБРАБОТЧИК ТОЛЬКО ДЛЯ НАШЕЙ ВКЛАДКИ (не трогаем остальные)
-  function setupOurTabOnly() {
+  // Настраиваем переключение (через стандартную систему, не ломая её)
+  function setupSwitching() {
     const ourTab = document.querySelector('[data-tab="pinyin-sounds"]');
     if (!ourTab) return;
 
-    // Удаляем возможный старый обработчик
+    // Убираем возможный старый обработчик
     if (ourTab._ourHandler) {
       ourTab.removeEventListener('click', ourTab._ourHandler);
     }
 
     const handler = function(e) {
-      e.preventDefault();
-      e.stopPropagation(); // НЕ даём основному обработчику сработать
+      // Находим все панели и вкладки
+      const allPanels = document.querySelectorAll('.panel');
+      const allTabs = document.querySelectorAll('.tab');
 
-      // Скрываем все панели через классы (как в основном коде)
-      document.querySelectorAll('.panel').forEach(panel => {
-        panel.classList.remove('active');
-      });
+      // Скрываем все панели
+      allPanels.forEach(panel => panel.classList.remove('active'));
 
       // Показываем нашу панель
       const ourPanel = document.getElementById('pinyinSoundsPanel');
@@ -96,11 +98,14 @@
         renderComparisons('pinyinSoundsContainer');
       }
 
-      // Обновляем активный класс у вкладок
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-      });
+      // Убираем активный класс у всех вкладок
+      allTabs.forEach(tab => tab.classList.remove('active'));
+
+      // Добавляем активный класс нашей вкладке
       ourTab.classList.add('active');
+
+      e.preventDefault();
+      e.stopPropagation();
     };
 
     ourTab.addEventListener('click', handler);
@@ -108,7 +113,7 @@
     console.log('✅ Обработчик для вкладки настроен');
   }
 
-  // Стили (добавляем только свои, не трогая существующие)
+  // Стили
   function addStyles() {
     if (document.getElementById('pinyin-styles')) return;
     const style = document.createElement('style');
@@ -160,21 +165,19 @@
     document.head.appendChild(style);
   }
 
-  // Ждём, пока основной код index.html полностью загрузится и создаст свои обработчики
-  function waitForMainCode() {
-    // Даём основному коду время на инициализацию
-    setTimeout(() => {
-      addStyles();
-      addTab();
-      createPanel();
-      setupOurTabOnly();
-      console.log('✅ Модуль "Сравнение звуков" загружен (без конфликтов)');
-    }, 500);
+  // Запуск
+  function init() {
+    addStyles();
+    addTab();
+    createPanel();
+    setupSwitching();
+    console.log('✅ Модуль "Сравнение звуков" загружен (только вкладка)');
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', waitForMainCode);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    waitForMainCode();
+    // Даём небольшую задержку, чтобы основной код index.html успел создать свои обработчики
+    setTimeout(init, 300);
   }
 })();
