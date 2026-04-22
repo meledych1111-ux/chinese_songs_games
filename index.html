@@ -518,8 +518,37 @@ function startVoice(targetChar, targetPinyin, feedElement) {
 
 function openModal(w) {
   var c = document.getElementById('modalContent');
-  c.innerHTML = '<button class="close" onclick="closeModal()">×</button><div class="big-char">'+w.c+'</div><div class="pinyin">'+colorP(w.p)+'</div><div class="meaning">'+w.m+'</div><div class="emoji">'+(w.e||'📖')+'</div><div class="badge">'+(CAT_NAMES[w.cat]||w.cat)+'</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>'+(w.a||'Практикуй произношение!')+'</div><div class="btn-group"><button onclick="speak(\''+w.c+'\')">🔊 Слушать</button><button class="voice-btn" onclick="startVoice(\''+w.c+'\', \''+w.p+'\', document.getElementById(\'mFeed\'))">🎙️ Проверить</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>';
+  // Превращаем объект в строку JSON для передачи в onclick
+  var wJson = JSON.stringify(w).replace(/'/g, "\\'");
+  c.innerHTML = '<button class="close" onclick="closeModal()">×</button>' +
+    '<div class="big-char">'+w.c+'</div>' +
+    '<div class="pinyin">'+colorP(w.p)+'</div>' +
+    '<div class="meaning">'+w.m+'</div>' +
+    '<div class="emoji">'+(w.e||'📖')+'</div>' +
+    '<div class="badge">'+(CAT_NAMES[w.cat]||w.cat)+'</div>' +
+    '<div class="assoc"><strong>🧠 Как запомнить:</strong><br>'+(w.a||'Практикуй произношение!')+'</div>' +
+    '<div class="btn-group">' +
+      '<button onclick="speak(\''+w.c+'\')">🔊 Слушать</button>' +
+      '<button class="voice-btn" onclick="startVoice(\''+w.c+'\', \''+w.p+'\', document.getElementById(\'mFeed\'))">🎙️ Проверить</button>' +
+      '<button onclick=\'selectWord('+wJson+')\' style="background:linear-gradient(135deg, #10b981, #059669);">🎯 Учить это слово</button>' +
+    '</div>' +
+    '<div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>';
   document.getElementById('modal').classList.add('active');
+}
+
+function selectWord(w) {
+  currentW = w;
+  updateUI();
+  if (ctx) clearCanvas();
+  closeModal();
+  
+  // Добавляем уведомление о выборе
+  const feed = document.getElementById('sFeedback');
+  if(feed) {
+    feed.innerHTML = "✅ Слово \"" + w.c + "\" выбрано для изучения!";
+    feed.style.color = "#10b981";
+    setTimeout(() => feed.innerHTML = "", 2000);
+  }
 }
 
 function closeModal() { document.getElementById('modal').classList.remove('active'); }
