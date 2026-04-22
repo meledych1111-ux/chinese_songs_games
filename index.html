@@ -179,6 +179,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
       <button id="sListen">🔊 Слушать</button>
       <button id="sVoice" class="voice-btn">🎙️ Проверить</button>
       <button id="sNext">🎲 Следующее</button>
+      <button id="sFirst" style="background: #4b5563;">⏪ С начала</button>
       <button id="sRandom" class="random-btn">✨ Случайное</button>
     </div>
     <div id="sFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
@@ -293,6 +294,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
         <button id="nListen">🔊 Слушать</button>
         <button id="nVoice" class="voice-btn">🎙️ Голос</button>
         <button id="nNext">🎲 Следующее</button>
+        <button id="nFirst" style="background: #4b5563;">⏪ С начала</button>
         <button id="nRandom" class="random-btn">✨ Случайное</button>
       </div>
       <div id="nFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
@@ -316,6 +318,7 @@ canvas { background: white; border-radius: 24px; display: block; margin: 18px au
         <button id="cVoice" class="voice-btn">🎙️ Проверить</button>
         <button id="cFlip">🔄 Перевернуть</button>
         <button id="cNext">🎲 Следующая</button>
+        <button id="cFirst" style="background: #4b5563;">⏪ С начала</button>
         <button id="cRandom" class="random-btn">✨ Случайное</button>
       </div>
       <div id="cFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
@@ -661,6 +664,17 @@ function nextWord() {
   document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
 }
 
+function firstWord() {
+  currentW = WORDS[0];
+  updateUI();
+  if (ctx) clearCanvas();
+  // Clear feedbacks
+  if(document.getElementById('cFeedback')) document.getElementById('cFeedback').innerHTML = '';
+  if(document.getElementById('sFeedback')) document.getElementById('sFeedback').innerHTML = '';
+  if(document.getElementById('nFeedback')) document.getElementById('nFeedback').innerHTML = '';
+  document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
+}
+
 function randomWord() {
   currentW = WORDS[Math.floor(Math.random() * WORDS.length)];
   updateUI();
@@ -989,6 +1003,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('sListen').onclick = function() { speak(currentW.c); };
   document.getElementById('sVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('sFeedback')); };
   document.getElementById('sNext').onclick = nextWord;
+  document.getElementById('sFirst').onclick = firstWord;
   document.getElementById('sRandom').onclick = randomWord;
   
   // Кнопки диалогов
@@ -1000,6 +1015,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('nListen').onclick = function() { speak(currentW.c); };
   document.getElementById('nVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('nFeedback')); };
   document.getElementById('nNext').onclick = nextWord;
+  document.getElementById('nFirst').onclick = firstWord;
   document.getElementById('nClear').onclick = clearCanvas;
   document.getElementById('nGridBtn').onclick = toggleGrid;
   document.getElementById('nExample').onclick = showExample;
@@ -1009,6 +1025,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Карточки
   document.getElementById('cFlip').onclick = flipCard;
   document.getElementById('cNext').onclick = function() { nextWord(); document.getElementById('cFeedback').innerHTML = ''; };
+  document.getElementById('cFirst').onclick = firstWord;
   document.getElementById('cListen').onclick = function() { speak(currentW.c); };
   document.getElementById('cVoice').onclick = function() { startVoice(currentW.c, currentW.p, document.getElementById('cFeedback')); };
   document.getElementById('cRandom').onclick = randomWord;
