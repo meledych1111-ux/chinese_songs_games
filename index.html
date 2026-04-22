@@ -377,8 +377,8 @@
         <div id="tonesComparison" style="display: flex; flex-direction: column; gap: 24px;"></div>
     </div>
 </div>
-<!-- НОВАЯ ПАНЕЛЬ ДЛЯ КАЛЛИГРАФИИ -->
-<div id="gamePanel" class="panel">
+<!-- НОВАЯ ПАНЕЛЬ ДЛЯ КАЛЛИГРАФИИ (ID ИСПРАВЛЕН на writingPanel) -->
+<div id="writingPanel" class="panel">
     <div class="card">
         <h2 style="margin-bottom: 20px; color: #4361ee;">✍️ Каллиграфия: как красиво писать иероглифы</h2>
         <div id="writingVideosContainer"></div>
@@ -1141,18 +1141,27 @@ function generateToneComparisons() {
         speak(w.c);
       };
 
-      // Табы
+            // Табы (обновленная версия с поддержкой видео-модулей)
       document.querySelectorAll('.tab').forEach(function(tab) {
         tab.onclick = function() {
           var p = this.dataset.tab;
+
+          // 1. Переключение активного класса у вкладок
           document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
           this.classList.add('active');
+
+          // 2. Переключение видимости панелей
           document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
 
+          // Пытаемся найти ID панели (обычно это имя_вкладки + Panel)
           var targetId = (p === 'radical-words') ? 'radicalWordsPanel' : p + 'Panel';
           var targetPanel = document.getElementById(targetId);
-          if (targetPanel) targetPanel.classList.add('active');
 
+          if (targetPanel) {
+            targetPanel.classList.add('active');
+          }
+
+          // 3. Вызов функций отрисовки контента
           if(p === 'numbers') renderNums();
           if(p === 'colors') renderCols();
           if(p === 'dialogs') renderDia();
@@ -1161,6 +1170,14 @@ function generateToneComparisons() {
           if(p === 'radicals') renderRads();
           if(p === 'game') newGame();
           if(p === 'radical-words') generateWordsByRadical();
+
+          // Специальные вызовы для ваших новых видео-модулей
+          if(p === 'writing' && typeof renderWritingVideos === 'function') {
+            renderWritingVideos();
+          }
+          if(p === 'sounds-v' && typeof renderSoundsVideos === 'function') {
+            renderSoundsVideos();
+          }
         };
       });
 
@@ -1205,5 +1222,6 @@ function generateToneComparisons() {
 </script>
 <script src="pinyin-sounds.js"></script>
 <script src="writing-videos.js"></script>
+<script src="sounds-videos.js"></script>
 </body>
 </html>

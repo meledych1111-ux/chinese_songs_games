@@ -69,11 +69,11 @@
         if (!container) return;
 
         const panel = document.createElement('div');
-        panel.id = 'writingPanel';
-        panel.className = 'panel';
-        panel.innerHTML = '<div id="writingVideosContainer"></div>';
-        container.appendChild(panel);
-    }
+            panel.id = 'writingPanel'; // Важно для переключения табов
+            panel.className = 'panel';
+            panel.innerHTML = '<div id="writingVideosContainer"></div>';
+            document.body.appendChild(panel);
+        }
 
     // Настраиваем переключение вкладок
     function setupSwitching() {
