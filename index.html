@@ -2612,13 +2612,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-<script src="pinyin-sounds.js">
-  // ========== СЛУЧАЙНОЕ СЛОВО ДЛЯ ВСЕХ ПАНЕЛЕЙ ==========
+<script src="pinyin-sounds.js">  // ========== СЛУЧАЙНОЕ СЛОВО ==========
   function setRandomWord() {
     const randomIndex = Math.floor(Math.random() * WORDS.length);
     currentW = WORDS[randomIndex];
     
-    // Обновляем панель "Слова" (studyPanel)
+    // Слова
     const sChar = document.getElementById('sChar');
     const sPinyin = document.getElementById('sPinyin');
     const sMeaning = document.getElementById('sMeaning');
@@ -2630,13 +2629,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (sEmoji) sEmoji.textContent = currentW.e || '📖';
     if (sCat) sCat.textContent = CAT_NAMES[currentW.cat] || currentW.cat;
     
-    // Обновляем панель "Тетрадь" (notebookPanel)
+    // Тетрадь
     const nChar = document.getElementById('nChar');
     const nAssoc = document.getElementById('nAssoc');
     if (nChar) nChar.textContent = currentW.c;
     if (nAssoc) nAssoc.innerHTML = currentW.a || 'Ассоциация появится здесь...';
     
-    // Обновляем панель "Карточки" (cardsPanel)
+    // Карточки
     const cChar = document.getElementById('cChar');
     const cPinyin = document.getElementById('cPinyin');
     const cMeaning = document.getElementById('cMeaning');
@@ -2648,73 +2647,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (cBackEmoji) cBackEmoji.textContent = currentW.e || '📖';
     if (cPinyinBack) cPinyinBack.innerHTML = colorP(currentW.p);
     
-    // Сбрасываем canvas в тетради
-    const canvas = document.getElementById('drawCanvas');
-    if (canvas && canvas.getContext) {
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      if (window.gridEnabled) {
-        drawTianzige();
-      }
-    }
-    document.getElementById('strokeInfo').innerHTML = 'Нажмите "Образец" чтобы увидеть иероглиф для обведения';
-    
-    // Сбрасываем карточку в режим "лицом"
-    const cFront = document.getElementById('cFront');
-    const cBack = document.getElementById('cBack');
-    if (cFront && cBack) {
-      cFront.style.display = 'block';
-      cBack.style.display = 'none';
-    }
-    
-    // Очищаем фидбеки
-    const sFeedback = document.getElementById('sFeedback');
-    const nFeedback = document.getElementById('nFeedback');
-    const cFeedback = document.getElementById('cFeedback');
-    if (sFeedback) sFeedback.innerHTML = '';
-    if (nFeedback) nFeedback.innerHTML = '';
-    if (cFeedback) cFeedback.innerHTML = '';
-    
-    console.log('🎲 Случайное слово: ' + currentW.c + ' (' + currentW.m + ')');
-  }
-
-  // ========== СЛУЧАЙНОЕ СЛОВО ДЛЯ ВСЕХ ПАНЕЛЕЙ ==========
-  function setRandomWord() {
-    const randomIndex = Math.floor(Math.random() * WORDS.length);
-    currentW = WORDS[randomIndex];
-    
-    // Обновляем панель "Слова"
-    const sChar = document.getElementById('sChar');
-    const sPinyin = document.getElementById('sPinyin');
-    const sMeaning = document.getElementById('sMeaning');
-    const sEmoji = document.getElementById('sEmoji');
-    const sCat = document.getElementById('sCat');
-    if (sChar) sChar.textContent = currentW.c;
-    if (sPinyin) sPinyin.innerHTML = colorP(currentW.p);
-    if (sMeaning) sMeaning.textContent = currentW.m;
-    if (sEmoji) sEmoji.textContent = currentW.e || '📖';
-    if (sCat) sCat.textContent = CAT_NAMES[currentW.cat] || currentW.cat;
-    
-    // Обновляем панель "Тетрадь"
-    const nChar = document.getElementById('nChar');
-    const nAssoc = document.getElementById('nAssoc');
-    if (nChar) nChar.textContent = currentW.c;
-    if (nAssoc) nAssoc.innerHTML = currentW.a || 'Ассоциация появится здесь...';
-    
-    // Обновляем панель "Карточки"
-    const cChar = document.getElementById('cChar');
-    const cPinyin = document.getElementById('cPinyin');
-    const cMeaning = document.getElementById('cMeaning');
-    const cBackEmoji = document.getElementById('cBackEmoji');
-    const cPinyinBack = document.getElementById('cPinyinBack');
-    if (cChar) cChar.textContent = currentW.c;
-    if (cPinyin) cPinyin.innerHTML = colorP(currentW.p);
-    if (cMeaning) cMeaning.textContent = currentW.m;
-    if (cBackEmoji) cBackEmoji.textContent = currentW.e || '📖';
-    if (cPinyinBack) cPinyinBack.innerHTML = colorP(currentW.p);
-    
-    // Сбрасываем canvas
+    // Canvas
     const canvas = document.getElementById('drawCanvas');
     if (canvas && canvas.getContext) {
       const ctx = canvas.getContext('2d');
@@ -2723,9 +2656,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (window.gridEnabled && typeof drawTianzige === 'function') drawTianzige();
     }
     const strokeInfo = document.getElementById('strokeInfo');
-    if (strokeInfo) strokeInfo.innerHTML = 'Нажмите "Образец" чтобы увидеть иероглиф для обведения';
+    if (strokeInfo) strokeInfo.innerHTML = 'Нажмите "Образец" чтобы увидеть иероглиф';
     
-    // Сбрасываем карточку
+    // Сброс карточки
     const cFront = document.getElementById('cFront');
     const cBack = document.getElementById('cBack');
     if (cFront && cBack) {
@@ -2733,7 +2666,7 @@ document.addEventListener('DOMContentLoaded', function() {
       cBack.style.display = 'none';
     }
     
-    // Очищаем фидбеки
+    // Очистка фидбеков
     const sFeedback = document.getElementById('sFeedback');
     const nFeedback = document.getElementById('nFeedback');
     const cFeedback = document.getElementById('cFeedback');
@@ -2741,7 +2674,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nFeedback) nFeedback.innerHTML = '';
     if (cFeedback) cFeedback.innerHTML = '';
     
-    console.log('🎲 Случайное слово: ' + currentW.c + ' (' + currentW.m + ')');
+    console.log('🎲 Случайное слово: ' + currentW.c);
   }
 
 </script>
