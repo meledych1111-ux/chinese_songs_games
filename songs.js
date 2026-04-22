@@ -61,4 +61,11 @@ renderSongs = function() {
 
   document.getElementById('songsBox').innerHTML += html;
 };
+// Попробуйте добавить это в самый конец songs.js
+setTimeout(() => {
+    const box = document.getElementById('songsBox');
+    if (box && !box.innerHTML.includes('ВИДЕОУРОКИ')) {
+        renderSongs(); // Вызываем переопределенную версию
+    }
+}, 500);
 
