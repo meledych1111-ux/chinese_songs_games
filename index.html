@@ -673,7 +673,7 @@ function initCanvas() {
   ctx.fillStyle = '#fff';
   ctx.fillRect(0,0,canvas.width,canvas.height);
   ctx.strokeStyle = '#333';
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 5;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   
@@ -686,9 +686,24 @@ function initCanvas() {
     return {x: x * canvas.width / rect.width, y: y * canvas.height / rect.height};
   }
   
-  function start(e) { e.preventDefault(); painting=true; var p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
-  function draw(e) { if(!painting) return; e.preventDefault(); var p=getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
-  function end(e) { painting=false; ctx.beginPath(); }
+  function start(e) { 
+    e.preventDefault(); 
+    painting=true; 
+    var p=getPos(e); 
+    ctx.beginPath(); 
+    ctx.moveTo(p.x, p.y); 
+  }
+  function draw(e) { 
+    if(!painting) return; 
+    e.preventDefault(); 
+    var p=getPos(e); 
+    ctx.lineTo(p.x, p.y); 
+    ctx.stroke(); 
+  }
+  function end(e) { 
+    painting=false; 
+    ctx.closePath(); 
+  }
   
   canvas.addEventListener('mousedown', start);
   canvas.addEventListener('mousemove', draw);
@@ -698,7 +713,13 @@ function initCanvas() {
   canvas.addEventListener('touchend', end);
 }
 
-function clearCanvas() { if(ctx) { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); } }
+function clearCanvas() { 
+  if(ctx) { 
+    ctx.fillStyle='#fff'; 
+    ctx.fillRect(0,0,canvas.width,canvas.height); 
+    if(gridEnabled) drawTianzige();
+  } 
+}
 
 function drawTianzige() {
   if(!ctx || !canvas) return;
@@ -716,21 +737,21 @@ function drawTianzige() {
 
 function toggleGrid() {
   gridEnabled = !gridEnabled;
-  if(gridEnabled) drawTianzige();
-  else clearCanvas();
+  clearCanvas();
 }
 
 function showExample() {
+  clearCanvas();
   var w = canvas.width, h = canvas.height;
   ctx.save();
-  ctx.globalAlpha = 0.35;
-  ctx.font = "bold " + (h * 0.6) + "px 'Noto Sans CJK SC', 'Segoe UI', system-ui";
-  ctx.fillStyle = "#ff9800";
+  ctx.globalAlpha = 0.25;
+  ctx.font = "bold " + (h * 0.7) + "px 'Noto Sans CJK SC', 'Segoe UI', system-ui";
+  ctx.fillStyle = "#ff6b35";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(currentW.c, w/2, h/2);
   ctx.restore();
-  document.getElementById('strokeInfo').innerHTML = "Образец иероглифа <strong>" + currentW.c + "</strong> для обведения";
+  document.getElementById('strokeInfo').innerHTML = "Обведите иероглиф <strong>" + currentW.c + "</strong> по контуру";
 }
 // ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ (АВТОМАТИЧЕСКИЙ) ==========
 function generateToneComparisons() {
