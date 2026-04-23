@@ -10,6 +10,27 @@
             description: "Техника написания черты 捺 (nà) — отличный способ улучшить почерк",
             tags: "#硬笔书法之美 #练字是一种生活 #练字",
             url: "https://www.xiaohongshu.com/explore/699065a70000000015022775?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBlRwebsjH1ck3jrxdRRSDdYArY0KraPp1_8Xrxh7s-L0=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876682&share_id=4ff9c52b9b85465bb6fef5856681a7e7"
+        },
+        {
+            emoji: "📝",
+            title: "规范字书写",
+            description: "Правильное написание стандартных иероглифов. Каллиграфия для детей и взрослых",
+            tags: "#硬笔规范字 #同步字帖 #每日一字 #写一手好字惊艳所有人 #少儿硬笔书法 #书法教学 #练字方法 #笔画笔顺 #书法老师 #汉字之美",
+            url: "http://xhslink.com/o/IzKUtk4KPs"
+        },
+        {
+            emoji: "📖",
+            title: "书法里所有口字规律",
+            description: "Полный разбор правил написания иероглифа 口 (рот): отдельно, слева, справа, в окружении. Разные стили каллиграфии. Эффективность в 2 раза выше!",
+            tags: "#硬笔书法 #写一手好字惊艳所有人 #硬笔规范字 #基本笔画 #硬笔书法之美 #练字方法 #生字 #书法教学 #书法老师 #书法入门",
+            url: "http://xhslink.com/o/3MsFcW8PhxV"
+        },
+        {
+            emoji: "📚",
+            title: "二年级上册《语文园地一》词语手写",
+            description: "Написание слов для 2 класса, 1单元. Практика для школьников. #字词积累 #小学生练字",
+            tags: "#字词积累 #小学生练字 #二年级 #开学必备 #培养孩子好习惯",
+            url: "http://xhslink.com/o/49vImbaOczT"
         }
     ];
 
@@ -69,11 +90,11 @@
         if (!container) return;
 
         const panel = document.createElement('div');
-            panel.id = 'writingPanel'; // Важно для переключения табов
-            panel.className = 'panel';
-            panel.innerHTML = '<div id="writingVideosContainer"></div>';
-            document.body.appendChild(panel);
-        }
+        panel.id = 'writingPanel';
+        panel.className = 'panel';
+        panel.innerHTML = '<div id="writingVideosContainer"></div>';
+        container.appendChild(panel);
+    }
 
     // Настраиваем переключение вкладок
     function setupSwitching() {
@@ -83,20 +104,15 @@
         writingTab.onclick = function(e) {
             e.preventDefault();
 
-            // Убираем активный класс у всех вкладок
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-
-            // Добавляем активный класс нашей вкладке
             writingTab.classList.add('active');
 
-            // Скрываем все панели
             document.querySelectorAll('.panel').forEach(panel => {
                 panel.classList.remove('active');
             });
 
-            // Показываем нашу панель
             const writingPanel = document.getElementById('writingPanel');
             if (writingPanel) {
                 writingPanel.classList.add('active');
@@ -142,15 +158,16 @@
                 flex: 1;
             }
             .writing-video-title {
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: 800;
                 color: #2c3e50;
                 margin-bottom: 6px;
             }
             .writing-video-tags {
-                font-size: 12px;
+                font-size: 11px;
                 color: #ff6b35;
                 margin-bottom: 6px;
+                line-height: 1.4;
             }
             .writing-video-desc {
                 font-size: 14px;
