@@ -721,28 +721,50 @@
 }
 
     function renderRads() {
-      var grid = document.getElementById('radGrid');
-      grid.innerHTML = '';
-      for(var i=0; i<RADICALS.length; i++) {
-        var r = RADICALS[i];
-        var div = document.createElement('div');
-        div.className = 'grid-item';
-        div.innerHTML = '<div class="ch">'+r.s+'</div><div class="info">'+r.m+'</div>';
-        div.onclick = (function(rad){
-          return function() {
-            speak(rad.s);
-            var detailDiv = document.getElementById('radicalDetail');
-            detailDiv.style.display = 'block';
-            detailDiv.innerHTML = '<strong>'+rad.s+'</strong> — '+rad.p+'<br>'+rad.m+' '+(rad.e||'')+'<br><br><em>Примеры:</em> '+(rad.ex||'—');
-            document.getElementById('rChar').textContent = rad.s;
-            document.getElementById('rPinyin').innerHTML = colorP(rad.p);
-            document.getElementById('rMeaning').textContent = rad.m;
-            currentRad = rad;
-          };
-        })(r);
-        grid.appendChild(div);
-      }
-    }
+  var grid = document.getElementById('radGrid');
+  grid.innerHTML = '';
+  for(var i=0; i<RADICALS.length; i++) {
+    var r = RADICALS[i];
+    var div = document.createElement('div');
+    div.className = 'grid-item';
+    div.innerHTML = '<div class="ch">'+r.s+'</div><div class="info">'+r.m+'</div>';
+    div.onclick = (function(rad){
+      return function() {
+        speak(rad.s);
+        
+        // Находим индекс радикала в WORDS
+        let idx = -1;
+        for(let i = 0; i < WORDS.length; i++) {
+          if(WORDS[i].c === rad.s) {
+            idx = i;
+            break;
+          }
+        }
+        
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        
+        modalContent.innerHTML = `
+          <button class="close" onclick="closeModal()">×</button>
+          <div class="big-char">${rad.s}</div>
+          <div class="pinyin">${colorP(rad.p)}</div>
+          <div class="meaning">${rad.m}</div>
+          <div class="emoji">${rad.e || '🔤'}</div>
+          <div class="badge">🔤 Радикал</div>
+          <div class="assoc"><strong>🧠 Как запомнить:</strong><br>Радикал: ${rad.m}<br>Примеры: ${rad.ex || '—'}</div>
+          <div class="btn-group">
+            <button onclick="speak('${rad.s}')">🔊 Слушать</button>
+            <button onclick="selectWordByIndex(${idx}, 'notebook')" style="background:var(--success)">📓 В тетрадь</button>
+            <button onclick="selectWordByIndex(${idx}, 'cards')" style="background:var(--primary)">🃏 В карточки</button>
+          </div>
+          <div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`;
+        
+        modal.classList.add('active');
+      };
+    })(r);
+    grid.appendChild(div);
+  }
+}
 
     function updateUI() {
       document.getElementById('sChar').textContent = currentW.c;
