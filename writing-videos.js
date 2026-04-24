@@ -12,6 +12,13 @@
             url: "https://www.xiaohongshu.com/explore/699065a70000000015022775?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBlRwebsjH1ck3jrxdRRSDdYArY0KraPp1_8Xrxh7s-L0=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776876682&share_id=4ff9c52b9b85465bb6fef5856681a7e7"
         },
         {
+            emoji: "✍️",
+            title: "好的写法，建议收藏保存",
+            description: "Правильные техники написания иероглифов. Сохраните для практики!",
+            tags: "#写一手好字惊艳所有人 #硬笔规范字 #书法教学",
+            url: "http://xhslink.com/o/Ag3RLonpiPT"
+        },
+        {
             emoji: "📝",
             title: "规范字书写",
             description: "Правильное написание стандартных иероглифов. Каллиграфия для детей и взрослых",
