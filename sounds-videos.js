@@ -6,6 +6,14 @@ const SOUNDS_VIDEOS = [
         tags: "#汉语拼音字母表 #一年级拼音 #幼小衔接",
         url: "https://www.xiaohongshu.com/explore/68f96bb6000000000400646e?app_platform=ios&app_version=9.27&share_from_user_hidden=true&xsec_source=app_share&type=video&xsec_token=CBb83wsyzFqPxZdZ8gNoiMFNLUnczro7-LChg8d_z3AsU=&author_share=1&xhsshare=CopyLink&shareRedId=OD01M0RGSUo2NzUyOTgwNjdGOThGPD5N&apptime=1776895522&share_id=c8a2fa41667543b7ab9e5446f2743cca"
     },
+
+{
+    emoji: "😌",
+    title: "学会休息 и放松",
+    description: "Как правильно отдыхать и расслабляться. Важность отдыха для изучения языка",
+    tags: "#学会休息和放松 #休息一下吧 #让心自然的休息 #有空就休息",
+    url: "http://xhslink.com/o/A3eOMxOu4k5"
+},
     {
         emoji: "📢",
         title: "Основы чтения слогов",
