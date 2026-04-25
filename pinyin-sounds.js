@@ -1,6 +1,6 @@
 // ==========================================
 // Модуль: Сравнение звуков пиньинь
-// ВСЕ ВИДЕО — 32 штуки
+// БУКВЫ КРУПНЕЕ (24px) + удобные кнопки
 // ==========================================
 
 (function() {
@@ -14,7 +14,7 @@
       { title: 'Свистящие', sounds: 'z / c / s', description: 'Плоские звуки, язык у зубов', videoUrl: 'http://xhslink.com/o/7sBCBNQF4fU', color: '#a18cd1' },
       { title: 'en vs un', sounds: 'en / un', description: 'en: рот плоский | un: губы округляются', videoUrl: 'http://xhslink.com/o/9z1CzsXN9sG', color: '#ff9a9e' },
 
-      // === ОРИГИНАЛЬНЫЕ ВИДЕО (25 шт) ===
+      // === ОРИГИНАЛЬНЫЕ ВИДЕО (23 шт) ===
       { title: 'an / en', sounds: 'an / en', description: 'Разница в произношении -an и -en', videoUrl: 'https://www.rednote.com/explore/69e5c2340000000023012eb1?xsec_token=ABSJ5fXql0_RYweB4YHpGEEFBK-eZFkbVBu23jLwrDlgE=&xsec_source=pc_user', color: '#e74c3c' },
       { title: 'r / l', sounds: 'r / l', description: 'Разница в произношении r и l', videoUrl: 'https://www.rednote.com/explore/69e1974a000000001d01c10a?xsec_token=ABe_8nJiAf34tSIz6aT4Oeg1r3trq9cVqPP5O_tI_2nuY=&xsec_source=pc_user', color: '#3498db' },
       { title: 'sh / r', sounds: 'sh / r', description: 'Разница в произношении sh и r', videoUrl: 'https://www.rednote.com/explore/69dc6975000000001b002437?xsec_token=AB-SmsktqGvfoEoRiqGXWP1fDvQdZefq0_ec3K0LH4k2A=&xsec_source=pc_user', color: '#2ecc71' },
@@ -153,9 +153,9 @@
       }
       .sounds-badge {
         display: inline-block;
-        padding: 10px 18px;
-        border-radius: 40px;
-        font-size: 18px;
+        padding: 12px 20px;
+        border-radius: 48px;
+        font-size: 24px;
         font-weight: 700;
         letter-spacing: 1px;
         color: white;
@@ -195,8 +195,8 @@
           gap: 16px;
         }
         .sounds-badge {
-          font-size: 16px;
-          padding: 8px 14px;
+          font-size: 20px;
+          padding: 10px 16px;
         }
         .video-btn {
           width: 100%;
@@ -216,7 +216,7 @@
     addTab();
     createPanel();
     setupSwitching();
-    console.log(`✅ Модуль загружен — ${SOUND_COMPARISONS.length} видеоуроков`);
+    console.log(`✅ Модуль загружен — ${SOUND_COMPARISONS.length} видеоуроков, буквы 24px`);
   }
 
   if (document.readyState === 'loading') {
