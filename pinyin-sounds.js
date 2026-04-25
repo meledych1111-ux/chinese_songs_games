@@ -1,10 +1,48 @@
 // ==========================================
-// Модуль: Сравнение звуков пиньинь
+// Модуль: Сравнение звуков пиньинь + Видеоуроки
 // ТОЛЬКО ВКЛАДКА В ВЕРХНЕМ МЕНЮ (без фильтров)
 // ==========================================
 
 (function() {
     const SOUND_COMPARISONS = [
+      // === НОВЫЕ ВИДЕО (韵母 + 口型 разборы) ===
+      {
+        title: '🎬 韵母口型大全',
+        description: 'От a/o/e до ang/eng/ing/ong. Все финали: простые, сложные, носовые',
+        videoUrl: 'http://xhslink.com/o/G3AxgYIxyI'
+      },
+      {
+        title: '🔍 in vs ing — разбор',
+        description: 'Положение языка и рта. in: язык внизу — ing: корень языка вверх',
+        videoUrl: 'http://xhslink.com/o/7eBLuEIBOTP'
+      },
+      {
+        title: '📌 Задненосовые: ang/eng/ing/ong',
+        description: 'Корень языка поднимается назад. Главная проблема детей',
+        videoUrl: 'http://xhslink.com/o/xmOy44wp7x'
+      },
+      {
+        title: '📖 Передненосовые: an/en/in/un/ün',
+        description: 'Кончик языка у нижних зубов. Простое объяснение',
+        videoUrl: 'http://xhslink.com/o/2HqPwcU8dy1'
+      },
+      {
+        title: '🗣️ Шипящие: zh / ch / sh',
+        description: 'Правильный подъём языка к нёбу. Смотрим положение рта',
+        videoUrl: 'http://xhslink.com/o/9ZqcE4LpL41'
+      },
+      {
+        title: '👅 Свистящие: z / c / s',
+        description: 'Плоские звуки: кончик языка у зубов',
+        videoUrl: 'http://xhslink.com/o/7sBCBNQF4fU'
+      },
+      {
+        title: '🔄 en vs un — сравнение',
+        description: 'en: рот плоский / un: губы округляются в начале',
+        videoUrl: 'http://xhslink.com/o/9z1CzsXN9sG'
+      },
+
+      // === ОРИГИНАЛЬНЫЕ ВИДЕО (сравнение похожих звуков) ===
       {
         title: 'Сравнение an / en',
         description: 'Разница в произношении финалей -an и -en',
@@ -121,11 +159,6 @@
         videoUrl: 'https://www.rednote.com/explore/697b3165000000000c03556a?xsec_token=ABU90zuwNZwPS93KI1jbQj9he98wcpODZ7c_89RiPCY04=&xsec_source=pc_user'
       },
       {
-        title: 'Сравнение x / s',
-        description: 'Как различать x и s',
-        videoUrl: 'https://www.rednote.com/explore/6978b4cc000000000903a905?xsec_token=ABZYsE4OX5sT0LrEyHQYqrz-8GL8qoloh85VTR5pb0IaM=&xsec_source=pc_user'
-      },
-      {
         title: 'Сравнение n / l (口型)',
         description: 'Разница в произношении n и l (положение рта)',
         videoUrl: 'https://www.rednote.com/explore/692fc056000000001e007432?xsec_token=AB9gAoDnhuhq7qraTKv01H75YLNJbRX1RVbM3avD7-L3k=&xsec_source=pc_user'
@@ -137,15 +170,15 @@
     if (!container) return;
     container.innerHTML = `
       <div class="card">
-        <h2 style="margin-bottom:20px;">🔊 Сравнение похожих звуков</h2>
-        <p style="margin-bottom:16px;color:#555;">🎯 Нажмите на кнопку, чтобы открыть видеоурок.</p>
+        <h2 style="margin-bottom:20px;">🎬 Видеоуроки по произношению пиньинь</h2>
+        <p style="margin-bottom:16px;color:#555;">🎯 Нажмите на кнопку, чтобы открыть видеоурок на Xiaohongshu (RedNote).</p>
         <div class="comparisons-grid">
           ${SOUND_COMPARISONS.map(item => `
             <div class="comparison-card">
               <div class="comparison-title">${item.title}</div>
               <div class="comparison-desc">${item.description}</div>
               <a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="comparison-link">🎬 Смотреть видео</a>
-              <div style="font-size:11px;color:#999;margin-top:12px;">🌐 RedNote (интернет ссылка)</div>
+              <div style="font-size:11px;color:#999;margin-top:12px;">🔗 Откроется на Xiaohongshu</div>
             </div>
           `).join('')}
         </div>
@@ -165,9 +198,9 @@
     const newTab = document.createElement('div');
     newTab.className = 'tab';
     newTab.setAttribute('data-tab', 'pinyin-sounds');
-    newTab.textContent = '🔊 Звуки пиньинь';
+    newTab.textContent = '🎬 Видеоуроки';
     tabsContainer.appendChild(newTab);
-    console.log('✅ Вкладка "Звуки пиньинь" добавлена в .tabs');
+    console.log('✅ Вкладка "Видеоуроки" добавлена в .tabs');
   }
 
   // Создаём панель
@@ -188,35 +221,28 @@
     console.log('✅ Панель pinyinSoundsPanel создана');
   }
 
-  // Настраиваем переключение (через стандартную систему, не ломая её)
+  // Настраиваем переключение
   function setupSwitching() {
     const ourTab = document.querySelector('[data-tab="pinyin-sounds"]');
     if (!ourTab) return;
 
-    // Убираем возможный старый обработчик
     if (ourTab._ourHandler) {
       ourTab.removeEventListener('click', ourTab._ourHandler);
     }
 
     const handler = function(e) {
-      // Находим все панели и вкладки
       const allPanels = document.querySelectorAll('.panel');
       const allTabs = document.querySelectorAll('.tab');
 
-      // Скрываем все панели
       allPanels.forEach(panel => panel.classList.remove('active'));
 
-      // Показываем нашу панель
       const ourPanel = document.getElementById('pinyinSoundsPanel');
       if (ourPanel) {
         ourPanel.classList.add('active');
         renderComparisons('pinyinSoundsContainer');
       }
 
-      // Убираем активный класс у всех вкладок
       allTabs.forEach(tab => tab.classList.remove('active'));
-
-      // Добавляем активный класс нашей вкладке
       ourTab.classList.add('active');
 
       e.preventDefault();
@@ -253,15 +279,16 @@
         box-shadow: 0 12px 24px rgba(0,0,0,0.12);
       }
       .comparison-title {
-        font-size: 22px;
+        font-size: 18px;
         font-weight: bold;
         color: #e67e22;
         margin-bottom: 10px;
       }
       .comparison-desc {
-        font-size: 14px;
+        font-size: 13px;
         color: #4a627a;
         margin-bottom: 18px;
+        line-height: 1.4;
       }
       .comparison-link {
         display: inline-block;
@@ -286,13 +313,12 @@
     addTab();
     createPanel();
     setupSwitching();
-    console.log('✅ Модуль "Сравнение звуков" загружен (только вкладка)');
+    console.log('✅ Модуль "Видеоуроки пиньинь" загружен (32 видео)');
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
-    // Даём небольшую задержку, чтобы основной код index.html успел создать свои обработчики
     setTimeout(init, 300);
   }
 })();
