@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🀄️ МАДЖОНГ | 214 РАДИКАЛОВ | ВСЕ ФУНКЦИИ</title>
+    <title>🀄️ МАДЖОНГ | 214 РАДИКАЛОВ | ПОЛНАЯ ВЕРСИЯ</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body { background: linear-gradient(145deg, #1a3a2a 0%, #0a1a0f 100%); min-height: 100vh; font-family: system-ui, 'Segoe UI', 'PingFang SC', sans-serif; padding: 12px; }
@@ -76,8 +76,7 @@
     <div class="ctrl-buttons"><button id="hintBtn" class="hint-btn">💡 Подсказка</button><button id="shuffleBtn" class="shuffle-btn">🔄 Перемешать</button><button id="resetGameBtn" class="reset-btn">🆕 Новая игра</button></div>
 </div>
 <script>
-    // ==================== ВСЕ 214 РАДИКАЛОВ (базовые данные) ====================
-    // Каждый радикал: ключ, пиньинь, название, слово-пример, пиньинь слова, перевод, доп.примеры, количество черт
+    // ==================== ВСЕ 214 РАДИКАЛОВ ====================
     const RADICALS_DB = [
         { key: "一", keyPinyin: "yī", keyName: "один", word: "一", wordPinyin: "yī", wordName: "один", examples: [], strokes: 1 },
         { key: "丨", keyPinyin: "gǔn", keyName: "вертикаль", word: "中", wordPinyin: "zhōng", wordName: "середина", examples: [], strokes: 1 },
@@ -311,66 +310,27 @@
     const msgEl = document.getElementById('gameMessage');
     const gridEl = document.getElementById('gameGrid');
 
-    // ========== ОЗВУЧКА ==========
     let chineseVoice = null;
-    function loadChineseVoice() {
-        const voices = window.speechSynthesis.getVoices();
-        chineseVoice = voices.find(v => v.lang === "zh-CN" && (v.name.includes("Tingting") || v.name.includes("Google") || v.name.includes("Chinese")));
-        if (!chineseVoice) chineseVoice = voices.find(v => v.lang === "zh-CN");
-    }
+    function loadChineseVoice() { const voices = window.speechSynthesis.getVoices(); chineseVoice = voices.find(v => v.lang === "zh-CN" && (v.name.includes("Tingting") || v.name.includes("Google") || v.name.includes("Chinese"))); if (!chineseVoice) chineseVoice = voices.find(v => v.lang === "zh-CN"); }
     window.speechSynthesis.onvoiceschanged = loadChineseVoice;
     setTimeout(loadChineseVoice, 100);
     
-    function speakChinese(text) {
-        if (!window.speechSynthesis) return;
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = "zh-CN";
-        utterance.rate = 0.85;
-        if (chineseVoice) utterance.voice = chineseVoice;
-        window.speechSynthesis.speak(utterance);
-    }
+    function speakChinese(text) { if (!window.speechSynthesis) return; window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(text); utterance.lang = "zh-CN"; utterance.rate = 0.85; if (chineseVoice) utterance.voice = chineseVoice; window.speechSynthesis.speak(utterance); }
 
     function showLearnModal(pair) {
         if (currentModal) currentModal.remove();
-        const examples = pair.examples || [];
+        let radical = pair;
+        if (pair && pair.key) { radical = pair; }
+        else if (pair && pair.word) { radical = RADICALS_DB.find(r => r.word === pair.word); if (!radical) radical = pair; }
+        else if (pair && pair.char && !pair.key) { radical = RADICALS_DB.find(r => r.key === pair.char || r.word === pair.char); if (!radical) radical = pair; }
+        const examples = radical.examples || [];
         const modal = document.createElement('div');
         modal.className = 'learn-modal';
-        modal.innerHTML = `
-            <div class="learn-card">
-                <div class="radical-big">${pair.key}</div>
-                <div class="radical-name">${pair.keyName}</div>
-                <div class="radical-pinyin">${pair.keyPinyin}</div>
-                <div class="draw-section">
-                    <div class="stroke-num">✍️ ${pair.strokes} ${pair.strokes === 1 ? 'черта' : (pair.strokes < 5 ? 'черты' : 'черт')}</div>
-                    <div class="draw-canvas-container">
-                        <canvas class="draw-canvas" width="400" height="400" style="width:100%; height:auto; max-width:400px; aspect-ratio:1/1"></canvas>
-                    </div>
-                    <div class="draw-tools">
-                        <button class="clear-draw">🧽 Очистить</button>
-                        <button class="example-draw">✍️ Образец для обведения</button>
-                    </div>
-                    <div class="weight-control">
-                        <span>🖌️ Толщина: <span id="weightValue">6</span></span>
-                        <input type="range" id="drawWeight" min="1" max="25" value="6">
-                    </div>
-                </div>
-                <div class="examples-title">📖 Примеры слов с этим радикалом:</div>
-                <div class="examples-list">
-                    <div class="example-word" data-char="${pair.word}" data-pinyin="${pair.wordPinyin}">
-                        <div class="ex-char">${pair.word}</div><div class="ex-pinyin">${pair.wordPinyin}</div><div class="ex-mean">${pair.wordName}</div>
-                    </div>
-                    ${examples.map(ex => `<div class="example-word" data-char="${ex.c}" data-pinyin="${ex.p}"><div class="ex-char">${ex.c}</div><div class="ex-pinyin">${ex.p}</div><div class="ex-mean">${ex.m}</div></div>`).join('')}
-                </div>
-                <button class="close-learn">✖ Закрыть</button>
-            </div>
-        `;
+        modal.innerHTML = `<div class="learn-card"><div class="radical-big">${radical.key}</div><div class="radical-name">${radical.keyName}</div><div class="radical-pinyin">${radical.keyPinyin}</div><div class="draw-section"><div class="stroke-num">✍️ ${radical.strokes} ${radical.strokes === 1 ? 'черта' : (radical.strokes < 5 ? 'черты' : 'черт')}</div><div class="draw-canvas-container"><canvas class="draw-canvas" width="400" height="400" style="width:100%; height:auto; max-width:400px; aspect-ratio:1/1"></canvas></div><div class="draw-tools"><button class="clear-draw">🧽 Очистить</button><button class="example-draw">✍️ Образец для обведения</button></div><div class="weight-control"><span>🖌️ Толщина: <span id="weightValue">6</span></span><input type="range" id="drawWeight" min="1" max="25" value="6"></div></div><div class="examples-title">📖 Примеры слов с этим радикалом:</div><div class="examples-list"><div class="example-word" data-char="${radical.word}" data-pinyin="${radical.wordPinyin}"><div class="ex-char">${radical.word}</div><div class="ex-pinyin">${radical.wordPinyin}</div><div class="ex-mean">${radical.wordName}</div></div>${examples.map(ex => `<div class="example-word" data-char="${ex.c}" data-pinyin="${ex.p}"><div class="ex-char">${ex.c}</div><div class="ex-pinyin">${ex.p}</div><div class="ex-mean">${ex.m}</div></div>`).join('')}</div><button class="close-learn">✖ Закрыть</button></div>`;
         document.body.appendChild(modal);
         currentModal = modal;
-
         const canvas = modal.querySelector('.draw-canvas');
-        canvas.width = 400;
-        canvas.height = 400;
+        canvas.width = 400; canvas.height = 400;
         const ctx = canvas.getContext('2d');
         function initCanvas() { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.strokeStyle = '#333'; ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; }
         initCanvas();
@@ -381,14 +341,13 @@
         function stop() { drawing = false; ctx.closePath(); }
         canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', stop);
         canvas.addEventListener('touchstart', start, { passive: false }); canvas.addEventListener('touchmove', draw, { passive: false }); canvas.addEventListener('touchend', stop);
-
         modal.querySelector('.clear-draw').onclick = () => initCanvas();
-        modal.querySelector('.example-draw').onclick = () => { initCanvas(); ctx.save(); ctx.globalAlpha = 0.25; ctx.font = `bold ${canvas.height * 0.55}px "Noto Sans CJK SC", system-ui`; ctx.fillStyle = "#ff6b35"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(pair.key, canvas.width / 2, canvas.height / 2); ctx.restore(); };
+        modal.querySelector('.example-draw').onclick = () => { initCanvas(); ctx.save(); ctx.globalAlpha = 0.25; ctx.font = `bold ${canvas.height * 0.55}px "Noto Sans CJK SC", system-ui`; ctx.fillStyle = "#ff6b35"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(radical.key, canvas.width / 2, canvas.height / 2); ctx.restore(); };
         const weightSlider = modal.querySelector('#drawWeight');
         weightSlider.oninput = (e) => { const val = parseInt(e.target.value); ctx.lineWidth = val; modal.querySelector('#weightValue').textContent = val; };
         modal.querySelectorAll('.example-word').forEach(el => { el.onclick = () => { const ch = el.dataset.char; if (ch) speakChinese(ch); }; });
         modal.querySelector('.close-learn').onclick = () => { modal.remove(); currentModal = null; };
-        speakChinese(pair.key);
+        speakChinese(radical.key);
     }
 
     function renderGrid() {
@@ -432,10 +391,10 @@
     function shuffleTiles() {
         const remaining = tiles.filter(t => !t.removed);
         if (remaining.length === 0) { initGame(currentLevel); return; }
-        const tileData = remaining.map(t => ({ pairId: t.pairId, type: t.type, char: t.char, pinyin: t.pinyin, name: t.name }));
-        for (let i = tileData.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [tileData[i], tileData[j]] = [tileData[j], tileData[i]]; }
-        let idx = 0;
-        for (let i = 0; i < tiles.length; i++) { if (!tiles[i].removed) { tiles[i].pairId = tileData[idx].pairId; tiles[i].type = tileData[idx].type; tiles[i].char = tileData[idx].char; tiles[i].pinyin = tileData[idx].pinyin; tiles[i].name = tileData[idx].name; idx++; } }
+        for (let i = remaining.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [remaining[i], remaining[j]] = [remaining[j], remaining[i]]; }
+        const newTiles = [...remaining];
+        for (let i = 0; i < tiles.length; i++) { if (tiles[i].removed) newTiles.push(tiles[i]); }
+        tiles = newTiles;
         selectedId = null; renderGrid(); msgEl.innerHTML = "🃏 Плитки перемешаны! Продолжай игру.";
     }
 
@@ -444,13 +403,9 @@
         msgEl.innerHTML = "💡 Попробуй перемешать плитки!";
     }
 
-    // ========== ФУНКЦИЯ ДЛЯ СЛУЧАЙНОГО ВЫБОРА ПАР ==========
     function getRandomPairs(count) {
         const shuffled = [...RADICALS_DB];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
+        for (let i = shuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; }
         return shuffled.slice(0, count);
     }
 
@@ -459,12 +414,8 @@
         const config = LEVEL_CONFIG[level];
         const neededPairs = Math.min(config.pairsCount, RADICALS_DB.length);
         const selectedPairs = getRandomPairs(neededPairs);
-        
         totalPairs = selectedPairs.length;
-        matchedCount = 0;
-        score = 0;
-        streak = 0;
-        selectedId = null;
+        matchedCount = 0; score = 0; streak = 0; selectedId = null;
         tiles = [];
         let idCounter = 0;
         for (let i = 0; i < selectedPairs.length; i++) {
@@ -472,13 +423,8 @@
             tiles.push({ id: idCounter++, pairId: i, type: 'key', char: p.key, pinyin: p.keyPinyin, name: p.keyName, removed: false });
             tiles.push({ id: idCounter++, pairId: i, type: 'word', char: p.word, pinyin: p.wordPinyin, name: p.wordName, removed: false });
         }
-        for (let i = tiles.length - 1; i > 0; i--) { 
-            const j = Math.floor(Math.random() * (i + 1)); 
-            [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; 
-        }
-        updateUI(); 
-        renderGrid(); 
-        msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй КЛЮЧ со СЛОВОМ!`;
+        for (let i = tiles.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; }
+        updateUI(); renderGrid(); msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй КЛЮЧ со СЛОВОМ!`;
     }
 
     document.querySelectorAll('.level-btn').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const level = parseInt(btn.dataset.level); initGame(level); }; });
