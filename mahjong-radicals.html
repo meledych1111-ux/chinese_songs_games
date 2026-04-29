@@ -2,48 +2,39 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ | Игра</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
-
         body {
             background: linear-gradient(145deg, #1e3c2c 0%, #0a2a1a 100%);
             min-height: 100vh;
-            font-family: system-ui, 'Segoe UI', 'PingFang SC', Roboto, sans-serif;
+            font-family: system-ui, 'Segoe UI', sans-serif;
             padding: 20px;
         }
-
         .game-container {
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 0 auto;
             background: rgba(30, 20, 15, 0.6);
             border-radius: 48px;
             padding: 20px;
-            backdrop-filter: blur(4px);
         }
-
         h1 {
             text-align: center;
             font-size: 1.8rem;
             color: #f7e05e;
-            text-shadow: 3px 3px 0 #b45f1b;
             margin-bottom: 8px;
         }
-
         .sub {
             text-align: center;
             color: #d4c9a6;
             margin-bottom: 20px;
-            font-size: 0.9rem;
         }
-
         .score-board {
             display: flex;
             justify-content: space-between;
@@ -55,84 +46,67 @@
             font-weight: bold;
             font-size: 1.2rem;
             flex-wrap: wrap;
-            gap: 12px;
         }
-
         .score-board span {
             background: #00000066;
             padding: 6px 18px;
             border-radius: 40px;
         }
-
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 14px;
             margin: 20px 0;
             background: #4a3729;
-            padding: 24px 18px;
+            padding: 24px;
             border-radius: 48px;
-            min-height: 450px;
-            max-height: 60vh;
-            overflow-y: auto;
+            min-height: 400px;
         }
-
         .tile {
             background: #fff8e7;
             border-radius: 20px;
-            padding: 14px 6px;
+            padding: 20px 6px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.12s;
+            transition: all 0.1s;
             border: 2px solid #c8aa6e;
             box-shadow: 0 7px 0 #8b6946;
-            transform: translateY(-2px);
         }
-
         .tile.selected {
             background: #ffe6b3;
             border: 3px solid #f5b042;
-            transform: scale(0.98);
-            box-shadow: 0 0 0 2px #ffd966;
+            transform: scale(0.97);
         }
-
         .tile .main-char {
-            font-size: 44px;
+            font-size: 52px;
             font-weight: 800;
             color: #3c2a1f;
-            line-height: 1;
         }
-
         .tile .info {
-            font-size: 11px;
-            margin-top: 6px;
+            font-size: 12px;
+            margin-top: 8px;
             color: #7a5a3a;
             font-weight: 600;
             background: #f3e5c9;
             display: inline-block;
-            padding: 3px 8px;
+            padding: 3px 12px;
             border-radius: 40px;
         }
-
         .message-area {
             background: #261d14e6;
             border-radius: 60px;
             padding: 12px 20px;
             text-align: center;
             font-weight: bold;
-            font-size: 1rem;
             margin: 15px 0;
             color: #f7e6c4;
         }
-
         .ctrl-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            margin-top: 10px;
         }
-
         button {
             background: linear-gradient(135deg, #f7b42c, #fc8e2c);
             border: none;
@@ -142,39 +116,25 @@
             border-radius: 60px;
             color: #2c1a0c;
             cursor: pointer;
-            transition: 0.1s linear;
             box-shadow: 0 4px 0 #9b5e1c;
-            font-family: inherit;
         }
-
         button:active {
             transform: translateY(2px);
-            box-shadow: 0 1px 0 #9b5e1c;
         }
-
         .reset-btn {
             background: linear-gradient(135deg, #4b6a3b, #2d5a2a);
             color: #f9e7b3;
-            box-shadow: 0 4px 0 #1e3a1a;
         }
-
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.7rem;
-            color: #b4a27a;
-        }
-
         @media (max-width: 650px) {
-            .game-grid { gap: 10px; padding: 16px 12px; max-height: 50vh; }
-            .tile .main-char { font-size: 34px; }
+            .game-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 16px; }
+            .tile .main-char { font-size: 38px; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
     <h1>🀄️ МАДЖОНГ С РАДИКАЛАМИ</h1>
-    <div class="sub">🔤 Найди пару: иероглиф ⟷ его радикал (ключ)</div>
+    <div class="sub">🔤 Найди пару: иероглиф ⟷ радикал</div>
 
     <div class="score-board">
         <span>🎯 Счёт: <span id="scoreValue">0</span></span>
@@ -192,156 +152,59 @@
         <button id="shuffleBtn">♻️ Перемешать</button>
         <button id="resetGameBtn" class="reset-btn">🔄 Новая игра</button>
     </div>
-    <div class="footer">
-        💡 Радикал — смысловой ключ иероглифа. Соедините слово с его ключом!
-    </div>
 </div>
 
 <script>
-    // ==================== ВСТРОЕННЫЕ СЛОВА И РАДИКАЛЫ ====================
-    const WORDS_DATA = [
-        {c:"水",p:"shuǐ",m:"вода",cat:"nature"},
-        {c:"火",p:"huǒ",m:"огонь",cat:"nature"},
-        {c:"木",p:"mù",m:"дерево",cat:"nature"},
-        {c:"口",p:"kǒu",m:"рот",cat:"body"},
-        {c:"手",p:"shǒu",m:"рука",cat:"body"},
-        {c:"心",p:"xīn",m:"сердце",cat:"body"},
-        {c:"日",p:"rì",m:"солнце",cat:"nature"},
-        {c:"月",p:"yuè",m:"луна",cat:"nature"},
-        {c:"女",p:"nǚ",m:"женщина",cat:"people"},
-        {c:"子",p:"zǐ",m:"ребёнок",cat:"family"},
-        {c:"田",p:"tián",m:"поле",cat:"nature"},
-        {c:"山",p:"shān",m:"гора",cat:"nature"},
-        {c:"川",p:"chuān",m:"река",cat:"nature"},
-        {c:"人",p:"rén",m:"человек",cat:"people"},
-        {c:"言",p:"yán",m:"речь",cat:"basics"},
-        {c:"金",p:"jīn",m:"золото",cat:"colors"},
-        {c:"土",p:"tǔ",m:"земля",cat:"nature"},
-        {c:"力",p:"lì",m:"сила",cat:"basics"},
-        {c:"刀",p:"dāo",m:"нож",cat:"home"},
-        {c:"车",p:"chē",m:"машина",cat:"transport"},
-        {c:"马",p:"mǎ",m:"лошадь",cat:"animals"},
-        {c:"鸟",p:"niǎo",m:"птица",cat:"animals"},
-        {c:"鱼",p:"yú",m:"рыба",cat:"animals"},
-        {c:"虫",p:"chóng",m:"насекомое",cat:"animals"},
-        {c:"雨",p:"yǔ",m:"дождь",cat:"weather"},
-        {c:"风",p:"fēng",m:"ветер",cat:"nature"},
-        {c:"门",p:"mén",m:"дверь",cat:"home"},
-        {c:"石",p:"shí",m:"камень",cat:"nature"},
-        {c:"目",p:"mù",m:"глаз",cat:"body"},
-        {c:"耳",p:"ěr",m:"ухо",cat:"body"},
-        {c:"舌",p:"shé",m:"язык",cat:"body"},
-        {c:"足",p:"zú",m:"нога",cat:"body"},
-        {c:"走",p:"zǒu",m:"идти",cat:"verbs"},
-        {c:"吃",p:"chī",m:"есть",cat:"food"},
-        {c:"喝",p:"hē",m:"пить",cat:"food"},
-        {c:"你",p:"nǐ",m:"ты",cat:"pronouns"},
-        {c:"好",p:"hǎo",m:"хорошо",cat:"adjectives"},
-        {c:"想",p:"xiǎng",m:"думать",cat:"verbs"},
-        {c:"妈",p:"mā",m:"мама",cat:"family"},
-        {c:"爸",p:"bà",m:"папа",cat:"family"},
-        {c:"花",p:"huā",m:"цветок",cat:"nature"},
-        {c:"草",p:"cǎo",m:"трава",cat:"nature"},
-        {c:"竹",p:"zhú",m:"бамбук",cat:"nature"},
-        {c:"米",p:"mǐ",m:"рис",cat:"food"},
-        {c:"林",p:"lín",m:"лес",cat:"nature"},
-        {c:"森",p:"sēn",m:"чаща",cat:"nature"},
-        {c:"海",p:"hǎi",m:"море",cat:"nature"},
-        {c:"河",p:"hé",m:"река",cat:"nature"},
-        {c:"白",p:"bái",m:"белый",cat:"colors"},
-        {c:"黑",p:"hēi",m:"чёрный",cat:"colors"},
-        {c:"红",p:"hóng",m:"красный",cat:"colors"}
+    // ==================== ГОТОВЫЕ ПАРЫ (СЛОВО + РАДИКАЛ) ====================
+    const PAIRS = [
+        { word: "水", wordM: "вода", radical: "氵", radicalM: "вода" },
+        { word: "火", wordM: "огонь", radical: "火", radicalM: "огонь" },
+        { word: "木", wordM: "дерево", radical: "木", radicalM: "дерево" },
+        { word: "口", wordM: "рот", radical: "口", radicalM: "рот" },
+        { word: "手", wordM: "рука", radical: "扌", radicalM: "рука" },
+        { word: "心", wordM: "сердце", radical: "忄", radicalM: "сердце" },
+        { word: "日", wordM: "солнце", radical: "日", radicalM: "день" },
+        { word: "月", wordM: "луна", radical: "月", radicalM: "луна" },
+        { word: "女", wordM: "женщина", radical: "女", radicalM: "женщина" },
+        { word: "子", wordM: "ребёнок", radical: "子", radicalM: "ребёнок" },
+        { word: "田", wordM: "поле", radical: "田", radicalM: "поле" },
+        { word: "山", wordM: "гора", radical: "山", radicalM: "гора" },
+        { word: "人", wordM: "человек", radical: "亻", radicalM: "человек" },
+        { word: "言", wordM: "речь", radical: "讠", radicalM: "речь" },
+        { word: "金", wordM: "золото", radical: "钅", radicalM: "металл" },
+        { word: "土", wordM: "земля", radical: "土", radicalM: "земля" },
+        { word: "力", wordM: "сила", radical: "力", radicalM: "сила" },
+        { word: "刀", wordM: "нож", radical: "刂", radicalM: "нож" },
+        { word: "车", wordM: "машина", radical: "车", radicalM: "машина" },
+        { word: "马", wordM: "лошадь", radical: "马", radicalM: "лошадь" },
+        { word: "鸟", wordM: "птица", radical: "鸟", radicalM: "птица" },
+        { word: "鱼", wordM: "рыба", radical: "鱼", radicalM: "рыба" },
+        { word: "虫", wordM: "насекомое", radical: "虫", radicalM: "насекомое" },
+        { word: "雨", wordM: "дождь", radical: "雨", radicalM: "дождь" },
+        { word: "门", wordM: "дверь", radical: "门", radicalM: "дверь" },
+        { word: "石", wordM: "камень", radical: "石", radicalM: "камень" },
+        { word: "目", wordM: "глаз", radical: "目", radicalM: "глаз" },
+        { word: "耳", wordM: "ухо", radical: "耳", radicalM: "ухо" },
+        { word: "足", wordM: "нога", radical: "足", radicalM: "нога" },
+        { word: "走", wordM: "идти", radical: "走", radicalM: "ходить" },
+        { word: "食", wordM: "еда", radical: "饣", radicalM: "еда" },
+        { word: "衣", wordM: "одежда", radical: "衤", radicalM: "одежда" }
     ];
 
-    const RADICALS_DATA = [
-        {s:"水",m:"вода"},{s:"氵",m:"вода (ключ)"},{s:"火",m:"огонь"},{s:"灬",m:"огонь снизу"},
-        {s:"木",m:"дерево"},{s:"口",m:"рот"},{s:"手",m:"рука"},{s:"扌",m:"рука слева"},
-        {s:"心",m:"сердце"},{s:"忄",m:"сердце слева"},{s:"日",m:"солнце"},{s:"月",m:"луна"},
-        {s:"女",m:"женщина"},{s:"子",m:"ребёнок"},{s:"田",m:"поле"},{s:"山",m:"гора"},
-        {s:"川",m:"река"},{s:"人",m:"человек"},{s:"亻",m:"человек слева"},{s:"言",m:"речь"},
-        {s:"讠",m:"речь слева"},{s:"金",m:"золото"},{s:"钅",m:"металл слева"},{s:"土",m:"земля"},
-        {s:"力",m:"сила"},{s:"刀",m:"нож"},{s:"刂",m:"нож справа"},{s:"车",m:"машина"},
-        {s:"马",m:"лошадь"},{s:"鸟",m:"птица"},{s:"鱼",m:"рыба"},{s:"虫",m:"насекомое"},
-        {s:"雨",m:"дождь"},{s:"风",m:"ветер"},{s:"门",m:"дверь"},{s:"石",m:"камень"},
-        {s:"目",m:"глаз"},{s:"耳",m:"ухо"},{s:"舌",m:"язык"},{s:"足",m:"нога"},
-        {s:"走",m:"ходить"},{s:"食",m:"еда"},{s:"饣",m:"еда слева"},{s:"衣",m:"одежда"},
-        {s:"衤",m:"одежда слева"},{s:"辶",m:"движение"},{s:"艹",m:"трава"},{s:"竹",m:"бамбук"},
-        {s:"米",m:"рис"},{s:"白",m:"белый"},{s:"黑",m:"чёрный"}
-    ];
-
-    // ==================== ПОСТРОЕНИЕ ПАР ====================
-    function buildPairs() {
-        const pairs = [];
-        const used = new Set();
-        
-        // Прямые соответствия (слово = радикал)
-        for (const word of WORDS_DATA) {
-            for (const rad of RADICALS_DATA) {
-                if (word.c === rad.s && !used.has(word.c)) {
-                    pairs.push({ word: word, radical: rad });
-                    used.add(word.c);
-                    break;
-                }
-            }
-        }
-        
-        // Дополнительные пары (слово содержит радикал)
-        for (const word of WORDS_DATA) {
-            if (pairs.some(p => p.word.c === word.c)) continue;
-            for (const rad of RADICALS_DATA) {
-                if (word.c === rad.s) continue;
-                if (word.c.includes(rad.s) && rad.s.length === 1 && !used.has(word.c+rad.s)) {
-                    pairs.push({ word: word, radical: rad });
-                    used.add(word.c+rad.s);
-                    break;
-                }
-            }
-        }
-        
-        // Если пар мало, добавим ручные
-        if (pairs.length < 12) {
-            const manual = [
-                {word: {c:"吃",m:"есть"}, radical: {s:"口",m:"рот"}},
-                {word: {c:"喝",m:"пить"}, radical: {s:"口",m:"рот"}},
-                {word: {c:"你",m:"ты"}, radical: {s:"亻",m:"человек"}},
-                {word: {c:"好",m:"хорошо"}, radical: {s:"女",m:"женщина"}},
-                {word: {c:"想",m:"думать"}, radical: {s:"心",m:"сердце"}},
-                {word: {c:"妈",m:"мама"}, radical: {s:"女",m:"женщина"}},
-                {word: {c:"爸",m:"папа"}, radical: {s:"父",m:"отец"}},
-                {word: {c:"河",m:"река"}, radical: {s:"氵",m:"вода"}},
-                {word: {c:"海",m:"море"}, radical: {s:"氵",m:"вода"}},
-                {word: {c:"林",m:"лес"}, radical: {s:"木",m:"дерево"}},
-                {word: {c:"森",m:"чаща"}, radical: {s:"木",m:"дерево"}},
-                {word: {c:"花",m:"цветок"}, radical: {s:"艹",m:"трава"}},
-                {word: {c:"草",m:"трава"}, radical: {s:"艹",m:"трава"}}
-            ];
-            for (const m of manual) {
-                if (!pairs.some(p => p.word.c === m.word.c)) {
-                    pairs.push(m);
-                }
-            }
-        }
-        
-        return pairs.slice(0, 24);
-    }
-
-    // ==================== ИГРА ====================
-    let currentPairs = [];
+    // ==================== ПЕРЕМЕННЫЕ ====================
     let gameCards = [];
-    let selectedIdx = null;
-    let matchedCount = 0, totalPairs = 0, score = 0, streak = 0;
+    let selectedIndex = null;
+    let matchedCount = 0;
+    let totalPairs = 0;
+    let score = 0;
+    let streak = 0;
     
+    // DOM элементы
     const gridEl = document.getElementById('gameGrid');
     const scoreSpan = document.getElementById('scoreValue');
     const remainSpan = document.getElementById('remainValue');
     const streakSpan = document.getElementById('streakValue');
     const msgEl = document.getElementById('gameMessage');
-    
-    function updateUI() {
-        scoreSpan.textContent = score;
-        remainSpan.textContent = totalPairs - matchedCount;
-        streakSpan.textContent = streak;
-    }
     
     function shuffleArray(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
@@ -351,111 +214,145 @@
         return arr;
     }
     
+    function updateUI() {
+        scoreSpan.textContent = score;
+        remainSpan.textContent = totalPairs - matchedCount;
+        streakSpan.textContent = streak;
+    }
+    
     function render() {
-        if (!gridEl) return;
         gridEl.innerHTML = '';
         for (let i = 0; i < gameCards.length; i++) {
-            const c = gameCards[i];
-            if (c.matched) continue;
-            const div = document.createElement('div');
-            div.className = `tile ${c.type === 'radical' ? 'radical-tile' : 'word-tile'}`;
-            if (selectedIdx === i) div.classList.add('selected');
-            div.innerHTML = `<div class="main-char">${c.type === 'word' ? c.data.c : c.data.s}</div>
-                             <div class="info">${c.type === 'word' ? (c.data.m || 'слово') : (c.data.m || 'радикал')}</div>`;
-            div.onclick = (function(idx) { return function() { onCardClick(idx); }; })(i);
-            gridEl.appendChild(div);
+            const card = gameCards[i];
+            if (card.matched) continue;
+            
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+            if (selectedIndex === i) tile.classList.add('selected');
+            
+            tile.innerHTML = `
+                <div class="main-char">${card.char}</div>
+                <div class="info">${card.info}</div>
+            `;
+            
+            tile.onclick = (function(idx) {
+                return function() { onCardClick(idx); };
+            })(i);
+            
+            gridEl.appendChild(tile);
         }
     }
     
-    function onCardClick(idx) {
+    function onCardClick(clickedIndex) {
         if (matchedCount === totalPairs) {
-            msgEl.innerHTML = "🏆 ПОБЕДА! Нажмите 'Новая игра'";
-            return;
-        }
-        if (gameCards[idx].matched) return;
-        
-        if (selectedIdx === null) {
-            selectedIdx = idx;
-            render();
-            msgEl.innerHTML = `✅ Выбрано: ${gameCards[idx].type === 'word' ? gameCards[idx].data.c : gameCards[idx].data.s}`;
+            msgEl.innerHTML = "🏆 ПОБЕДА! Нажми 'Новая игра'";
             return;
         }
         
-        const first = gameCards[selectedIdx];
-        const second = gameCards[idx];
-        let correct = (first.pairId === second.pairId);
-        
-        if (correct) {
-            first.matched = true;
-            second.matched = true;
-            matchedCount++;
-            streak++;
-            score += 10 + Math.floor(streak / 2) * 2;
-            updateUI();
-            msgEl.innerHTML = `✅ Верно! +${10 + Math.floor(streak / 2) * 2} очков (серия ${streak})`;
-            selectedIdx = null;
+        if (selectedIndex === null) {
+            // Первая карточка
+            selectedIndex = clickedIndex;
             render();
-            if (matchedCount === totalPairs) {
-                msgEl.innerHTML = "🎉 ПОБЕДА! Отличная игра! 🎉";
-            }
+            msgEl.innerHTML = `✅ Выбрано: ${gameCards[clickedIndex].char} (${gameCards[clickedIndex].info})`;
+        } else if (selectedIndex === clickedIndex) {
+            // Снять выделение
+            selectedIndex = null;
+            render();
+            msgEl.innerHTML = "🔍 Выделение снято";
         } else {
-            streak = 0;
-            updateUI();
-            msgEl.innerHTML = `❌ Не пара! "${first.type === 'word' ? first.data.c : first.data.s}" ≠ "${second.type === 'word' ? second.data.c : second.data.s}"`;
-            selectedIdx = null;
-            render();
+            // Проверяем пару
+            const card1 = gameCards[selectedIndex];
+            const card2 = gameCards[clickedIndex];
+            
+            if (card1.pairId === card2.pairId && card1.type !== card2.type) {
+                // Правильная пара!
+                card1.matched = true;
+                card2.matched = true;
+                matchedCount++;
+                streak++;
+                score += 10 + Math.floor(streak / 2) * 2;
+                updateUI();
+                msgEl.innerHTML = `✅ Правильно! +${10 + Math.floor(streak / 2) * 2} очков (серия ${streak})`;
+                selectedIndex = null;
+                render();
+                
+                if (matchedCount === totalPairs) {
+                    msgEl.innerHTML = "🎉 ПОБЕДА! Ты знаток радикалов! 🎉";
+                }
+            } else {
+                // Неправильная пара
+                streak = 0;
+                updateUI();
+                msgEl.innerHTML = `❌ Не пара! "${card1.char}" не подходит к "${card2.char}"`;
+                selectedIndex = null;
+                render();
+            }
         }
     }
     
-    function initGame() {
-        currentPairs = buildPairs();
-        totalPairs = currentPairs.length;
+    function initGame(selectedPairs) {
+        totalPairs = selectedPairs.length;
         matchedCount = 0;
         score = 0;
         streak = 0;
-        selectedIdx = null;
+        selectedIndex = null;
         
         gameCards = [];
-        for (let i = 0; i < currentPairs.length; i++) {
+        for (let i = 0; i < selectedPairs.length; i++) {
+            const p = selectedPairs[i];
+            // Карточка слова
             gameCards.push({
                 id: `w_${i}`,
                 type: 'word',
-                data: currentPairs[i].word,
+                char: p.word,
+                info: p.wordM,
                 pairId: i,
                 matched: false
             });
+            // Карточка радикала
             gameCards.push({
                 id: `r_${i}`,
                 type: 'radical',
-                data: currentPairs[i].radical,
+                char: p.radical,
+                info: p.radicalM,
                 pairId: i,
                 matched: false
             });
         }
+        
         gameCards = shuffleArray(gameCards);
         updateUI();
         render();
-        msgEl.innerHTML = `🎋 Игра началась! ${totalPairs} пар. Соединяй иероглиф с его радикалом!`;
+        msgEl.innerHTML = `🎋 Игра началась! Найди ${totalPairs} пар слов с их радикалами!`;
+    }
+    
+    function startNewGame() {
+        // Берём случайные 12 пар для разнообразия
+        const shuffledPairs = shuffleArray([...PAIRS]);
+        const selectedPairs = shuffledPairs.slice(0, 16);
+        initGame(selectedPairs);
+    }
+    
+    function shuffleGame() {
+        if (matchedCount === totalPairs) {
+            startNewGame();
+            return;
+        }
+        // Перемешиваем только активные карточки
+        const activeCards = gameCards.filter(c => !c.matched);
+        const matchedCards = gameCards.filter(c => c.matched);
+        gameCards = shuffleArray([...activeCards, ...matchedCards]);
+        selectedIndex = null;
+        render();
+        msgEl.innerHTML = "🃏 Колода перемешана! Продолжай искать пары.";
     }
     
     // Кнопки
-    document.getElementById('shuffleBtn').onclick = () => {
-        if (matchedCount === totalPairs) {
-            initGame();
-            return;
-        }
-        const active = gameCards.filter(c => !c.matched);
-        const matched = gameCards.filter(c => c.matched);
-        gameCards = shuffleArray([...active, ...matched]);
-        selectedIdx = null;
-        render();
-        msgEl.innerHTML = "🃏 Колода перемешана!";
-    };
-    
-    document.getElementById('resetGameBtn').onclick = () => initGame();
+    document.getElementById('shuffleBtn').onclick = shuffleGame;
+    document.getElementById('resetGameBtn').onclick = startNewGame;
     
     // Запуск
-    initGame();
+    startNewGame();
 </script>
 </body>
 </html>
