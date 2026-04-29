@@ -215,7 +215,7 @@
 <body>
 <div class="game-container">
     <h1>🀄️ МАДЖОНГ С РАДИКАЛАМИ</h1>
-    <div class="sub">🔗 Соедини КЛЮЧ и СЛОВО | Никаких блокировок!</div>
+    <div class="sub">🔗 Соедини КЛЮЧ и СЛОВО | Нажми на плитку — услышишь произношение</div>
 
     <div class="level-bar" id="levelBar">
         <div class="level-btn" data-level="1">🌱 Лёгкий (6 пар)</div>
@@ -258,18 +258,7 @@
         { key: "亻", keyPinyin: "rén", keyName: "человек (ключ)", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."},{c:"住",p:"zhù",m:"жить"}] },
         { key: "钅", keyPinyin: "jīn", keyName: "металл (ключ)", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"},{c:"钢",p:"gāng",m:"сталь"}] },
         { key: "土", keyPinyin: "tǔ", keyName: "земля (ключ)", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"},{c:"坏",p:"huài",m:"плохой"},{c:"块",p:"kuài",m:"кусок"}] },
-        { key: "山", keyPinyin: "shān", keyName: "гора (ключ)", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"},{c:"岸",p:"àn",m:"берег"}] },
-        { key: "田", keyPinyin: "tián", keyName: "поле (ключ)", word: "男", wordPinyin: "nán", wordName: "мужчина", examples: [{c:"留",p:"liú",m:"оставлять"},{c:"累",p:"lèi",m:"уставать"}] },
-        { key: "目", keyPinyin: "mù", keyName: "глаз (ключ)", word: "看", wordPinyin: "kàn", wordName: "смотреть", examples: [{c:"眼",p:"yǎn",m:"глаз"},{c:"睡",p:"shuì",m:"спать"},{c:"睛",p:"jīng",m:"глаз"}] },
-        { key: "耳", keyPinyin: "ěr", keyName: "ухо (ключ)", word: "听", wordPinyin: "tīng", wordName: "слушать", examples: [{c:"闻",p:"wén",m:"слышать"},{c:"聪",p:"cōng",m:"умный"}] },
-        { key: "足", keyPinyin: "zú", keyName: "нога (ключ)", word: "跑", wordPinyin: "pǎo", wordName: "бежать", examples: [{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"},{c:"跟",p:"gēn",m:"следовать"}] },
-        { key: "讠", keyPinyin: "yán", keyName: "речь (ключ)", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [{c:"话",p:"huà",m:"слова"},{c:"请",p:"qǐng",m:"пожалуйста"},{c:"读",p:"dú",m:"читать"}] },
-        { key: "饣", keyPinyin: "shí", keyName: "еда (ключ)", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [{c:"饱",p:"bǎo",m:"сытый"},{c:"饿",p:"è",m:"голодный"},{c:"饼",p:"bǐng",m:"лепёшка"}] },
-        { key: "衤", keyPinyin: "yī", keyName: "одежда (ключ)", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [{c:"衬衫",p:"chènshān",m:"рубашка"},{c:"袜",p:"wà",m:"носки"},{c:"裙",p:"qún",m:"юбка"}] },
-        { key: "辶", keyPinyin: "chuò", keyName: "движение (ключ)", word: "过", wordPinyin: "guò", wordName: "проходить", examples: [{c:"还",p:"hái",m:"ещё"},{c:"送",p:"sòng",m:"отправлять"},{c:"进",p:"jìn",m:"входить"}] },
-        { key: "门", keyPinyin: "mén", keyName: "дверь (ключ)", word: "问", wordPinyin: "wèn", wordName: "спрашивать", examples: [{c:"间",p:"jiān",m:"комната"},{c:"开",p:"kāi",m:"открывать"},{c:"关",p:"guān",m:"закрывать"}] },
-        { key: "车", keyPinyin: "chē", keyName: "машина (ключ)", word: "轮", wordPinyin: "lún", wordName: "колесо", examples: [{c:"转",p:"zhuǎn",m:"поворачивать"},{c:"轻",p:"qīng",m:"лёгкий"}] },
-        { key: "雨", keyPinyin: "yǔ", keyName: "дождь (ключ)", word: "雪", wordPinyin: "xuě", wordName: "снег", examples: [{c:"雷",p:"léi",m:"гром"},{c:"雾",p:"wù",m:"туман"}] }
+        { key: "山", keyPinyin: "shān", keyName: "гора (ключ)", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"},{c:"岸",p:"àn",m:"берег"}] }
     ];
 
     let currentLevel = 2;
@@ -284,8 +273,8 @@
     const LEVEL_CONFIG = {
         1: { pairsCount: 6, gridCols: 4 },
         2: { pairsCount: 12, gridCols: 6 },
-        3: { pairsCount: 18, gridCols: 6 },
-        4: { pairsCount: 24, gridCols: 8 }
+        3: { pairsCount: 16, gridCols: 6 },
+        4: { pairsCount: 20, gridCols: 8 }
     };
 
     const scoreSpan = document.getElementById('scoreValue');
@@ -296,7 +285,8 @@
     const msgEl = document.getElementById('gameMessage');
     const gridEl = document.getElementById('gameGrid');
 
-    function speakText(text) {
+    // Функция озвучки на китайском
+    function speakChinese(text) {
         if (!window.speechSynthesis) return;
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
@@ -312,18 +302,18 @@
         popup.innerHTML = `
             <div>📚 <strong>${pair.key} (${pair.keyPinyin})</strong> — ${pair.keyName}</div>
             <div class="examples">
-                <div class="example-item" onclick="speakText('${pair.word}')">
+                <div class="example-item" onclick="speakChinese('${pair.word}')">
                     <div class="ex-char">${pair.word}</div>
                     <div class="ex-pinyin">${pair.wordPinyin}</div>
                     <div>${pair.wordName}</div>
                 </div>
-                ${examples.map(ex => `<div class="example-item" onclick="speakText('${ex.c}')"><div class="ex-char">${ex.c}</div><div class="ex-pinyin">${ex.p}</div><div>${ex.m}</div></div>`).join('')}
+                ${examples.map(ex => `<div class="example-item" onclick="speakChinese('${ex.c}')"><div class="ex-char">${ex.c}</div><div class="ex-pinyin">${ex.p}</div><div>${ex.m}</div></div>`).join('')}
             </div>
             <div style="font-size:10px; margin-top:8px;">✨ Нажми на слово, чтобы услышать</div>
         `;
         document.body.appendChild(popup);
         setTimeout(() => popup.remove(), 5000);
-        speakText(pair.key);
+        speakChinese(pair.key);
     }
 
     function renderGrid() {
@@ -343,7 +333,13 @@
                 <div class="pinyin">${tile.pinyin}</div>
                 <div class="info">${tile.name}</div>
             `;
-            div.onclick = (function(t) { return function() { onTileClick(t); }; })(tile);
+            // При клике на плитку — озвучиваем на китайском
+            div.onclick = (function(t) { 
+                return function() { 
+                    speakChinese(t.char);
+                    onTileClick(t); 
+                }; 
+            })(tile);
             gridEl.appendChild(div);
         }
         
@@ -390,7 +386,7 @@
             
             if (matchedCount === totalPairs) {
                 msgEl.innerHTML = `🏆 ПОБЕДА! Уровень ${currentLevel} пройден! 🏆`;
-                speakText("Поздравляю! Уровень пройден!");
+                speakChinese("恭喜你"); // Поздравляю по-китайски
             }
         } else {
             streak = 0;
