@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ | Найди пару ключ+слово</title>
+    <title>🀄️ МАДЖОНГ | Найди пару ключ+слово</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
             padding: 20px;
         }
         .game-container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             background: rgba(30, 25, 20, 0.6);
             border-radius: 48px;
@@ -200,6 +200,7 @@
         }
         .example-item:active { transform: scale(0.95); }
         .example-item .ex-char { font-size: 28px; font-weight: bold; }
+        .example-item .ex-pinyin { font-size: 11px; color: #ffd966; }
         @media (max-width: 800px) {
             .game-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 20px; }
             .tile .main-char { font-size: 42px; }
@@ -214,7 +215,7 @@
 <body>
 <div class="game-container">
     <h1>🀄️ МАДЖОНГ С РАДИКАЛАМИ</h1>
-    <div class="sub">🔗 Соедини КЛЮЧ и СЛОВО | Найди все пары</div>
+    <div class="sub">🔗 Соедини КЛЮЧ и СЛОВО | Никаких блокировок!</div>
 
     <div class="level-bar" id="levelBar">
         <div class="level-btn" data-level="1">🌱 Лёгкий (6 пар)</div>
@@ -245,26 +246,30 @@
 <script>
     // ==================== РАДИКАЛЫ (ключ + слово = пара) ====================
     const PAIRS = [
-        { key: "口", keyPinyin: "kǒu", keyName: "рот (ключ)", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"}] },
-        { key: "氵", keyPinyin: "shuǐ", keyName: "вода (ключ)", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"},{c:"洗",p:"xǐ",m:"мыть"}] },
-        { key: "火", keyPinyin: "huǒ", keyName: "огонь (ключ)", word: "烧", wordPinyin: "shāo", wordName: "жечь", examples: [{c:"炒",p:"chǎo",m:"жарить"},{c:"烟",p:"yān",m:"дым"}] },
-        { key: "木", keyPinyin: "mù", keyName: "дерево (ключ)", word: "树", wordPinyin: "shù", wordName: "дерево", examples: [{c:"林",p:"lín",m:"лес"},{c:"桌",p:"zhuō",m:"стол"}] },
-        { key: "扌", keyPinyin: "shǒu", keyName: "рука (ключ)", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"拿",p:"ná",m:"брать"},{c:"找",p:"zhǎo",m:"искать"}] },
-        { key: "忄", keyPinyin: "xīn", keyName: "сердце (ключ)", word: "想", wordPinyin: "xiǎng", wordName: "думать", examples: [{c:"忘",p:"wàng",m:"забывать"},{c:"忙",p:"máng",m:"занятой"}] },
-        { key: "日", keyPinyin: "rì", keyName: "солнце (ключ)", word: "时", wordPinyin: "shí", wordName: "время", examples: [{c:"明",p:"míng",m:"яркий"},{c:"暖",p:"nuǎn",m:"тёплый"}] },
-        { key: "月", keyPinyin: "yuè", keyName: "луна (ключ)", word: "期", wordPinyin: "qī", wordName: "период", examples: [{c:"有",p:"yǒu",m:"иметь"},{c:"朋",p:"péng",m:"друг"}] },
-        { key: "女", keyPinyin: "nǚ", keyName: "женщина (ключ)", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"好",p:"hǎo",m:"хорошо"}] },
-        { key: "亻", keyPinyin: "rén", keyName: "человек (ключ)", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."}] },
-        { key: "钅", keyPinyin: "jīn", keyName: "металл (ключ)", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"}] },
-        { key: "土", keyPinyin: "tǔ", keyName: "земля (ключ)", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"},{c:"坏",p:"huài",m:"плохой"}] },
-        { key: "山", keyPinyin: "shān", keyName: "гора (ключ)", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"}] },
+        { key: "口", keyPinyin: "kǒu", keyName: "рот (ключ)", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"},{c:"唱",p:"chàng",m:"петь"}] },
+        { key: "氵", keyPinyin: "shuǐ", keyName: "вода (ключ)", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"},{c:"洗",p:"xǐ",m:"мыть"},{c:"泳",p:"yǒng",m:"плыть"}] },
+        { key: "火", keyPinyin: "huǒ", keyName: "огонь (ключ)", word: "烧", wordPinyin: "shāo", wordName: "жечь", examples: [{c:"炒",p:"chǎo",m:"жарить"},{c:"烟",p:"yān",m:"дым"},{c:"灯",p:"dēng",m:"лампа"}] },
+        { key: "木", keyPinyin: "mù", keyName: "дерево (ключ)", word: "树", wordPinyin: "shù", wordName: "дерево", examples: [{c:"林",p:"lín",m:"лес"},{c:"桌",p:"zhuō",m:"стол"},{c:"椅",p:"yǐ",m:"стул"}] },
+        { key: "扌", keyPinyin: "shǒu", keyName: "рука (ключ)", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"拿",p:"ná",m:"брать"},{c:"找",p:"zhǎo",m:"искать"},{c:"拉",p:"lā",m:"тянуть"}] },
+        { key: "忄", keyPinyin: "xīn", keyName: "сердце (ключ)", word: "想", wordPinyin: "xiǎng", wordName: "думать", examples: [{c:"忘",p:"wàng",m:"забывать"},{c:"忙",p:"máng",m:"занятой"},{c:"情",p:"qíng",m:"чувство"}] },
+        { key: "日", keyPinyin: "rì", keyName: "солнце (ключ)", word: "时", wordPinyin: "shí", wordName: "время", examples: [{c:"明",p:"míng",m:"яркий"},{c:"暖",p:"nuǎn",m:"тёплый"},{c:"晚",p:"wǎn",m:"вечер"}] },
+        { key: "月", keyPinyin: "yuè", keyName: "луна (ключ)", word: "期", wordPinyin: "qī", wordName: "период", examples: [{c:"有",p:"yǒu",m:"иметь"},{c:"朋",p:"péng",m:"друг"},{c:"朝",p:"zhāo",m:"утро"}] },
+        { key: "女", keyPinyin: "nǚ", keyName: "женщина (ключ)", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"妹",p:"mèi",m:"младшая сестра"},{c:"好",p:"hǎo",m:"хорошо"}] },
+        { key: "亻", keyPinyin: "rén", keyName: "человек (ключ)", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."},{c:"住",p:"zhù",m:"жить"}] },
+        { key: "钅", keyPinyin: "jīn", keyName: "металл (ключ)", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"},{c:"钢",p:"gāng",m:"сталь"}] },
+        { key: "土", keyPinyin: "tǔ", keyName: "земля (ключ)", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"},{c:"坏",p:"huài",m:"плохой"},{c:"块",p:"kuài",m:"кусок"}] },
+        { key: "山", keyPinyin: "shān", keyName: "гора (ключ)", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"},{c:"岸",p:"àn",m:"берег"}] },
         { key: "田", keyPinyin: "tián", keyName: "поле (ключ)", word: "男", wordPinyin: "nán", wordName: "мужчина", examples: [{c:"留",p:"liú",m:"оставлять"},{c:"累",p:"lèi",m:"уставать"}] },
-        { key: "目", keyPinyin: "mù", keyName: "глаз (ключ)", word: "看", wordPinyin: "kàn", wordName: "смотреть", examples: [{c:"眼",p:"yǎn",m:"глаз"},{c:"睡",p:"shuì",m:"спать"}] },
-        { key: "耳", keyPinyin: "ěr", keyName: "ухо (ключ)", word: "听", wordPinyin: "tīng", wordName: "слушать", examples: [{c:"闻",p:"wén",m:"слышать"}] },
-        { key: "足", keyPinyin: "zú", keyName: "нога (ключ)", word: "跑", wordPinyin: "pǎo", wordName: "бежать", examples: [{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"}] },
-        { key: "讠", keyPinyin: "yán", keyName: "речь (ключ)", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [{c:"话",p:"huà",m:"слова"},{c:"请",p:"qǐng",m:"пожалуйста"}] },
-        { key: "饣", keyPinyin: "shí", keyName: "еда (ключ)", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [{c:"饱",p:"bǎo",m:"сытый"},{c:"饿",p:"è",m:"голодный"}] },
-        { key: "衤", keyPinyin: "yī", keyName: "одежда (ключ)", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [{c:"衬衫",p:"chènshān",m:"рубашка"},{c:"袜",p:"wà",m:"носки"}] }
+        { key: "目", keyPinyin: "mù", keyName: "глаз (ключ)", word: "看", wordPinyin: "kàn", wordName: "смотреть", examples: [{c:"眼",p:"yǎn",m:"глаз"},{c:"睡",p:"shuì",m:"спать"},{c:"睛",p:"jīng",m:"глаз"}] },
+        { key: "耳", keyPinyin: "ěr", keyName: "ухо (ключ)", word: "听", wordPinyin: "tīng", wordName: "слушать", examples: [{c:"闻",p:"wén",m:"слышать"},{c:"聪",p:"cōng",m:"умный"}] },
+        { key: "足", keyPinyin: "zú", keyName: "нога (ключ)", word: "跑", wordPinyin: "pǎo", wordName: "бежать", examples: [{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"},{c:"跟",p:"gēn",m:"следовать"}] },
+        { key: "讠", keyPinyin: "yán", keyName: "речь (ключ)", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [{c:"话",p:"huà",m:"слова"},{c:"请",p:"qǐng",m:"пожалуйста"},{c:"读",p:"dú",m:"читать"}] },
+        { key: "饣", keyPinyin: "shí", keyName: "еда (ключ)", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [{c:"饱",p:"bǎo",m:"сытый"},{c:"饿",p:"è",m:"голодный"},{c:"饼",p:"bǐng",m:"лепёшка"}] },
+        { key: "衤", keyPinyin: "yī", keyName: "одежда (ключ)", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [{c:"衬衫",p:"chènshān",m:"рубашка"},{c:"袜",p:"wà",m:"носки"},{c:"裙",p:"qún",m:"юбка"}] },
+        { key: "辶", keyPinyin: "chuò", keyName: "движение (ключ)", word: "过", wordPinyin: "guò", wordName: "проходить", examples: [{c:"还",p:"hái",m:"ещё"},{c:"送",p:"sòng",m:"отправлять"},{c:"进",p:"jìn",m:"входить"}] },
+        { key: "门", keyPinyin: "mén", keyName: "дверь (ключ)", word: "问", wordPinyin: "wèn", wordName: "спрашивать", examples: [{c:"间",p:"jiān",m:"комната"},{c:"开",p:"kāi",m:"открывать"},{c:"关",p:"guān",m:"закрывать"}] },
+        { key: "车", keyPinyin: "chē", keyName: "машина (ключ)", word: "轮", wordPinyin: "lún", wordName: "колесо", examples: [{c:"转",p:"zhuǎn",m:"поворачивать"},{c:"轻",p:"qīng",m:"лёгкий"}] },
+        { key: "雨", keyPinyin: "yǔ", keyName: "дождь (ключ)", word: "雪", wordPinyin: "xuě", wordName: "снег", examples: [{c:"雷",p:"léi",m:"гром"},{c:"雾",p:"wù",m:"туман"}] }
     ];
 
     let currentLevel = 2;
@@ -309,9 +314,10 @@
             <div class="examples">
                 <div class="example-item" onclick="speakText('${pair.word}')">
                     <div class="ex-char">${pair.word}</div>
-                    <div>${pair.wordPinyin} — ${pair.wordName}</div>
+                    <div class="ex-pinyin">${pair.wordPinyin}</div>
+                    <div>${pair.wordName}</div>
                 </div>
-                ${examples.map(ex => `<div class="example-item" onclick="speakText('${ex.c}')"><div class="ex-char">${ex.c}</div><div>${ex.p} — ${ex.m}</div></div>`).join('')}
+                ${examples.map(ex => `<div class="example-item" onclick="speakText('${ex.c}')"><div class="ex-char">${ex.c}</div><div class="ex-pinyin">${ex.p}</div><div>${ex.m}</div></div>`).join('')}
             </div>
             <div style="font-size:10px; margin-top:8px;">✨ Нажми на слово, чтобы услышать</div>
         `;
@@ -341,7 +347,6 @@
             gridEl.appendChild(div);
         }
         
-        // Если сетка пустая после удаления всех плиток
         if (gridEl.children.length === 0 && matchedCount === totalPairs) {
             msgEl.innerHTML = "🏆 ПОБЕДА! Отличная игра! 🏆";
         }
@@ -405,14 +410,12 @@
     }
 
     function shuffleTiles() {
-        // Перемешиваем только оставшиеся плитки
         const remaining = tiles.filter(t => !t.removed);
         if (remaining.length === 0) {
             initGame(currentLevel);
             return;
         }
         
-        // Сохраняем данные плиток
         const tileData = remaining.map(t => ({
             pairId: t.pairId,
             type: t.type,
@@ -421,13 +424,11 @@
             name: t.name
         }));
         
-        // Перемешиваем
         for (let i = tileData.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [tileData[i], tileData[j]] = [tileData[j], tileData[i]];
         }
         
-        // Обновляем плитки
         let idx = 0;
         for (let i = 0; i < tiles.length; i++) {
             if (!tiles[i].removed) {
@@ -464,7 +465,6 @@
         const config = LEVEL_CONFIG[level];
         const neededPairs = config.pairsCount;
         
-        // Берём нужное количество пар
         const selectedPairs = [];
         for (let i = 0; i < neededPairs; i++) {
             selectedPairs.push(PAIRS[i % PAIRS.length]);
@@ -476,12 +476,10 @@
         streak = 0;
         selectedId = null;
         
-        // Создаём плитки
         tiles = [];
         let idCounter = 0;
         for (let i = 0; i < selectedPairs.length; i++) {
             const pair = selectedPairs[i];
-            // Ключ
             tiles.push({
                 id: idCounter++,
                 pairId: i,
@@ -491,7 +489,6 @@
                 name: pair.keyName,
                 removed: false
             });
-            // Слово
             tiles.push({
                 id: idCounter++,
                 pairId: i,
@@ -503,7 +500,6 @@
             });
         }
         
-        // Перемешиваем
         for (let i = tiles.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
@@ -514,7 +510,6 @@
         msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй ключи со словами!`;
     }
 
-    // Обработчики уровней
     document.querySelectorAll('.level-btn').forEach(btn => {
         btn.onclick = () => {
             document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
@@ -528,7 +523,6 @@
     document.getElementById('shuffleBtn').onclick = shuffleTiles;
     document.getElementById('resetGameBtn').onclick = () => initGame(currentLevel);
     
-    // Запуск
     initGame(2);
 </script>
 </body>
