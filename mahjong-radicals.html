@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🀄️ МАДЖОНГ | 214 РАДИКАЛОВ | КЛЮЧ + СЛОВО</title>
+    <title>🀄️ МАДЖОНГ | ВСЕ 214 РАДИКАЛОВ | КЛЮЧ + СЛОВО</title>
     <style>
         * {
             margin: 0;
@@ -213,15 +213,15 @@
 </head>
 <body>
 <div class="game-container">
-    <h1>🀄️ МАДЖОНГ | 214 РАДИКАЛОВ</h1>
+    <h1>🀄️ МАДЖОНГ | ВСЕ 214 РАДИКАЛОВ</h1>
     <div class="sub">🔗 Соедини КЛЮЧ (радикал) и СЛОВО с этим ключом</div>
 
     <div class="level-bar" id="levelBar">
-        <div class="level-btn" data-level="1">🌱 Лёгкий (10 пар)</div>
-        <div class="level-btn" data-level="2" class="active">⭐ Средний (20 пар)</div>
-        <div class="level-btn" data-level="3">🏆 Сложный (30 пар)</div>
-        <div class="level-btn" data-level="4">🔥 Мастер (50 пар)</div>
-        <div class="level-btn" data-level="5">💎 Эксперт (70 пар)</div>
+        <div class="level-btn" data-level="1">🌱 Лёгкий (20 пар)</div>
+        <div class="level-btn" data-level="2" class="active">⭐ Средний (40 пар)</div>
+        <div class="level-btn" data-level="3">🏆 Сложный (70 пар)</div>
+        <div class="level-btn" data-level="4">🔥 Мастер (107 пар)</div>
+        <div class="level-btn" data-level="5">💎 Эксперт (214 пар)</div>
     </div>
 
     <div class="stats-bar">
@@ -244,77 +244,220 @@
 </div>
 
 <script>
-    // ==================== ВСЕ 214 РАДИКАЛОВ + ПРИМЕРЫ СЛОВ ====================
-    // Формат: ключ (радикал) + слово (пример использования этого радикала)
+    // ==================== ВСЕ 214 РАДИКАЛОВ С ПРИМЕРАМИ СЛОВ ====================
     const RADICAL_WORD_PAIRS = [
-        { key: "口", keyPinyin: "kǒu", keyName: "рот", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"}] },
-        { key: "氵", keyPinyin: "shuǐ", keyName: "вода", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"},{c:"洗",p:"xǐ",m:"мыть"}] },
-        { key: "火", keyPinyin: "huǒ", keyName: "огонь", word: "烧", wordPinyin: "shāo", wordName: "жечь", examples: [{c:"炒",p:"chǎo",m:"жарить"},{c:"烟",p:"yān",m:"дым"}] },
-        { key: "木", keyPinyin: "mù", keyName: "дерево", word: "树", wordPinyin: "shù", wordName: "дерево", examples: [{c:"林",p:"lín",m:"лес"},{c:"桌",p:"zhuō",m:"стол"}] },
-        { key: "扌", keyPinyin: "shǒu", keyName: "рука", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"拿",p:"ná",m:"брать"},{c:"找",p:"zhǎo",m:"искать"}] },
-        { key: "忄", keyPinyin: "xīn", keyName: "сердце", word: "忙", wordPinyin: "máng", wordName: "занятой", examples: [{c:"快",p:"kuài",m:"быстрый"},{c:"慢",p:"màn",m:"медленный"}] },
-        { key: "日", keyPinyin: "rì", keyName: "солнце", word: "时", wordPinyin: "shí", wordName: "время", examples: [{c:"明",p:"míng",m:"яркий"},{c:"暖",p:"nuǎn",m:"тёплый"}] },
-        { key: "月", keyPinyin: "yuè", keyName: "луна", word: "期", wordPinyin: "qī", wordName: "период", examples: [{c:"有",p:"yǒu",m:"иметь"},{c:"朋",p:"péng",m:"друг"}] },
-        { key: "女", keyPinyin: "nǚ", keyName: "женщина", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"妹",p:"mèi",m:"младшая сестра"}] },
-        { key: "亻", keyPinyin: "rén", keyName: "человек", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."}] },
-        { key: "钅", keyPinyin: "jīn", keyName: "металл", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"}] },
-        { key: "土", keyPinyin: "tǔ", keyName: "земля", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"},{c:"坏",p:"huài",m:"плохой"}] },
-        { key: "山", keyPinyin: "shān", keyName: "гора", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岸",p:"àn",m:"берег"}] },
-        { key: "田", keyPinyin: "tián", keyName: "поле", word: "男", wordPinyin: "nán", wordName: "мужчина", examples: [{c:"留",p:"liú",m:"оставлять"}] },
-        { key: "目", keyPinyin: "mù", keyName: "глаз", word: "眼", wordPinyin: "yǎn", wordName: "глаз", examples: [{c:"看",p:"kàn",m:"смотреть"},{c:"睡",p:"shuì",m:"спать"}] },
-        { key: "耳", keyPinyin: "ěr", keyName: "ухо", word: "听", wordPinyin: "tīng", wordName: "слушать", examples: [{c:"闻",p:"wén",m:"слышать"}] },
-        { key: "足", keyPinyin: "zú", keyName: "нога", word: "跑", wordPinyin: "pǎo", wordName: "бежать", examples: [{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"}] },
-        { key: "讠", keyPinyin: "yán", keyName: "речь", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [{c:"话",p:"huà",m:"слова"},{c:"请",p:"qǐng",m:"пожалуйста"}] },
-        { key: "饣", keyPinyin: "shí", keyName: "еда", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [{c:"饿",p:"è",m:"голодный"},{c:"饱",p:"bǎo",m:"сытый"}] },
-        { key: "衤", keyPinyin: "yī", keyName: "одежда", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [{c:"裙",p:"qún",m:"юбка"},{c:"袜",p:"wà",m:"носки"}] },
-        { key: "辶", keyPinyin: "chuò", keyName: "движение", word: "过", wordPinyin: "guò", wordName: "проходить", examples: [{c:"还",p:"hái",m:"ещё"},{c:"送",p:"sòng",m:"отправлять"}] },
-        { key: "门", keyPinyin: "mén", keyName: "дверь", word: "问", wordPinyin: "wèn", wordName: "спрашивать", examples: [{c:"间",p:"jiān",m:"комната"},{c:"开",p:"kāi",m:"открывать"}] },
-        { key: "车", keyPinyin: "chē", keyName: "машина", word: "轮", wordPinyin: "lún", wordName: "колесо", examples: [{c:"转",p:"zhuǎn",m:"поворачивать"}] },
-        { key: "雨", keyPinyin: "yǔ", keyName: "дождь", word: "雪", wordPinyin: "xuě", wordName: "снег", examples: [{c:"雷",p:"léi",m:"гром"},{c:"雾",p:"wù",m:"туман"}] },
-        { key: "风", keyPinyin: "fēng", keyName: "ветер", word: "飘", wordPinyin: "piāo", wordName: "парить", examples: [{c:"飓",p:"jù",m:"ураган"}] },
-        { key: "鸟", keyPinyin: "niǎo", keyName: "птица", word: "鸡", wordPinyin: "jī", wordName: "курица", examples: [{c:"鸭",p:"yā",m:"утка"},{c:"鹅",p:"é",m:"гусь"}] },
-        { key: "鱼", keyPinyin: "yú", keyName: "рыба", word: "鲜", wordPinyin: "xiān", wordName: "свежий", examples: [{c:"鲤",p:"lǐ",m:"карп"}] },
-        { key: "马", keyPinyin: "mǎ", keyName: "лошадь", word: "骑", wordPinyin: "qí", wordName: "ехать", examples: [{c:"驾",p:"jià",m:"управлять"}] },
-        { key: "虫", keyPinyin: "chóng", keyName: "насекомое", word: "蛇", wordPinyin: "shé", wordName: "змея", examples: [{c:"虾",p:"xiā",m:"креветка"}] },
-        { key: "艹", keyPinyin: "cǎo", keyName: "трава", word: "花", wordPinyin: "huā", wordName: "цветок", examples: [{c:"草",p:"cǎo",m:"трава"},{c:"茶",p:"chá",m:"чай"}] },
-        { key: "竹", keyPinyin: "zhú", keyName: "бамбук", word: "笔", wordPinyin: "bǐ", wordName: "ручка", examples: [{c:"笑",p:"xiào",m:"смех"}] },
-        { key: "米", keyPinyin: "mǐ", keyName: "рис", word: "粮", wordPinyin: "liáng", wordName: "зерно", examples: [{c:"粉",p:"fěn",m:"мука"}] },
-        { key: "心", keyPinyin: "xīn", keyName: "сердце", word: "想", wordPinyin: "xiǎng", wordName: "думать", examples: [{c:"忘",p:"wàng",m:"забывать"}] },
-        { key: "手", keyPinyin: "shǒu", keyName: "рука", word: "拿", wordPinyin: "ná", wordName: "брать", examples: [{c:"拍",p:"pāi",m:"хлопать"}] },
-        { key: "水", keyPinyin: "shuǐ", keyName: "вода", word: "海", wordPinyin: "hǎi", wordName: "море", examples: [{c:"湖",p:"hú",m:"озеро"}] },
-        { key: "金", keyPinyin: "jīn", keyName: "золото", word: "银", wordPinyin: "yín", wordName: "серебро", examples: [{c:"钢",p:"gāng",m:"сталь"}] },
+        { key: "一", keyPinyin: "yī", keyName: "один", word: "一", wordPinyin: "yī", wordName: "один", examples: [] },
+        { key: "丨", keyPinyin: "gǔn", keyName: "вертикаль", word: "中", wordPinyin: "zhōng", wordName: "середина", examples: [] },
+        { key: "丶", keyPinyin: "zhǔ", keyName: "точка", word: "主", wordPinyin: "zhǔ", wordName: "хозяин", examples: [] },
+        { key: "丿", keyPinyin: "piě", keyName: "наклон", word: "八", wordPinyin: "bā", wordName: "восемь", examples: [] },
+        { key: "乙", keyPinyin: "yǐ", keyName: "изгиб", word: "九", wordPinyin: "jiǔ", wordName: "девять", examples: [] },
+        { key: "亅", keyPinyin: "jué", keyName: "крюк", word: "了", wordPinyin: "le", wordName: "завершение", examples: [] },
+        { key: "二", keyPinyin: "èr", keyName: "два", word: "二", wordPinyin: "èr", wordName: "два", examples: [] },
+        { key: "亠", keyPinyin: "tóu", keyName: "крышка", word: "交", wordPinyin: "jiāo", wordName: "обмениваться", examples: [] },
         { key: "人", keyPinyin: "rén", keyName: "человек", word: "从", wordPinyin: "cóng", wordName: "следовать", examples: [{c:"众",p:"zhòng",m:"толпа"}] },
-        { key: "力", keyPinyin: "lì", keyName: "сила", word: "加", wordPinyin: "jiā", wordName: "добавлять", examples: [{c:"助",p:"zhù",m:"помогать"}] },
-        { key: "刀", keyPinyin: "dāo", keyName: "нож", word: "切", wordPinyin: "qiē", wordName: "резать", examples: [{c:"分",p:"fēn",m:"делить"}] },
-        { key: "又", keyPinyin: "yòu", keyName: "снова", word: "友", wordPinyin: "yǒu", wordName: "друг", examples: [{c:"双",p:"shuāng",m:"два"}] },
+        { key: "亻", keyPinyin: "rén", keyName: "человек (слева)", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."}] },
+        { key: "入", keyPinyin: "rù", keyName: "входить", word: "入", wordPinyin: "rù", wordName: "входить", examples: [] },
+        { key: "八", keyPinyin: "bā", keyName: "восемь", word: "分", wordPinyin: "fēn", wordName: "делить", examples: [{c:"公",p:"gōng",m:"публичный"}] },
+        { key: "冂", keyPinyin: "jiōng", keyName: "далёкий", word: "同", wordPinyin: "tóng", wordName: "одинаковый", examples: [] },
+        { key: "冖", keyPinyin: "mì", keyName: "покрывало", word: "冠", wordPinyin: "guān", wordName: "корона", examples: [] },
         { key: "冫", keyPinyin: "bīng", keyName: "лёд", word: "冰", wordPinyin: "bīng", wordName: "лёд", examples: [{c:"冷",p:"lěng",m:"холодно"}] },
+        { key: "几", keyPinyin: "jǐ", keyName: "столик", word: "几", wordPinyin: "jǐ", wordName: "сколько", examples: [] },
+        { key: "凵", keyPinyin: "kǎn", keyName: "яма", word: "出", wordPinyin: "chū", wordName: "выходить", examples: [] },
+        { key: "刀", keyPinyin: "dāo", keyName: "нож", word: "切", wordPinyin: "qiē", wordName: "резать", examples: [{c:"分",p:"fēn",m:"делить"}] },
+        { key: "刂", keyPinyin: "dāo", keyName: "нож (справа)", word: "别", wordPinyin: "bié", wordName: "другой", examples: [{c:"到",p:"dào",m:"достигать"}] },
+        { key: "力", keyPinyin: "lì", keyName: "сила", word: "加", wordPinyin: "jiā", wordName: "добавлять", examples: [{c:"助",p:"zhù",m:"помогать"}] },
+        { key: "勹", keyPinyin: "bāo", keyName: "обхват", word: "包", wordPinyin: "bāo", wordName: "пакет", examples: [] },
+        { key: "匕", keyPinyin: "bǐ", keyName: "ложка", word: "化", wordPinyin: "huà", wordName: "превращаться", examples: [] },
+        { key: "匚", keyPinyin: "fāng", keyName: "ящик", word: "区", wordPinyin: "qū", wordName: "район", examples: [] },
+        { key: "匸", keyPinyin: "xì", keyName: "прятать", word: "匹", wordPinyin: "pǐ", wordName: "пара", examples: [] },
+        { key: "十", keyPinyin: "shí", keyName: "десять", word: "十", wordPinyin: "shí", wordName: "десять", examples: [{c:"千",p:"qiān",m:"тысяча"}] },
+        { key: "卜", keyPinyin: "bǔ", keyName: "гадание", word: "外", wordPinyin: "wài", wordName: "снаружи", examples: [] },
+        { key: "卩", keyPinyin: "jié", keyName: "печать", word: "卫", wordPinyin: "wèi", wordName: "защищать", examples: [] },
+        { key: "厂", keyPinyin: "hǎn", keyName: "обрыв", word: "原", wordPinyin: "yuán", wordName: "исходный", examples: [] },
+        { key: "厶", keyPinyin: "sī", keyName: "частный", word: "私", wordPinyin: "sī", wordName: "личный", examples: [] },
+        { key: "又", keyPinyin: "yòu", keyName: "снова", word: "友", wordPinyin: "yǒu", wordName: "друг", examples: [{c:"双",p:"shuāng",m:"два"}] },
+        { key: "口", keyPinyin: "kǒu", keyName: "рот", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"}] },
+        { key: "囗", keyPinyin: "wéi", keyName: "ограда", word: "国", wordPinyin: "guó", wordName: "страна", examples: [{c:"园",p:"yuán",m:"сад"}] },
+        { key: "土", keyPinyin: "tǔ", keyName: "земля", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"}] },
+        { key: "士", keyPinyin: "shì", keyName: "учёный", word: "士", wordPinyin: "shì", wordName: "воин", examples: [] },
+        { key: "夂", keyPinyin: "zhǐ", keyName: "идти", word: "处", wordPinyin: "chù", wordName: "место", examples: [] },
+        { key: "夊", keyPinyin: "suī", keyName: "медленно", word: "夏", wordPinyin: "xià", wordName: "лето", examples: [] },
+        { key: "夕", keyPinyin: "xī", keyName: "вечер", word: "外", wordPinyin: "wài", wordName: "снаружи", examples: [{c:"多",p:"duō",m:"много"}] },
+        { key: "大", keyPinyin: "dà", keyName: "большой", word: "大", wordPinyin: "dà", wordName: "большой", examples: [{c:"天",p:"tiān",m:"небо"}] },
+        { key: "女", keyPinyin: "nǚ", keyName: "женщина", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"妹",p:"mèi",m:"младшая сестра"}] },
+        { key: "子", keyPinyin: "zǐ", keyName: "ребёнок", word: "孩", wordPinyin: "hái", wordName: "ребёнок", examples: [{c:"学",p:"xué",m:"учиться"}] },
         { key: "宀", keyPinyin: "mián", keyName: "крыша", word: "家", wordPinyin: "jiā", wordName: "дом", examples: [{c:"安",p:"ān",m:"спокойный"}] },
-        { key: "广", keyPinyin: "yǎn", keyName: "здание", word: "店", wordPinyin: "diàn", wordName: "магазин", examples: [{c:"床",p:"chuáng",m:"кровать"}] },
+        { key: "寸", keyPinyin: "cùn", keyName: "дюйм", word: "对", wordPinyin: "duì", wordName: "правильно", examples: [] },
+        { key: "小", keyPinyin: "xiǎo", keyName: "маленький", word: "小", wordPinyin: "xiǎo", wordName: "маленький", examples: [{c:"少",p:"shǎo",m:"мало"}] },
+        { key: "尢", keyPinyin: "wāng", keyName: "хромой", word: "尤", wordPinyin: "yóu", wordName: "особенно", examples: [] },
         { key: "尸", keyPinyin: "shī", keyName: "тело", word: "层", wordPinyin: "céng", wordName: "слой", examples: [{c:"居",p:"jū",m:"жить"}] },
+        { key: "屮", keyPinyin: "chè", keyName: "росток", word: "出", wordPinyin: "chū", wordName: "выходить", examples: [] },
+        { key: "山", keyPinyin: "shān", keyName: "гора", word: "山", wordPinyin: "shān", wordName: "гора", examples: [{c:"峰",p:"fēng",m:"вершина"}] },
+        { key: "川", keyPinyin: "chuān", keyName: "река", word: "州", wordPinyin: "zhōu", wordName: "провинция", examples: [] },
+        { key: "工", keyPinyin: "gōng", keyName: "работа", word: "工", wordPinyin: "gōng", wordName: "работа", examples: [{c:"左",p:"zuǒ",m:"левый"}] },
+        { key: "己", keyPinyin: "jǐ", keyName: "себя", word: "己", wordPinyin: "jǐ", wordName: "себя", examples: [] },
+        { key: "巾", keyPinyin: "jīn", keyName: "полотенце", word: "布", wordPinyin: "bù", wordName: "ткань", examples: [] },
+        { key: "干", keyPinyin: "gān", keyName: "сухой", word: "干", wordPinyin: "gān", wordName: "сухой", examples: [{c:"平",p:"píng",m:"ровный"}] },
+        { key: "广", keyPinyin: "yǎn", keyName: "здание", word: "店", wordPinyin: "diàn", wordName: "магазин", examples: [{c:"床",p:"chuáng",m:"кровать"}] },
+        { key: "廾", keyPinyin: "gǒng", keyName: "две руки", word: "开", wordPinyin: "kāi", wordName: "открывать", examples: [] },
+        { key: "弋", keyPinyin: "yì", keyName: "стрела", word: "式", wordPinyin: "shì", wordName: "стиль", examples: [] },
         { key: "弓", keyPinyin: "gōng", keyName: "лук", word: "张", wordPinyin: "zhāng", wordName: "раскрывать", examples: [{c:"弯",p:"wān",m:"изгиб"}] },
+        { key: "彐", keyPinyin: "jì", keyName: "свиной хвост", word: "雪", wordPinyin: "xuě", wordName: "снег", examples: [] },
+        { key: "彡", keyPinyin: "shān", keyName: "волосы", word: "形", wordPinyin: "xíng", wordName: "форма", examples: [{c:"彩",p:"cǎi",m:"цвет"}] },
+        { key: "彳", keyPinyin: "chì", keyName: "шаг", word: "行", wordPinyin: "xíng", wordName: "идти", examples: [{c:"很",p:"hěn",m:"очень"}] },
+        { key: "心", keyPinyin: "xīn", keyName: "сердце", word: "心", wordPinyin: "xīn", wordName: "сердце", examples: [{c:"想",p:"xiǎng",m:"думать"}] },
+        { key: "忄", keyPinyin: "xīn", keyName: "сердце (слева)", word: "忙", wordPinyin: "máng", wordName: "занятой", examples: [{c:"快",p:"kuài",m:"быстрый"}] },
         { key: "戈", keyPinyin: "gē", keyName: "алебарда", word: "战", wordPinyin: "zhàn", wordName: "война", examples: [{c:"我",p:"wǒ",m:"я"}] },
         { key: "户", keyPinyin: "hù", keyName: "дверь", word: "房", wordPinyin: "fáng", wordName: "дом", examples: [{c:"所",p:"suǒ",m:"место"}] },
-        { key: "斤", keyPinyin: "jīn", keyName: "топор", word: "新", wordPinyin: "xīn", wordName: "новый", examples: [{c:"所",p:"suǒ",m:"место"}] },
-        { key: "方", keyPinyin: "fāng", keyName: "квадрат", word: "放", wordPinyin: "fàng", wordName: "класть", examples: [{c:"房",p:"fáng",m:"комната"}] },
-        { key: "欠", keyPinyin: "qiàn", keyName: "нехватка", word: "欢", wordPinyin: "huān", wordName: "радость", examples: [{c:"次",p:"cì",m:"раз"}] },
-        { key: "贝", keyPinyin: "bèi", keyName: "ракушка", word: "财", wordPinyin: "cái", wordName: "богатство", examples: [{c:"购",p:"gòu",m:"покупать"}] },
-        { key: "见", keyPinyin: "jiàn", keyName: "видеть", word: "现", wordPinyin: "xiàn", wordName: "появляться", examples: [{c:"视",p:"shì",m:"смотреть"}] },
-        { key: "角", keyPinyin: "jiǎo", keyName: "рог", word: "解", wordPinyin: "jiě", wordName: "развязывать", examples: [{c:"触",p:"chù",m:"касаться"}] },
-        { key: "言", keyPinyin: "yán", keyName: "речь", word: "语", wordPinyin: "yǔ", wordName: "язык", examples: [{c:"认",p:"rèn",m:"узнавать"}] },
+        { key: "手", keyPinyin: "shǒu", keyName: "рука", word: "手", wordPinyin: "shǒu", wordName: "рука", examples: [{c:"打",p:"dǎ",m:"бить"}] },
+        { key: "扌", keyPinyin: "shǒu", keyName: "рука (слева)", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"找",p:"zhǎo",m:"искать"}] },
+        { key: "支", keyPinyin: "zhī", keyName: "ветка", word: "枝", wordPinyin: "zhī", wordName: "ветка", examples: [] },
+        { key: "攴", keyPinyin: "pū", keyName: "бить", word: "收", wordPinyin: "shōu", wordName: "получать", examples: [] },
+        { key: "文", keyPinyin: "wén", keyName: "письменность", word: "文", wordPinyin: "wén", wordName: "текст", examples: [] },
+        { key: "斗", keyPinyin: "dǒu", keyName: "ковш", word: "斗", wordPinyin: "dǒu", wordName: "ковш", examples: [] },
+        { key: "斤", keyPinyin: "jīn", keyName: "топор", word: "斤", wordPinyin: "jīn", wordName: "топор", examples: [{c:"所",p:"suǒ",m:"место"}] },
+        { key: "方", keyPinyin: "fāng", keyName: "квадрат", word: "方", wordPinyin: "fāng", wordName: "квадрат", examples: [{c:"放",p:"fàng",m:"класть"}] },
+        { key: "无", keyPinyin: "wú", keyName: "нет", word: "无", wordPinyin: "wú", wordName: "нет", examples: [] },
+        { key: "日", keyPinyin: "rì", keyName: "солнце", word: "日", wordPinyin: "rì", wordName: "солнце", examples: [{c:"时",p:"shí",m:"время"}] },
+        { key: "曰", keyPinyin: "yuē", keyName: "сказать", word: "曰", wordPinyin: "yuē", wordName: "сказать", examples: [] },
+        { key: "月", keyPinyin: "yuè", keyName: "луна", word: "月", wordPinyin: "yuè", wordName: "луна", examples: [{c:"期",p:"qī",m:"период"}] },
+        { key: "木", keyPinyin: "mù", keyName: "дерево", word: "木", wordPinyin: "mù", wordName: "дерево", examples: [{c:"树",p:"shù",m:"дерево"}] },
+        { key: "欠", keyPinyin: "qiàn", keyName: "нехватка", word: "欠", wordPinyin: "qiàn", wordName: "нехватка", examples: [{c:"次",p:"cì",m:"раз"}] },
+        { key: "止", keyPinyin: "zhǐ", keyName: "остановка", word: "止", wordPinyin: "zhǐ", wordName: "остановка", examples: [{c:"正",p:"zhèng",m:"правильный"}] },
+        { key: "歹", keyPinyin: "dǎi", keyName: "смерть", word: "死", wordPinyin: "sǐ", wordName: "смерть", examples: [{c:"残",p:"cán",m:"жестокий"}] },
+        { key: "殳", keyPinyin: "shū", keyName: "оружие", word: "没", wordPinyin: "méi", wordName: "нет", examples: [] },
+        { key: "毋", keyPinyin: "wú", keyName: "не", word: "母", wordPinyin: "mǔ", wordName: "мать", examples: [] },
+        { key: "比", keyPinyin: "bǐ", keyName: "сравнивать", word: "比", wordPinyin: "bǐ", wordName: "сравнивать", examples: [] },
+        { key: "毛", keyPinyin: "máo", keyName: "шерсть", word: "毛", wordPinyin: "máo", wordName: "шерсть", examples: [{c:"笔",p:"bǐ",m:"ручка"}] },
+        { key: "氏", keyPinyin: "shì", keyName: "род", word: "民", wordPinyin: "mín", wordName: "народ", examples: [] },
+        { key: "气", keyPinyin: "qì", keyName: "воздух", word: "气", wordPinyin: "qì", wordName: "воздух", examples: [] },
+        { key: "水", keyPinyin: "shuǐ", keyName: "вода", word: "水", wordPinyin: "shuǐ", wordName: "вода", examples: [{c:"河",p:"hé",m:"река"}] },
+        { key: "氵", keyPinyin: "shuǐ", keyName: "вода (слева)", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"}] },
+        { key: "火", keyPinyin: "huǒ", keyName: "огонь", word: "火", wordPinyin: "huǒ", wordName: "огонь", examples: [{c:"烧",p:"shāo",m:"жечь"}] },
+        { key: "灬", keyPinyin: "huǒ", keyName: "огонь (снизу)", word: "热", wordPinyin: "rè", wordName: "жарко", examples: [{c:"煮",p:"zhǔ",m:"варить"}] },
+        { key: "爪", keyPinyin: "zhǎo", keyName: "коготь", word: "爪", wordPinyin: "zhǎo", wordName: "коготь", examples: [{c:"爬",p:"pá",m:"ползать"}] },
+        { key: "父", keyPinyin: "fù", keyName: "отец", word: "爸", wordPinyin: "bà", wordName: "папа", examples: [] },
+        { key: "爻", keyPinyin: "yáo", keyName: "черта", word: "爻", wordPinyin: "yáo", wordName: "черта", examples: [] },
+        { key: "爿", keyPinyin: "qiáng", keyName: "щепа", word: "床", wordPinyin: "chuáng", wordName: "кровать", examples: [] },
+        { key: "片", keyPinyin: "piàn", keyName: "ломтик", word: "片", wordPinyin: "piàn", wordName: "ломтик", examples: [] },
+        { key: "牙", keyPinyin: "yá", keyName: "зуб", word: "牙", wordPinyin: "yá", wordName: "зуб", examples: [] },
+        { key: "牛", keyPinyin: "niú", keyName: "корова", word: "牛", wordPinyin: "niú", wordName: "корова", examples: [{c:"牲",p:"shēng",m:"жертва"}] },
+        { key: "犬", keyPinyin: "quǎn", keyName: "собака", word: "狗", wordPinyin: "gǒu", wordName: "собака", examples: [{c:"猫",p:"māo",m:"кошка"}] },
+        { key: "犭", keyPinyin: "quǎn", keyName: "собака (слева)", word: "狗", wordPinyin: "gǒu", wordName: "собака", examples: [{c:"猫",p:"māo",m:"кошка"}] },
+        { key: "王", keyPinyin: "wáng", keyName: "король", word: "王", wordPinyin: "wáng", wordName: "король", examples: [{c:"玉",p:"yù",m:"нефрит"}] },
+        { key: "玉", keyPinyin: "yù", keyName: "нефрит", word: "玉", wordPinyin: "yù", wordName: "нефрит", examples: [] },
+        { key: "瓜", keyPinyin: "guā", keyName: "дыня", word: "瓜", wordPinyin: "guā", wordName: "дыня", examples: [] },
+        { key: "瓦", keyPinyin: "wǎ", keyName: "черепица", word: "瓦", wordPinyin: "wǎ", wordName: "черепица", examples: [] },
+        { key: "甘", keyPinyin: "gān", keyName: "сладкий", word: "甘", wordPinyin: "gān", wordName: "сладкий", examples: [] },
+        { key: "生", keyPinyin: "shēng", keyName: "рождаться", word: "生", wordPinyin: "shēng", wordName: "жизнь", examples: [{c:"姓",p:"xìng",m:"фамилия"}] },
+        { key: "用", keyPinyin: "yòng", keyName: "использовать", word: "用", wordPinyin: "yòng", wordName: "использовать", examples: [] },
+        { key: "田", keyPinyin: "tián", keyName: "поле", word: "田", wordPinyin: "tián", wordName: "поле", examples: [{c:"男",p:"nán",m:"мужчина"}] },
+        { key: "疋", keyPinyin: "pǐ", keyName: "рулон ткани", word: "疏", wordPinyin: "shū", wordName: "редкий", examples: [] },
+        { key: "疒", keyPinyin: "nè", keyName: "болезнь", word: "病", wordPinyin: "bìng", wordName: "болезнь", examples: [{c:"痛",p:"tòng",m:"боль"}] },
+        { key: "癶", keyPinyin: "bō", keyName: "ноги", word: "登", wordPinyin: "dēng", wordName: "подниматься", examples: [] },
+        { key: "白", keyPinyin: "bái", keyName: "белый", word: "白", wordPinyin: "bái", wordName: "белый", examples: [{c:"百",p:"bǎi",m:"сто"}] },
+        { key: "皮", keyPinyin: "pí", keyName: "кожа", word: "皮", wordPinyin: "pí", wordName: "кожа", examples: [] },
+        { key: "皿", keyPinyin: "mǐn", keyName: "посуда", word: "盆", wordPinyin: "pén", wordName: "таз", examples: [] },
+        { key: "目", keyPinyin: "mù", keyName: "глаз", word: "眼", wordPinyin: "yǎn", wordName: "глаз", examples: [{c:"看",p:"kàn",m:"смотреть"}] },
+        { key: "矛", keyPinyin: "máo", keyName: "копьё", word: "矛", wordPinyin: "máo", wordName: "копьё", examples: [] },
+        { key: "矢", keyPinyin: "shǐ", keyName: "стрела", word: "矢", wordPinyin: "shǐ", wordName: "стрела", examples: [{c:"知",p:"zhī",m:"знать"}] },
+        { key: "石", keyPinyin: "shí", keyName: "камень", word: "石", wordPinyin: "shí", wordName: "камень", examples: [{c:"矿",p:"kuàng",m:"шахта"}] },
+        { key: "示", keyPinyin: "shì", keyName: "дух", word: "礼", wordPinyin: "lǐ", wordName: "поклон", examples: [{c:"神",p:"shén",m:"бог"}] },
+        { key: "礻", keyPinyin: "shì", keyName: "дух (слева)", word: "礼", wordPinyin: "lǐ", wordName: "поклон", examples: [{c:"福",p:"fú",m:"счастье"}] },
+        { key: "禸", keyPinyin: "róu", keyName: "след", word: "禹", wordPinyin: "yǔ", wordName: "Юй", examples: [] },
+        { key: "禾", keyPinyin: "hé", keyName: "зерно", word: "禾", wordPinyin: "hé", wordName: "зерно", examples: [{c:"秋",p:"qiū",m:"осень"}] },
+        { key: "穴", keyPinyin: "xué", keyName: "пещера", word: "空", wordPinyin: "kōng", wordName: "пустой", examples: [{c:"穿",p:"chuān",m:"проходить"}] },
+        { key: "立", keyPinyin: "lì", keyName: "стоять", word: "立", wordPinyin: "lì", wordName: "стоять", examples: [{c:"站",p:"zhàn",m:"вставать"}] },
+        { key: "竹", keyPinyin: "zhú", keyName: "бамбук", word: "竹", wordPinyin: "zhú", wordName: "бамбук", examples: [{c:"笔",p:"bǐ",m:"ручка"}] },
+        { key: "米", keyPinyin: "mǐ", keyName: "рис", word: "米", wordPinyin: "mǐ", wordName: "рис", examples: [{c:"粮",p:"liáng",m:"зерно"}] },
+        { key: "糸", keyPinyin: "mì", keyName: "шёлк", word: "丝", wordPinyin: "sī", wordName: "шёлк", examples: [{c:"红",p:"hóng",m:"красный"}] },
+        { key: "纟", keyPinyin: "sī", keyName: "шёлк (слева)", word: "红", wordPinyin: "hóng", wordName: "красный", examples: [{c:"绿",p:"lǜ",m:"зелёный"}] },
+        { key: "缶", keyPinyin: "fǒu", keyName: "горшок", word: "缸", wordPinyin: "gāng", wordName: "кувшин", examples: [] },
+        { key: "网", keyPinyin: "wǎng", keyName: "сеть", word: "网", wordPinyin: "wǎng", wordName: "сеть", examples: [] },
+        { key: "罒", keyPinyin: "wǎng", keyName: "сеть (сверху)", word: "罪", wordPinyin: "zuì", wordName: "преступление", examples: [] },
+        { key: "羊", keyPinyin: "yáng", keyName: "овца", word: "羊", wordPinyin: "yáng", wordName: "овца", examples: [{c:"美",p:"měi",m:"красивый"}] },
+        { key: "⺷", keyPinyin: "yáng", keyName: "овца (сверху)", word: "美", wordPinyin: "měi", wordName: "красивый", examples: [] },
+        { key: "羽", keyPinyin: "yǔ", keyName: "перо", word: "羽", wordPinyin: "yǔ", wordName: "перо", examples: [] },
+        { key: "老", keyPinyin: "lǎo", keyName: "старый", word: "老", wordPinyin: "lǎo", wordName: "старый", examples: [] },
+        { key: "耒", keyPinyin: "lěi", keyName: "плуг", word: "耕", wordPinyin: "gēng", wordName: "пахать", examples: [] },
+        { key: "耳", keyPinyin: "ěr", keyName: "ухо", word: "耳", wordPinyin: "ěr", wordName: "ухо", examples: [{c:"听",p:"tīng",m:"слушать"}] },
+        { key: "聿", keyPinyin: "yù", keyName: "кисть", word: "笔", wordPinyin: "bǐ", wordName: "ручка", examples: [] },
+        { key: "肉", keyPinyin: "ròu", keyName: "мясо", word: "肉", wordPinyin: "ròu", wordName: "мясо", examples: [] },
+        { key: "月(肉)", keyPinyin: "ròu", keyName: "мясо (тело)", word: "脸", wordPinyin: "liǎn", wordName: "лицо", examples: [{c:"腿",p:"tuǐ",m:"нога"}] },
+        { key: "臣", keyPinyin: "chén", keyName: "министр", word: "臣", wordPinyin: "chén", wordName: "министр", examples: [] },
+        { key: "自", keyPinyin: "zì", keyName: "сам", word: "自", wordPinyin: "zì", wordName: "сам", examples: [{c:"息",p:"xī",m:"дышать"}] },
+        { key: "至", keyPinyin: "zhì", keyName: "достигать", word: "到", wordPinyin: "dào", wordName: "достигать", examples: [] },
+        { key: "臼", keyPinyin: "jiù", keyName: "ступа", word: "臼", wordPinyin: "jiù", wordName: "ступа", examples: [] },
+        { key: "舌", keyPinyin: "shé", keyName: "язык", word: "舌", wordPinyin: "shé", wordName: "язык", examples: [{c:"甜",p:"tián",m:"сладкий"}] },
+        { key: "舛", keyPinyin: "chuǎn", keyName: "противоположный", word: "舞", wordPinyin: "wǔ", wordName: "танец", examples: [] },
+        { key: "舟", keyPinyin: "zhōu", keyName: "лодка", word: "船", wordPinyin: "chuán", wordName: "корабль", examples: [] },
+        { key: "艮", keyPinyin: "gèn", keyName: "граница", word: "良", wordPinyin: "liáng", wordName: "хороший", examples: [] },
+        { key: "色", keyPinyin: "sè", keyName: "цвет", word: "色", wordPinyin: "sè", wordName: "цвет", examples: [] },
+        { key: "艸", keyPinyin: "cǎo", keyName: "трава", word: "草", wordPinyin: "cǎo", wordName: "трава", examples: [] },
+        { key: "艹", keyPinyin: "cǎo", keyName: "трава (сверху)", word: "花", wordPinyin: "huā", wordName: "цветок", examples: [{c:"草",p:"cǎo",m:"трава"}] },
+        { key: "虍", keyPinyin: "hū", keyName: "тигр", word: "虎", wordPinyin: "hǔ", wordName: "тигр", examples: [] },
+        { key: "虫", keyPinyin: "chóng", keyName: "насекомое", word: "虫", wordPinyin: "chóng", wordName: "насекомое", examples: [{c:"蛇",p:"shé",m:"змея"}] },
+        { key: "血", keyPinyin: "xuè", keyName: "кровь", word: "血", wordPinyin: "xuè", wordName: "кровь", examples: [] },
+        { key: "行", keyPinyin: "xíng", keyName: "идти", word: "行", wordPinyin: "xíng", wordName: "идти", examples: [] },
+        { key: "衣", keyPinyin: "yī", keyName: "одежда", word: "衣", wordPinyin: "yī", wordName: "одежда", examples: [{c:"裤",p:"kù",m:"штаны"}] },
+        { key: "衤", keyPinyin: "yī", keyName: "одежда (слева)", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [{c:"裙",p:"qún",m:"юбка"}] },
+        { key: "襾", keyPinyin: "yà", keyName: "покрывать", word: "西", wordPinyin: "xī", wordName: "запад", examples: [] },
+        { key: "见", keyPinyin: "jiàn", keyName: "видеть", word: "见", wordPinyin: "jiàn", wordName: "видеть", examples: [{c:"现",p:"xiàn",m:"появляться"}] },
+        { key: "角", keyPinyin: "jiǎo", keyName: "рог", word: "角", wordPinyin: "jiǎo", wordName: "рог", examples: [{c:"解",p:"jiě",m:"развязывать"}] },
+        { key: "言", keyPinyin: "yán", keyName: "речь", word: "言", wordPinyin: "yán", wordName: "речь", examples: [{c:"说",p:"shuō",m:"говорить"}] },
+        { key: "讠", keyPinyin: "yán", keyName: "речь (слева)", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [{c:"请",p:"qǐng",m:"пожалуйста"}] },
+        { key: "辛", keyPinyin: "xīn", keyName: "горький", word: "辛", wordPinyin: "xīn", wordName: "горький", examples: [] },
+        { key: "辰", keyPinyin: "chén", keyName: "утро", word: "晨", wordPinyin: "chén", wordName: "утро", examples: [] },
+        { key: "辶", keyPinyin: "chuò", keyName: "движение", word: "过", wordPinyin: "guò", wordName: "проходить", examples: [{c:"还",p:"hái",m:"ещё"}] },
+        { key: "邑", keyPinyin: "yì", keyName: "город", word: "那", wordPinyin: "nà", wordName: "тот", examples: [{c:"都",p:"dōu",m:"весь"}] },
         { key: "酉", keyPinyin: "yǒu", keyName: "вино", word: "酒", wordPinyin: "jiǔ", wordName: "алкоголь", examples: [{c:"醉",p:"zuì",m:"пьяный"}] },
-        { key: "里", keyPinyin: "lǐ", keyName: "внутри", word: "理", wordPinyin: "lǐ", wordName: "логика", examples: [{c:"里",p:"lǐ",m:"внутри"}] },
-        { key: "青", keyPinyin: "qīng", keyName: "синий", word: "静", wordPinyin: "jìng", wordName: "тихий", examples: [{c:"清",p:"qīng",m:"чистый"}] },
-        { key: "革", keyPinyin: "gé", keyName: "кожа", word: "鞋", wordPinyin: "xié", wordName: "обувь", examples: [{c:"鞍",p:"ān",m:"седло"}] },
-        { key: "音", keyPinyin: "yīn", keyName: "звук", word: "暗", wordPinyin: "àn", wordName: "тёмный", examples: [{c:"韵",p:"yùn",m:"рифма"}] },
-        { key: "页", keyPinyin: "yè", keyName: "голова", word: "头", wordPinyin: "tóu", wordName: "голова", examples: [{c:"领",p:"lǐng",m:"воротник"}] },
-        { key: "食", keyPinyin: "shí", keyName: "еда", word: "饱", wordPinyin: "bǎo", wordName: "сытый", examples: [{c:"饿",p:"è",m:"голодный"}] },
-        { key: "鬼", keyPinyin: "guǐ", keyName: "призрак", word: "魂", wordPinyin: "hún", wordName: "душа", examples: [{c:"魔",p:"mó",m:"демон"}] },
-        { key: "黄", keyPinyin: "huáng", keyName: "жёлтый", word: "黄金", wordPinyin: "huángjīn", wordName: "золото", examples: [] },
-        { key: "黑", keyPinyin: "hēi", keyName: "чёрный", word: "墨", wordPinyin: "mò", wordName: "тушь", examples: [{c:"黑",p:"hēi",m:"чёрный"}] },
-        { key: "龙", keyPinyin: "lóng", keyName: "дракон", word: "笼", wordPinyin: "lóng", wordName: "клетка", examples: [{c:"聋",p:"lóng",m:"глухой"}] },
-        { key: "龟", keyPinyin: "guī", keyName: "черепаха", word: "龟", wordPinyin: "guī", wordName: "черепаха", examples: [] },
+        { key: "釆", keyPinyin: "biàn", keyName: "отличать", word: "释", wordPinyin: "shì", wordName: "объяснять", examples: [] },
+        { key: "里", keyPinyin: "lǐ", keyName: "внутри", word: "里", wordPinyin: "lǐ", wordName: "внутри", examples: [{c:"理",p:"lǐ",m:"логика"}] },
+        { key: "金", keyPinyin: "jīn", keyName: "золото", word: "金", wordPinyin: "jīn", wordName: "золото", examples: [{c:"钱",p:"qián",m:"деньги"}] },
+        { key: "钅", keyPinyin: "jīn", keyName: "металл (слева)", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"}] },
+        { key: "长", keyPinyin: "cháng", keyName: "длинный", word: "长", wordPinyin: "cháng", wordName: "длинный", examples: [] },
+        { key: "门", keyPinyin: "mén", keyName: "дверь", word: "门", wordPinyin: "mén", wordName: "дверь", examples: [{c:"问",p:"wèn",m:"спрашивать"}] },
+        { key: "阝", keyPinyin: "fù", keyName: "холм", word: "阳", wordPinyin: "yáng", wordName: "солнце", examples: [{c:"阴",p:"yīn",m:"тень"}] },
+        { key: "隶", keyPinyin: "lì", keyName: "раб", word: "隶", wordPinyin: "lì", wordName: "раб", examples: [] },
+        { key: "隹", keyPinyin: "zhuī", keyName: "птица", word: "雀", wordPinyin: "què", wordName: "воробей", examples: [] },
+        { key: "雨", keyPinyin: "yǔ", keyName: "дождь", word: "雨", wordPinyin: "yǔ", wordName: "дождь", examples: [{c:"雪",p:"xuě",m:"снег"}] },
+        { key: "青", keyPinyin: "qīng", keyName: "синий", word: "青", wordPinyin: "qīng", wordName: "синий", examples: [{c:"静",p:"jìng",m:"тихий"}] },
+        { key: "非", keyPinyin: "fēi", keyName: "не", word: "非", wordPinyin: "fēi", wordName: "не", examples: [] },
+        { key: "面", keyPinyin: "miàn", keyName: "лицо", word: "面", wordPinyin: "miàn", wordName: "лицо", examples: [] },
+        { key: "革", keyPinyin: "gé", keyName: "кожа", word: "革", wordPinyin: "gé", wordName: "кожа", examples: [{c:"鞋",p:"xié",m:"обувь"}] },
+        { key: "韦", keyPinyin: "wéi", keyName: "мягкая кожа", word: "伟", wordPinyin: "wěi", wordName: "великий", examples: [] },
+        { key: "音", keyPinyin: "yīn", keyName: "звук", word: "音", wordPinyin: "yīn", wordName: "звук", examples: [] },
+        { key: "页", keyPinyin: "yè", keyName: "голова", word: "头", wordPinyin: "tóu", wordName: "голова", examples: [] },
+        { key: "风", keyPinyin: "fēng", keyName: "ветер", word: "风", wordPinyin: "fēng", wordName: "ветер", examples: [{c:"飘",p:"piāo",m:"парить"}] },
+        { key: "飞", keyPinyin: "fēi", keyName: "лететь", word: "飞", wordPinyin: "fēi", wordName: "лететь", examples: [] },
+        { key: "食", keyPinyin: "shí", keyName: "еда", word: "食", wordPinyin: "shí", wordName: "еда", examples: [{c:"饭",p:"fàn",m:"рис"}] },
+        { key: "饣", keyPinyin: "shí", keyName: "еда (слева)", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [{c:"饿",p:"è",m:"голодный"}] },
+        { key: "首", keyPinyin: "shǒu", keyName: "голова", word: "首", wordPinyin: "shǒu", wordName: "голова", examples: [] },
+        { key: "香", keyPinyin: "xiāng", keyName: "аромат", word: "香", wordPinyin: "xiāng", wordName: "аромат", examples: [] },
+        { key: "马", keyPinyin: "mǎ", keyName: "лошадь", word: "马", wordPinyin: "mǎ", wordName: "лошадь", examples: [{c:"骑",p:"qí",m:"ехать"}] },
+        { key: "骨", keyPinyin: "gǔ", keyName: "кость", word: "骨", wordPinyin: "gǔ", wordName: "кость", examples: [] },
+        { key: "高", keyPinyin: "gāo", keyName: "высокий", word: "高", wordPinyin: "gāo", wordName: "высокий", examples: [] },
+        { key: "髟", keyPinyin: "biāo", keyName: "волосы", word: "发", wordPinyin: "fà", wordName: "волосы", examples: [] },
+        { key: "鬥", keyPinyin: "dòu", keyName: "драться", word: "斗", wordPinyin: "dòu", wordName: "драться", examples: [] },
+        { key: "鬯", keyPinyin: "chàng", keyName: "жертвенное вино", word: "鬯", wordPinyin: "chàng", wordName: "вино", examples: [] },
+        { key: "鬲", keyPinyin: "lì", keyName: "треножник", word: "隔", wordPinyin: "gé", wordName: "разделять", examples: [] },
+        { key: "鬼", keyPinyin: "guǐ", keyName: "призрак", word: "鬼", wordPinyin: "guǐ", wordName: "призрак", examples: [] },
+        { key: "鱼", keyPinyin: "yú", keyName: "рыба", word: "鱼", wordPinyin: "yú", wordName: "рыба", examples: [{c:"鲜",p:"xiān",m:"свежий"}] },
+        { key: "鸟", keyPinyin: "niǎo", keyName: "птица", word: "鸟", wordPinyin: "niǎo", wordName: "птица", examples: [{c:"鸡",p:"jī",m:"курица"}] },
+        { key: "卤", keyPinyin: "lǔ", keyName: "соль", word: "卤", wordPinyin: "lǔ", wordName: "соль", examples: [] },
+        { key: "鹿", keyPinyin: "lù", keyName: "олень", word: "鹿", wordPinyin: "lù", wordName: "олень", examples: [] },
+        { key: "麦", keyPinyin: "mài", keyName: "пшеница", word: "麦", wordPinyin: "mài", wordName: "пшеница", examples: [] },
+        { key: "麻", keyPinyin: "má", keyName: "конопля", word: "麻", wordPinyin: "má", wordName: "конопля", examples: [] },
+        { key: "黄", keyPinyin: "huáng", keyName: "жёлтый", word: "黄", wordPinyin: "huáng", wordName: "жёлтый", examples: [{c:"黄金",p:"huángjīn",m:"золото"}] },
+        { key: "黑", keyPinyin: "hēi", keyName: "чёрный", word: "黑", wordPinyin: "hēi", wordName: "чёрный", examples: [{c:"墨",p:"mò",m:"тушь"}] },
+        { key: "黍", keyPinyin: "shǔ", keyName: "просо", word: "黍", wordPinyin: "shǔ", wordName: "просо", examples: [] },
+        { key: "黹", keyPinyin: "zhǐ", keyName: "вышивка", word: "黹", wordPinyin: "zhǐ", wordName: "вышивка", examples: [] },
         { key: "鼻", keyPinyin: "bí", keyName: "нос", word: "鼻", wordPinyin: "bí", wordName: "нос", examples: [] },
-        { key: "齿", keyPinyin: "chǐ", keyName: "зуб", word: "齿", wordPinyin: "chǐ", wordName: "зуб", examples: [] }
+        { key: "齐", keyPinyin: "qí", keyName: "ровный", word: "齐", wordPinyin: "qí", wordName: "ровный", examples: [] },
+        { key: "齿", keyPinyin: "chǐ", keyName: "зуб", word: "齿", wordPinyin: "chǐ", wordName: "зуб", examples: [] },
+        { key: "龙", keyPinyin: "lóng", keyName: "дракон", word: "龙", wordPinyin: "lóng", wordName: "дракон", examples: [] },
+        { key: "龟", keyPinyin: "guī", keyName: "черепаха", word: "龟", wordPinyin: "guī", wordName: "черепаха", examples: [] },
+        { key: "龠", keyPinyin: "yuè", keyName: "флейта", word: "龠", wordPinyin: "yuè", wordName: "флейта", examples: [] }
     ];
 
     let currentLevel = 2;
@@ -327,11 +470,11 @@
     let record = 0;
 
     const LEVEL_CONFIG = {
-        1: { pairsCount: 10, gridCols: 5 },
-        2: { pairsCount: 20, gridCols: 6 },
-        3: { pairsCount: 30, gridCols: 7 },
-        4: { pairsCount: 50, gridCols: 8 },
-        5: { pairsCount: 70, gridCols: 10 }
+        1: { pairsCount: 20, gridCols: 5 },
+        2: { pairsCount: 40, gridCols: 6 },
+        3: { pairsCount: 70, gridCols: 7 },
+        4: { pairsCount: 107, gridCols: 8 },
+        5: { pairsCount: 214, gridCols: 10 }
     };
 
     const scoreSpan = document.getElementById('scoreValue');
@@ -421,7 +564,6 @@
             return;
         }
         
-        // Проверка: одна плитка — ключ, другая — слово из той же пары
         if (selectedTile.pairId === clickedTile.pairId && selectedTile.type !== clickedTile.type) {
             selectedTile.removed = true;
             clickedTile.removed = true;
@@ -531,7 +673,6 @@
         let idCounter = 0;
         for (let i = 0; i < selectedPairs.length; i++) {
             const pair = selectedPairs[i];
-            // Ключ (радикал)
             tiles.push({
                 id: idCounter++,
                 pairId: i,
@@ -541,7 +682,6 @@
                 name: pair.keyName,
                 removed: false
             });
-            // Слово (пример использования радикала)
             tiles.push({
                 id: idCounter++,
                 pairId: i,
