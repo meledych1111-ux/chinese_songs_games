@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🀄️ МАДЖОНГ | ВСЕ 214 РАДИКАЛОВ | КЛЮЧ + СЛОВО</title>
+    <title>🀄️ МАДЖОНГ | 214 РАДИКАЛОВ | КЛЮЧ + СЛОВО</title>
     <style>
         * {
             margin: 0;
@@ -15,60 +15,60 @@
             background: linear-gradient(145deg, #1a3a2a 0%, #0a1a0f 100%);
             min-height: 100vh;
             font-family: system-ui, 'Segoe UI', 'PingFang SC', sans-serif;
-            padding: 20px;
+            padding: 16px;
         }
         .game-container {
             max-width: 1400px;
             margin: 0 auto;
             background: rgba(30, 25, 20, 0.6);
             border-radius: 48px;
-            padding: 24px;
+            padding: 20px;
         }
         h1 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #f7e05e;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         .sub {
             text-align: center;
             color: #d4c9a6;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
+            margin-bottom: 15px;
+            font-size: 0.75rem;
         }
         .stats-bar {
             display: flex;
             justify-content: space-between;
             background: #2c2118;
-            padding: 12px 24px;
+            padding: 8px 16px;
             border-radius: 60px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #ffecb3;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.85rem;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
         }
         .stats-bar span {
             background: #00000066;
-            padding: 6px 18px;
+            padding: 4px 12px;
             border-radius: 40px;
         }
         .level-bar {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 6px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
         .level-btn {
             background: #4a3729;
             color: #d4c9a6;
-            padding: 8px 20px;
+            padding: 5px 12px;
             border-radius: 40px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.1s;
+            font-size: 0.7rem;
         }
         .level-btn.active {
             background: linear-gradient(135deg, #f7b42c, #fc8e2c);
@@ -76,80 +76,62 @@
         }
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 12px;
+            gap: 8px;
             background: #4a3729;
-            padding: 25px;
-            border-radius: 48px;
-            min-height: 550px;
-            margin: 20px 0;
+            padding: 16px;
+            border-radius: 40px;
+            min-height: 400px;
+            margin: 12px 0;
+            max-height: 55vh;
+            overflow-y: auto;
         }
         .tile {
             background: #fff8e7;
             background-image: radial-gradient(circle at 25% 35%, rgba(255,245,200,0.6) 2%, transparent 2.5%);
-            background-size: 25px 25px;
-            border-radius: 16px;
+            background-size: 20px 20px;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.1s;
-            border: 3px solid #c8aa6e;
-            box-shadow: 0 6px 0 #8b6946;
-            padding: 12px 5px;
+            border: 2px solid #c8aa6e;
+            box-shadow: 0 4px 0 #8b6946;
+            padding: 8px 4px;
         }
         .tile.selected {
             background: #ffe6b3;
             border: 3px solid #f5b042;
             transform: scale(0.96);
-            box-shadow: 0 3px 0 #8b6946;
+            box-shadow: 0 2px 0 #8b6946;
         }
-        .tile.removed {
-            display: none;
-        }
-        .tile .main-char {
-            font-size: 42px;
-            font-weight: 800;
-            color: #3c2a1f;
-        }
-        .tile .pinyin {
-            font-size: 11px;
-            color: #b34e1a;
-            margin-top: 5px;
-        }
-        .tile .info {
-            font-size: 9px;
-            margin-top: 3px;
-            color: #7a5a3a;
-            background: #f3e5c9;
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 40px;
-        }
+        .tile.removed { display: none; }
+        .tile .main-char { font-size: 32px; font-weight: 800; color: #3c2a1f; }
+        .tile .pinyin { font-size: 9px; color: #b34e1a; margin-top: 3px; }
+        .tile .info { font-size: 8px; margin-top: 2px; color: #7a5a3a; background: #f3e5c9; display: inline-block; padding: 2px 6px; border-radius: 40px; }
         .message-area {
             background: #261d14e6;
             border-radius: 60px;
-            padding: 14px 20px;
+            padding: 10px 16px;
             text-align: center;
             font-weight: bold;
-            font-size: 1rem;
-            margin: 20px 0;
+            font-size: 0.85rem;
+            margin: 12px 0;
             color: #f7e6c4;
         }
         .ctrl-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         button {
             background: linear-gradient(135deg, #f7b42c, #fc8e2c);
             border: none;
-            padding: 12px 28px;
-            font-size: 1rem;
+            padding: 8px 20px;
+            font-size: 0.85rem;
             font-weight: bold;
             border-radius: 60px;
             color: #2c1a0c;
             cursor: pointer;
-            box-shadow: 0 4px 0 #9b5e1c;
+            box-shadow: 0 3px 0 #9b5e1c;
         }
         button:active { transform: translateY(2px); }
         .reset-btn { background: linear-gradient(135deg, #4b6a3b, #2d5a2a); color: #f9e7b3; }
@@ -158,8 +140,8 @@
         .progress-bar {
             background: #4a3729;
             border-radius: 30px;
-            height: 10px;
-            margin: 15px 0;
+            height: 6px;
+            margin: 10px 0;
             overflow: hidden;
         }
         .progress-fill {
@@ -168,60 +150,76 @@
             height: 100%;
             transition: width 0.3s;
         }
-        .example-popup {
+        .learn-modal {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e2a1aee;
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
-            padding: 16px 24px;
-            max-width: 95%;
-            z-index: 1000;
-            border: 2px solid #f7b42c;
-            text-align: center;
-            color: #fef0cf;
-            font-size: 12px;
-        }
-        .example-popup .examples {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            align-items: center;
             justify-content: center;
-            margin-top: 10px;
+            z-index: 2000;
+            padding: 16px;
         }
-        .example-item {
+        .learn-card {
+            background: linear-gradient(145deg, #fff8e7, #f5e6c8);
+            border-radius: 40px;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 3px solid #f7b42c;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .learn-card .radical-big { font-size: 60px; font-weight: 800; color: #b34e1a; background: #fff0d0; display: inline-block; padding: 5px 20px; border-radius: 50px; margin-bottom: 10px; }
+        .learn-card .radical-name { font-size: 18px; font-weight: bold; }
+        .learn-card .radical-pinyin { font-size: 14px; color: #8e44ad; margin-bottom: 10px; }
+        .examples-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0; }
+        .example-word {
             background: #3c2a1f;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 6px 12px;
             text-align: center;
             cursor: pointer;
         }
-        .example-item:active { transform: scale(0.95); }
-        .example-item .ex-char { font-size: 24px; font-weight: bold; }
-        .example-item .ex-pinyin { font-size: 10px; color: #ffd966; }
-        @media (max-width: 900px) {
-            .game-grid { grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 20px; }
-            .tile .main-char { font-size: 36px; }
+        .example-word .ex-char { font-size: 28px; font-weight: bold; color: #f7e05e; }
+        .example-word .ex-pinyin { font-size: 10px; color: #ffd966; }
+        .example-word .ex-mean { font-size: 9px; color: #d4c9a6; }
+        .close-learn {
+            background: linear-gradient(135deg, #f7b42c, #fc8e2c);
+            border: none;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            border-radius: 60px;
+            cursor: pointer;
+            margin-top: 10px;
         }
         @media (max-width: 650px) {
-            .game-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; }
-            .tile .main-char { font-size: 30px; }
+            .tile .main-char { font-size: 24px; }
+            .level-btn { padding: 3px 8px; font-size: 0.65rem; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <h1>🀄️ МАДЖОНГ | ВСЕ 214 РАДИКАЛОВ</h1>
-    <div class="sub">🔗 Соедини КЛЮЧ (радикал) и СЛОВО с этим ключом</div>
+    <h1>🀄️ МАДЖОНГ | 214 РАДИКАЛОВ</h1>
+    <div class="sub">🔗 КЛЮЧ (радикал) + СЛОВО-ПРИМЕР | Нажми на плитку — услышишь произношение</div>
 
     <div class="level-bar" id="levelBar">
-        <div class="level-btn" data-level="1">🌱 Лёгкий (20 пар)</div>
-        <div class="level-btn" data-level="2" class="active">⭐ Средний (40 пар)</div>
-        <div class="level-btn" data-level="3">🏆 Сложный (70 пар)</div>
-        <div class="level-btn" data-level="4">🔥 Мастер (107 пар)</div>
-        <div class="level-btn" data-level="5">💎 Эксперт (214 пар)</div>
+        <div class="level-btn" data-level="1">🌱 10 пар</div>
+        <div class="level-btn" data-level="2">⭐ 20 пар</div>
+        <div class="level-btn" data-level="3" class="active">🏆 30 пар</div>
+        <div class="level-btn" data-level="4">🔥 50 пар</div>
+        <div class="level-btn" data-level="5">💪 80 пар</div>
+        <div class="level-btn" data-level="6">🎯 110 пар</div>
+        <div class="level-btn" data-level="7">⚡ 150 пар</div>
+        <div class="level-btn" data-level="8">💎 180 пар</div>
+        <div class="level-btn" data-level="9">👑 200 пар</div>
+        <div class="level-btn" data-level="10">🏰 214 пар</div>
     </div>
 
     <div class="stats-bar">
@@ -244,8 +242,10 @@
 </div>
 
 <script>
-    // ==================== ВСЕ 214 РАДИКАЛОВ С ПРИМЕРАМИ СЛОВ ====================
-    const RADICAL_WORD_PAIRS = [
+    // ==================== ВСЕ 214 РАДИКАЛОВ (ключ + слово-пример) ====================
+    // КАЖДАЯ ПАРА: ключ (радикал) + слово (пример использования этого радикала)
+    // НЕТ пар "радикал+радикал"!
+    const ALL_PAIRS = [
         { key: "一", keyPinyin: "yī", keyName: "один", word: "一", wordPinyin: "yī", wordName: "один", examples: [] },
         { key: "丨", keyPinyin: "gǔn", keyName: "вертикаль", word: "中", wordPinyin: "zhōng", wordName: "середина", examples: [] },
         { key: "丶", keyPinyin: "zhǔ", keyName: "точка", word: "主", wordPinyin: "zhǔ", wordName: "хозяин", examples: [] },
@@ -254,187 +254,185 @@
         { key: "亅", keyPinyin: "jué", keyName: "крюк", word: "了", wordPinyin: "le", wordName: "завершение", examples: [] },
         { key: "二", keyPinyin: "èr", keyName: "два", word: "二", wordPinyin: "èr", wordName: "два", examples: [] },
         { key: "亠", keyPinyin: "tóu", keyName: "крышка", word: "交", wordPinyin: "jiāo", wordName: "обмениваться", examples: [] },
-        { key: "人", keyPinyin: "rén", keyName: "человек", word: "从", wordPinyin: "cóng", wordName: "следовать", examples: [{c:"众",p:"zhòng",m:"толпа"}] },
-        { key: "亻", keyPinyin: "rén", keyName: "человек (слева)", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."}] },
+        { key: "人", keyPinyin: "rén", keyName: "человек", word: "从", wordPinyin: "cóng", wordName: "следовать", examples: [] },
+        { key: "亻", keyPinyin: "rén", keyName: "человек слева", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"}] },
         { key: "入", keyPinyin: "rù", keyName: "входить", word: "入", wordPinyin: "rù", wordName: "входить", examples: [] },
-        { key: "八", keyPinyin: "bā", keyName: "восемь", word: "分", wordPinyin: "fēn", wordName: "делить", examples: [{c:"公",p:"gōng",m:"публичный"}] },
+        { key: "八", keyPinyin: "bā", keyName: "восемь", word: "分", wordPinyin: "fēn", wordName: "делить", examples: [] },
         { key: "冂", keyPinyin: "jiōng", keyName: "далёкий", word: "同", wordPinyin: "tóng", wordName: "одинаковый", examples: [] },
         { key: "冖", keyPinyin: "mì", keyName: "покрывало", word: "冠", wordPinyin: "guān", wordName: "корона", examples: [] },
-        { key: "冫", keyPinyin: "bīng", keyName: "лёд", word: "冰", wordPinyin: "bīng", wordName: "лёд", examples: [{c:"冷",p:"lěng",m:"холодно"}] },
+        { key: "冫", keyPinyin: "bīng", keyName: "лёд", word: "冰", wordPinyin: "bīng", wordName: "лёд", examples: [] },
         { key: "几", keyPinyin: "jǐ", keyName: "столик", word: "几", wordPinyin: "jǐ", wordName: "сколько", examples: [] },
         { key: "凵", keyPinyin: "kǎn", keyName: "яма", word: "出", wordPinyin: "chū", wordName: "выходить", examples: [] },
-        { key: "刀", keyPinyin: "dāo", keyName: "нож", word: "切", wordPinyin: "qiē", wordName: "резать", examples: [{c:"分",p:"fēn",m:"делить"}] },
-        { key: "刂", keyPinyin: "dāo", keyName: "нож (справа)", word: "别", wordPinyin: "bié", wordName: "другой", examples: [{c:"到",p:"dào",m:"достигать"}] },
-        { key: "力", keyPinyin: "lì", keyName: "сила", word: "加", wordPinyin: "jiā", wordName: "добавлять", examples: [{c:"助",p:"zhù",m:"помогать"}] },
+        { key: "刀", keyPinyin: "dāo", keyName: "нож", word: "切", wordPinyin: "qiē", wordName: "резать", examples: [] },
+        { key: "刂", keyPinyin: "dāo", keyName: "нож справа", word: "别", wordPinyin: "bié", wordName: "другой", examples: [] },
+        { key: "力", keyPinyin: "lì", keyName: "сила", word: "加", wordPinyin: "jiā", wordName: "добавлять", examples: [] },
         { key: "勹", keyPinyin: "bāo", keyName: "обхват", word: "包", wordPinyin: "bāo", wordName: "пакет", examples: [] },
         { key: "匕", keyPinyin: "bǐ", keyName: "ложка", word: "化", wordPinyin: "huà", wordName: "превращаться", examples: [] },
         { key: "匚", keyPinyin: "fāng", keyName: "ящик", word: "区", wordPinyin: "qū", wordName: "район", examples: [] },
         { key: "匸", keyPinyin: "xì", keyName: "прятать", word: "匹", wordPinyin: "pǐ", wordName: "пара", examples: [] },
-        { key: "十", keyPinyin: "shí", keyName: "десять", word: "十", wordPinyin: "shí", wordName: "десять", examples: [{c:"千",p:"qiān",m:"тысяча"}] },
+        { key: "十", keyPinyin: "shí", keyName: "десять", word: "十", wordPinyin: "shí", wordName: "десять", examples: [] },
         { key: "卜", keyPinyin: "bǔ", keyName: "гадание", word: "外", wordPinyin: "wài", wordName: "снаружи", examples: [] },
         { key: "卩", keyPinyin: "jié", keyName: "печать", word: "卫", wordPinyin: "wèi", wordName: "защищать", examples: [] },
         { key: "厂", keyPinyin: "hǎn", keyName: "обрыв", word: "原", wordPinyin: "yuán", wordName: "исходный", examples: [] },
         { key: "厶", keyPinyin: "sī", keyName: "частный", word: "私", wordPinyin: "sī", wordName: "личный", examples: [] },
-        { key: "又", keyPinyin: "yòu", keyName: "снова", word: "友", wordPinyin: "yǒu", wordName: "друг", examples: [{c:"双",p:"shuāng",m:"два"}] },
-        { key: "口", keyPinyin: "kǒu", keyName: "рот", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"}] },
-        { key: "囗", keyPinyin: "wéi", keyName: "ограда", word: "国", wordPinyin: "guó", wordName: "страна", examples: [{c:"园",p:"yuán",m:"сад"}] },
-        { key: "土", keyPinyin: "tǔ", keyName: "земля", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"}] },
+        { key: "又", keyPinyin: "yòu", keyName: "снова", word: "友", wordPinyin: "yǒu", wordName: "друг", examples: [] },
+        { key: "口", keyPinyin: "kǒu", keyName: "рот", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"}] },
+        { key: "囗", keyPinyin: "wéi", keyName: "ограда", word: "国", wordPinyin: "guó", wordName: "страна", examples: [] },
+        { key: "土", keyPinyin: "tǔ", keyName: "земля", word: "地", wordPinyin: "dì", wordName: "земля", examples: [] },
         { key: "士", keyPinyin: "shì", keyName: "учёный", word: "士", wordPinyin: "shì", wordName: "воин", examples: [] },
         { key: "夂", keyPinyin: "zhǐ", keyName: "идти", word: "处", wordPinyin: "chù", wordName: "место", examples: [] },
         { key: "夊", keyPinyin: "suī", keyName: "медленно", word: "夏", wordPinyin: "xià", wordName: "лето", examples: [] },
-        { key: "夕", keyPinyin: "xī", keyName: "вечер", word: "外", wordPinyin: "wài", wordName: "снаружи", examples: [{c:"多",p:"duō",m:"много"}] },
-        { key: "大", keyPinyin: "dà", keyName: "большой", word: "大", wordPinyin: "dà", wordName: "большой", examples: [{c:"天",p:"tiān",m:"небо"}] },
-        { key: "女", keyPinyin: "nǚ", keyName: "женщина", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"妹",p:"mèi",m:"младшая сестра"}] },
-        { key: "子", keyPinyin: "zǐ", keyName: "ребёнок", word: "孩", wordPinyin: "hái", wordName: "ребёнок", examples: [{c:"学",p:"xué",m:"учиться"}] },
-        { key: "宀", keyPinyin: "mián", keyName: "крыша", word: "家", wordPinyin: "jiā", wordName: "дом", examples: [{c:"安",p:"ān",m:"спокойный"}] },
+        { key: "夕", keyPinyin: "xī", keyName: "вечер", word: "外", wordPinyin: "wài", wordName: "снаружи", examples: [] },
+        { key: "大", keyPinyin: "dà", keyName: "большой", word: "大", wordPinyin: "dà", wordName: "большой", examples: [] },
+        { key: "女", keyPinyin: "nǚ", keyName: "женщина", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"}] },
+        { key: "子", keyPinyin: "zǐ", keyName: "ребёнок", word: "孩", wordPinyin: "hái", wordName: "ребёнок", examples: [] },
+        { key: "宀", keyPinyin: "mián", keyName: "крыша", word: "家", wordPinyin: "jiā", wordName: "дом", examples: [] },
         { key: "寸", keyPinyin: "cùn", keyName: "дюйм", word: "对", wordPinyin: "duì", wordName: "правильно", examples: [] },
-        { key: "小", keyPinyin: "xiǎo", keyName: "маленький", word: "小", wordPinyin: "xiǎo", wordName: "маленький", examples: [{c:"少",p:"shǎo",m:"мало"}] },
+        { key: "小", keyPinyin: "xiǎo", keyName: "маленький", word: "小", wordPinyin: "xiǎo", wordName: "маленький", examples: [] },
         { key: "尢", keyPinyin: "wāng", keyName: "хромой", word: "尤", wordPinyin: "yóu", wordName: "особенно", examples: [] },
-        { key: "尸", keyPinyin: "shī", keyName: "тело", word: "层", wordPinyin: "céng", wordName: "слой", examples: [{c:"居",p:"jū",m:"жить"}] },
+        { key: "尸", keyPinyin: "shī", keyName: "тело", word: "层", wordPinyin: "céng", wordName: "слой", examples: [] },
         { key: "屮", keyPinyin: "chè", keyName: "росток", word: "出", wordPinyin: "chū", wordName: "выходить", examples: [] },
-        { key: "山", keyPinyin: "shān", keyName: "гора", word: "山", wordPinyin: "shān", wordName: "гора", examples: [{c:"峰",p:"fēng",m:"вершина"}] },
+        { key: "山", keyPinyin: "shān", keyName: "гора", word: "山", wordPinyin: "shān", wordName: "гора", examples: [] },
         { key: "川", keyPinyin: "chuān", keyName: "река", word: "州", wordPinyin: "zhōu", wordName: "провинция", examples: [] },
-        { key: "工", keyPinyin: "gōng", keyName: "работа", word: "工", wordPinyin: "gōng", wordName: "работа", examples: [{c:"左",p:"zuǒ",m:"левый"}] },
+        { key: "工", keyPinyin: "gōng", keyName: "работа", word: "工", wordPinyin: "gōng", wordName: "работа", examples: [] },
         { key: "己", keyPinyin: "jǐ", keyName: "себя", word: "己", wordPinyin: "jǐ", wordName: "себя", examples: [] },
         { key: "巾", keyPinyin: "jīn", keyName: "полотенце", word: "布", wordPinyin: "bù", wordName: "ткань", examples: [] },
-        { key: "干", keyPinyin: "gān", keyName: "сухой", word: "干", wordPinyin: "gān", wordName: "сухой", examples: [{c:"平",p:"píng",m:"ровный"}] },
-        { key: "广", keyPinyin: "yǎn", keyName: "здание", word: "店", wordPinyin: "diàn", wordName: "магазин", examples: [{c:"床",p:"chuáng",m:"кровать"}] },
+        { key: "干", keyPinyin: "gān", keyName: "сухой", word: "干", wordPinyin: "gān", wordName: "сухой", examples: [] },
+        { key: "广", keyPinyin: "yǎn", keyName: "здание", word: "店", wordPinyin: "diàn", wordName: "магазин", examples: [] },
         { key: "廾", keyPinyin: "gǒng", keyName: "две руки", word: "开", wordPinyin: "kāi", wordName: "открывать", examples: [] },
         { key: "弋", keyPinyin: "yì", keyName: "стрела", word: "式", wordPinyin: "shì", wordName: "стиль", examples: [] },
-        { key: "弓", keyPinyin: "gōng", keyName: "лук", word: "张", wordPinyin: "zhāng", wordName: "раскрывать", examples: [{c:"弯",p:"wān",m:"изгиб"}] },
+        { key: "弓", keyPinyin: "gōng", keyName: "лук", word: "张", wordPinyin: "zhāng", wordName: "раскрывать", examples: [] },
         { key: "彐", keyPinyin: "jì", keyName: "свиной хвост", word: "雪", wordPinyin: "xuě", wordName: "снег", examples: [] },
-        { key: "彡", keyPinyin: "shān", keyName: "волосы", word: "形", wordPinyin: "xíng", wordName: "форма", examples: [{c:"彩",p:"cǎi",m:"цвет"}] },
-        { key: "彳", keyPinyin: "chì", keyName: "шаг", word: "行", wordPinyin: "xíng", wordName: "идти", examples: [{c:"很",p:"hěn",m:"очень"}] },
-        { key: "心", keyPinyin: "xīn", keyName: "сердце", word: "心", wordPinyin: "xīn", wordName: "сердце", examples: [{c:"想",p:"xiǎng",m:"думать"}] },
-        { key: "忄", keyPinyin: "xīn", keyName: "сердце (слева)", word: "忙", wordPinyin: "máng", wordName: "занятой", examples: [{c:"快",p:"kuài",m:"быстрый"}] },
-        { key: "戈", keyPinyin: "gē", keyName: "алебарда", word: "战", wordPinyin: "zhàn", wordName: "война", examples: [{c:"我",p:"wǒ",m:"я"}] },
-        { key: "户", keyPinyin: "hù", keyName: "дверь", word: "房", wordPinyin: "fáng", wordName: "дом", examples: [{c:"所",p:"suǒ",m:"место"}] },
-        { key: "手", keyPinyin: "shǒu", keyName: "рука", word: "手", wordPinyin: "shǒu", wordName: "рука", examples: [{c:"打",p:"dǎ",m:"бить"}] },
-        { key: "扌", keyPinyin: "shǒu", keyName: "рука (слева)", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"找",p:"zhǎo",m:"искать"}] },
+        { key: "彡", keyPinyin: "shān", keyName: "волосы", word: "形", wordPinyin: "xíng", wordName: "форма", examples: [] },
+        { key: "彳", keyPinyin: "chì", keyName: "шаг", word: "行", wordPinyin: "xíng", wordName: "идти", examples: [] },
+        { key: "心", keyPinyin: "xīn", keyName: "сердце", word: "心", wordPinyin: "xīn", wordName: "сердце", examples: [] },
+        { key: "忄", keyPinyin: "xīn", keyName: "сердце слева", word: "忙", wordPinyin: "máng", wordName: "занятой", examples: [] },
+        { key: "戈", keyPinyin: "gē", keyName: "алебарда", word: "战", wordPinyin: "zhàn", wordName: "война", examples: [] },
+        { key: "户", keyPinyin: "hù", keyName: "дверь", word: "房", wordPinyin: "fáng", wordName: "дом", examples: [] },
+        { key: "手", keyPinyin: "shǒu", keyName: "рука", word: "手", wordPinyin: "shǒu", wordName: "рука", examples: [] },
+        { key: "扌", keyPinyin: "shǒu", keyName: "рука слева", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [] },
         { key: "支", keyPinyin: "zhī", keyName: "ветка", word: "枝", wordPinyin: "zhī", wordName: "ветка", examples: [] },
         { key: "攴", keyPinyin: "pū", keyName: "бить", word: "收", wordPinyin: "shōu", wordName: "получать", examples: [] },
         { key: "文", keyPinyin: "wén", keyName: "письменность", word: "文", wordPinyin: "wén", wordName: "текст", examples: [] },
         { key: "斗", keyPinyin: "dǒu", keyName: "ковш", word: "斗", wordPinyin: "dǒu", wordName: "ковш", examples: [] },
-        { key: "斤", keyPinyin: "jīn", keyName: "топор", word: "斤", wordPinyin: "jīn", wordName: "топор", examples: [{c:"所",p:"suǒ",m:"место"}] },
-        { key: "方", keyPinyin: "fāng", keyName: "квадрат", word: "方", wordPinyin: "fāng", wordName: "квадрат", examples: [{c:"放",p:"fàng",m:"класть"}] },
+        { key: "斤", keyPinyin: "jīn", keyName: "топор", word: "斤", wordPinyin: "jīn", wordName: "топор", examples: [] },
+        { key: "方", keyPinyin: "fāng", keyName: "квадрат", word: "方", wordPinyin: "fāng", wordName: "квадрат", examples: [] },
         { key: "无", keyPinyin: "wú", keyName: "нет", word: "无", wordPinyin: "wú", wordName: "нет", examples: [] },
-        { key: "日", keyPinyin: "rì", keyName: "солнце", word: "日", wordPinyin: "rì", wordName: "солнце", examples: [{c:"时",p:"shí",m:"время"}] },
+        { key: "日", keyPinyin: "rì", keyName: "солнце", word: "日", wordPinyin: "rì", wordName: "солнце", examples: [] },
         { key: "曰", keyPinyin: "yuē", keyName: "сказать", word: "曰", wordPinyin: "yuē", wordName: "сказать", examples: [] },
-        { key: "月", keyPinyin: "yuè", keyName: "луна", word: "月", wordPinyin: "yuè", wordName: "луна", examples: [{c:"期",p:"qī",m:"период"}] },
-        { key: "木", keyPinyin: "mù", keyName: "дерево", word: "木", wordPinyin: "mù", wordName: "дерево", examples: [{c:"树",p:"shù",m:"дерево"}] },
-        { key: "欠", keyPinyin: "qiàn", keyName: "нехватка", word: "欠", wordPinyin: "qiàn", wordName: "нехватка", examples: [{c:"次",p:"cì",m:"раз"}] },
-        { key: "止", keyPinyin: "zhǐ", keyName: "остановка", word: "止", wordPinyin: "zhǐ", wordName: "остановка", examples: [{c:"正",p:"zhèng",m:"правильный"}] },
-        { key: "歹", keyPinyin: "dǎi", keyName: "смерть", word: "死", wordPinyin: "sǐ", wordName: "смерть", examples: [{c:"残",p:"cán",m:"жестокий"}] },
+        { key: "月", keyPinyin: "yuè", keyName: "луна", word: "月", wordPinyin: "yuè", wordName: "луна", examples: [] },
+        { key: "木", keyPinyin: "mù", keyName: "дерево", word: "木", wordPinyin: "mù", wordName: "дерево", examples: [] },
+        { key: "欠", keyPinyin: "qiàn", keyName: "нехватка", word: "欠", wordPinyin: "qiàn", wordName: "нехватка", examples: [] },
+        { key: "止", keyPinyin: "zhǐ", keyName: "остановка", word: "止", wordPinyin: "zhǐ", wordName: "остановка", examples: [] },
+        { key: "歹", keyPinyin: "dǎi", keyName: "смерть", word: "死", wordPinyin: "sǐ", wordName: "смерть", examples: [] },
         { key: "殳", keyPinyin: "shū", keyName: "оружие", word: "没", wordPinyin: "méi", wordName: "нет", examples: [] },
         { key: "毋", keyPinyin: "wú", keyName: "не", word: "母", wordPinyin: "mǔ", wordName: "мать", examples: [] },
         { key: "比", keyPinyin: "bǐ", keyName: "сравнивать", word: "比", wordPinyin: "bǐ", wordName: "сравнивать", examples: [] },
-        { key: "毛", keyPinyin: "máo", keyName: "шерсть", word: "毛", wordPinyin: "máo", wordName: "шерсть", examples: [{c:"笔",p:"bǐ",m:"ручка"}] },
+        { key: "毛", keyPinyin: "máo", keyName: "шерсть", word: "毛", wordPinyin: "máo", wordName: "шерсть", examples: [] },
         { key: "氏", keyPinyin: "shì", keyName: "род", word: "民", wordPinyin: "mín", wordName: "народ", examples: [] },
         { key: "气", keyPinyin: "qì", keyName: "воздух", word: "气", wordPinyin: "qì", wordName: "воздух", examples: [] },
-        { key: "水", keyPinyin: "shuǐ", keyName: "вода", word: "水", wordPinyin: "shuǐ", wordName: "вода", examples: [{c:"河",p:"hé",m:"река"}] },
-        { key: "氵", keyPinyin: "shuǐ", keyName: "вода (слева)", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"}] },
-        { key: "火", keyPinyin: "huǒ", keyName: "огонь", word: "火", wordPinyin: "huǒ", wordName: "огонь", examples: [{c:"烧",p:"shāo",m:"жечь"}] },
-        { key: "灬", keyPinyin: "huǒ", keyName: "огонь (снизу)", word: "热", wordPinyin: "rè", wordName: "жарко", examples: [{c:"煮",p:"zhǔ",m:"варить"}] },
-        { key: "爪", keyPinyin: "zhǎo", keyName: "коготь", word: "爪", wordPinyin: "zhǎo", wordName: "коготь", examples: [{c:"爬",p:"pá",m:"ползать"}] },
+        { key: "水", keyPinyin: "shuǐ", keyName: "вода", word: "水", wordPinyin: "shuǐ", wordName: "вода", examples: [] },
+        { key: "氵", keyPinyin: "shuǐ", keyName: "вода слева", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"}] },
+        { key: "火", keyPinyin: "huǒ", keyName: "огонь", word: "火", wordPinyin: "huǒ", wordName: "огонь", examples: [] },
+        { key: "灬", keyPinyin: "huǒ", keyName: "огонь снизу", word: "热", wordPinyin: "rè", wordName: "жарко", examples: [] },
+        { key: "爪", keyPinyin: "zhǎo", keyName: "коготь", word: "爪", wordPinyin: "zhǎo", wordName: "коготь", examples: [] },
         { key: "父", keyPinyin: "fù", keyName: "отец", word: "爸", wordPinyin: "bà", wordName: "папа", examples: [] },
         { key: "爻", keyPinyin: "yáo", keyName: "черта", word: "爻", wordPinyin: "yáo", wordName: "черта", examples: [] },
         { key: "爿", keyPinyin: "qiáng", keyName: "щепа", word: "床", wordPinyin: "chuáng", wordName: "кровать", examples: [] },
         { key: "片", keyPinyin: "piàn", keyName: "ломтик", word: "片", wordPinyin: "piàn", wordName: "ломтик", examples: [] },
         { key: "牙", keyPinyin: "yá", keyName: "зуб", word: "牙", wordPinyin: "yá", wordName: "зуб", examples: [] },
-        { key: "牛", keyPinyin: "niú", keyName: "корова", word: "牛", wordPinyin: "niú", wordName: "корова", examples: [{c:"牲",p:"shēng",m:"жертва"}] },
-        { key: "犬", keyPinyin: "quǎn", keyName: "собака", word: "狗", wordPinyin: "gǒu", wordName: "собака", examples: [{c:"猫",p:"māo",m:"кошка"}] },
-        { key: "犭", keyPinyin: "quǎn", keyName: "собака (слева)", word: "狗", wordPinyin: "gǒu", wordName: "собака", examples: [{c:"猫",p:"māo",m:"кошка"}] },
-        { key: "王", keyPinyin: "wáng", keyName: "король", word: "王", wordPinyin: "wáng", wordName: "король", examples: [{c:"玉",p:"yù",m:"нефрит"}] },
+        { key: "牛", keyPinyin: "niú", keyName: "корова", word: "牛", wordPinyin: "niú", wordName: "корова", examples: [] },
+        { key: "犬", keyPinyin: "quǎn", keyName: "собака", word: "狗", wordPinyin: "gǒu", wordName: "собака", examples: [] },
+        { key: "犭", keyPinyin: "quǎn", keyName: "собака слева", word: "狗", wordPinyin: "gǒu", wordName: "собака", examples: [] },
+        { key: "王", keyPinyin: "wáng", keyName: "король", word: "王", wordPinyin: "wáng", wordName: "король", examples: [] },
         { key: "玉", keyPinyin: "yù", keyName: "нефрит", word: "玉", wordPinyin: "yù", wordName: "нефрит", examples: [] },
         { key: "瓜", keyPinyin: "guā", keyName: "дыня", word: "瓜", wordPinyin: "guā", wordName: "дыня", examples: [] },
         { key: "瓦", keyPinyin: "wǎ", keyName: "черепица", word: "瓦", wordPinyin: "wǎ", wordName: "черепица", examples: [] },
         { key: "甘", keyPinyin: "gān", keyName: "сладкий", word: "甘", wordPinyin: "gān", wordName: "сладкий", examples: [] },
-        { key: "生", keyPinyin: "shēng", keyName: "рождаться", word: "生", wordPinyin: "shēng", wordName: "жизнь", examples: [{c:"姓",p:"xìng",m:"фамилия"}] },
+        { key: "生", keyPinyin: "shēng", keyName: "рождаться", word: "生", wordPinyin: "shēng", wordName: "жизнь", examples: [] },
         { key: "用", keyPinyin: "yòng", keyName: "использовать", word: "用", wordPinyin: "yòng", wordName: "использовать", examples: [] },
-        { key: "田", keyPinyin: "tián", keyName: "поле", word: "田", wordPinyin: "tián", wordName: "поле", examples: [{c:"男",p:"nán",m:"мужчина"}] },
+        { key: "田", keyPinyin: "tián", keyName: "поле", word: "田", wordPinyin: "tián", wordName: "поле", examples: [] },
         { key: "疋", keyPinyin: "pǐ", keyName: "рулон ткани", word: "疏", wordPinyin: "shū", wordName: "редкий", examples: [] },
-        { key: "疒", keyPinyin: "nè", keyName: "болезнь", word: "病", wordPinyin: "bìng", wordName: "болезнь", examples: [{c:"痛",p:"tòng",m:"боль"}] },
+        { key: "疒", keyPinyin: "nè", keyName: "болезнь", word: "病", wordPinyin: "bìng", wordName: "болезнь", examples: [] },
         { key: "癶", keyPinyin: "bō", keyName: "ноги", word: "登", wordPinyin: "dēng", wordName: "подниматься", examples: [] },
-        { key: "白", keyPinyin: "bái", keyName: "белый", word: "白", wordPinyin: "bái", wordName: "белый", examples: [{c:"百",p:"bǎi",m:"сто"}] },
+        { key: "白", keyPinyin: "bái", keyName: "белый", word: "白", wordPinyin: "bái", wordName: "белый", examples: [] },
         { key: "皮", keyPinyin: "pí", keyName: "кожа", word: "皮", wordPinyin: "pí", wordName: "кожа", examples: [] },
         { key: "皿", keyPinyin: "mǐn", keyName: "посуда", word: "盆", wordPinyin: "pén", wordName: "таз", examples: [] },
-        { key: "目", keyPinyin: "mù", keyName: "глаз", word: "眼", wordPinyin: "yǎn", wordName: "глаз", examples: [{c:"看",p:"kàn",m:"смотреть"}] },
+        { key: "目", keyPinyin: "mù", keyName: "глаз", word: "眼", wordPinyin: "yǎn", wordName: "глаз", examples: [] },
         { key: "矛", keyPinyin: "máo", keyName: "копьё", word: "矛", wordPinyin: "máo", wordName: "копьё", examples: [] },
-        { key: "矢", keyPinyin: "shǐ", keyName: "стрела", word: "矢", wordPinyin: "shǐ", wordName: "стрела", examples: [{c:"知",p:"zhī",m:"знать"}] },
-        { key: "石", keyPinyin: "shí", keyName: "камень", word: "石", wordPinyin: "shí", wordName: "камень", examples: [{c:"矿",p:"kuàng",m:"шахта"}] },
-        { key: "示", keyPinyin: "shì", keyName: "дух", word: "礼", wordPinyin: "lǐ", wordName: "поклон", examples: [{c:"神",p:"shén",m:"бог"}] },
-        { key: "礻", keyPinyin: "shì", keyName: "дух (слева)", word: "礼", wordPinyin: "lǐ", wordName: "поклон", examples: [{c:"福",p:"fú",m:"счастье"}] },
+        { key: "矢", keyPinyin: "shǐ", keyName: "стрела", word: "矢", wordPinyin: "shǐ", wordName: "стрела", examples: [] },
+        { key: "石", keyPinyin: "shí", keyName: "камень", word: "石", wordPinyin: "shí", wordName: "камень", examples: [] },
+        { key: "示", keyPinyin: "shì", keyName: "дух", word: "礼", wordPinyin: "lǐ", wordName: "поклон", examples: [] },
+        { key: "礻", keyPinyin: "shì", keyName: "дух слева", word: "礼", wordPinyin: "lǐ", wordName: "поклон", examples: [] },
         { key: "禸", keyPinyin: "róu", keyName: "след", word: "禹", wordPinyin: "yǔ", wordName: "Юй", examples: [] },
-        { key: "禾", keyPinyin: "hé", keyName: "зерно", word: "禾", wordPinyin: "hé", wordName: "зерно", examples: [{c:"秋",p:"qiū",m:"осень"}] },
-        { key: "穴", keyPinyin: "xué", keyName: "пещера", word: "空", wordPinyin: "kōng", wordName: "пустой", examples: [{c:"穿",p:"chuān",m:"проходить"}] },
-        { key: "立", keyPinyin: "lì", keyName: "стоять", word: "立", wordPinyin: "lì", wordName: "стоять", examples: [{c:"站",p:"zhàn",m:"вставать"}] },
-        { key: "竹", keyPinyin: "zhú", keyName: "бамбук", word: "竹", wordPinyin: "zhú", wordName: "бамбук", examples: [{c:"笔",p:"bǐ",m:"ручка"}] },
-        { key: "米", keyPinyin: "mǐ", keyName: "рис", word: "米", wordPinyin: "mǐ", wordName: "рис", examples: [{c:"粮",p:"liáng",m:"зерно"}] },
-        { key: "糸", keyPinyin: "mì", keyName: "шёлк", word: "丝", wordPinyin: "sī", wordName: "шёлк", examples: [{c:"红",p:"hóng",m:"красный"}] },
-        { key: "纟", keyPinyin: "sī", keyName: "шёлк (слева)", word: "红", wordPinyin: "hóng", wordName: "красный", examples: [{c:"绿",p:"lǜ",m:"зелёный"}] },
+        { key: "禾", keyPinyin: "hé", keyName: "зерно", word: "禾", wordPinyin: "hé", wordName: "зерно", examples: [] },
+        { key: "穴", keyPinyin: "xué", keyName: "пещера", word: "空", wordPinyin: "kōng", wordName: "пустой", examples: [] },
+        { key: "立", keyPinyin: "lì", keyName: "стоять", word: "立", wordPinyin: "lì", wordName: "стоять", examples: [] },
+        { key: "竹", keyPinyin: "zhú", keyName: "бамбук", word: "竹", wordPinyin: "zhú", wordName: "бамбук", examples: [] },
+        { key: "米", keyPinyin: "mǐ", keyName: "рис", word: "米", wordPinyin: "mǐ", wordName: "рис", examples: [] },
+        { key: "糸", keyPinyin: "mì", keyName: "шёлк", word: "丝", wordPinyin: "sī", wordName: "шёлк", examples: [] },
+        { key: "纟", keyPinyin: "sī", keyName: "шёлк слева", word: "红", wordPinyin: "hóng", wordName: "красный", examples: [] },
         { key: "缶", keyPinyin: "fǒu", keyName: "горшок", word: "缸", wordPinyin: "gāng", wordName: "кувшин", examples: [] },
         { key: "网", keyPinyin: "wǎng", keyName: "сеть", word: "网", wordPinyin: "wǎng", wordName: "сеть", examples: [] },
-        { key: "罒", keyPinyin: "wǎng", keyName: "сеть (сверху)", word: "罪", wordPinyin: "zuì", wordName: "преступление", examples: [] },
-        { key: "羊", keyPinyin: "yáng", keyName: "овца", word: "羊", wordPinyin: "yáng", wordName: "овца", examples: [{c:"美",p:"měi",m:"красивый"}] },
-        { key: "⺷", keyPinyin: "yáng", keyName: "овца (сверху)", word: "美", wordPinyin: "měi", wordName: "красивый", examples: [] },
+        { key: "罒", keyPinyin: "wǎng", keyName: "сеть сверху", word: "罪", wordPinyin: "zuì", wordName: "преступление", examples: [] },
+        { key: "羊", keyPinyin: "yáng", keyName: "овца", word: "羊", wordPinyin: "yáng", wordName: "овца", examples: [] },
         { key: "羽", keyPinyin: "yǔ", keyName: "перо", word: "羽", wordPinyin: "yǔ", wordName: "перо", examples: [] },
         { key: "老", keyPinyin: "lǎo", keyName: "старый", word: "老", wordPinyin: "lǎo", wordName: "старый", examples: [] },
         { key: "耒", keyPinyin: "lěi", keyName: "плуг", word: "耕", wordPinyin: "gēng", wordName: "пахать", examples: [] },
-        { key: "耳", keyPinyin: "ěr", keyName: "ухо", word: "耳", wordPinyin: "ěr", wordName: "ухо", examples: [{c:"听",p:"tīng",m:"слушать"}] },
+        { key: "耳", keyPinyin: "ěr", keyName: "ухо", word: "耳", wordPinyin: "ěr", wordName: "ухо", examples: [] },
         { key: "聿", keyPinyin: "yù", keyName: "кисть", word: "笔", wordPinyin: "bǐ", wordName: "ручка", examples: [] },
         { key: "肉", keyPinyin: "ròu", keyName: "мясо", word: "肉", wordPinyin: "ròu", wordName: "мясо", examples: [] },
-        { key: "月(肉)", keyPinyin: "ròu", keyName: "мясо (тело)", word: "脸", wordPinyin: "liǎn", wordName: "лицо", examples: [{c:"腿",p:"tuǐ",m:"нога"}] },
         { key: "臣", keyPinyin: "chén", keyName: "министр", word: "臣", wordPinyin: "chén", wordName: "министр", examples: [] },
-        { key: "自", keyPinyin: "zì", keyName: "сам", word: "自", wordPinyin: "zì", wordName: "сам", examples: [{c:"息",p:"xī",m:"дышать"}] },
+        { key: "自", keyPinyin: "zì", keyName: "сам", word: "自", wordPinyin: "zì", wordName: "сам", examples: [] },
         { key: "至", keyPinyin: "zhì", keyName: "достигать", word: "到", wordPinyin: "dào", wordName: "достигать", examples: [] },
         { key: "臼", keyPinyin: "jiù", keyName: "ступа", word: "臼", wordPinyin: "jiù", wordName: "ступа", examples: [] },
-        { key: "舌", keyPinyin: "shé", keyName: "язык", word: "舌", wordPinyin: "shé", wordName: "язык", examples: [{c:"甜",p:"tián",m:"сладкий"}] },
+        { key: "舌", keyPinyin: "shé", keyName: "язык", word: "舌", wordPinyin: "shé", wordName: "язык", examples: [] },
         { key: "舛", keyPinyin: "chuǎn", keyName: "противоположный", word: "舞", wordPinyin: "wǔ", wordName: "танец", examples: [] },
         { key: "舟", keyPinyin: "zhōu", keyName: "лодка", word: "船", wordPinyin: "chuán", wordName: "корабль", examples: [] },
         { key: "艮", keyPinyin: "gèn", keyName: "граница", word: "良", wordPinyin: "liáng", wordName: "хороший", examples: [] },
         { key: "色", keyPinyin: "sè", keyName: "цвет", word: "色", wordPinyin: "sè", wordName: "цвет", examples: [] },
         { key: "艸", keyPinyin: "cǎo", keyName: "трава", word: "草", wordPinyin: "cǎo", wordName: "трава", examples: [] },
-        { key: "艹", keyPinyin: "cǎo", keyName: "трава (сверху)", word: "花", wordPinyin: "huā", wordName: "цветок", examples: [{c:"草",p:"cǎo",m:"трава"}] },
+        { key: "艹", keyPinyin: "cǎo", keyName: "трава сверху", word: "花", wordPinyin: "huā", wordName: "цветок", examples: [] },
         { key: "虍", keyPinyin: "hū", keyName: "тигр", word: "虎", wordPinyin: "hǔ", wordName: "тигр", examples: [] },
-        { key: "虫", keyPinyin: "chóng", keyName: "насекомое", word: "虫", wordPinyin: "chóng", wordName: "насекомое", examples: [{c:"蛇",p:"shé",m:"змея"}] },
+        { key: "虫", keyPinyin: "chóng", keyName: "насекомое", word: "虫", wordPinyin: "chóng", wordName: "насекомое", examples: [] },
         { key: "血", keyPinyin: "xuè", keyName: "кровь", word: "血", wordPinyin: "xuè", wordName: "кровь", examples: [] },
         { key: "行", keyPinyin: "xíng", keyName: "идти", word: "行", wordPinyin: "xíng", wordName: "идти", examples: [] },
-        { key: "衣", keyPinyin: "yī", keyName: "одежда", word: "衣", wordPinyin: "yī", wordName: "одежда", examples: [{c:"裤",p:"kù",m:"штаны"}] },
-        { key: "衤", keyPinyin: "yī", keyName: "одежда (слева)", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [{c:"裙",p:"qún",m:"юбка"}] },
+        { key: "衣", keyPinyin: "yī", keyName: "одежда", word: "衣", wordPinyin: "yī", wordName: "одежда", examples: [] },
+        { key: "衤", keyPinyin: "yī", keyName: "одежда слева", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [] },
         { key: "襾", keyPinyin: "yà", keyName: "покрывать", word: "西", wordPinyin: "xī", wordName: "запад", examples: [] },
-        { key: "见", keyPinyin: "jiàn", keyName: "видеть", word: "见", wordPinyin: "jiàn", wordName: "видеть", examples: [{c:"现",p:"xiàn",m:"появляться"}] },
-        { key: "角", keyPinyin: "jiǎo", keyName: "рог", word: "角", wordPinyin: "jiǎo", wordName: "рог", examples: [{c:"解",p:"jiě",m:"развязывать"}] },
-        { key: "言", keyPinyin: "yán", keyName: "речь", word: "言", wordPinyin: "yán", wordName: "речь", examples: [{c:"说",p:"shuō",m:"говорить"}] },
-        { key: "讠", keyPinyin: "yán", keyName: "речь (слева)", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [{c:"请",p:"qǐng",m:"пожалуйста"}] },
+        { key: "见", keyPinyin: "jiàn", keyName: "видеть", word: "见", wordPinyin: "jiàn", wordName: "видеть", examples: [] },
+        { key: "角", keyPinyin: "jiǎo", keyName: "рог", word: "角", wordPinyin: "jiǎo", wordName: "рог", examples: [] },
+        { key: "言", keyPinyin: "yán", keyName: "речь", word: "言", wordPinyin: "yán", wordName: "речь", examples: [] },
+        { key: "讠", keyPinyin: "yán", keyName: "речь слева", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [] },
         { key: "辛", keyPinyin: "xīn", keyName: "горький", word: "辛", wordPinyin: "xīn", wordName: "горький", examples: [] },
         { key: "辰", keyPinyin: "chén", keyName: "утро", word: "晨", wordPinyin: "chén", wordName: "утро", examples: [] },
-        { key: "辶", keyPinyin: "chuò", keyName: "движение", word: "过", wordPinyin: "guò", wordName: "проходить", examples: [{c:"还",p:"hái",m:"ещё"}] },
-        { key: "邑", keyPinyin: "yì", keyName: "город", word: "那", wordPinyin: "nà", wordName: "тот", examples: [{c:"都",p:"dōu",m:"весь"}] },
-        { key: "酉", keyPinyin: "yǒu", keyName: "вино", word: "酒", wordPinyin: "jiǔ", wordName: "алкоголь", examples: [{c:"醉",p:"zuì",m:"пьяный"}] },
+        { key: "辶", keyPinyin: "chuò", keyName: "движение", word: "过", wordPinyin: "guò", wordName: "проходить", examples: [] },
+        { key: "邑", keyPinyin: "yì", keyName: "город", word: "那", wordPinyin: "nà", wordName: "тот", examples: [] },
+        { key: "酉", keyPinyin: "yǒu", keyName: "вино", word: "酒", wordPinyin: "jiǔ", wordName: "алкоголь", examples: [] },
         { key: "釆", keyPinyin: "biàn", keyName: "отличать", word: "释", wordPinyin: "shì", wordName: "объяснять", examples: [] },
-        { key: "里", keyPinyin: "lǐ", keyName: "внутри", word: "里", wordPinyin: "lǐ", wordName: "внутри", examples: [{c:"理",p:"lǐ",m:"логика"}] },
-        { key: "金", keyPinyin: "jīn", keyName: "золото", word: "金", wordPinyin: "jīn", wordName: "золото", examples: [{c:"钱",p:"qián",m:"деньги"}] },
-        { key: "钅", keyPinyin: "jīn", keyName: "металл (слева)", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"}] },
+        { key: "里", keyPinyin: "lǐ", keyName: "внутри", word: "里", wordPinyin: "lǐ", wordName: "внутри", examples: [] },
+        { key: "金", keyPinyin: "jīn", keyName: "золото", word: "金", wordPinyin: "jīn", wordName: "золото", examples: [] },
+        { key: "钅", keyPinyin: "jīn", keyName: "металл слева", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [] },
         { key: "长", keyPinyin: "cháng", keyName: "длинный", word: "长", wordPinyin: "cháng", wordName: "длинный", examples: [] },
-        { key: "门", keyPinyin: "mén", keyName: "дверь", word: "门", wordPinyin: "mén", wordName: "дверь", examples: [{c:"问",p:"wèn",m:"спрашивать"}] },
-        { key: "阝", keyPinyin: "fù", keyName: "холм", word: "阳", wordPinyin: "yáng", wordName: "солнце", examples: [{c:"阴",p:"yīn",m:"тень"}] },
+        { key: "门", keyPinyin: "mén", keyName: "дверь", word: "门", wordPinyin: "mén", wordName: "дверь", examples: [] },
+        { key: "阝", keyPinyin: "fù", keyName: "холм", word: "阳", wordPinyin: "yáng", wordName: "солнце", examples: [] },
         { key: "隶", keyPinyin: "lì", keyName: "раб", word: "隶", wordPinyin: "lì", wordName: "раб", examples: [] },
         { key: "隹", keyPinyin: "zhuī", keyName: "птица", word: "雀", wordPinyin: "què", wordName: "воробей", examples: [] },
-        { key: "雨", keyPinyin: "yǔ", keyName: "дождь", word: "雨", wordPinyin: "yǔ", wordName: "дождь", examples: [{c:"雪",p:"xuě",m:"снег"}] },
-        { key: "青", keyPinyin: "qīng", keyName: "синий", word: "青", wordPinyin: "qīng", wordName: "синий", examples: [{c:"静",p:"jìng",m:"тихий"}] },
+        { key: "雨", keyPinyin: "yǔ", keyName: "дождь", word: "雨", wordPinyin: "yǔ", wordName: "дождь", examples: [] },
+        { key: "青", keyPinyin: "qīng", keyName: "синий", word: "青", wordPinyin: "qīng", wordName: "синий", examples: [] },
         { key: "非", keyPinyin: "fēi", keyName: "не", word: "非", wordPinyin: "fēi", wordName: "не", examples: [] },
         { key: "面", keyPinyin: "miàn", keyName: "лицо", word: "面", wordPinyin: "miàn", wordName: "лицо", examples: [] },
-        { key: "革", keyPinyin: "gé", keyName: "кожа", word: "革", wordPinyin: "gé", wordName: "кожа", examples: [{c:"鞋",p:"xié",m:"обувь"}] },
+        { key: "革", keyPinyin: "gé", keyName: "кожа", word: "革", wordPinyin: "gé", wordName: "кожа", examples: [] },
         { key: "韦", keyPinyin: "wéi", keyName: "мягкая кожа", word: "伟", wordPinyin: "wěi", wordName: "великий", examples: [] },
         { key: "音", keyPinyin: "yīn", keyName: "звук", word: "音", wordPinyin: "yīn", wordName: "звук", examples: [] },
         { key: "页", keyPinyin: "yè", keyName: "голова", word: "头", wordPinyin: "tóu", wordName: "голова", examples: [] },
-        { key: "风", keyPinyin: "fēng", keyName: "ветер", word: "风", wordPinyin: "fēng", wordName: "ветер", examples: [{c:"飘",p:"piāo",m:"парить"}] },
+        { key: "风", keyPinyin: "fēng", keyName: "ветер", word: "风", wordPinyin: "fēng", wordName: "ветер", examples: [] },
         { key: "飞", keyPinyin: "fēi", keyName: "лететь", word: "飞", wordPinyin: "fēi", wordName: "лететь", examples: [] },
-        { key: "食", keyPinyin: "shí", keyName: "еда", word: "食", wordPinyin: "shí", wordName: "еда", examples: [{c:"饭",p:"fàn",m:"рис"}] },
-        { key: "饣", keyPinyin: "shí", keyName: "еда (слева)", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [{c:"饿",p:"è",m:"голодный"}] },
+        { key: "食", keyPinyin: "shí", keyName: "еда", word: "食", wordPinyin: "shí", wordName: "еда", examples: [] },
+        { key: "饣", keyPinyin: "shí", keyName: "еда слева", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [] },
         { key: "首", keyPinyin: "shǒu", keyName: "голова", word: "首", wordPinyin: "shǒu", wordName: "голова", examples: [] },
         { key: "香", keyPinyin: "xiāng", keyName: "аромат", word: "香", wordPinyin: "xiāng", wordName: "аромат", examples: [] },
-        { key: "马", keyPinyin: "mǎ", keyName: "лошадь", word: "马", wordPinyin: "mǎ", wordName: "лошадь", examples: [{c:"骑",p:"qí",m:"ехать"}] },
+        { key: "马", keyPinyin: "mǎ", keyName: "лошадь", word: "马", wordPinyin: "mǎ", wordName: "лошадь", examples: [] },
         { key: "骨", keyPinyin: "gǔ", keyName: "кость", word: "骨", wordPinyin: "gǔ", wordName: "кость", examples: [] },
         { key: "高", keyPinyin: "gāo", keyName: "высокий", word: "高", wordPinyin: "gāo", wordName: "высокий", examples: [] },
         { key: "髟", keyPinyin: "biāo", keyName: "волосы", word: "发", wordPinyin: "fà", wordName: "волосы", examples: [] },
@@ -442,14 +440,14 @@
         { key: "鬯", keyPinyin: "chàng", keyName: "жертвенное вино", word: "鬯", wordPinyin: "chàng", wordName: "вино", examples: [] },
         { key: "鬲", keyPinyin: "lì", keyName: "треножник", word: "隔", wordPinyin: "gé", wordName: "разделять", examples: [] },
         { key: "鬼", keyPinyin: "guǐ", keyName: "призрак", word: "鬼", wordPinyin: "guǐ", wordName: "призрак", examples: [] },
-        { key: "鱼", keyPinyin: "yú", keyName: "рыба", word: "鱼", wordPinyin: "yú", wordName: "рыба", examples: [{c:"鲜",p:"xiān",m:"свежий"}] },
-        { key: "鸟", keyPinyin: "niǎo", keyName: "птица", word: "鸟", wordPinyin: "niǎo", wordName: "птица", examples: [{c:"鸡",p:"jī",m:"курица"}] },
+        { key: "鱼", keyPinyin: "yú", keyName: "рыба", word: "鱼", wordPinyin: "yú", wordName: "рыба", examples: [] },
+        { key: "鸟", keyPinyin: "niǎo", keyName: "птица", word: "鸟", wordPinyin: "niǎo", wordName: "птица", examples: [] },
         { key: "卤", keyPinyin: "lǔ", keyName: "соль", word: "卤", wordPinyin: "lǔ", wordName: "соль", examples: [] },
         { key: "鹿", keyPinyin: "lù", keyName: "олень", word: "鹿", wordPinyin: "lù", wordName: "олень", examples: [] },
         { key: "麦", keyPinyin: "mài", keyName: "пшеница", word: "麦", wordPinyin: "mài", wordName: "пшеница", examples: [] },
         { key: "麻", keyPinyin: "má", keyName: "конопля", word: "麻", wordPinyin: "má", wordName: "конопля", examples: [] },
-        { key: "黄", keyPinyin: "huáng", keyName: "жёлтый", word: "黄", wordPinyin: "huáng", wordName: "жёлтый", examples: [{c:"黄金",p:"huángjīn",m:"золото"}] },
-        { key: "黑", keyPinyin: "hēi", keyName: "чёрный", word: "黑", wordPinyin: "hēi", wordName: "чёрный", examples: [{c:"墨",p:"mò",m:"тушь"}] },
+        { key: "黄", keyPinyin: "huáng", keyName: "жёлтый", word: "黄", wordPinyin: "huáng", wordName: "жёлтый", examples: [] },
+        { key: "黑", keyPinyin: "hēi", keyName: "чёрный", word: "黑", wordPinyin: "hēi", wordName: "чёрный", examples: [] },
         { key: "黍", keyPinyin: "shǔ", keyName: "просо", word: "黍", wordPinyin: "shǔ", wordName: "просо", examples: [] },
         { key: "黹", keyPinyin: "zhǐ", keyName: "вышивка", word: "黹", wordPinyin: "zhǐ", wordName: "вышивка", examples: [] },
         { key: "鼻", keyPinyin: "bí", keyName: "нос", word: "鼻", wordPinyin: "bí", wordName: "нос", examples: [] },
@@ -460,7 +458,7 @@
         { key: "龠", keyPinyin: "yuè", keyName: "флейта", word: "龠", wordPinyin: "yuè", wordName: "флейта", examples: [] }
     ];
 
-    let currentLevel = 2;
+    let currentLevel = 3;
     let tiles = [];
     let selectedId = null;
     let matchedCount = 0;
@@ -468,13 +466,19 @@
     let score = 0;
     let streak = 0;
     let record = 0;
+    let currentModal = null;
 
     const LEVEL_CONFIG = {
-        1: { pairsCount: 20, gridCols: 5 },
-        2: { pairsCount: 40, gridCols: 6 },
-        3: { pairsCount: 70, gridCols: 7 },
-        4: { pairsCount: 107, gridCols: 8 },
-        5: { pairsCount: 214, gridCols: 10 }
+        1: { pairsCount: 10, gridCols: 4 },
+        2: { pairsCount: 20, gridCols: 5 },
+        3: { pairsCount: 30, gridCols: 6 },
+        4: { pairsCount: 50, gridCols: 7 },
+        5: { pairsCount: 80, gridCols: 8 },
+        6: { pairsCount: 110, gridCols: 9 },
+        7: { pairsCount: 150, gridCols: 10 },
+        8: { pairsCount: 180, gridCols: 10 },
+        9: { pairsCount: 200, gridCols: 12 },
+        10: { pairsCount: 214, gridCols: 12 }
     };
 
     const scoreSpan = document.getElementById('scoreValue');
@@ -494,24 +498,47 @@
         window.speechSynthesis.speak(u);
     }
 
-    function showExamples(pair) {
+    function showLearnModal(pair) {
+        if (currentModal) currentModal.remove();
         const examples = pair.examples || [];
-        const popup = document.createElement('div');
-        popup.className = 'example-popup';
-        popup.innerHTML = `
-            <div>📚 <strong>${pair.key} (${pair.keyPinyin})</strong> — ${pair.keyName}</div>
-            <div class="examples">
-                <div class="example-item" onclick="speakChinese('${pair.word}')">
-                    <div class="ex-char">${pair.word}</div>
-                    <div class="ex-pinyin">${pair.wordPinyin}</div>
-                    <div>${pair.wordName}</div>
+        const modal = document.createElement('div');
+        modal.className = 'learn-modal';
+        modal.innerHTML = `
+            <div class="learn-card">
+                <div class="radical-big">${pair.key}</div>
+                <div class="radical-name">${pair.keyName}</div>
+                <div class="radical-pinyin">${pair.keyPinyin}</div>
+                <div class="examples-title">📖 Примеры слов с этим радикалом:</div>
+                <div class="examples-list">
+                    <div class="example-word" data-char="${pair.word}" data-pinyin="${pair.wordPinyin}">
+                        <div class="ex-char">${pair.word}</div>
+                        <div class="ex-pinyin">${pair.wordPinyin}</div>
+                        <div class="ex-mean">${pair.wordName}</div>
+                    </div>
+                    ${examples.map(ex => `
+                        <div class="example-word" data-char="${ex.c}" data-pinyin="${ex.p}">
+                            <div class="ex-char">${ex.c}</div>
+                            <div class="ex-pinyin">${ex.p}</div>
+                            <div class="ex-mean">${ex.m}</div>
+                        </div>
+                    `).join('')}
                 </div>
-                ${examples.map(ex => `<div class="example-item" onclick="speakChinese('${ex.c}')"><div class="ex-char">${ex.c}</div><div class="ex-pinyin">${ex.p}</div><div>${ex.m}</div></div>`).join('')}
+                <button class="close-learn">✖ Закрыть</button>
             </div>
-            <div style="font-size:10px;">✨ Нажми на слово, чтобы услышать</div>
         `;
-        document.body.appendChild(popup);
-        setTimeout(() => popup.remove(), 5000);
+        document.body.appendChild(modal);
+        currentModal = modal;
+        
+        modal.querySelectorAll('.example-word').forEach(el => {
+            el.onclick = () => {
+                const char = el.dataset.char;
+                if (char) speakChinese(char);
+            };
+        });
+        modal.querySelector('.close-learn').onclick = () => {
+            modal.remove();
+            currentModal = null;
+        };
         speakChinese(pair.key);
     }
 
@@ -520,7 +547,6 @@
         const config = LEVEL_CONFIG[currentLevel];
         gridEl.style.gridTemplateColumns = `repeat(${config.gridCols}, 1fr)`;
         gridEl.innerHTML = '';
-        
         for (let i = 0; i < tiles.length; i++) {
             const tile = tiles[i];
             if (tile.removed) continue;
@@ -540,7 +566,6 @@
             })(tile);
             gridEl.appendChild(div);
         }
-        
         if (gridEl.children.length === 0 && matchedCount === totalPairs) {
             msgEl.innerHTML = "🏆 ПОБЕДА! Отличная игра! 🏆";
         }
@@ -548,14 +573,12 @@
 
     function onTileClick(clickedTile) {
         if (clickedTile.removed) return;
-        
         if (selectedId === null) {
             selectedId = clickedTile.id;
             renderGrid();
             msgEl.innerHTML = `✅ Выбрано: ${clickedTile.char} (${clickedTile.name})`;
             return;
         }
-        
         const selectedTile = tiles.find(t => t.id === selectedId);
         if (selectedTile.id === clickedTile.id) {
             selectedId = null;
@@ -563,7 +586,6 @@
             msgEl.innerHTML = "🔍 Выделение снято";
             return;
         }
-        
         if (selectedTile.pairId === clickedTile.pairId && selectedTile.type !== clickedTile.type) {
             selectedTile.removed = true;
             clickedTile.removed = true;
@@ -573,14 +595,11 @@
             score += points;
             if (streak > record) record = streak;
             updateUI();
-            
-            const pair = RADICAL_WORD_PAIRS[selectedTile.pairId % RADICAL_WORD_PAIRS.length];
-            if (pair) showExamples(pair);
-            
+            const pair = ALL_PAIRS[selectedTile.pairId % ALL_PAIRS.length];
+            if (pair) showLearnModal(pair);
             selectedId = null;
             renderGrid();
             msgEl.innerHTML = `✅ Верно! +${points} очков (серия ${streak})`;
-            
             if (matchedCount === totalPairs) {
                 msgEl.innerHTML = `🏆 ПОБЕДА! Уровень ${currentLevel} пройден! 🏆`;
                 speakChinese("恭喜你");
@@ -608,7 +627,6 @@
             initGame(currentLevel);
             return;
         }
-        
         const tileData = remaining.map(t => ({
             pairId: t.pairId,
             type: t.type,
@@ -616,12 +634,10 @@
             pinyin: t.pinyin,
             name: t.name
         }));
-        
         for (let i = tileData.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [tileData[i], tileData[j]] = [tileData[j], tileData[i]];
         }
-        
         let idx = 0;
         for (let i = 0; i < tiles.length; i++) {
             if (!tiles[i].removed) {
@@ -633,7 +649,6 @@
                 idx++;
             }
         }
-        
         selectedId = null;
         renderGrid();
         msgEl.innerHTML = "🃏 Плитки перемешаны! Продолжай игру.";
@@ -650,25 +665,22 @@
                 }
             }
         }
-        msgEl.innerHTML = "💡 Нет доступных пар? Попробуй перемешать плитки!";
+        msgEl.innerHTML = "💡 Попробуй перемешать плитки!";
     }
 
     function initGame(level) {
         currentLevel = level;
         const config = LEVEL_CONFIG[level];
         const neededPairs = config.pairsCount;
-        
         const selectedPairs = [];
         for (let i = 0; i < neededPairs; i++) {
-            selectedPairs.push(RADICAL_WORD_PAIRS[i % RADICAL_WORD_PAIRS.length]);
+            selectedPairs.push(ALL_PAIRS[i % ALL_PAIRS.length]);
         }
-        
         totalPairs = selectedPairs.length;
         matchedCount = 0;
         score = 0;
         streak = 0;
         selectedId = null;
-        
         tiles = [];
         let idCounter = 0;
         for (let i = 0; i < selectedPairs.length; i++) {
@@ -692,12 +704,10 @@
                 removed: false
             });
         }
-        
         for (let i = tiles.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
         }
-        
         updateUI();
         renderGrid();
         msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй КЛЮЧ со СЛОВОМ!`;
@@ -716,7 +726,7 @@
     document.getElementById('shuffleBtn').onclick = shuffleTiles;
     document.getElementById('resetGameBtn').onclick = () => initGame(currentLevel);
     
-    initGame(2);
+    initGame(3);
 </script>
 </body>
 </html>
