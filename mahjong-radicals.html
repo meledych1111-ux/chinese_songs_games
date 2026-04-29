@@ -309,7 +309,15 @@
     const progressFill = document.getElementById('progressFill');
     const msgEl = document.getElementById('gameMessage');
     const gridEl = document.getElementById('gameGrid');
-
+// ========== ВСТАВЬТЕ ЭТОТ КОД СЮДА ==========
+    // Список радикалов, которые не нужно озвучивать (технические символы)
+    const SKIP_SPEECH = ["一", "丨", "丶", "丿", "乙", "亅", "二", "亠", "八", "冂", "冖", "冫", "几", "凵", "刀", "刂", "力", "勹", "匕", "匚", "匸", "卜", "卩", "厂", "厶", "又", "囗", "士", "夂", "夊", "夕", "尢", "屮", "川", "己", "巾", "干", "广", "廾", "弋", "弓", "彐", "彡", "彳", "忄", "扌", "攴", "无", "曰", "灬", "爿", "牙", "犭", "玉", "瓜", "瓦", "甘", "疋", "疒", "癶", "皮", "皿", "矛", "矢", "石", "示", "礻", "禸", "禾", "穴", "立", "竹", "米", "糸", "纟", "缶", "网", "罒", "羽", "耒", "聿", "肉", "臣", "自", "至", "臼", "舌", "舛", "舟", "艮", "色", "艸", "艹", "虍", "血", "行", "衣", "衤", "襾", "角", "言", "讠", "辛", "辰", "辶", "邑", "酉", "釆", "里", "金", "钅", "长", "门", "阝", "隶", "隹", "青", "非", "面", "革", "韦", "音", "页", "风", "飞", "食", "饣", "首", "香", "马", "骨", "高", "髟", "鬥", "鬯", "鬲", "鬼", "鱼", "鸟", "卤", "鹿", "麦", "麻", "黄", "黑", "黍", "黹", "鼻", "齐", "齿", "龙", "龟", "龠"];
+    
+    function canSpeak(char) {
+        if (SKIP_SPEECH.includes(char)) return false;
+        const code = char.charCodeAt(0);
+        return (code >= 0x4E00 && code <= 0x9FFF);
+    }
     let chineseVoice = null;
     function loadChineseVoice() { const voices = window.speechSynthesis.getVoices(); chineseVoice = voices.find(v => v.lang === "zh-CN" && (v.name.includes("Tingting") || v.name.includes("Google") || v.name.includes("Chinese"))); if (!chineseVoice) chineseVoice = voices.find(v => v.lang === "zh-CN"); }
     window.speechSynthesis.onvoiceschanged = loadChineseVoice;
