@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ | Китайские ключи</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(145deg, #1e3c2c 0%, #0a2a1a 100%);
+            min-height: 100vh;
+            font-family: system-ui, 'Segoe UI', 'PingFang SC', Roboto, 'Noto Sans CJK SC', sans-serif;
+            padding: 20px;
+            padding-top: env(safe-area-inset-top, 20px);
+        }
+
+        .game-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: rgba(30, 20, 15, 0.6);
+            border-radius: 48px;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #f7e05e;
+            text-shadow: 3px 3px 0 #b45f1b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .sub {
+            text-align: center;
+            color: #d4c9a6;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            background: #2c2118;
+            padding: 12px 24px;
+            border-radius: 60px;
+            margin-bottom: 25px;
+            color: #ffecb3;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .score-board span {
+            background: #00000066;
+            padding: 6px 18px;
+            border-radius: 40px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+            background: #4a3729;
+            padding: 24px 18px;
+            border-radius: 48px;
+            box-shadow: inset 0 0 0 3px #e9c891, 0 10px 25px rgba(0,0,0,0.3);
+            min-height: 480px;
+        }
+
+        .tile {
+            background: #fff8e7;
+            background-image: radial-gradient(circle at 25% 35%, rgba(255,245,200,0.8) 2%, transparent 2.5%);
+            background-size: 28px 28px;
+            border-radius: 20px;
+            padding: 16px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.12s linear;
+            border: 2px solid #c8aa6e;
+            box-shadow: 0 7px 0 #8b6946;
+            transform: translateY(-2px);
+        }
+
+        .tile.selected {
+            background: #ffe6b3;
+            border: 3px solid #f5b042;
+            box-shadow: 0 0 0 2px #ffd966, 0 4px 12px gold;
+            transform: scale(0.98);
+        }
+
+        .tile.removed {
+            visibility: hidden;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: visibility 0.2s, opacity 0.2s;
+        }
+
+        .tile .main-char {
+            font-size: 48px;
+            font-weight: 800;
+            color: #3c2a1f;
+            text-shadow: 2px 2px 0 #e9cb9a;
+            line-height: 1;
+        }
+
+        .tile .info {
+            font-size: 13px;
+            margin-top: 8px;
+            color: #7a5a3a;
+            font-weight: 600;
+            background: #f3e5c9;
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 40px;
+        }
+
+        .tile.radical-tile .main-char {
+            font-size: 44px;
+            color: #2a6b5c;
+        }
+
+        .tile.word-tile .main-char {
+            font-size: 44px;
+            color: #b34e1a;
+        }
+
+        .message-area {
+            background: #261d14e6;
+            border-radius: 60px;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 15px 0;
+            color: #f7e6c4;
+            backdrop-filter: blur(8px);
+        }
+
+        .ctrl-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #f7b42c, #fc8e2c);
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 60px;
+            color: #2c1a0c;
+            cursor: pointer;
+            transition: 0.1s linear;
+            box-shadow: 0 4px 0 #9b5e1c;
+            font-family: inherit;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #9b5e1c;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #4b6a3b, #2d5a2a);
+            color: #f9e7b3;
+            box-shadow: 0 4px 0 #1e3a1a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.75rem;
+            color: #b4a27a;
+        }
+
+        @media (max-width: 650px) {
+            .game-grid { gap: 10px; padding: 16px 12px; }
+            .tile .main-char { font-size: 34px; }
+            .tile .info { font-size: 10px; }
+            .score-board { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>
+        🀄️ МАДЖОНГ С РАДИКАЛАМИ
+        <span style="font-size: 1.2rem;">🎋 соедини пары</span>
+    </h1>
+    <div class="sub">🔤 Иероглиф ⟷ Радикал (ключ). Нажми на карточку, затем на её пару!</div>
+
+    <div class="score-board">
+        <span>🎯 Очки: <span id="scoreValue">0</span></span>
+        <span>🧩 Осталось: <span id="remainValue">0</span></span>
+        <span>🏆 Лучшая серия: <span id="streakValue">0</span></span>
+    </div>
+
+    <div class="game-grid" id="gameGrid"></div>
+
+    <div class="message-area" id="gameMessage">
+        🌟 Найди пару: иероглиф и его радикал (ключ)
+    </div>
+
+    <div class="ctrl-buttons">
+        <button id="shuffleBtn">♻️ Перемешать</button>
+        <button id="resetGameBtn" class="reset-btn">🔄 Новая игра</button>
+    </div>
+    <div class="footer">
+        💡 Подсказка: радикал — графическая часть, которая часто дает ключ к смыслу. 
+        Соедините слово (иероглиф) с его радикалом!
+    </div>
+</div>
+
+<script>
+    // ИСПОЛЬЗУЕМ ВАШУ БАЗУ WORDS И RADICALS (глобальные переменные из WORDS.js и RADICALS.js)
+    // ВНИМАНИЕ! Предполагается, что в проекте уже загружены:
+    // <script src="WORDS.js"></script> и <script src="RADICALS.js"></script>
+    // Если нет — создадим fallback на основе встроенных данных (но у вас они есть)
+    
+    // ==================== ГЕНЕРАЦИЯ ПАР ====================
+    // Функция: для каждого слова из WORDS пытаемся найти подходящий радикал (по смыслу / вхождению)
+    // Составляем уникальные пары: слово -> радикал (один радикал может соответствовать нескольким словам,
+    // но в игре выбираем уникальные комбинации, чтобы не было скучно).
+    
+    function buildPairsFromData(wordsList, radicalsList) {
+        const pairs = []; // { word: {c, p, m, cat,...}, radical: {s, p, m, ex} }
+        const usedRadicalSet = new Set(); // чтобы разнообразить
+        
+        // 1. Из слов с высокочастотными радикалами (ищем вхождение радикала в иероглиф или совпадение по смыслу)
+        // Приоритет: если иероглиф содержит радикал (как часть) или радикал указан в категории
+        for (let word of wordsList) {
+            if (!word.c || word.c.length > 2) continue; // длинные составные слова пропускаем для простоты (чистые иероглифы)
+            const char = word.c;
+            // Ищем радикал, который является частью этого иероглифа (начинается с или содержит)
+            let bestRadical = null;
+            for (let rad of radicalsList) {
+                if (!rad.s) continue;
+                // Проверяем: содержится ли радикал в иероглифе как подстрока?
+                if (char.includes(rad.s) && rad.s.length === 1) {
+                    bestRadical = rad;
+                    break;
+                }
+                // Также если радикал - ключ по смыслу (через категории: слово про воду -> радикал 水/氵)
+                if (word.cat === "food" && (rad.s === "食" || rad.s === "饣" || rad.s === "米")) bestRadical = rad;
+                if (word.cat === "nature" && (rad.s === "山" || rad.s === "水" || rad.s === "木" || rad.s === "石")) bestRadical = rad;
+                if (word.cat === "animals" && (rad.s === "牛" || rad.s === "羊" || rad.s === "马" || rad.s === "鸟" || rad.s === "鱼")) bestRadical = rad;
+                if (word.cat === "colors" && (rad.s === "白" || rad.s === "黑" || rad.s === "赤" || rad.s === "黄")) bestRadical = rad;
+                if (word.cat === "verbs" && (rad.s === "手" || rad.s === "扌" || rad.s === "足" || rad.s === "言")) bestRadical = rad;
+                if (word.cat === "home" && (rad.s === "宀" || rad.s === "门" || rad.s === "户")) bestRadical = rad;
+                if (word.cat === "medicine" && (rad.s === "疒" || rad.s === "药")) bestRadical = rad;
+            }
+            // Если не нашли радикал по вхождению, попробуем по ключевому слову из ассоциации
+            if (!bestRadical) {
+                for (let rad of radicalsList) {
+                    if ((word.m && word.m.toLowerCase().includes("вода") && (rad.s === "水" || rad.s === "氵")) ||
+                        (word.m && word.m.toLowerCase().includes("огонь") && (rad.s === "火" || rad.s === "灬")) ||
+                        (word.m && word.m.toLowerCase().includes("дерево") && rad.s === "木") ||
+                        (word.m && word.m.toLowerCase().includes("человек") && (rad.s === "人" || rad.s === "亻")) ||
+                        (word.m && word.m.toLowerCase().includes("рот") && rad.s === "口") ||
+                        (word.m && word.m.toLowerCase().includes("рука") && (rad.s === "手" || rad.s === "扌")) ||
+                        (word.m && (word.m.toLowerCase().includes("сердце") || word.m.toLowerCase().includes("чувство")) && (rad.s === "心" || rad.s === "忄"))) {
+                        bestRadical = rad;
+                        break;
+                    }
+                }
+            }
+            if (bestRadical && !usedRadicalSet.has(bestRadical.s + word.c)) {
+                pairs.push({
+                    word: word,
+                    radical: bestRadical,
+                    type: 'pair'
+                });
+                usedRadicalSet.add(bestRadical.s + word.c);
+            }
+        }
+        
+        // дополнительно вручную добавим несколько ярких примеров из популярных слов
+        const manualExamples = [
+            { word: {c:"吃",p:"chī",m:"есть",e:"🍽️",cat:"food"}, radicalKey:"口" },
+            { word: {c:"喝",p:"hē",m:"пить",e:"🥤",cat:"food"}, radicalKey:"口" },
+            { word: {c:"你",p:"nǐ",m:"ты",e:"🧑",cat:"pronouns"}, radicalKey:"亻" },
+            { word: {c:"好",p:"hǎo",m:"хорошо",e:"👍",cat:"adjectives"}, radicalKey:"女" },
+            { word: {c:"想",p:"xiǎng",m:"думать",e:"💭",cat:"verbs"}, radicalKey:"心" },
+            { word: {c:"火",p:"huǒ",m:"огонь",e:"🔥",cat:"nature"}, radicalKey:"火" },
+            { word: {c:"水",p:"shuǐ",m:"вода",e:"💧",cat:"nature"}, radicalKey:"水" },
+            { word: {c:"林",p:"lín",m:"лес",e:"🌲",cat:"nature"}, radicalKey:"木" }
+        ];
+        for (let ex of manualExamples) {
+            let radObj = radicalsList.find(r => r.s === ex.radicalKey);
+            if (radObj && !pairs.some(p => p.word.c === ex.word.c && p.radical.s === radObj.s)) {
+                pairs.push({ word: ex.word, radical: radObj, type: 'pair' });
+            }
+        }
+        
+        // Убираем дубликаты по слову
+        const uniquePairs = [];
+        const seenWords = new Set();
+        for (let p of pairs) {
+            if (!seenWords.has(p.word.c)) {
+                seenWords.add(p.word.c);
+                uniquePairs.push(p);
+            }
+        }
+        // Ограничим количество пар до 24 для хорошей игры (чтобы сетка не перегружалась)
+        return uniquePairs.slice(0, 24);
+    }
+    
+    // Глобальные переменные игры
+    let currentPairs = [];         // массив объектов-пар { word, radical }
+    let gameCards = [];            // массив карточек: каждый элемент { id, type, data, pairId }
+    let selectedCardIndex = null;
+    let currentScore = 0;
+    let currentStreak = 0;
+    let bestStreak = 0;
+    let matchedCount = 0;
+    let totalPairs = 0;
+    
+    // DOM элементы
+    const gridEl = document.getElementById('gameGrid');
+    const scoreSpan = document.getElementById('scoreValue');
+    const remainSpan = document.getElementById('remainValue');
+    const streakSpan = document.getElementById('streakValue');
+    const messageEl = document.getElementById('gameMessage');
+    
+    function updateStatsUI() {
+        scoreSpan.textContent = currentScore;
+        const leftPairs = totalPairs - matchedCount;
+        remainSpan.textContent = leftPairs;
+        streakSpan.textContent = bestStreak;
+    }
+    
+    function showMessage(msg, isError = false) {
+        messageEl.innerHTML = isError ? `⚠️ ${msg}` : `✨ ${msg}`;
+        setTimeout(() => {
+            if (messageEl.innerHTML === `✨ ${msg}` || messageEl.innerHTML === `⚠️ ${msg}`) {
+                if (matchedCount === totalPairs && totalPairs > 0) {
+                    messageEl.innerHTML = "🏆 ПОБЕДА! Ты мастер радикалов! 🎉";
+                } else {
+                    messageEl.innerHTML = "🎋 Ищи следующую пару!";
+                }
+            }
+        }, 1800);
+    }
+    
+    function renderGrid() {
+        if (!gridEl) return;
+        gridEl.innerHTML = '';
+        for (let i = 0; i < gameCards.length; i++) {
+            const card = gameCards[i];
+            if (card.matched) continue; // удалённые не рендерим
+            const tile = document.createElement('div');
+            tile.className = `tile ${card.type === 'radical' ? 'radical-tile' : 'word-tile'}`;
+            if (selectedCardIndex === i) tile.classList.add('selected');
+            
+            const mainCharDiv = document.createElement('div');
+            mainCharDiv.className = 'main-char';
+            if (card.type === 'word') {
+                mainCharDiv.textContent = card.data.c;
+            } else {
+                mainCharDiv.textContent = card.data.s;
+            }
+            tile.appendChild(mainCharDiv);
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'info';
+            if (card.type === 'word') {
+                infoDiv.textContent = card.data.m || 'слово';
+            } else {
+                infoDiv.textContent = card.data.m || 'радикал';
+            }
+            tile.appendChild(infoDiv);
+            
+            tile.addEventListener('click', (function(idx) {
+                return function() { onCardClick(idx); };
+            })(i));
+            gridEl.appendChild(tile);
+        }
+    }
+    
+    function onCardClick(clickedIdx) {
+        if (matchedCount === totalPairs) {
+            showMessage("Игра завершена! Нажми 'Новая игра'", false);
+            return;
+        }
+        const clickedCard = gameCards[clickedIdx];
+        if (clickedCard.matched) return;
+        
+        // Если ничего не выбрано
+        if (selectedCardIndex === null) {
+            // выбираем карточку
+            selectedCardIndex = clickedIdx;
+            renderGrid();
+            showMessage(`Выбрано: ${clickedCard.type === 'word' ? clickedCard.data.c : clickedCard.data.s}`, false);
+            return;
+        }
+        
+        // Уже что-то выбрано
+        const selectedCard = gameCards[selectedCardIndex];
+        if (selectedCardIndex === clickedIdx) {
+            // снимаем выделение
+            selectedCardIndex = null;
+            renderGrid();
+            showMessage("Выделение снято", false);
+            return;
+        }
+        
+        // Пытаемся создать пару
+        const first = selectedCard;
+        const second = clickedCard;
+        
+        // Проверяем: одна карточка - слово, вторая - радикал и pairId совпадают
+        let isValid = false;
+        if ((first.type === 'word' && second.type === 'radical') || (first.type === 'radical' && second.type === 'word')) {
+            const wordCard = first.type === 'word' ? first : second;
+            const radCard = first.type === 'radical' ? first : second;
+            if (wordCard.pairId === radCard.pairId) {
+                isValid = true;
+            }
+        }
+        
+        if (isValid) {
+            // Правильная пара
+            gameCards[selectedCardIndex].matched = true;
+            gameCards[clickedIdx].matched = true;
+            matchedCount++;
+            currentStreak++;
+            if (currentStreak > bestStreak) bestStreak = currentStreak;
+            // Очки: база 10 + бонус за серию
+            let pointsGain = 10 + Math.min(15, Math.floor(currentStreak / 2) * 2);
+            currentScore += pointsGain;
+            updateStatsUI();
+            showMessage(`✅ Верно! +${pointsGain} очков (серия ${currentStreak})`, false);
+            selectedCardIndex = null;
+            renderGrid();
+            
+            if (matchedCount === totalPairs) {
+                showMessage("🎉 ПОБЕДА! Ты знаток радикалов! 🎉", false);
+                messageEl.innerHTML = "🏆 ВЕЛИКОЛЕПНО! Начни новую игру! 🏆";
+            }
+        } else {
+            // Неправильная пара
+            currentStreak = 0;
+            updateStatsUI();
+            showMessage(`❌ Не пара! "${first.type === 'word' ? first.data.c : first.data.s}" не подходит к "${second.type === 'word' ? second.data.c : second.data.s}"`, true);
+            selectedCardIndex = null;
+            renderGrid();
+        }
+    }
+    
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+    
+    function initGame(pairsData) {
+        if (!pairsData.length) {
+            gridEl.innerHTML = '<div style="color:white; text-align:center;">⚠️ Не удалось сгенерировать пары. Проверьте данные WORDS и RADICALS</div>';
+            return;
+        }
+        totalPairs = pairsData.length;
+        matchedCount = 0;
+        currentScore = 0;
+        currentStreak = 0;
+        bestStreak = 0;
+        selectedCardIndex = null;
+        
+        // Строим карточки: для каждой пары создаем word-карту и radical-карту
+        let newCards = [];
+        for (let i = 0; i < pairsData.length; i++) {
+            const pair = pairsData[i];
+            // слово
+            newCards.push({
+                id: `w_${i}`,
+                type: 'word',
+                data: pair.word,
+                pairId: i,
+                matched: false
+            });
+            // радикал
+            newCards.push({
+                id: `r_${i}`,
+                type: 'radical',
+                data: pair.radical,
+                pairId: i,
+                matched: false
+            });
+        }
+        // Перемешиваем карточки
+        gameCards = shuffleArray([...newCards]);
+        renderGrid();
+        updateStatsUI();
+        showMessage("Игра началась! Соедини иероглиф с его радикалом 🀄️", false);
+        if (totalPairs === 0) messageEl.innerHTML = "⚠️ Нет пар для игры, проверь загрузку WORDS и RADICALS";
+    }
+    
+    function resetGame() {
+        if (currentPairs.length > 0) {
+            initGame(currentPairs);
+        } else {
+            // если пары не построены, пробуем пересобрать
+            if (typeof WORDS !== 'undefined' && typeof RADICALS !== 'undefined') {
+                currentPairs = buildPairsFromData(WORDS, RADICALS);
+                initGame(currentPairs);
+            } else {
+                messageEl.innerHTML = "❌ Ошибка: не найдены WORDS или RADICALS. Убедись, что файлы подключены!";
+            }
+        }
+    }
+    
+    function shuffleCurrent() {
+        if (totalPairs === 0) return;
+        // перемешиваем только активные карточки (не удалённые)
+        const activeCards = gameCards.filter(c => !c.matched);
+        const matchedCards = gameCards.filter(c => c.matched);
+        const shuffledActive = shuffleArray([...activeCards]);
+        const newGameCards = [...shuffledActive, ...matchedCards];
+        // но порядок отображения должен быть только активных в перемешке, а совпавшие в конце не видны, и так ок.
+        gameCards = newGameCards;
+        selectedCardIndex = null;
+        renderGrid();
+        showMessage("Колода перемешана! Продолжай искать пары", false);
+    }
+    
+    // Инициализация игры при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        // Проверяем глобальные переменные WORDS и RADICALS (загружены из внешних скриптов)
+        if (typeof WORDS !== 'undefined' && typeof RADICALS !== 'undefined') {
+            console.log(`✅ Загружено слов: ${WORDS.length}, радикалов: ${RADICALS.length}`);
+            currentPairs = buildPairsFromData(WORDS, RADICALS);
+            if (currentPairs.length === 0) {
+                // форс-мажор: встроим расширенные пары вручную
+                messageEl.innerHTML = "⚠️ Генерация пар из слов... создаю базовые комбинации.";
+                console.warn("Не удалось создать пары, пробую fallback");
+                const fallbackPairs = [
+                    { word: {c:"吃",p:"chī",m:"есть"}, radical: {s:"口",m:"рот"} },
+                    { word: {c:"水",p:"shuǐ",m:"вода"}, radical: {s:"水",m:"вода"} },
+                    { word: {c:"火",p:"huǒ",m:"огонь"}, radical: {s:"火",m:"огонь"} },
+                    { word: {c:"林",p:"lín",m:"лес"}, radical: {s:"木",m:"дерево"} },
+                    { word: {c:"你",p:"nǐ",m:"ты"}, radical: {s:"亻",m:"человек"} },
+                    { word: {c:"好",p:"hǎo",m:"хорошо"}, radical: {s:"女",m:"женщина"} }
+                ];
+                currentPairs = fallbackPairs.map(p => ({ word:p.word, radical:p.radical, type:'pair' }));
+            }
+            initGame(currentPairs);
+        } else {
+            // Если скрипты не подгрузились, показываем сообщение
+            gridEl.innerHTML = '<div style="color:#f5c542; padding:30px; text-align:center;">📚 Подождите, загружаю словарь и радикалы...<br>Убедитесь, что файлы WORDS.js и RADICALS.js подключены.</div>';
+            messageEl.innerHTML = "🔄 Требуется загрузка базы радикалов. Перезагрузите страницу или проверьте скрипты.";
+            console.error("WORDS или RADICALS не определены. Проверь подключение скриптов.");
+        }
+        
+        // Кнопки
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const resetBtn = document.getElementById('resetGameBtn');
+        if (shuffleBtn) shuffleBtn.addEventListener('click', shuffleCurrent);
+        if (resetBtn) resetBtn.addEventListener('click', resetGame);
+    });
+    
+    // экспорт для глобальной совместимости
+    window.resetGame = resetGame;
+    window.shuffleCurrent = shuffleCurrent;
+</script>
+</body>
+</html>
