@@ -467,10 +467,34 @@
             if (streak > record) record = streak;
             updateUI();
             
-            // Находим радикал для отображения в обучающем окне
-            const pairId = selectedTile.pairId;
-            let radical = RADICALS_DB[pairId % RADICALS_DB.length];
-            if (radical) showLearnModal(radical);
+            // ========== ИСПРАВЛЕНО: НАХОДИМ РАДИКАЛ ПО КЛЮЧУ ==========
+            let foundRadical = null;
+            
+            // Пытаемся найти радикал по ключу (у кого type === 'key')
+            const keyTile = selectedTile.type === 'key' ? selectedTile : clickedTile;
+            // Ищем в базе RADICALS_DB по символу ключа
+            foundRadical = RADICALS_DB.find(r => r.key === keyTile.char);
+            
+            // Если не нашли, пробуем найти по pairId
+            if (!foundRadical) {
+                foundRadical = RADICALS_DB[selectedTile.pairId % RADICALS_DB.length];
+            }
+            
+            if (foundRadical) {
+                showLearnModal(foundRadical);
+            } else {
+                // Создаём минимальный объект, если ничего не нашли
+                showLearnModal({
+                    key: keyTile.char,
+                    keyPinyin: keyTile.pinyin,
+                    keyName: keyTile.name,
+                    word: keyTile.char,
+                    wordPinyin: keyTile.pinyin,
+                    wordName: keyTile.name,
+                    examples: [],
+                    strokes: 3
+                });
+            }
             
             selectedId = null; 
             renderGrid(); 
