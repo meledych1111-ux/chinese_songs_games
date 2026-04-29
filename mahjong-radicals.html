@@ -444,12 +444,14 @@
 
     function onTileClick(clickedTile) {
         if (clickedTile.removed) return;
+        
         if (selectedId === null) { 
             selectedId = clickedTile.id; 
             renderGrid(); 
             msgEl.innerHTML = `✅ Выбрано: ${clickedTile.char} (${clickedTile.name})`; 
             return; 
         }
+        
         const selectedTile = tiles.find(t => t.id === selectedId);
         if (selectedTile.id === clickedTile.id) { 
             selectedId = null; 
@@ -457,6 +459,8 @@
             msgEl.innerHTML = "🔍 Выделение снято"; 
             return; 
         }
+        
+        // Проверяем, что это пара (один ключ, другое слово, одинаковый pairId)
         if (selectedTile.pairId === clickedTile.pairId && selectedTile.type !== clickedTile.type) {
             selectedTile.removed = true; 
             clickedTile.removed = true;
@@ -467,24 +471,27 @@
             if (streak > record) record = streak;
             updateUI();
             
-            // ========== ИСПРАВЛЕНО: НАХОДИМ РАДИКАЛ ПО КЛЮЧУ ==========
+            // ========== НАХОДИМ ПРАВИЛЬНЫЙ РАДИКАЛ ==========
+            // Определяем, какая плитка является ключом (type === 'key')
+            let keyTile = null;
+            if (selectedTile.type === 'key') keyTile = selectedTile;
+            if (clickedTile.type === 'key') keyTile = clickedTile;
+            
             let foundRadical = null;
             
-            // Пытаемся найти радикал по ключу (у кого type === 'key')
-            const keyTile = selectedTile.type === 'key' ? selectedTile : clickedTile;
             // Ищем в базе RADICALS_DB по символу ключа
-            foundRadical = RADICALS_DB.find(r => r.key === keyTile.char);
+            if (keyTile) {
+                foundRadical = RADICALS_DB.find(r => r.key === keyTile.char);
+            }
             
-            // Если не нашли, пробуем найти по pairId
+            // Если не нашли по ключу, ищем по pairId (запасной вариант)
             if (!foundRadical) {
                 foundRadical = RADICALS_DB[selectedTile.pairId % RADICALS_DB.length];
             }
             
-            if (foundRadical) {
-                showLearnModal(foundRadical);
-            } else {
-                // Создаём минимальный объект, если ничего не нашли
-                showLearnModal({
+            // Если всё равно не нашли, создаём объект на лету
+            if (!foundRadical && keyTile) {
+                foundRadical = {
                     key: keyTile.char,
                     keyPinyin: keyTile.pinyin,
                     keyName: keyTile.name,
@@ -493,7 +500,11 @@
                     wordName: keyTile.name,
                     examples: [],
                     strokes: 3
-                });
+                };
+            }
+            
+            if (foundRadical) {
+                showLearnModal(foundRadical);
             }
             
             selectedId = null; 
