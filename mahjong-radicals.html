@@ -444,14 +444,27 @@
         msgEl.innerHTML = "💡 Попробуй перемешать плитки!";
     }
 
+    // ========== ФУНКЦИЯ ДЛЯ СЛУЧАЙНОГО ВЫБОРА ПАР ==========
+    function getRandomPairs(count) {
+        const shuffled = [...RADICALS_DB];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
     function initGame(level) {
         currentLevel = level;
         const config = LEVEL_CONFIG[level];
         const neededPairs = Math.min(config.pairsCount, RADICALS_DB.length);
-        const selectedPairs = [];
-        for (let i = 0; i < neededPairs; i++) selectedPairs.push(RADICALS_DB[i % RADICALS_DB.length]);
+        const selectedPairs = getRandomPairs(neededPairs);
+        
         totalPairs = selectedPairs.length;
-        matchedCount = 0; score = 0; streak = 0; selectedId = null;
+        matchedCount = 0;
+        score = 0;
+        streak = 0;
+        selectedId = null;
         tiles = [];
         let idCounter = 0;
         for (let i = 0; i < selectedPairs.length; i++) {
@@ -459,8 +472,13 @@
             tiles.push({ id: idCounter++, pairId: i, type: 'key', char: p.key, pinyin: p.keyPinyin, name: p.keyName, removed: false });
             tiles.push({ id: idCounter++, pairId: i, type: 'word', char: p.word, pinyin: p.wordPinyin, name: p.wordName, removed: false });
         }
-        for (let i = tiles.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; }
-        updateUI(); renderGrid(); msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй КЛЮЧ со СЛОВОМ!`;
+        for (let i = tiles.length - 1; i > 0; i--) { 
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; 
+        }
+        updateUI(); 
+        renderGrid(); 
+        msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй КЛЮЧ со СЛОВОМ!`;
     }
 
     document.querySelectorAll('.level-btn').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const level = parseInt(btn.dataset.level); initGame(level); }; });
