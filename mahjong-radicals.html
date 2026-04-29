@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ | 214 ключей</title>
+    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ | Классическая пирамида</title>
     <style>
         * {
             margin: 0;
@@ -15,125 +15,134 @@
             background: linear-gradient(145deg, #1a3a2a 0%, #0a1a0f 100%);
             min-height: 100vh;
             font-family: system-ui, 'Segoe UI', 'PingFang SC', sans-serif;
-            padding: 16px;
+            padding: 20px;
         }
         .game-container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             background: rgba(30, 25, 20, 0.6);
             border-radius: 48px;
-            padding: 20px;
-            backdrop-filter: blur(4px);
+            padding: 24px;
         }
         h1 {
             text-align: center;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: #f7e05e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
         }
         .sub {
             text-align: center;
             color: #d4c9a6;
-            margin-bottom: 15px;
-            font-size: 0.8rem;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
         .stats-bar {
             display: flex;
             justify-content: space-between;
             background: #2c2118;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 60px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #ffecb3;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1rem;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
         }
         .stats-bar span {
             background: #00000066;
-            padding: 5px 15px;
+            padding: 6px 18px;
             border-radius: 40px;
+        }
+        .level-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .level-btn {
+            background: #4a3729;
+            color: #d4c9a6;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .level-btn.active {
+            background: linear-gradient(135deg, #f7b42c, #fc8e2c);
+            color: #2c1a0c;
         }
         .game-board {
             display: flex;
             justify-content: center;
             margin: 20px 0;
             overflow-x: auto;
+            min-height: 500px;
         }
         .pyramid {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         .pyramid-row {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
         }
         .tile {
             background: #fff8e7;
             background-image: radial-gradient(circle at 25% 35%, rgba(255,245,200,0.6) 2%, transparent 2.5%);
             background-size: 25px 25px;
             border-radius: 16px;
-            padding: 15px 8px;
             text-align: center;
             cursor: pointer;
             transition: all 0.1s;
-            border: 2px solid #c8aa6e;
+            border: 3px solid #c8aa6e;
             box-shadow: 0 6px 0 #8b6946;
             min-width: 110px;
-            position: relative;
+            padding: 14px 6px;
         }
         .tile.selected {
             background: #ffe6b3;
             border: 3px solid #f5b042;
-            transform: scale(0.97);
+            transform: scale(0.96);
             box-shadow: 0 3px 0 #8b6946;
         }
         .tile.blocked {
-            opacity: 0.5;
+            opacity: 0.4;
             filter: grayscale(0.3);
             cursor: not-allowed;
         }
         .tile.removed {
-            visibility: hidden;
-            opacity: 0;
-            pointer-events: none;
+            display: none;
         }
         .tile .main-char {
             font-size: 48px;
             font-weight: 800;
             color: #3c2a1f;
         }
-        .tile .pinyin-small {
+        .tile .pinyin {
             font-size: 12px;
             color: #b34e1a;
             margin-top: 6px;
-            font-weight: 500;
         }
         .tile .info {
-            font-size: 11px;
-            margin-top: 5px;
+            font-size: 10px;
+            margin-top: 4px;
             color: #7a5a3a;
             background: #f3e5c9;
             display: inline-block;
-            padding: 3px 10px;
+            padding: 2px 10px;
             border-radius: 40px;
         }
         .message-area {
             background: #261d14e6;
             border-radius: 60px;
-            padding: 12px 20px;
+            padding: 14px 20px;
             text-align: center;
             font-weight: bold;
             font-size: 1rem;
-            margin: 15px 0;
+            margin: 20px 0;
             color: #f7e6c4;
         }
         .ctrl-buttons {
@@ -152,16 +161,16 @@
             color: #2c1a0c;
             cursor: pointer;
             box-shadow: 0 4px 0 #9b5e1c;
-            transition: 0.05s linear;
         }
         button:active { transform: translateY(2px); }
         .reset-btn { background: linear-gradient(135deg, #4b6a3b, #2d5a2a); color: #f9e7b3; }
         .hint-btn { background: linear-gradient(135deg, #3a6b8a, #2a4a6a); color: white; }
+        .shuffle-btn { background: linear-gradient(135deg, #8e44ad, #6c3483); color: white; }
         .progress-bar {
             background: #4a3729;
             border-radius: 30px;
             height: 10px;
-            margin: 10px 0;
+            margin: 15px 0;
             overflow: hidden;
         }
         .progress-fill {
@@ -199,28 +208,32 @@
             padding: 8px 14px;
             text-align: center;
             cursor: pointer;
-            transition: 0.1s;
         }
         .example-item:active { transform: scale(0.95); }
         .example-item .ex-char { font-size: 28px; font-weight: bold; }
-        .example-item .ex-pinyin { font-size: 11px; color: #ffd966; }
-        @media (max-width: 700px) {
-            .tile { min-width: 85px; padding: 10px 5px; }
-            .tile .main-char { font-size: 36px; }
-            .pyramid-row { gap: 8px; }
+        @media (max-width: 800px) {
+            .tile { min-width: 90px; padding: 10px 4px; }
+            .tile .main-char { font-size: 38px; }
         }
-        @media (max-width: 550px) {
-            .tile { min-width: 70px; padding: 8px 3px; }
+        @media (max-width: 600px) {
+            .tile { min-width: 75px; padding: 8px 3px; }
             .tile .main-char { font-size: 30px; }
-            .tile .pinyin-small { font-size: 9px; }
-            .pyramid-row { gap: 5px; }
+            .tile .pinyin { font-size: 9px; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <h1>🀄️ МАДЖОНГ С РАДИКАЛАМИ <span style="font-size: 0.9rem;">🎋 214 ключей</span></h1>
-    <div class="sub">🔗 Соединяй ТОЛЬКО СВОБОДНЫЕ плитки (не закрытые сверху или с двух боков)</div>
+    <h1>🀄️ МАДЖОНГ С РАДИКАЛАМИ</h1>
+    <div class="sub">🔗 Соедини КЛЮЧ и СЛОВО | Только свободные плитки</div>
+
+    <div class="level-bar" id="levelBar">
+        <div class="level-btn" data-level="1">🌟 Уровень 1 (2 ряда)</div>
+        <div class="level-btn" data-level="2">⭐ Уровень 2 (3 ряда)</div>
+        <div class="level-btn" data-level="3" class="active">🏆 Уровень 3 (4 ряда)</div>
+        <div class="level-btn" data-level="4">🔥 Уровень 4 (5 рядов)</div>
+        <div class="level-btn" data-level="5">💎 Уровень 5 (6 рядов)</div>
+    </div>
 
     <div class="stats-bar">
         <span>🎯 Счёт: <span id="scoreValue">0</span></span>
@@ -236,55 +249,34 @@
 
     <div class="ctrl-buttons">
         <button id="hintBtn" class="hint-btn">💡 Подсказка</button>
-        <button id="resetGameBtn" class="reset-btn">🔄 Новая игра</button>
+        <button id="shuffleBtn" class="shuffle-btn">🔄 Перемешать</button>
+        <button id="resetGameBtn" class="reset-btn">🆕 Новая игра</button>
     </div>
 </div>
 
 <script>
-    // ==================== БАЗА РАДИКАЛОВ С ПРИМЕРАМИ ====================
-    const RADICALS_DATA = [
-        { char: "口", pinyin: "kǒu", name: "рот", examples: [{c:"吃",p:"chī",m:"есть"},{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"},{c:"唱",p:"chàng",m:"петь"}] },
-        { char: "水", pinyin: "shuǐ", name: "вода", examples: [{c:"河",p:"hé",m:"река"},{c:"海",p:"hǎi",m:"море"},{c:"洗",p:"xǐ",m:"мыть"},{c:"泳",p:"yǒng",m:"плыть"}] },
-        { char: "氵", pinyin: "shuǐ", name: "вода (ключ)", examples: [{c:"江",p:"jiāng",m:"река"},{c:"湖",p:"hú",m:"озеро"},{c:"洗",p:"xǐ",m:"мыть"},{c:"游",p:"yóu",m:"плавать"}] },
-        { char: "火", pinyin: "huǒ", name: "огонь", examples: [{c:"烧",p:"shāo",m:"жечь"},{c:"炒",p:"chǎo",m:"жарить"},{c:"烟",p:"yān",m:"дым"},{c:"灯",p:"dēng",m:"лампа"}] },
-        { char: "木", pinyin: "mù", name: "дерево", examples: [{c:"树",p:"shù",m:"дерево"},{c:"林",p:"lín",m:"лес"},{c:"桌",p:"zhuō",m:"стол"},{c:"椅",p:"yǐ",m:"стул"}] },
-        { char: "手", pinyin: "shǒu", name: "рука", examples: [{c:"打",p:"dǎ",m:"бить"},{c:"拿",p:"ná",m:"брать"},{c:"找",p:"zhǎo",m:"искать"},{c:"提",p:"tí",m:"поднимать"}] },
-        { char: "扌", pinyin: "shǒu", name: "рука (ключ)", examples: [{c:"打",p:"dǎ",m:"бить"},{c:"拍",p:"pāi",m:"хлопать"},{c:"拉",p:"lā",m:"тянуть"},{c:"推",p:"tuī",m:"толкать"}] },
-        { char: "心", pinyin: "xīn", name: "сердце", examples: [{c:"想",p:"xiǎng",m:"думать"},{c:"忘",p:"wàng",m:"забывать"},{c:"忙",p:"máng",m:"занятой"},{c:"情",p:"qíng",m:"чувство"}] },
-        { char: "忄", pinyin: "xīn", name: "сердце (ключ)", examples: [{c:"忙",p:"máng",m:"занятой"},{c:"快",p:"kuài",m:"быстрый"},{c:"慢",p:"màn",m:"медленный"}] },
-        { char: "日", pinyin: "rì", name: "солнце", examples: [{c:"时",p:"shí",m:"время"},{c:"明",p:"míng",m:"яркий"},{c:"晚",p:"wǎn",m:"вечер"},{c:"暖",p:"nuǎn",m:"тёплый"}] },
-        { char: "月", pinyin: "yuè", name: "луна", examples: [{c:"期",p:"qī",m:"период"},{c:"有",p:"yǒu",m:"иметь"},{c:"朋",p:"péng",m:"друг"},{c:"朝",p:"zhāo",m:"утро"}] },
-        { char: "女", pinyin: "nǚ", name: "женщина", examples: [{c:"妈",p:"mā",m:"мама"},{c:"姐",p:"jiě",m:"сестра"},{c:"妹",p:"mèi",m:"младшая сестра"},{c:"好",p:"hǎo",m:"хорошо"}] },
-        { char: "人", pinyin: "rén", name: "человек", examples: [{c:"你",p:"nǐ",m:"ты"},{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."},{c:"从",p:"cóng",m:"следовать"}] },
-        { char: "亻", pinyin: "rén", name: "человек (ключ)", examples: [{c:"你",p:"nǐ",m:"ты"},{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."},{c:"住",p:"zhù",m:"жить"}] },
-        { char: "金", pinyin: "jīn", name: "золото", examples: [{c:"钱",p:"qián",m:"деньги"},{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"},{c:"钢",p:"gāng",m:"сталь"}] },
-        { char: "钅", pinyin: "jīn", name: "металл (ключ)", examples: [{c:"钱",p:"qián",m:"деньги"},{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"}] },
-        { char: "言", pinyin: "yán", name: "речь", examples: [{c:"说",p:"shuō",m:"говорить"},{c:"话",p:"huà",m:"речь"},{c:"请",p:"qǐng",m:"просить"},{c:"读",p:"dú",m:"читать"}] },
-        { char: "讠", pinyin: "yán", name: "речь (ключ)", examples: [{c:"说",p:"shuō",m:"говорить"},{c:"话",p:"huà",m:"слова"},{c:"请",p:"qǐng",m:"пожалуйста"}] },
-        { char: "土", pinyin: "tǔ", name: "земля", examples: [{c:"地",p:"dì",m:"земля"},{c:"城",p:"chéng",m:"город"},{c:"块",p:"kuài",m:"кусок"},{c:"坏",p:"huài",m:"плохой"}] },
-        { char: "山", pinyin: "shān", name: "гора", examples: [{c:"峰",p:"fēng",m:"вершина"},{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"},{c:"岸",p:"àn",m:"берег"}] },
-        { char: "田", pinyin: "tián", name: "поле", examples: [{c:"男",p:"nán",m:"мужчина"},{c:"留",p:"liú",m:"оставлять"},{c:"累",p:"lèi",m:"уставать"}] },
-        { char: "目", pinyin: "mù", name: "глаз", examples: [{c:"眼",p:"yǎn",m:"глаз"},{c:"看",p:"kàn",m:"смотреть"},{c:"睡",p:"shuì",m:"спать"}] },
-        { char: "耳", pinyin: "ěr", name: "ухо", examples: [{c:"听",p:"tīng",m:"слушать"},{c:"闻",p:"wén",m:"слышать"},{c:"聪",p:"cōng",m:"умный"}] },
-        { char: "足", pinyin: "zú", name: "нога", examples: [{c:"跑",p:"pǎo",m:"бежать"},{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"},{c:"跟",p:"gēn",m:"следовать"}] },
-        { char: "辶", pinyin: "chuò", name: "движение", examples: [{c:"过",p:"guò",m:"проходить"},{c:"还",p:"hái",m:"ещё"},{c:"送",p:"sòng",m:"отправлять"},{c:"进",p:"jìn",m:"входить"}] },
-        { char: "门", pinyin: "mén", name: "дверь", examples: [{c:"门",p:"mén",m:"дверь"},{c:"问",p:"wèn",m:"спрашивать"},{c:"间",p:"jiān",m:"комната"},{c:"开",p:"kāi",m:"открывать"}] },
-        { char: "车", pinyin: "chē", name: "машина", examples: [{c:"车",p:"chē",m:"машина"},{c:"轮",p:"lún",m:"колесо"},{c:"转",p:"zhuǎn",m:"поворачивать"}] },
-        { char: "雨", pinyin: "yǔ", name: "дождь", examples: [{c:"雨",p:"yǔ",m:"дождь"},{c:"雪",p:"xuě",m:"снег"},{c:"雷",p:"léi",m:"гром"},{c:"雾",p:"wù",m:"туман"}] },
-        { char: "风", pinyin: "fēng", name: "ветер", examples: [{c:"风",p:"fēng",m:"ветер"},{c:"飘",p:"piāo",m:"парить"}] },
-        { char: "鸟", pinyin: "niǎo", name: "птица", examples: [{c:"鸟",p:"niǎo",m:"птица"},{c:"鸡",p:"jī",m:"курица"},{c:"鸭",p:"yā",m:"утка"},{c:"鹅",p:"é",m:"гусь"}] },
-        { char: "鱼", pinyin: "yú", name: "рыба", examples: [{c:"鱼",p:"yú",m:"рыба"},{c:"鲜",p:"xiān",m:"свежий"},{c:"鲤",p:"lǐ",m:"карп"}] },
-        { char: "马", pinyin: "mǎ", name: "лошадь", examples: [{c:"马",p:"mǎ",m:"лошадь"},{c:"骑",p:"qí",m:"ехать верхом"}] },
-        { char: "虫", pinyin: "chóng", name: "насекомое", examples: [{c:"虫",p:"chóng",m:"насекомое"},{c:"蛇",p:"shé",m:"змея"},{c:"虾",p:"xiā",m:"креветка"}] },
-        { char: "艹", pinyin: "cǎo", name: "трава", examples: [{c:"花",p:"huā",m:"цветок"},{c:"草",p:"cǎo",m:"трава"},{c:"茶",p:"chá",m:"чай"},{c:"药",p:"yào",m:"лекарство"}] },
-        { char: "竹", pinyin: "zhú", name: "бамбук", examples: [{c:"竹",p:"zhú",m:"бамбук"},{c:"笔",p:"bǐ",m:"ручка"},{c:"笑",p:"xiào",m:"смех"}] },
-        { char: "米", pinyin: "mǐ", name: "рис", examples: [{c:"米",p:"mǐ",m:"рис"},{c:"粮",p:"liáng",m:"зерно"},{c:"粉",p:"fěn",m:"мука"}] },
-        { char: "衣", pinyin: "yī", name: "одежда", examples: [{c:"衣",p:"yī",m:"одежда"},{c:"裤",p:"kù",m:"штаны"},{c:"裙",p:"qún",m:"юбка"}] },
-        { char: "衤", pinyin: "yī", name: "одежда (ключ)", examples: [{c:"衬衫",p:"chènshān",m:"рубашка"},{c:"裤",p:"kù",m:"штаны"},{c:"袜",p:"wà",m:"носки"}] },
-        { char: "食", pinyin: "shí", name: "еда", examples: [{c:"食",p:"shí",m:"еда"},{c:"饭",p:"fàn",m:"рис"},{c:"饿",p:"è",m:"голодный"}] },
-        { char: "饣", pinyin: "shí", name: "еда (ключ)", examples: [{c:"饭",p:"fàn",m:"рис"},{c:"饱",p:"bǎo",m:"сытый"},{c:"饿",p:"è",m:"голодный"}] }
+    // ==================== РАДИКАЛЫ (ключ + слово = пара) ====================
+    const PAIRS_DATA = [
+        { key: "口", keyPinyin: "kǒu", keyName: "рот", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"}] },
+        { key: "水", keyPinyin: "shuǐ", keyName: "вода", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"},{c:"洗",p:"xǐ",m:"мыть"}] },
+        { key: "火", keyPinyin: "huǒ", keyName: "огонь", word: "烧", wordPinyin: "shāo", wordName: "жечь", examples: [{c:"炒",p:"chǎo",m:"жарить"},{c:"烟",p:"yān",m:"дым"}] },
+        { key: "木", keyPinyin: "mù", keyName: "дерево", word: "树", wordPinyin: "shù", wordName: "дерево", examples: [{c:"林",p:"lín",m:"лес"},{c:"桌",p:"zhuō",m:"стол"}] },
+        { key: "手", keyPinyin: "shǒu", keyName: "рука", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"拿",p:"ná",m:"брать"},{c:"找",p:"zhǎo",m:"искать"}] },
+        { key: "心", keyPinyin: "xīn", keyName: "сердце", word: "想", wordPinyin: "xiǎng", wordName: "думать", examples: [{c:"忘",p:"wàng",m:"забывать"},{c:"忙",p:"máng",m:"занятой"}] },
+        { key: "日", keyPinyin: "rì", keyName: "солнце", word: "时", wordPinyin: "shí", wordName: "время", examples: [{c:"明",p:"míng",m:"яркий"},{c:"暖",p:"nuǎn",m:"тёплый"}] },
+        { key: "月", keyPinyin: "yuè", keyName: "луна", word: "期", wordPinyin: "qī", wordName: "период", examples: [{c:"有",p:"yǒu",m:"иметь"},{c:"朋",p:"péng",m:"друг"}] },
+        { key: "女", keyPinyin: "nǚ", keyName: "женщина", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"好",p:"hǎo",m:"хорошо"}] },
+        { key: "人", keyPinyin: "rén", keyName: "человек", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."}] },
+        { key: "金", keyPinyin: "jīn", keyName: "золото", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"}] },
+        { key: "土", keyPinyin: "tǔ", keyName: "земля", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"},{c:"坏",p:"huài",m:"плохой"}] },
+        { key: "山", keyPinyin: "shān", keyName: "гора", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"}] },
+        { key: "田", keyPinyin: "tián", keyName: "поле", word: "男", wordPinyin: "nán", wordName: "мужчина", examples: [{c:"留",p:"liú",m:"оставлять"},{c:"累",p:"lèi",m:"уставать"}] },
+        { key: "目", keyPinyin: "mù", keyName: "глаз", word: "看", wordPinyin: "kàn", wordName: "смотреть", examples: [{c:"眼",p:"yǎn",m:"глаз"},{c:"睡",p:"shuì",m:"спать"}] },
+        { key: "耳", keyPinyin: "ěr", keyName: "ухо", word: "听", wordPinyin: "tīng", wordName: "слушать", examples: [{c:"闻",p:"wén",m:"слышать"}] },
+        { key: "足", keyPinyin: "zú", keyName: "нога", word: "跑", wordPinyin: "pǎo", wordName: "бежать", examples: [{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"}] }
     ];
 
+    let currentLevel = 3;
     let tiles = [];
     let selectedId = null;
     let matchedCount = 0;
@@ -292,6 +284,15 @@
     let score = 0;
     let streak = 0;
     let record = 0;
+
+    // Конфигурация уровней (количество рядов в пирамиде)
+    const LEVEL_CONFIG = {
+        1: { rows: [1, 2], pairsCount: 3 },
+        2: { rows: [1, 2, 3], pairsCount: 6 },
+        3: { rows: [1, 2, 3, 4], pairsCount: 10 },
+        4: { rows: [1, 2, 3, 4, 5], pairsCount: 15 },
+        5: { rows: [1, 2, 3, 4, 5, 6], pairsCount: 21 }
+    };
 
     const scoreSpan = document.getElementById('scoreValue');
     const remainSpan = document.getElementById('remainValue');
@@ -310,30 +311,49 @@
         window.speechSynthesis.speak(u);
     }
 
-    function showExamples(radical) {
-        const examples = radical.examples || [{c:radical.char, p:radical.pinyin, m:radical.name}];
+    function showExamples(pair) {
+        const examples = pair.examples || [];
+        if (examples.length === 0) {
+            speakText(pair.key);
+            return;
+        }
         const popup = document.createElement('div');
         popup.className = 'example-popup';
         popup.innerHTML = `
-            <div>📚 <strong>${radical.char} (${radical.pinyin})</strong> — ${radical.name}</div>
+            <div>📚 <strong>${pair.key} (${pair.keyPinyin})</strong> — ${pair.keyName}</div>
             <div class="examples">
-                ${examples.map(ex => `<div class="example-item" onclick="speakText('${ex.c}')"><div class="ex-char">${ex.c}</div><div class="ex-pinyin">${ex.p}</div><div>${ex.m}</div></div>`).join('')}
+                ${examples.map(ex => `<div class="example-item" onclick="speakText('${ex.c}')"><div class="ex-char">${ex.c}</div><div>${ex.p} — ${ex.m}</div></div>`).join('')}
+                <div class="example-item" onclick="speakText('${pair.word}')"><div class="ex-char">${pair.word}</div><div>${pair.wordPinyin} — ${pair.wordName}</div></div>
             </div>
             <div style="font-size:10px; margin-top:8px;">✨ Нажми на слово, чтобы услышать</div>
         `;
         document.body.appendChild(popup);
         setTimeout(() => popup.remove(), 6000);
-        speakText(radical.char);
+        speakText(pair.key);
     }
 
+    // Проверка: свободна ли плитка (классическое правило: нет плитки сверху)
     function isTileFree(tile, allTiles) {
         if (tile.removed) return false;
-        const above = allTiles.find(t => t.row === tile.row - 1 && t.col === tile.col && !t.removed);
-        if (above) return false;
-        const left = allTiles.find(t => t.row === tile.row && t.col === tile.col - 1 && !t.removed);
-        const right = allTiles.find(t => t.row === tile.row && t.col === tile.col + 1 && !t.removed);
-        if (left && right) return false;
-        return true;
+        // Проверяем плитку сверху (в ряду выше, та же позиция)
+        const above = allTiles.find(t => t.row === tile.row - 1 && Math.abs(t.col - tile.col) <= 1 && !t.removed);
+        return !above;
+    }
+
+    // Проверка: есть ли доступные ходы
+    function hasAvailableMoves() {
+        for (let i = 0; i < tiles.length; i++) {
+            if (tiles[i].removed) continue;
+            if (!isTileFree(tiles[i], tiles)) continue;
+            for (let j = i + 1; j < tiles.length; j++) {
+                if (tiles[j].removed) continue;
+                if (!isTileFree(tiles[j], tiles)) continue;
+                if (tiles[i].pairId === tiles[j].pairId && tiles[i].type !== tiles[j].type) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     function renderBoard() {
@@ -361,7 +381,7 @@
                 if (selectedId === tile.id) div.classList.add('selected');
                 div.innerHTML = `
                     <div class="main-char">${tile.char}</div>
-                    <div class="pinyin-small">${tile.pinyin}</div>
+                    <div class="pinyin">${tile.pinyin}</div>
                     <div class="info">${tile.name}</div>
                 `;
                 div.onclick = (function(t) { return function() { onTileClick(t); }; })(tile);
@@ -370,12 +390,17 @@
             if (rowDiv.children.length > 0) pyramidDiv.appendChild(rowDiv);
         }
         boardEl.appendChild(pyramidDiv);
+        
+        // Проверяем, есть ли доступные ходы
+        if (!hasAvailableMoves() && matchedCount < totalPairs) {
+            msgEl.innerHTML = "⚠️ Нет доступных ходов! Нажми 'Перемешать' чтобы продолжить.";
+        }
     }
 
     function onTileClick(clickedTile) {
         if (clickedTile.removed) return;
         if (!isTileFree(clickedTile, tiles)) {
-            msgEl.innerHTML = "🔒 Эта плитка заблокирована! Сначала уберите те, что сверху или по бокам.";
+            msgEl.innerHTML = "🔒 Эта плитка заблокирована! Сначала уберите ту, что сверху.";
             return;
         }
         if (selectedId === null) {
@@ -391,6 +416,7 @@
             msgEl.innerHTML = "🔍 Выделение снято";
             return;
         }
+        // Проверяем пару: одинаковый pairId и разные типы (ключ+слово)
         if (selectedTile.pairId === clickedTile.pairId && selectedTile.type !== clickedTile.type) {
             selectedTile.removed = true;
             clickedTile.removed = true;
@@ -400,14 +426,17 @@
             score += points;
             if (streak > record) record = streak;
             updateUI();
-            const radicalData = selectedTile.type === 'radical' ? selectedTile.radicalData : clickedTile.radicalData;
-            if (radicalData) showExamples(radicalData);
+            
+            const pair = PAIRS_DATA[selectedTile.pairId];
+            if (pair) showExamples(pair);
+            
             selectedId = null;
             renderBoard();
             msgEl.innerHTML = `✅ Верно! +${points} очков (серия ${streak})`;
+            
             if (matchedCount === totalPairs) {
-                msgEl.innerHTML = "🏆 ПОБЕДА! Ты знаток радикалов! 🏆";
-                speakText("Поздравляю! Вы выиграли!");
+                msgEl.innerHTML = `🏆 ПОБЕДА! Уровень ${currentLevel} пройден! Нажми следующий уровень. 🏆`;
+                speakText("Поздравляю! Уровень пройден!");
             }
         } else {
             streak = 0;
@@ -426,51 +455,119 @@
         progressFill.style.width = ((matchedCount / totalPairs) * 100) + "%";
     }
 
-    function buildPyramid() {
-        const shuffled = [...RADICALS_DATA].sort(() => Math.random() - 0.5);
-        const selected = shuffled.slice(0, 18);
-        const pairs = [];
-        for (let i = 0; i < selected.length; i++) {
-            pairs.push({ data: selected[i], type: 'word', pairId: i });
-            pairs.push({ data: selected[i], type: 'radical', pairId: i });
+    function shuffleRemaining() {
+        const remaining = tiles.filter(t => !t.removed);
+        if (remaining.length === 0) {
+            initGame(currentLevel);
+            return;
         }
-        const shuffledPairs = [...pairs].sort(() => Math.random() - 0.5);
-        const newTiles = [];
-        let idCounter = 0;
-        const rows = [1, 2, 3, 4, 5, 6];
-        let pairIdx = 0;
-        for (let r = 0; r < rows.length; r++) {
-            for (let c = 0; c < rows[r]; c++) {
-                if (pairIdx >= shuffledPairs.length) pairIdx = 0;
-                const p = shuffledPairs[pairIdx];
-                newTiles.push({
-                    id: idCounter++,
-                    row: r,
-                    col: c,
-                    char: p.data.char,
-                    pinyin: p.data.pinyin,
-                    name: p.data.name,
-                    type: p.type,
-                    pairId: p.pairId,
-                    radicalData: p.data,
-                    removed: false
-                });
-                pairIdx++;
+        // Перемешиваем только оставшиеся плитки, сохраняя их позиции
+        const remainingPairs = [];
+        for (let i = 0; i < remaining.length; i++) {
+            const tile = remaining[i];
+            remainingPairs.push({
+                pairId: tile.pairId,
+                type: tile.type,
+                char: tile.char,
+                pinyin: tile.pinyin,
+                name: tile.name
+            });
+        }
+        // Перемешиваем
+        for (let i = remainingPairs.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [remainingPairs[i], remainingPairs[j]] = [remainingPairs[j], remainingPairs[i]];
+        }
+        // Обновляем плитки
+        let idx = 0;
+        for (let i = 0; i < tiles.length; i++) {
+            if (!tiles[i].removed) {
+                tiles[i].pairId = remainingPairs[idx].pairId;
+                tiles[i].type = remainingPairs[idx].type;
+                tiles[i].char = remainingPairs[idx].char;
+                tiles[i].pinyin = remainingPairs[idx].pinyin;
+                tiles[i].name = remainingPairs[idx].name;
+                idx++;
             }
         }
-        return newTiles;
+        selectedId = null;
+        renderBoard();
+        msgEl.innerHTML = "🃏 Оставшиеся плитки перемешаны! Продолжай игру.";
     }
 
-    function initGame() {
-        tiles = buildPyramid();
-        totalPairs = tiles.length / 2;
+    function initGame(level) {
+        currentLevel = level;
+        const config = LEVEL_CONFIG[level];
+        const totalPairsNeeded = config.pairsCount;
+        
+        // Берём нужное количество пар
+        const selectedPairs = [];
+        for (let i = 0; i < totalPairsNeeded; i++) {
+            selectedPairs.push(PAIRS_DATA[i % PAIRS_DATA.length]);
+        }
+        
+        totalPairs = selectedPairs.length;
         matchedCount = 0;
         score = 0;
         streak = 0;
         selectedId = null;
+        
+        // Строим пирамиду
+        tiles = [];
+        let idCounter = 0;
+        const rows = config.rows;
+        
+        // Создаём список всех плиток (каждая пара даёт ключ и слово)
+        let allTilesList = [];
+        for (let i = 0; i < selectedPairs.length; i++) {
+            const pair = selectedPairs[i];
+            allTilesList.push({
+                pairId: i,
+                type: 'key',
+                char: pair.key,
+                pinyin: pair.keyPinyin,
+                name: pair.keyName
+            });
+            allTilesList.push({
+                pairId: i,
+                type: 'word',
+                char: pair.word,
+                pinyin: pair.wordPinyin,
+                name: pair.wordName
+            });
+        }
+        
+        // Перемешиваем
+        for (let i = allTilesList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allTilesList[i], allTilesList[j]] = [allTilesList[j], allTilesList[i]];
+        }
+        
+        // Раскладываем по рядам
+        let tileIdx = 0;
+        for (let r = 0; r < rows.length; r++) {
+            const rowSize = rows[r];
+            for (let c = 0; c < rowSize; c++) {
+                if (tileIdx >= allTilesList.length) break;
+                const tileData = allTilesList[tileIdx];
+                tiles.push({
+                    id: idCounter++,
+                    row: r,
+                    col: c,
+                    pairId: tileData.pairId,
+                    type: tileData.type,
+                    char: tileData.char,
+                    pinyin: tileData.pinyin,
+                    name: tileData.name,
+                    removed: false
+                });
+                tileIdx++;
+            }
+        }
+        
         updateUI();
         renderBoard();
-        msgEl.innerHTML = "🏔️ Маджонг-пирамида! Соединяй ТОЛЬКО свободные плитки.";
+        msgEl.innerHTML = `🏔️ Уровень ${level} (${rows.length} рядов, ${totalPairs} пар). Соединяй ключи со словами!`;
     }
 
     function showHint() {
@@ -486,12 +583,29 @@
                 }
             }
         }
-        msgEl.innerHTML = "💡 Попробуй убрать верхние плитки, чтобы открыть нижние.";
+        if (hasAvailableMoves()) {
+            msgEl.innerHTML = "💡 Осмотрись внимательно! Есть доступные пары.";
+        } else {
+            msgEl.innerHTML = "💡 Нет доступных ходов! Нажми 'Перемешать'.";
+        }
     }
 
+    // Обработчики уровней
+    document.querySelectorAll('.level-btn').forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const level = parseInt(btn.dataset.level);
+            initGame(level);
+        };
+    });
+
     document.getElementById('hintBtn').onclick = showHint;
-    document.getElementById('resetGameBtn').onclick = initGame;
-    initGame();
+    document.getElementById('shuffleBtn').onclick = shuffleRemaining;
+    document.getElementById('resetGameBtn').onclick = () => initGame(currentLevel);
+    
+    // Запуск
+    initGame(3);
 </script>
 </body>
 </html>
