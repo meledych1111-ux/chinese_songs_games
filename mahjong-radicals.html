@@ -454,8 +454,8 @@
 </div>
 
 <script>
-    // ==================== БАЗА РАДИКАЛОВ (ключ + слово) ====================
-    // Для демонстрации — 20 радикалов. Замените на полный массив из 214.
+    // ==================== ПОЛНАЯ БАЗА РАДИКАЛОВ (214) ====================
+    // ВАЖНО: массив правильно открыт и закрыт, все элементы уникальны
     const RADICALS_DB = [
         { key: "一", keyPinyin: "yī", keyName: "один", word: "一", wordPinyin: "yī", wordName: "один", examples: [], strokes: 1 },
         { key: "丨", keyPinyin: "gǔn", keyName: "вертикаль", word: "中", wordPinyin: "zhōng", wordName: "середина", examples: [], strokes: 1 },
@@ -678,6 +678,7 @@
     let streak = 0;
     let record = 0;
     let currentModal = null;
+    let currentRadicalChar = "";
 
     const LEVEL_CONFIG = {
         1: { pairsCount: 10, gridCols: 4 },
@@ -709,16 +710,11 @@
         window.speechSynthesis.speak(utterance);
     }
 
-    // Функция анимации порядка черт (покадрово, с паузой)
     async function animateStrokes(ctx, canvas, totalStrokes) {
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-        
         for (let s = 1; s <= totalStrokes; s++) {
-            // Очищаем холст
             ctx.fillStyle = '#fff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Рисуем полупрозрачный образец иероглифа
             ctx.save();
             ctx.globalAlpha = 0.15;
             ctx.font = `bold ${canvas.height * 0.55}px "Noto Sans CJK SC", system-ui`;
@@ -727,14 +723,9 @@
             ctx.textBaseline = "middle";
             ctx.fillText(currentRadicalChar, canvas.width / 2, canvas.height / 2);
             ctx.restore();
-            
-            // Показываем номер текущей черты (крупно и ярко)
             ctx.font = `bold ${canvas.height * 0.12}px system-ui`;
             ctx.fillStyle = '#e74c3c';
-            ctx.shadowBlur = 0;
             ctx.fillText(`${s} / ${totalStrokes}`, canvas.width - 50, 50);
-            
-            // Рисуем схематичную подсказку — круг с номером черты
             ctx.beginPath();
             ctx.arc(canvas.width - 30, 30, 20, 0, 2 * Math.PI);
             ctx.fillStyle = '#ff6b35';
@@ -742,12 +733,8 @@
             ctx.fillStyle = 'white';
             ctx.font = `bold 20px system-ui`;
             ctx.fillText(`${s}`, canvas.width - 38, 38);
-            
-            // Пауза, чтобы можно было рассмотреть номер черты
             await delay(1300);
         }
-        
-        // Финальный показ полного иероглифа
         ctx.fillStyle = '#fff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.save();
@@ -758,20 +745,16 @@
         ctx.textBaseline = "middle";
         ctx.fillText(currentRadicalChar, canvas.width / 2, canvas.height / 2);
         ctx.restore();
-        
         ctx.font = `16px system-ui`;
         ctx.fillStyle = '#2ecc71';
         ctx.fillText("✓ Порядок черт показан! Теперь можно обвести.", canvas.width / 2, canvas.height - 20);
     }
-
-    let currentRadicalChar = "";
 
     function showLearnModal(pair) {
         if (currentModal) currentModal.remove();
         currentRadicalChar = pair.key;
         const examples = pair.examples || [];
         const totalStrokes = pair.strokes || 3;
-        
         const modal = document.createElement('div');
         modal.className = 'learn-modal';
         modal.innerHTML = `
@@ -779,7 +762,6 @@
                 <div class="radical-big">${pair.key}</div>
                 <div class="radical-name">${pair.keyName}</div>
                 <div class="radical-pinyin">${pair.keyPinyin}</div>
-                
                 <div class="draw-section">
                     <div class="stroke-controls">
                         <button class="stroke-animate">🎬 Показать порядок черт</button>
@@ -797,7 +779,6 @@
                         <input type="range" id="drawWeight" min="1" max="25" value="6">
                     </div>
                 </div>
-                
                 <div class="examples-title">📖 Примеры слов с этим радикалом:</div>
                 <div class="examples-list">
                     <div class="example-word" data-char="${pair.word}" data-pinyin="${pair.wordPinyin}">
@@ -823,7 +804,6 @@
         canvas.width = 400;
         canvas.height = 400;
         const ctx = canvas.getContext('2d');
-        
         function initCanvas() {
             ctx.fillStyle = '#fff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -833,7 +813,6 @@
             ctx.lineJoin = 'round';
         }
         initCanvas();
-
         let drawing = false;
         function getPos(e) {
             const rect = canvas.getBoundingClientRect();
@@ -870,10 +849,7 @@
         canvas.addEventListener('touchmove', draw, { passive: false });
         canvas.addEventListener('touchend', stop);
 
-        modal.querySelector('.clear-draw').onclick = () => {
-            initCanvas();
-        };
-        
+        modal.querySelector('.clear-draw').onclick = () => initCanvas();
         modal.querySelector('.example-draw').onclick = () => {
             initCanvas();
             ctx.save();
@@ -885,29 +861,20 @@
             ctx.fillText(pair.key, canvas.width / 2, canvas.height / 2);
             ctx.restore();
         };
-        
         modal.querySelector('.stroke-animate').onclick = async () => {
             initCanvas();
             await animateStrokes(ctx, canvas, totalStrokes);
         };
-        
         const weightSlider = modal.querySelector('#drawWeight');
         weightSlider.oninput = (e) => {
             const val = parseInt(e.target.value);
             ctx.lineWidth = val;
             modal.querySelector('#weightValue').textContent = val;
         };
-
         modal.querySelectorAll('.example-word').forEach(el => {
-            el.onclick = () => {
-                const ch = el.dataset.char;
-                if (ch) speakChinese(ch);
-            };
+            el.onclick = () => { const ch = el.dataset.char; if (ch) speakChinese(ch); };
         });
-        modal.querySelector('.close-learn').onclick = () => {
-            modal.remove();
-            currentModal = null;
-        };
+        modal.querySelector('.close-learn').onclick = () => { modal.remove(); currentModal = null; };
         speakChinese(pair.key);
     }
 
@@ -922,22 +889,11 @@
             const div = document.createElement('div');
             div.className = 'tile';
             if (selectedId === t.id) div.classList.add('selected');
-            div.innerHTML = `
-                <div class="main-char">${t.char}</div>
-                <div class="pinyin">${t.pinyin}</div>
-                <div class="info">${t.name}</div>
-            `;
-            div.onclick = (function(tile) {
-                return function() {
-                    speakChinese(tile.char);
-                    onTileClick(tile);
-                };
-            })(t);
+            div.innerHTML = `<div class="main-char">${t.char}</div><div class="pinyin">${t.pinyin}</div><div class="info">${t.name}</div>`;
+            div.onclick = (function(tile) { return function() { speakChinese(tile.char); onTileClick(tile); }; })(t);
             gridEl.appendChild(div);
         }
-        if (gridEl.children.length === 0 && matchedCount === totalPairs) {
-            msgEl.innerHTML = "🏆 ПОБЕДА! Отличная игра! 🏆";
-        }
+        if (gridEl.children.length === 0 && matchedCount === totalPairs) msgEl.innerHTML = "🏆 ПОБЕДА! Отличная игра! 🏆";
     }
 
     function onTileClick(clickedTile) {
@@ -992,48 +948,16 @@
 
     function shuffleTiles() {
         const remaining = tiles.filter(t => !t.removed);
-        if (remaining.length === 0) {
-            initGame(currentLevel);
-            return;
-        }
-        const tileData = remaining.map(t => ({
-            pairId: t.pairId,
-            type: t.type,
-            char: t.char,
-            pinyin: t.pinyin,
-            name: t.name
-        }));
-        for (let i = tileData.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [tileData[i], tileData[j]] = [tileData[j], tileData[i]];
-        }
+        if (remaining.length === 0) { initGame(currentLevel); return; }
+        const tileData = remaining.map(t => ({ pairId: t.pairId, type: t.type, char: t.char, pinyin: t.pinyin, name: t.name }));
+        for (let i = tileData.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [tileData[i], tileData[j]] = [tileData[j], tileData[i]]; }
         let idx = 0;
-        for (let i = 0; i < tiles.length; i++) {
-            if (!tiles[i].removed) {
-                tiles[i].pairId = tileData[idx].pairId;
-                tiles[i].type = tileData[idx].type;
-                tiles[i].char = tileData[idx].char;
-                tiles[i].pinyin = tileData[idx].pinyin;
-                tiles[i].name = tileData[idx].name;
-                idx++;
-            }
-        }
-        selectedId = null;
-        renderGrid();
-        msgEl.innerHTML = "🃏 Плитки перемешаны! Продолжай игру.";
+        for (let i = 0; i < tiles.length; i++) { if (!tiles[i].removed) { tiles[i].pairId = tileData[idx].pairId; tiles[i].type = tileData[idx].type; tiles[i].char = tileData[idx].char; tiles[i].pinyin = tileData[idx].pinyin; tiles[i].name = tileData[idx].name; idx++; } }
+        selectedId = null; renderGrid(); msgEl.innerHTML = "🃏 Плитки перемешаны! Продолжай игру.";
     }
 
     function showHint() {
-        for (let i = 0; i < tiles.length; i++) {
-            if (tiles[i].removed) continue;
-            for (let j = i + 1; j < tiles.length; j++) {
-                if (tiles[j].removed) continue;
-                if (tiles[i].pairId === tiles[j].pairId && tiles[i].type !== tiles[j].type) {
-                    msgEl.innerHTML = `💡 Подсказка: "${tiles[i].char}" и "${tiles[j].char}" — это пара!`;
-                    return;
-                }
-            }
-        }
+        for (let i = 0; i < tiles.length; i++) { if (tiles[i].removed) continue; for (let j = i + 1; j < tiles.length; j++) { if (tiles[j].removed) continue; if (tiles[i].pairId === tiles[j].pairId && tiles[i].type !== tiles[j].type) { msgEl.innerHTML = `💡 Подсказка: "${tiles[i].char}" и "${tiles[j].char}" — это пара!`; return; } } }
         msgEl.innerHTML = "💡 Попробуй перемешать плитки!";
     }
 
@@ -1042,59 +966,24 @@
         const config = LEVEL_CONFIG[level];
         const neededPairs = Math.min(config.pairsCount, RADICALS_DB.length);
         const selectedPairs = [];
-        for (let i = 0; i < neededPairs; i++) {
-            selectedPairs.push(RADICALS_DB[i % RADICALS_DB.length]);
-        }
+        for (let i = 0; i < neededPairs; i++) selectedPairs.push(RADICALS_DB[i % RADICALS_DB.length]);
         totalPairs = selectedPairs.length;
-        matchedCount = 0;
-        score = 0;
-        streak = 0;
-        selectedId = null;
+        matchedCount = 0; score = 0; streak = 0; selectedId = null;
         tiles = [];
         let idCounter = 0;
         for (let i = 0; i < selectedPairs.length; i++) {
             const p = selectedPairs[i];
-            tiles.push({
-                id: idCounter++,
-                pairId: i,
-                type: 'key',
-                char: p.key,
-                pinyin: p.keyPinyin,
-                name: p.keyName,
-                removed: false
-            });
-            tiles.push({
-                id: idCounter++,
-                pairId: i,
-                type: 'word',
-                char: p.word,
-                pinyin: p.wordPinyin,
-                name: p.wordName,
-                removed: false
-            });
+            tiles.push({ id: idCounter++, pairId: i, type: 'key', char: p.key, pinyin: p.keyPinyin, name: p.keyName, removed: false });
+            tiles.push({ id: idCounter++, pairId: i, type: 'word', char: p.word, pinyin: p.wordPinyin, name: p.wordName, removed: false });
         }
-        for (let i = tiles.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
-        }
-        updateUI();
-        renderGrid();
-        msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй КЛЮЧ со СЛОВОМ!`;
+        for (let i = tiles.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; }
+        updateUI(); renderGrid(); msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй КЛЮЧ со СЛОВОМ!`;
     }
 
-    document.querySelectorAll('.level-btn').forEach(btn => {
-        btn.onclick = () => {
-            document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const level = parseInt(btn.dataset.level);
-            initGame(level);
-        };
-    });
-
+    document.querySelectorAll('.level-btn').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const level = parseInt(btn.dataset.level); initGame(level); }; });
     document.getElementById('hintBtn').onclick = showHint;
     document.getElementById('shuffleBtn').onclick = shuffleTiles;
     document.getElementById('resetGameBtn').onclick = () => initGame(currentLevel);
-
     initGame(3);
 </script>
 </body>
