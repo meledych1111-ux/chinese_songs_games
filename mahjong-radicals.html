@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ | Классическая пирамида</title>
+    <title>🀄️ МАДЖОНГ С РАДИКАЛАМИ | Найди пару ключ+слово</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
             padding: 20px;
         }
         .game-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             background: rgba(30, 25, 20, 0.6);
             border-radius: 48px;
@@ -28,6 +28,7 @@
             text-align: center;
             font-size: 1.8rem;
             color: #f7e05e;
+            margin-bottom: 8px;
         }
         .sub {
             text-align: center;
@@ -57,7 +58,8 @@
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         .level-btn {
             background: #4a3729;
@@ -66,28 +68,21 @@
             border-radius: 40px;
             cursor: pointer;
             font-weight: bold;
+            transition: 0.1s;
         }
         .level-btn.active {
             background: linear-gradient(135deg, #f7b42c, #fc8e2c);
             color: #2c1a0c;
         }
-        .game-board {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            overflow-x: auto;
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            background: #4a3729;
+            padding: 25px;
+            border-radius: 48px;
             min-height: 500px;
-        }
-        .pyramid {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        .pyramid-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+            margin: 20px 0;
         }
         .tile {
             background: #fff8e7;
@@ -99,8 +94,7 @@
             transition: all 0.1s;
             border: 3px solid #c8aa6e;
             box-shadow: 0 6px 0 #8b6946;
-            min-width: 110px;
-            padding: 14px 6px;
+            padding: 18px 8px;
         }
         .tile.selected {
             background: #ffe6b3;
@@ -108,31 +102,26 @@
             transform: scale(0.96);
             box-shadow: 0 3px 0 #8b6946;
         }
-        .tile.blocked {
-            opacity: 0.4;
-            filter: grayscale(0.3);
-            cursor: not-allowed;
-        }
         .tile.removed {
             display: none;
         }
         .tile .main-char {
-            font-size: 48px;
+            font-size: 52px;
             font-weight: 800;
             color: #3c2a1f;
         }
         .tile .pinyin {
-            font-size: 12px;
+            font-size: 13px;
             color: #b34e1a;
-            margin-top: 6px;
+            margin-top: 8px;
         }
         .tile .info {
-            font-size: 10px;
-            margin-top: 4px;
+            font-size: 11px;
+            margin-top: 5px;
             color: #7a5a3a;
             background: #f3e5c9;
             display: inline-block;
-            padding: 2px 10px;
+            padding: 3px 12px;
             border-radius: 40px;
         }
         .message-area {
@@ -212,27 +201,26 @@
         .example-item:active { transform: scale(0.95); }
         .example-item .ex-char { font-size: 28px; font-weight: bold; }
         @media (max-width: 800px) {
-            .tile { min-width: 90px; padding: 10px 4px; }
-            .tile .main-char { font-size: 38px; }
+            .game-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 20px; }
+            .tile .main-char { font-size: 42px; }
         }
-        @media (max-width: 600px) {
-            .tile { min-width: 75px; padding: 8px 3px; }
-            .tile .main-char { font-size: 30px; }
-            .tile .pinyin { font-size: 9px; }
+        @media (max-width: 550px) {
+            .game-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+            .tile .main-char { font-size: 34px; }
+            .tile { padding: 12px 5px; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
     <h1>🀄️ МАДЖОНГ С РАДИКАЛАМИ</h1>
-    <div class="sub">🔗 Соедини КЛЮЧ и СЛОВО | Только свободные плитки</div>
+    <div class="sub">🔗 Соедини КЛЮЧ и СЛОВО | Найди все пары</div>
 
     <div class="level-bar" id="levelBar">
-        <div class="level-btn" data-level="1">🌟 Уровень 1 (2 ряда)</div>
-        <div class="level-btn" data-level="2">⭐ Уровень 2 (3 ряда)</div>
-        <div class="level-btn" data-level="3" class="active">🏆 Уровень 3 (4 ряда)</div>
-        <div class="level-btn" data-level="4">🔥 Уровень 4 (5 рядов)</div>
-        <div class="level-btn" data-level="5">💎 Уровень 5 (6 рядов)</div>
+        <div class="level-btn" data-level="1">🌱 Лёгкий (6 пар)</div>
+        <div class="level-btn" data-level="2" class="active">⭐ Средний (12 пар)</div>
+        <div class="level-btn" data-level="3">🏆 Сложный (18 пар)</div>
+        <div class="level-btn" data-level="4">🔥 Мастер (24 пары)</div>
     </div>
 
     <div class="stats-bar">
@@ -243,9 +231,9 @@
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-    <div class="game-board" id="gameBoard"></div>
+    <div class="game-grid" id="gameGrid"></div>
 
-    <div class="message-area" id="gameMessage">🌟 Нажми на свободную плитку, затем на её пару</div>
+    <div class="message-area" id="gameMessage">🌟 Нажми на плитку, затем на её пару (ключ + слово)</div>
 
     <div class="ctrl-buttons">
         <button id="hintBtn" class="hint-btn">💡 Подсказка</button>
@@ -256,27 +244,30 @@
 
 <script>
     // ==================== РАДИКАЛЫ (ключ + слово = пара) ====================
-    const PAIRS_DATA = [
-        { key: "口", keyPinyin: "kǒu", keyName: "рот", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"}] },
-        { key: "水", keyPinyin: "shuǐ", keyName: "вода", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"},{c:"洗",p:"xǐ",m:"мыть"}] },
-        { key: "火", keyPinyin: "huǒ", keyName: "огонь", word: "烧", wordPinyin: "shāo", wordName: "жечь", examples: [{c:"炒",p:"chǎo",m:"жарить"},{c:"烟",p:"yān",m:"дым"}] },
-        { key: "木", keyPinyin: "mù", keyName: "дерево", word: "树", wordPinyin: "shù", wordName: "дерево", examples: [{c:"林",p:"lín",m:"лес"},{c:"桌",p:"zhuō",m:"стол"}] },
-        { key: "手", keyPinyin: "shǒu", keyName: "рука", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"拿",p:"ná",m:"брать"},{c:"找",p:"zhǎo",m:"искать"}] },
-        { key: "心", keyPinyin: "xīn", keyName: "сердце", word: "想", wordPinyin: "xiǎng", wordName: "думать", examples: [{c:"忘",p:"wàng",m:"забывать"},{c:"忙",p:"máng",m:"занятой"}] },
-        { key: "日", keyPinyin: "rì", keyName: "солнце", word: "时", wordPinyin: "shí", wordName: "время", examples: [{c:"明",p:"míng",m:"яркий"},{c:"暖",p:"nuǎn",m:"тёплый"}] },
-        { key: "月", keyPinyin: "yuè", keyName: "луна", word: "期", wordPinyin: "qī", wordName: "период", examples: [{c:"有",p:"yǒu",m:"иметь"},{c:"朋",p:"péng",m:"друг"}] },
-        { key: "女", keyPinyin: "nǚ", keyName: "женщина", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"好",p:"hǎo",m:"хорошо"}] },
-        { key: "人", keyPinyin: "rén", keyName: "человек", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."}] },
-        { key: "金", keyPinyin: "jīn", keyName: "золото", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"}] },
-        { key: "土", keyPinyin: "tǔ", keyName: "земля", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"},{c:"坏",p:"huài",m:"плохой"}] },
-        { key: "山", keyPinyin: "shān", keyName: "гора", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"}] },
-        { key: "田", keyPinyin: "tián", keyName: "поле", word: "男", wordPinyin: "nán", wordName: "мужчина", examples: [{c:"留",p:"liú",m:"оставлять"},{c:"累",p:"lèi",m:"уставать"}] },
-        { key: "目", keyPinyin: "mù", keyName: "глаз", word: "看", wordPinyin: "kàn", wordName: "смотреть", examples: [{c:"眼",p:"yǎn",m:"глаз"},{c:"睡",p:"shuì",m:"спать"}] },
-        { key: "耳", keyPinyin: "ěr", keyName: "ухо", word: "听", wordPinyin: "tīng", wordName: "слушать", examples: [{c:"闻",p:"wén",m:"слышать"}] },
-        { key: "足", keyPinyin: "zú", keyName: "нога", word: "跑", wordPinyin: "pǎo", wordName: "бежать", examples: [{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"}] }
+    const PAIRS = [
+        { key: "口", keyPinyin: "kǒu", keyName: "рот (ключ)", word: "吃", wordPinyin: "chī", wordName: "есть", examples: [{c:"喝",p:"hē",m:"пить"},{c:"叫",p:"jiào",m:"кричать"}] },
+        { key: "氵", keyPinyin: "shuǐ", keyName: "вода (ключ)", word: "河", wordPinyin: "hé", wordName: "река", examples: [{c:"海",p:"hǎi",m:"море"},{c:"洗",p:"xǐ",m:"мыть"}] },
+        { key: "火", keyPinyin: "huǒ", keyName: "огонь (ключ)", word: "烧", wordPinyin: "shāo", wordName: "жечь", examples: [{c:"炒",p:"chǎo",m:"жарить"},{c:"烟",p:"yān",m:"дым"}] },
+        { key: "木", keyPinyin: "mù", keyName: "дерево (ключ)", word: "树", wordPinyin: "shù", wordName: "дерево", examples: [{c:"林",p:"lín",m:"лес"},{c:"桌",p:"zhuō",m:"стол"}] },
+        { key: "扌", keyPinyin: "shǒu", keyName: "рука (ключ)", word: "打", wordPinyin: "dǎ", wordName: "бить", examples: [{c:"拿",p:"ná",m:"брать"},{c:"找",p:"zhǎo",m:"искать"}] },
+        { key: "忄", keyPinyin: "xīn", keyName: "сердце (ключ)", word: "想", wordPinyin: "xiǎng", wordName: "думать", examples: [{c:"忘",p:"wàng",m:"забывать"},{c:"忙",p:"máng",m:"занятой"}] },
+        { key: "日", keyPinyin: "rì", keyName: "солнце (ключ)", word: "时", wordPinyin: "shí", wordName: "время", examples: [{c:"明",p:"míng",m:"яркий"},{c:"暖",p:"nuǎn",m:"тёплый"}] },
+        { key: "月", keyPinyin: "yuè", keyName: "луна (ключ)", word: "期", wordPinyin: "qī", wordName: "период", examples: [{c:"有",p:"yǒu",m:"иметь"},{c:"朋",p:"péng",m:"друг"}] },
+        { key: "女", keyPinyin: "nǚ", keyName: "женщина (ключ)", word: "妈", wordPinyin: "mā", wordName: "мама", examples: [{c:"姐",p:"jiě",m:"сестра"},{c:"好",p:"hǎo",m:"хорошо"}] },
+        { key: "亻", keyPinyin: "rén", keyName: "человек (ключ)", word: "你", wordPinyin: "nǐ", wordName: "ты", examples: [{c:"他",p:"tā",m:"он"},{c:"们",p:"men",m:"мн.ч."}] },
+        { key: "钅", keyPinyin: "jīn", keyName: "металл (ключ)", word: "钱", wordPinyin: "qián", wordName: "деньги", examples: [{c:"银",p:"yín",m:"серебро"},{c:"针",p:"zhēn",m:"игла"}] },
+        { key: "土", keyPinyin: "tǔ", keyName: "земля (ключ)", word: "地", wordPinyin: "dì", wordName: "земля", examples: [{c:"城",p:"chéng",m:"город"},{c:"坏",p:"huài",m:"плохой"}] },
+        { key: "山", keyPinyin: "shān", keyName: "гора (ключ)", word: "峰", wordPinyin: "fēng", wordName: "вершина", examples: [{c:"岛",p:"dǎo",m:"остров"},{c:"岁",p:"suì",m:"возраст"}] },
+        { key: "田", keyPinyin: "tián", keyName: "поле (ключ)", word: "男", wordPinyin: "nán", wordName: "мужчина", examples: [{c:"留",p:"liú",m:"оставлять"},{c:"累",p:"lèi",m:"уставать"}] },
+        { key: "目", keyPinyin: "mù", keyName: "глаз (ключ)", word: "看", wordPinyin: "kàn", wordName: "смотреть", examples: [{c:"眼",p:"yǎn",m:"глаз"},{c:"睡",p:"shuì",m:"спать"}] },
+        { key: "耳", keyPinyin: "ěr", keyName: "ухо (ключ)", word: "听", wordPinyin: "tīng", wordName: "слушать", examples: [{c:"闻",p:"wén",m:"слышать"}] },
+        { key: "足", keyPinyin: "zú", keyName: "нога (ключ)", word: "跑", wordPinyin: "pǎo", wordName: "бежать", examples: [{c:"跳",p:"tiào",m:"прыгать"},{c:"踢",p:"tī",m:"пинать"}] },
+        { key: "讠", keyPinyin: "yán", keyName: "речь (ключ)", word: "说", wordPinyin: "shuō", wordName: "говорить", examples: [{c:"话",p:"huà",m:"слова"},{c:"请",p:"qǐng",m:"пожалуйста"}] },
+        { key: "饣", keyPinyin: "shí", keyName: "еда (ключ)", word: "饭", wordPinyin: "fàn", wordName: "рис", examples: [{c:"饱",p:"bǎo",m:"сытый"},{c:"饿",p:"è",m:"голодный"}] },
+        { key: "衤", keyPinyin: "yī", keyName: "одежда (ключ)", word: "裤", wordPinyin: "kù", wordName: "штаны", examples: [{c:"衬衫",p:"chènshān",m:"рубашка"},{c:"袜",p:"wà",m:"носки"}] }
     ];
 
-    let currentLevel = 3;
+    let currentLevel = 2;
     let tiles = [];
     let selectedId = null;
     let matchedCount = 0;
@@ -285,13 +276,11 @@
     let streak = 0;
     let record = 0;
 
-    // Конфигурация уровней (количество рядов в пирамиде)
     const LEVEL_CONFIG = {
-        1: { rows: [1, 2], pairsCount: 3 },
-        2: { rows: [1, 2, 3], pairsCount: 6 },
-        3: { rows: [1, 2, 3, 4], pairsCount: 10 },
-        4: { rows: [1, 2, 3, 4, 5], pairsCount: 15 },
-        5: { rows: [1, 2, 3, 4, 5, 6], pairsCount: 21 }
+        1: { pairsCount: 6, gridCols: 4 },
+        2: { pairsCount: 12, gridCols: 6 },
+        3: { pairsCount: 18, gridCols: 6 },
+        4: { pairsCount: 24, gridCols: 8 }
     };
 
     const scoreSpan = document.getElementById('scoreValue');
@@ -300,7 +289,7 @@
     const recordSpan = document.getElementById('recordValue');
     const progressFill = document.getElementById('progressFill');
     const msgEl = document.getElementById('gameMessage');
-    const boardEl = document.getElementById('gameBoard');
+    const gridEl = document.getElementById('gameGrid');
 
     function speakText(text) {
         if (!window.speechSynthesis) return;
@@ -313,110 +302,70 @@
 
     function showExamples(pair) {
         const examples = pair.examples || [];
-        if (examples.length === 0) {
-            speakText(pair.key);
-            return;
-        }
         const popup = document.createElement('div');
         popup.className = 'example-popup';
         popup.innerHTML = `
             <div>📚 <strong>${pair.key} (${pair.keyPinyin})</strong> — ${pair.keyName}</div>
             <div class="examples">
+                <div class="example-item" onclick="speakText('${pair.word}')">
+                    <div class="ex-char">${pair.word}</div>
+                    <div>${pair.wordPinyin} — ${pair.wordName}</div>
+                </div>
                 ${examples.map(ex => `<div class="example-item" onclick="speakText('${ex.c}')"><div class="ex-char">${ex.c}</div><div>${ex.p} — ${ex.m}</div></div>`).join('')}
-                <div class="example-item" onclick="speakText('${pair.word}')"><div class="ex-char">${pair.word}</div><div>${pair.wordPinyin} — ${pair.wordName}</div></div>
             </div>
             <div style="font-size:10px; margin-top:8px;">✨ Нажми на слово, чтобы услышать</div>
         `;
         document.body.appendChild(popup);
-        setTimeout(() => popup.remove(), 6000);
+        setTimeout(() => popup.remove(), 5000);
         speakText(pair.key);
     }
 
-    // Проверка: свободна ли плитка (классическое правило: нет плитки сверху)
-    function isTileFree(tile, allTiles) {
-        if (tile.removed) return false;
-        // Проверяем плитку сверху (в ряду выше, та же позиция)
-        const above = allTiles.find(t => t.row === tile.row - 1 && Math.abs(t.col - tile.col) <= 1 && !t.removed);
-        return !above;
-    }
-
-    // Проверка: есть ли доступные ходы
-    function hasAvailableMoves() {
+    function renderGrid() {
+        if (!gridEl) return;
+        const config = LEVEL_CONFIG[currentLevel];
+        gridEl.style.gridTemplateColumns = `repeat(${config.gridCols}, 1fr)`;
+        gridEl.innerHTML = '';
+        
         for (let i = 0; i < tiles.length; i++) {
-            if (tiles[i].removed) continue;
-            if (!isTileFree(tiles[i], tiles)) continue;
-            for (let j = i + 1; j < tiles.length; j++) {
-                if (tiles[j].removed) continue;
-                if (!isTileFree(tiles[j], tiles)) continue;
-                if (tiles[i].pairId === tiles[j].pairId && tiles[i].type !== tiles[j].type) {
-                    return true;
-                }
-            }
+            const tile = tiles[i];
+            if (tile.removed) continue;
+            const div = document.createElement('div');
+            div.className = 'tile';
+            if (selectedId === tile.id) div.classList.add('selected');
+            div.innerHTML = `
+                <div class="main-char">${tile.char}</div>
+                <div class="pinyin">${tile.pinyin}</div>
+                <div class="info">${tile.name}</div>
+            `;
+            div.onclick = (function(t) { return function() { onTileClick(t); }; })(tile);
+            gridEl.appendChild(div);
         }
-        return false;
-    }
-
-    function renderBoard() {
-        if (!boardEl) return;
-        boardEl.innerHTML = '';
-        const maxRow = Math.max(...tiles.map(t => t.row));
-        const pyramidDiv = document.createElement('div');
-        pyramidDiv.className = 'pyramid';
         
-        for (let r = 0; r <= maxRow; r++) {
-            const rowTiles = tiles.filter(t => t.row === r && !t.removed);
-            if (rowTiles.length === 0) continue;
-            const rowDiv = document.createElement('div');
-            rowDiv.className = 'pyramid-row';
-            rowDiv.style.marginLeft = `${(maxRow - r) * 35}px`;
-            
-            const maxCol = Math.max(...tiles.filter(t => t.row === r).map(t => t.col));
-            for (let c = 0; c <= maxCol; c++) {
-                const tile = tiles.find(t => t.row === r && t.col === c);
-                if (!tile || tile.removed) continue;
-                const div = document.createElement('div');
-                div.className = 'tile';
-                const free = isTileFree(tile, tiles);
-                if (!free) div.classList.add('blocked');
-                if (selectedId === tile.id) div.classList.add('selected');
-                div.innerHTML = `
-                    <div class="main-char">${tile.char}</div>
-                    <div class="pinyin">${tile.pinyin}</div>
-                    <div class="info">${tile.name}</div>
-                `;
-                div.onclick = (function(t) { return function() { onTileClick(t); }; })(tile);
-                rowDiv.appendChild(div);
-            }
-            if (rowDiv.children.length > 0) pyramidDiv.appendChild(rowDiv);
-        }
-        boardEl.appendChild(pyramidDiv);
-        
-        // Проверяем, есть ли доступные ходы
-        if (!hasAvailableMoves() && matchedCount < totalPairs) {
-            msgEl.innerHTML = "⚠️ Нет доступных ходов! Нажми 'Перемешать' чтобы продолжить.";
+        // Если сетка пустая после удаления всех плиток
+        if (gridEl.children.length === 0 && matchedCount === totalPairs) {
+            msgEl.innerHTML = "🏆 ПОБЕДА! Отличная игра! 🏆";
         }
     }
 
     function onTileClick(clickedTile) {
         if (clickedTile.removed) return;
-        if (!isTileFree(clickedTile, tiles)) {
-            msgEl.innerHTML = "🔒 Эта плитка заблокирована! Сначала уберите ту, что сверху.";
-            return;
-        }
+        
         if (selectedId === null) {
             selectedId = clickedTile.id;
-            renderBoard();
+            renderGrid();
             msgEl.innerHTML = `✅ Выбрано: ${clickedTile.char} (${clickedTile.name})`;
             return;
         }
+        
         const selectedTile = tiles.find(t => t.id === selectedId);
         if (selectedTile.id === clickedTile.id) {
             selectedId = null;
-            renderBoard();
+            renderGrid();
             msgEl.innerHTML = "🔍 Выделение снято";
             return;
         }
-        // Проверяем пару: одинаковый pairId и разные типы (ключ+слово)
+        
+        // Проверяем пару: одинаковый pairId и разные типы (ключ + слово)
         if (selectedTile.pairId === clickedTile.pairId && selectedTile.type !== clickedTile.type) {
             selectedTile.removed = true;
             clickedTile.removed = true;
@@ -427,15 +376,15 @@
             if (streak > record) record = streak;
             updateUI();
             
-            const pair = PAIRS_DATA[selectedTile.pairId];
+            const pair = PAIRS[selectedTile.pairId % PAIRS.length];
             if (pair) showExamples(pair);
             
             selectedId = null;
-            renderBoard();
+            renderGrid();
             msgEl.innerHTML = `✅ Верно! +${points} очков (серия ${streak})`;
             
             if (matchedCount === totalPairs) {
-                msgEl.innerHTML = `🏆 ПОБЕДА! Уровень ${currentLevel} пройден! Нажми следующий уровень. 🏆`;
+                msgEl.innerHTML = `🏆 ПОБЕДА! Уровень ${currentLevel} пройден! 🏆`;
                 speakText("Поздравляю! Уровень пройден!");
             }
         } else {
@@ -443,7 +392,7 @@
             updateUI();
             msgEl.innerHTML = `❌ Не пара! "${selectedTile.char}" ≠ "${clickedTile.char}"`;
             selectedId = null;
-            renderBoard();
+            renderGrid();
         }
     }
 
@@ -455,55 +404,70 @@
         progressFill.style.width = ((matchedCount / totalPairs) * 100) + "%";
     }
 
-    function shuffleRemaining() {
+    function shuffleTiles() {
+        // Перемешиваем только оставшиеся плитки
         const remaining = tiles.filter(t => !t.removed);
         if (remaining.length === 0) {
             initGame(currentLevel);
             return;
         }
-        // Перемешиваем только оставшиеся плитки, сохраняя их позиции
-        const remainingPairs = [];
-        for (let i = 0; i < remaining.length; i++) {
-            const tile = remaining[i];
-            remainingPairs.push({
-                pairId: tile.pairId,
-                type: tile.type,
-                char: tile.char,
-                pinyin: tile.pinyin,
-                name: tile.name
-            });
-        }
+        
+        // Сохраняем данные плиток
+        const tileData = remaining.map(t => ({
+            pairId: t.pairId,
+            type: t.type,
+            char: t.char,
+            pinyin: t.pinyin,
+            name: t.name
+        }));
+        
         // Перемешиваем
-        for (let i = remainingPairs.length - 1; i > 0; i--) {
+        for (let i = tileData.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [remainingPairs[i], remainingPairs[j]] = [remainingPairs[j], remainingPairs[i]];
+            [tileData[i], tileData[j]] = [tileData[j], tileData[i]];
         }
+        
         // Обновляем плитки
         let idx = 0;
         for (let i = 0; i < tiles.length; i++) {
             if (!tiles[i].removed) {
-                tiles[i].pairId = remainingPairs[idx].pairId;
-                tiles[i].type = remainingPairs[idx].type;
-                tiles[i].char = remainingPairs[idx].char;
-                tiles[i].pinyin = remainingPairs[idx].pinyin;
-                tiles[i].name = remainingPairs[idx].name;
+                tiles[i].pairId = tileData[idx].pairId;
+                tiles[i].type = tileData[idx].type;
+                tiles[i].char = tileData[idx].char;
+                tiles[i].pinyin = tileData[idx].pinyin;
+                tiles[i].name = tileData[idx].name;
                 idx++;
             }
         }
+        
         selectedId = null;
-        renderBoard();
-        msgEl.innerHTML = "🃏 Оставшиеся плитки перемешаны! Продолжай игру.";
+        renderGrid();
+        msgEl.innerHTML = "🃏 Плитки перемешаны! Продолжай игру.";
+    }
+
+    function showHint() {
+        for (let i = 0; i < tiles.length; i++) {
+            if (tiles[i].removed) continue;
+            for (let j = i + 1; j < tiles.length; j++) {
+                if (tiles[j].removed) continue;
+                if (tiles[i].pairId === tiles[j].pairId && tiles[i].type !== tiles[j].type) {
+                    msgEl.innerHTML = `💡 Подсказка: "${tiles[i].char}" и "${tiles[j].char}" — это пара!`;
+                    return;
+                }
+            }
+        }
+        msgEl.innerHTML = "💡 Нет доступных пар? Попробуй перемешать плитки!";
     }
 
     function initGame(level) {
         currentLevel = level;
         const config = LEVEL_CONFIG[level];
-        const totalPairsNeeded = config.pairsCount;
+        const neededPairs = config.pairsCount;
         
         // Берём нужное количество пар
         const selectedPairs = [];
-        for (let i = 0; i < totalPairsNeeded; i++) {
-            selectedPairs.push(PAIRS_DATA[i % PAIRS_DATA.length]);
+        for (let i = 0; i < neededPairs; i++) {
+            selectedPairs.push(PAIRS[i % PAIRS.length]);
         }
         
         totalPairs = selectedPairs.length;
@@ -512,82 +476,42 @@
         streak = 0;
         selectedId = null;
         
-        // Строим пирамиду
+        // Создаём плитки
         tiles = [];
         let idCounter = 0;
-        const rows = config.rows;
-        
-        // Создаём список всех плиток (каждая пара даёт ключ и слово)
-        let allTilesList = [];
         for (let i = 0; i < selectedPairs.length; i++) {
             const pair = selectedPairs[i];
-            allTilesList.push({
+            // Ключ
+            tiles.push({
+                id: idCounter++,
                 pairId: i,
                 type: 'key',
                 char: pair.key,
                 pinyin: pair.keyPinyin,
-                name: pair.keyName
+                name: pair.keyName,
+                removed: false
             });
-            allTilesList.push({
+            // Слово
+            tiles.push({
+                id: idCounter++,
                 pairId: i,
                 type: 'word',
                 char: pair.word,
                 pinyin: pair.wordPinyin,
-                name: pair.wordName
+                name: pair.wordName,
+                removed: false
             });
         }
         
         // Перемешиваем
-        for (let i = allTilesList.length - 1; i > 0; i--) {
+        for (let i = tiles.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [allTilesList[i], allTilesList[j]] = [allTilesList[j], allTilesList[i]];
-        }
-        
-        // Раскладываем по рядам
-        let tileIdx = 0;
-        for (let r = 0; r < rows.length; r++) {
-            const rowSize = rows[r];
-            for (let c = 0; c < rowSize; c++) {
-                if (tileIdx >= allTilesList.length) break;
-                const tileData = allTilesList[tileIdx];
-                tiles.push({
-                    id: idCounter++,
-                    row: r,
-                    col: c,
-                    pairId: tileData.pairId,
-                    type: tileData.type,
-                    char: tileData.char,
-                    pinyin: tileData.pinyin,
-                    name: tileData.name,
-                    removed: false
-                });
-                tileIdx++;
-            }
+            [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
         }
         
         updateUI();
-        renderBoard();
-        msgEl.innerHTML = `🏔️ Уровень ${level} (${rows.length} рядов, ${totalPairs} пар). Соединяй ключи со словами!`;
-    }
-
-    function showHint() {
-        for (let i = 0; i < tiles.length; i++) {
-            if (tiles[i].removed) continue;
-            if (!isTileFree(tiles[i], tiles)) continue;
-            for (let j = i + 1; j < tiles.length; j++) {
-                if (tiles[j].removed) continue;
-                if (!isTileFree(tiles[j], tiles)) continue;
-                if (tiles[i].pairId === tiles[j].pairId && tiles[i].type !== tiles[j].type) {
-                    msgEl.innerHTML = `💡 Подсказка: "${tiles[i].char}" и "${tiles[j].char}" — это пара! Оба свободны.`;
-                    return;
-                }
-            }
-        }
-        if (hasAvailableMoves()) {
-            msgEl.innerHTML = "💡 Осмотрись внимательно! Есть доступные пары.";
-        } else {
-            msgEl.innerHTML = "💡 Нет доступных ходов! Нажми 'Перемешать'.";
-        }
+        renderGrid();
+        msgEl.innerHTML = `🎮 Уровень ${level} (${totalPairs} пар). Соединяй ключи со словами!`;
     }
 
     // Обработчики уровней
@@ -601,11 +525,11 @@
     });
 
     document.getElementById('hintBtn').onclick = showHint;
-    document.getElementById('shuffleBtn').onclick = shuffleRemaining;
+    document.getElementById('shuffleBtn').onclick = shuffleTiles;
     document.getElementById('resetGameBtn').onclick = () => initGame(currentLevel);
     
     // Запуск
-    initGame(3);
+    initGame(2);
 </script>
 </body>
 </html>
