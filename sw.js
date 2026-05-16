@@ -1,73 +1,85 @@
-const CACHE_NAME = 'chinese-course-v2';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/songs.js',
-  '/WORDS.js',
-  '/GRAMMAR.js',
-  '/DIALOGS.js',
-  '/game.js',
-  '/pinyin-sounds.js',
-  '/writing-videos.js',
-  '/sounds-videos.js',
-  '/manifest.json',
-  '/mahjong-radicals.html'
+// Имя вашего репозитория на GitHub
+const REPO_NAME = 'chinese_songs_games';
+
+// Базовый путь (с / в начале и конце)
+const BASE_PATH = `/${REPO_NAME}/`;
+
+// Название кеша (увеличьте номер при изменении файлов)
+const CACHE_NAME = 'chinese-cache-v3';
+
+// Файлы для кеширования
+const FILES_TO_CACHE = [
+  BASE_PATH,
+  `${BASE_PATH}index.html`,
+  `${BASE_PATH}songs.js`,
+  `${BASE_PATH}WORDS.js`,
+  `${BASE_PATH}GRAMMAR.js`,
+  `${BASE_PATH}DIALOGS.js`,
+  `${BASE_PATH}game.js`,
+  `${BASE_PATH}pinyin-sounds.js`,
+  `${BASE_PATH}writing-videos.js`,
+  `${BASE_PATH}sounds-videos.js`,
+  `${BASE_PATH}manifest.json`,
+  `${BASE_PATH}mahjong-radicals.html`
 ];
 
-// Установка Service Worker — кешируем файлы
+// Установка: кешируем файлы
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('📦 Кеширование файлов:', urlsToCache);
-        return cache.addAll(urlsToCache);
+        console.log('📦 Кеширование файлов:', FILES_TO_CACHE);
+        return cache.addAll(FILES_TO_CACHE);
       })
-      .catch(err => console.log('❌ Ошибка кеширования:', err))
+      .catch(err => console.error('❌ Ошибка кеширования:', err))
   );
   self.skipWaiting();
 });
 
-// Активация — удаляем старые кеши
+// Активация: удаляем старые кеши
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(name => {
-          if (name !== CACHE_NAME) {
-            console.log('🗑️ Удаляем старый кеш:', name);
-            return caches.delete(name);
-          }
-        })
-      );
+    caches.keys().then(keyList => {
+      return Promise.all(keyList.map(key => {
+        if (key !== CACHE_NAME) {
+          console.log('🗑️ Удаляем старый кеш:', key);
+          return caches.delete(key);
+        }
+      }));
     })
   );
   self.clients.claim();
 });
 
-// Перехват запросов — сначала ищем в кеше, потом в сети
+// Перехват запросов
 self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  
+  // Пропускаем запросы к другим доменам
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+  
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Нашли в кеше — возвращаем
         if (response) {
-          return response;
+          return response;  // Нашли в кеше
         }
-        // Не нашли — идём в сеть
+        // Иначе идём в сеть
         return fetch(event.request).then(networkResponse => {
-          // Кешируем новый файл для будущих офлайн-сессий
           if (networkResponse && networkResponse.status === 200) {
-            const responseToCache = networkResponse.clone();
+            const responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseToCache);
+              cache.put(event.request, responseClone);
             });
           }
           return networkResponse;
         });
       })
       .catch(() => {
-        // Офлайн и нет в кеше — показываем заглушку
-        return caches.match('/index.html');
+        // Офлайн — показываем главную страницу
+        return caches.match(`${BASE_PATH}index.html`);
       })
   );
 });
