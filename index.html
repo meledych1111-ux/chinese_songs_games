@@ -20,27 +20,41 @@
     <script src="DIALOGS.js"></script>
     <script src="game.js"></script>
 
+    <!-- Добавление радикалов в общий список слов (ТОЛЬКО ОДИН РАЗ) -->
     <script>
     (function addRadicalsToWords() {
-      if (typeof RADICALS !== 'undefined' && RADICALS.length > 0 && typeof WORDS !== 'undefined') {
-        const radicalWords = RADICALS.map(r => ({
-          c: r.s,
-          p: r.p || '?',
-          m: r.m,
-          e: r.e || '🔤',
-          cat: 'radicals',
-          a: `Радикал: ${r.m}. Примеры: ${r.ex || '—'}`
-        }));
-        const existingChars = new Set(WORDS.map(w => w.c));
-        const newRadicals = radicalWords.filter(r => !existingChars.has(r.c));
-        if (newRadicals.length > 0) {
-          WORDS.push(...newRadicals);
-          console.log(`✅ Добавлено ${newRadicals.length} радикалов в общий список слов`);
+        if (typeof RADICALS !== 'undefined' && RADICALS.length > 0 && typeof WORDS !== 'undefined') {
+            const radicalWords = RADICALS.map(r => ({
+                c: r.s,
+                p: r.p || '?',
+                m: r.m,
+                e: r.e || '🔤',
+                cat: 'radicals',
+                a: `Радикал: ${r.m}. Примеры: ${r.ex || '—'}`
+            }));
+            const existingChars = new Set(WORDS.map(w => w.c));
+            const newRadicals = radicalWords.filter(r => !existingChars.has(r.c));
+            if (newRadicals.length > 0) {
+                WORDS.push(...newRadicals);
+                console.log(`✅ Добавлено ${newRadicals.length} радикалов в общий список слов`);
+            }
         }
-      }
     })();
     </script>
-
+    <script>
+        // Регистрация Service Worker для офлайн-режима
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(reg) {
+                        console.log('✅ Service Worker зарегистрирован:', reg);
+                    })
+                    .catch(function(err) {
+                        console.log('❌ Ошибка регистрации SW:', err);
+                    });
+            });
+        }
+    </script>
     <style>
         :root {
           --primary: #4361ee; --primary-dark: #3a56d4;
