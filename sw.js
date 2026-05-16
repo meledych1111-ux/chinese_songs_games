@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chinese-course-v1';
+const CACHE_NAME = 'chinese-course-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -9,7 +9,9 @@ const urlsToCache = [
   '/game.js',
   '/pinyin-sounds.js',
   '/writing-videos.js',
-  '/sounds-videos.js'
+  '/sounds-videos.js',
+  '/manifest.json',
+  '/mahjong-radicals.html'
 ];
 
 // Установка Service Worker — кешируем файлы
@@ -17,10 +19,10 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Кеширование файлов');
+        console.log('📦 Кеширование файлов:', urlsToCache);
         return cache.addAll(urlsToCache);
       })
-      .catch(err => console.log('Ошибка кеширования:', err))
+      .catch(err => console.log('❌ Ошибка кеширования:', err))
   );
   self.skipWaiting();
 });
@@ -32,7 +34,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(name => {
           if (name !== CACHE_NAME) {
-            console.log('Удаляем старый кеш:', name);
+            console.log('🗑️ Удаляем старый кеш:', name);
             return caches.delete(name);
           }
         })
