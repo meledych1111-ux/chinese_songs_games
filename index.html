@@ -173,7 +173,6 @@
             <div style="margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 15px; background: #fdf2e9; padding: 10px; border-radius: 15px; border: 1px solid #e2d1c3; flex-wrap: wrap;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <span>🖌️ Толщина:</span>
-                    <!-- ✅ Изначально толстая кисть (16) и максимум 40 -->
                     <input type="range" id="nWeight" min="1" max="40" value="16" style="cursor: pointer; width: 120px;">
                     <span id="nWeightVal" style="font-weight: bold; min-width: 20px;">16</span>
                 </div>
@@ -256,7 +255,7 @@
     function nextDia() { currentDia=(currentDia+1)%DIALOGS.length; renderDia(); }
     function speakDia() { speak(DIALOGS[currentDia].q+' '+DIALOGS[currentDia].a); }
 
-    // ==================== ЛОГИКА ТЕТРАДИ (CANVAS) - ИСПРАВЛЕНА ====================
+    // ==================== ЛОГИКА ТЕТРАДИ (CANVAS) ====================
     function applyBrushSettings() {
         if(!ctx) return;
         let val = document.getElementById('nWeight').value || 16;
@@ -289,7 +288,7 @@
     function clearCanvas() {
         if(!ctx || !canvas) return;
         ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-        applyBrushSettings(); // ✅ Восстановить толщину
+        applyBrushSettings();
         if(gridEnabled) drawTianzige();
     }
 
@@ -298,21 +297,32 @@
         ctx.save(); ctx.setLineDash([5,5]); ctx.strokeStyle="#d4b5b0"; ctx.lineWidth=2;
         ctx.moveTo(canvas.width/2,0); ctx.lineTo(canvas.width/2,canvas.height); ctx.stroke();
         ctx.moveTo(0,canvas.height/2); ctx.lineTo(canvas.width,canvas.height/2); ctx.stroke();
-        ctx.restore(); applyBrushSettings(); // ✅ Восстановить толщину
+        ctx.restore(); applyBrushSettings();
     }
 
     function toggleGrid() { gridEnabled=!gridEnabled; clearCanvas(); document.getElementById('nGridBtn').textContent = gridEnabled?"🚫 Скрыть сетку":"📐 Показать сетку"; }
 
+    // ✅ ИСПРАВЛЕНИЕ: Автоматический подбор размера под канвас
     function showExample() {
         clearCanvas();
-        let w=canvas.width, h=canvas.height;
-        ctx.save(); ctx.globalAlpha=0.2;
-        // ✅ УВЕЛИЧЕН РАЗМЕР ОБРАЗЦА ПОД ТОЛСТУЮ КИСТЬ
-        ctx.font = `bold ${h * 0.6}px system-ui, sans-serif`;
-        ctx.fillStyle="#ff6b35"; ctx.textAlign="center"; ctx.textBaseline="middle";
+        let w = canvas.width, h = canvas.height;
+        ctx.save(); ctx.globalAlpha = 0.2; ctx.fillStyle = "#ff6b35";
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        
+        let size = Math.min(w, h) * 0.8;
+        ctx.font = `bold ${size}px "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif`;
+        let m = ctx.measureText(currentW.c);
+        
+        // Уменьшаем, пока не влезет с отступом 15%
+        while ((m.width > w * 0.85 || size > h * 0.8) && size > 20) {
+            size -= 5;
+            ctx.font = `bold ${size}px "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif`;
+            m = ctx.measureText(currentW.c);
+        }
+        
         ctx.fillText(currentW.c, w/2, h/2);
         ctx.restore();
-        applyBrushSettings(); // ✅ Восстановить толщину
+        applyBrushSettings();
         document.getElementById('strokeInfo').innerHTML = `Обведите <b>${currentW.c}</b> (Толщина: ${document.getElementById('nWeight').value})`;
     }
 
