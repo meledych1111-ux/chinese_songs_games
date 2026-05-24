@@ -19,6 +19,7 @@
     <script src="GRAMMAR.js"></script>
     <script src="DIALOGS.js"></script>
     <script src="game.js"></script>
+    <script src="RADICALS.js"></script>
 
     <!-- Добавление радикалов в общий список слов (ТОЛЬКО ОДИН РАЗ) -->
     <script>
@@ -40,6 +41,8 @@
             }
         }
     })();
+    </script>
+    
     <script>
         // Регистрация Service Worker для офлайн-режима
         if ('serviceWorker' in navigator) {
@@ -1059,10 +1062,6 @@
         div.onclick = (function(rad){
           return function() {
             speak(rad.s);
-            let idx = -1;
-            for(let i = 0; i < WORDS.length; i++) {
-              if(WORDS[i].c === rad.s) { idx = i; break; }
-            }
             const modal = document.getElementById('modal');
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
@@ -1075,8 +1074,8 @@
               <div class="assoc"><strong>🧠 Как запомнить:</strong><br>Радикал: ${rad.m}<br>Примеры: ${rad.ex || '—'}</div>
               <div class="btn-group">
                 <button onclick="speak('${rad.s}')">🔊 Слушать</button>
-                <button onclick="selectWordByIndex(${idx}, 'notebook')" style="background:var(--success)">📓 В тетрадь</button>
-                <button onclick="selectWordByIndex(${idx}, 'cards')" style="background:var(--primary)">🃏 В карточки</button>
+                <button onclick="addToNotebook('${rad.s.replace(/'/g, "\\'")}')">📓 В тетрадь</button>
+                <button onclick="addToCards('${rad.s.replace(/'/g, "\\'")}')">🃏 В карточки</button>
               </div>
               <div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`;
             modal.classList.add('active');
@@ -1374,6 +1373,31 @@
       }
     }
 
+    // ========== 🆕 НОВЫЕ ФУНКЦИИ ДЛЯ РАДИКАЛОВ ==========
+    function addToNotebook(char) {
+      const idx = WORDS.findIndex(w => w.c === char);
+      if(idx === -1) { showFeedback('mFeed', '❌ Радикал не найден', '#e74c3c'); return; }
+      selectWordByIndex(idx, 'notebook');
+      showFeedback('mFeed', '✅ В тетрадь!', '#2ecc71');
+    }
+
+    function addToCards(char) {
+      const idx = WORDS.findIndex(w => w.c === char);
+      if(idx === -1) { showFeedback('mFeed', '❌ Радикал не найден', '#e74c3c'); return; }
+      selectWordByIndex(idx, 'cards');
+      showFeedback('mFeed', '✅ В карточки!', '#2ecc71');
+    }
+
+    function showFeedback(elementId, text, color) {
+      const el = document.getElementById(elementId);
+      if(el) {
+        el.innerHTML = text;
+        el.style.color = color;
+        setTimeout(() => { if(el) el.innerHTML = ''; }, 2000);
+      }
+    }
+    // ========== 🔚 КОНЕЦ НОВЫХ ФУНКЦИЙ ==========
+
     // ==================== ИНИЦИАЛИЗАЦИЯ ====================
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function() { if(typeof generateToneComparisons === "function") generateToneComparisons(); }, 500);
@@ -1483,4 +1507,4 @@
 <script src="sounds-videos.js"></script>
 </body>
 </html>
-    
+
