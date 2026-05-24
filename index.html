@@ -1138,18 +1138,26 @@
     function speakDia() { speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); }
 
     // ==================== ЛОГИКА ТЕТРАДИ (CANVAS) ====================
+    
+    // ========== 🖌️ ФУНКЦИЯ ПРИМЕНЕНИЯ НАСТРОЕК КИСТИ ==========
+    function applyBrushSettings() {
+      if (!ctx) return;
+      const weight = parseInt(document.getElementById('nWeight').value) || 6;
+      ctx.lineWidth = weight;
+      ctx.strokeStyle = '#333';
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+    
     function initCanvas() {
       canvas = document.getElementById('drawCanvas');
       if(!canvas) return;
       ctx = canvas.getContext('2d', { willReadFrequently: true });
       ctx.fillStyle = '#fff';
       ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.strokeStyle = '#333';
-      ctx.lineWidth = document.getElementById('nWeight').value;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
+      applyBrushSettings(); // ✅ Применяем настройки кисти при инициализации
       document.getElementById('nWeight').oninput = function() {
-        ctx.lineWidth = this.value;
+        applyBrushSettings(); // ✅ Применяем настройки при изменении ползунка
         document.getElementById('nWeightVal').textContent = this.value;
       };
       function getPos(e) {
@@ -1172,15 +1180,22 @@
     }
 
     function clearCanvas() {
-      if(ctx) {
-        ctx.fillStyle='#fff';
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        if(gridEnabled) drawTianzige();
-      }
+      if(!ctx || !canvas) return;
+      ctx.fillStyle='#fff';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      applyBrushSettings(); // ✅ ВОССТАНАВЛИВАЕМ настройки кисти после очистки
+      if(gridEnabled) drawTianzige();
     }
 
     function drawTianzige() {
       if(!ctx || !canvas) return;
+      
+      // ✅ Сохраняем текущие настройки пользователя
+      const savedLineWidth = ctx.lineWidth;
+      const savedStrokeStyle = ctx.strokeStyle;
+      const savedLineCap = ctx.lineCap;
+      const savedLineJoin = ctx.lineJoin;
+      
       var w = canvas.width, h = canvas.height;
       ctx.save();
       ctx.setLineDash([5, 5]);
@@ -1196,6 +1211,12 @@
       ctx.lineWidth = 3;
       ctx.strokeRect(0,0,w,h);
       ctx.restore();
+      
+      // ✅ ВОССТАНАВЛИВАЕМ настройки пользователя
+      ctx.lineWidth = savedLineWidth;
+      ctx.strokeStyle = savedStrokeStyle;
+      ctx.lineCap = savedLineCap;
+      ctx.lineJoin = savedLineJoin;
     }
 
     function toggleGrid() {
@@ -1205,16 +1226,16 @@
     }
 
     function showExample() {
-      clearCanvas();
+      clearCanvas(); // ✅ Уже восстанавливает настройки
       var w = canvas.width, h = canvas.height;
-      ctx.save();
+      ctx.save(); // ✅ Сохраняем состояние
       ctx.globalAlpha = 0.2;
       ctx.font = "bold " + (h * 0.25) + "px 'Noto Sans CJK SC', system-ui";
       ctx.fillStyle = "#ff6b35";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(currentW.c, w/2, h/2);
-      ctx.restore();
+      ctx.restore(); // ✅ Восстанавливаем состояние (включая lineWidth!)
       document.getElementById('strokeInfo').innerHTML = "Обведите иероглиф <strong>" + currentW.c + "</strong> по контуру";
     }
 
