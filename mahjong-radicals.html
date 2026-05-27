@@ -375,7 +375,11 @@
                 factor *= NOTEBOOK_CONFIG.brushTaper;
             }
             
-
+            // Микро-вариации для реалистичности
+            const wobble = 1 + (Math.random() - 0.5) * NOTEBOOK_CONFIG.brushWobble;
+            
+            return Math.max(base * 0.5, Math.min(base * 2.8, base * factor * wobble));
+        }
 
         function drawEllipse(ctx, x, y, radiusX, radiusY, angle, alpha = 1) {
             ctx.save();
