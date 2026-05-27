@@ -121,6 +121,7 @@
         <div class="level-btn" data-level="6">🎯 30 пар</div>
         <div class="level-btn" data-level="7">👑 40 пар</div>
         <div class="level-btn" data-level="8">🏅 50 пар</div>
+        <div class="level-btn" data-level="9">🏆 60 пар</div>
     </div></div>
     <div class="stats-bar"><span>🎯 Счёт: <span id="scoreValue">0</span></span><span>🧩 Осталось: <span id="remainValue">0</span></span><span>🔥 Серия: <span id="streakValue">0</span></span><span>🏆 Рекорд: <span id="recordValue">0</span></span></div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -145,7 +146,12 @@
         strokeColor: '#1a0f0a',
         exampleColor: '#9b59b6',
         checkThreshold: 0.40,
-        checkGoodThreshold: 0.25
+        checkGoodThreshold: 0.25,
+        // 🖌️ НАСТРОЙКИ КАЛЛИГРАФИЧЕСКОЙ КИСТИ
+        brushSoftness: 3,        // Мягкость краёв (эффект туши)
+        brushTaper: 0.7,         // Заострение концов (0.5-0.9)
+        brushWobble: 0.15,       // Микро-дрожь для реалистичности
+        brushEllipse: 0.85       // Эллиптичность кисти (0.7-1.0)
     };
 
     const LEVEL_CONFIG = {
@@ -156,7 +162,8 @@
         5: { pairsCount: 25, gridCols: 5 },
         6: { pairsCount: 30, gridCols: 6 },
         7: { pairsCount: 40, gridCols: 6 },
-        8: { pairsCount: 50, gridCols: 7 }
+        8: { pairsCount: 50, gridCols: 7 },
+        9: { pairsCount: 60, gridCols: 7 }
     };
 
     // ========== ГЛОБАЛЬНЫЕ ==========
@@ -200,67 +207,60 @@
         speechSynthesis.speak(u);
     }
 
-    // ========== УМНЫЙ ПОИСК СЛОВ С РАДИКАЛОМ (ЛЕВО/ПРАВО/ВЕРХ/НИЗ) ==========
-function findWordsWithRadical(radicalChar, limit = 5) {
-    if (typeof WORDS === 'undefined' || !Array.isArray(WORDS)) return [];
-    
-    // Лёгкий маппинг компонентных радикалов → характерные иероглифы, которые их содержат
-    // Это гарантирует, что игра найдёт пару даже для "коротких" радикалов
-    const RADICAL_INDEX = {
-        "氵": ["河","海","江","洗","游","湖","湿","满","深","法","泪","油","温","渴"],
-        "扌": ["打","找","拉","推","拿","提","接","拍","搬","换","扫","按","招","抓"],
-        "艹": ["花","草","茶","药","菜","蓝","苹","莓","莲","菊","芳","芽","苗","范"],
-        "钅": ["钱","银","铁","铜","钢","针","钟","镜","锁","锅","钻","锋","锐","链"],
-        "讠": ["说","话","请","认","记","试","讲","谢","词","语","谈","诉","误","调"],
-        "忄": ["怕","忙","快","慢","懂","惊","慌","忆","情","惊","愉","悦","恨","悔"],
-        "辶": ["过","还","远","近","进","退","追","逃","达","送","遇","边","遍","连"],
-        "饣": ["饭","饱","饿","饮","饺","饼","馆","饰","饿","饨","馄","饲","饵","饥"],
-        "衤": ["衫","裤","袜","被","初","补","裙","袄","袋","装","裁","裂","袭","衬"],
-        "礻": ["礼","社","神","福","祖","祝","祈","祷","祥","视","禅","禄","祸","禁"],
-        "犭": ["猫","狗","狼","狐","猴","狮","猎","独","狭","猛","狂","狡","猩","猩"],
-        "⺮": ["笔","笑","篮","等","箱","算","管","箭","符","简","笨","笛","筝","策"],
-        "阝": ["阳","阴","队","阿","陈","陆","院","阵","阶","限","隔","防","险","陵"],
-        "攵": ["放","收","教","改","政","故","效","敌","敬","敏","救","散","整","数"],
-        "灬": ["热","煮","焦","照","黑","烈","点","熟","照","熊","然","蒸","煎","熬"],
-        "疒": ["病","疼","痛","疗","疫","疯","疤","疾","症","瘦","疲","疤","痒","疮"],
-        "罒": ["罪","罗","罚","网","罩","置","署","羁","罢","罗","罹","罕","罔","罪"],
-        "廾": ["弄","异","开","弊","式","弄","弈","弊","弄","弄","弄","弄","弄","弄"],
-        "夂": ["冬","处","备","复","夏","各","名","处","夏","复","备","冬","处","各"],
-        "冫": ["冰","冷","冻","凉","次","决","冲","减","准","凝","凛","冽","凄","凋"]
-    };
+    // ========== УМНЫЙ ПОИСК СЛОВ С РАДИКАЛОМ ==========
+    function findWordsWithRadical(radicalChar, limit = 5) {
+        if (typeof WORDS === 'undefined' || !Array.isArray(WORDS)) return [];
+        
+        const RADICAL_INDEX = {
+            "氵": ["河","海","江","洗","游","湖","湿","满","深","法","泪","油","温","渴"],
+            "扌": ["打","找","拉","推","拿","提","接","拍","搬","换","扫","按","招","抓"],
+            "艹": ["花","草","茶","药","菜","蓝","苹","莓","莲","菊","芳","芽","苗","范"],
+            "钅": ["钱","银","铁","铜","钢","针","钟","镜","锁","锅","钻","锋","锐","链"],
+            "讠": ["说","话","请","认","记","试","讲","谢","词","语","谈","诉","误","调"],
+            "忄": ["怕","忙","快","慢","懂","惊","慌","忆","情","惊","愉","悦","恨","悔"],
+            "辶": ["过","还","远","近","进","退","追","逃","达","送","遇","边","遍","连"],
+            "饣": ["饭","饱","饿","饮","饺","饼","馆","饰","饿","饨","馄","饲","饵","饥"],
+            "衤": ["衫","裤","袜","被","初","补","裙","袄","袋","装","裁","裂","袭","衬"],
+            "礻": ["礼","社","神","福","祖","祝","祈","祷","祥","视","禅","禄","祸","禁"],
+            "犭": ["猫","狗","狼","狐","猴","狮","猎","独","狭","猛","狂","狡","猩","猬"],
+            "⺮": ["笔","笑","篮","等","箱","算","管","箭","符","简","笨","笛","筝","策"],
+            "阝": ["阳","阴","队","阿","陈","陆","院","阵","阶","限","隔","防","险","陵"],
+            "攵": ["放","收","教","改","政","故","效","敌","敬","敏","救","散","整","数"],
+            "灬": ["热","煮","焦","照","黑","烈","点","熟","熊","然","蒸","煎","熬","煦"],
+            "疒": ["病","疼","痛","疗","疫","疯","疤","疾","症","瘦","疲","痒","疮","痊"],
+            "罒": ["罪","罗","罚","网","罩","置","署","羁","罢","罹","罕","罔","罪","罚"],
+            "廾": ["弄","异","开","弊","式","弄","弈","弊","弄","弄","弄","弄","弄","弄"],
+            "夂": ["冬","处","备","复","夏","各","名","处","夏","复","备","冬","处","各"],
+            "冫": ["冰","冷","冻","凉","次","决","冲","减","准","凝","凛","冽","凄","凋"]
+        };
 
-    const results = [];
-    const seen = new Set();
-    
-    // 1. Если радикал есть в индексе, берём слова из него
-    if (RADICAL_INDEX[radicalChar]) {
-        for (let trigger of RADICAL_INDEX[radicalChar]) {
-            if (results.length >= limit) break;
-            const match = WORDS.find(w => w.c === trigger && !seen.has(w.c));
-            if (match) {
-                seen.add(match.c);
-                results.push({ char: match.c, pinyin: match.p || '', meaning: match.m || '' });
+        const results = [];
+        const seen = new Set();
+        
+        if (RADICAL_INDEX[radicalChar]) {
+            for (let trigger of RADICAL_INDEX[radicalChar]) {
+                if (results.length >= limit) break;
+                const match = WORDS.find(w => w.c === trigger && !seen.has(w.c));
+                if (match) {
+                    seen.add(match.c);
+                    results.push({ char: match.c, pinyin: match.p || '', meaning: match.m || '' });
+                }
             }
         }
-    }
-    
-    // 2. Дополнительно проверяем точное вхождение (для самостоятельных радикалов)
-    if (results.length < limit) {
-        for (let w of WORDS) {
-            if (results.length >= limit) break;
-            if (!w.c || w.c === radicalChar || seen.has(w.c)) continue;
-            // Проверяем, содержит ли слово сам радикал или его вариант
-            if (w.c.includes(radicalChar)) {
-                seen.add(w.c);
-                results.push({ char: w.c, pinyin: w.p || '', meaning: w.m || '' });
+        
+        if (results.length < limit) {
+            for (let w of WORDS) {
+                if (results.length >= limit) break;
+                if (!w.c || w.c === radicalChar || seen.has(w.c)) continue;
+                if (w.c.includes(radicalChar)) {
+                    seen.add(w.c);
+                    results.push({ char: w.c, pinyin: w.p || '', meaning: w.m || '' });
+                }
             }
         }
+        
+        return results;
     }
-    
-    return results;
-}
-
-
 
     // ========== СЕТКА МИЦЗЫГЭ ==========
     function drawMiziGeGrid(ctx, size, padding) {
@@ -341,11 +341,12 @@ function findWordsWithRadical(radicalChar, limit = 5) {
         return { score: pct, msg: '📝 Продолжай тренироваться', color: '#e67e22' };
     }
 
-    // ========== 🖌️ ДИНАМИЧЕСКОЕ ПЕРО (ДАВЛЕНИЕ + СКОРОСТЬ) ==========
-    function setupDynamicBrush(canvas) {
+    // ========== 🖌️ КАЛЛИГРАФИЧЕСКАЯ КИСТЬ (КАК В КИТАЙСКОЙ ЖИВОПИСИ) ==========
+    function setupCalligraphyBrush(canvas) {
         const ctx = canvas.getContext('2d');
         let drawing = false;
-        let lastX, lastY, lastTime, lastWidth;
+        let lastX, lastY, lastTime, lastWidth, lastAngle;
+        let strokePoints = []; // Для заострения концов
 
         function getPos(e) {
             const rect = canvas.getBoundingClientRect();
@@ -356,31 +357,59 @@ function findWordsWithRadical(radicalChar, limit = 5) {
             };
         }
 
-        function calculateWidth(pressure, speed) {
+        function calculateWidth(pressure, speed, isStart, isEnd) {
             const base = NOTEBOOK_CONFIG.defaultBrushWidth;
             let factor = 1;
+            
+            // Давление
             if (pressure > 0 && pressure !== 0.5) {
-                // Стилус: 0.4x ~ 2.0x от базы
                 factor = 0.4 + pressure * 1.6;
             } else {
-                // Палец/мышь: имитация по скорости
                 const maxSpeed = 0.8;
                 const norm = Math.min(speed / maxSpeed, 1);
-                factor = 1.8 - norm * 0.8; // медленно=1.8x, быстро=1.0x
+                factor = 1.8 - norm * 0.8;
             }
-            return Math.max(base * 0.6, Math.min(base * 2.5, base * factor));
+            
+            // Заострение начала/конца штриха (каллиграфия)
+            if (isStart || isEnd) {
+                factor *= NOTEBOOK_CONFIG.brushTaper;
+            }
+            
+            // Микро-вариации для реалистичности
+            const wobble = 1 + (Math.random() - 0.5) * NOTEBOOK_CONFIG.brushWobble;
+            
+            return Math.max(base * 0.5, Math.min(base * 2.8, base * factor * wobble));
+        }
+
+        function drawEllipse(ctx, x, y, radiusX, radiusY, angle, alpha = 1) {
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, radiusX, radiusY, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
         }
 
         function start(e) {
             e.preventDefault();
             drawing = true;
             canvas._drawn = true;
+            strokePoints = [];
+            
             const p = getPos(e);
             lastX = p.x; lastY = p.y; lastTime = performance.now();
-            lastWidth = calculateWidth(p.pressure, 0);
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+            lastWidth = calculateWidth(p.pressure, 0, true, false);
+            lastAngle = 0;
+            
+            // Начинаем с маленькой точки (заострённое начало)
+            ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor;
+            ctx.shadowBlur = NOTEBOOK_CONFIG.brushSoftness;
+            ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
+            drawEllipse(ctx, p.x, p.y, lastWidth * 0.4, lastWidth * 0.4 * NOTEBOOK_CONFIG.brushEllipse, 0);
+            
+            strokePoints.push({ x: p.x, y: p.y, width: lastWidth, angle: 0, isStart: true });
         }
 
         function draw(e) {
@@ -393,36 +422,74 @@ function findWordsWithRadical(radicalChar, limit = 5) {
             const dy = p.y - lastY;
             const dist = Math.hypot(dx, dy);
             const speed = dist / dt;
-
-            let targetW = calculateWidth(p.pressure, speed);
-            // Плавное изменение толщины (интерполяция)
-            let newW = lastWidth * 0.65 + targetW * 0.35;
             
-            ctx.lineWidth = newW;
-            ctx.strokeStyle = NOTEBOOK_CONFIG.strokeColor;
-
-            // Квадратичная кривая для плавности
-            const midX = (lastX + p.x) / 2;
-            const midY = (lastY + p.y) / 2;
-            ctx.quadraticCurveTo(lastX, lastY, midX, midY);
-            ctx.stroke();
-
-            lastX = p.x; lastY = p.y; lastTime = now; lastWidth = newW;
+            // Угол направления движения (для эллиптической кисти)
+            const angle = Math.atan2(dy, dx);
+            
+            let targetW = calculateWidth(p.pressure, speed, false, false);
+            let newW = lastWidth * 0.7 + targetW * 0.3; // Плавная интерполяция
+            
+            // Мягкие края как у туши
+            ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor;
+            ctx.shadowBlur = NOTEBOOK_CONFIG.brushSoftness;
+            ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
+            
+            // Рисуем сегмент кисти с эллиптической формой
+            const radiusX = newW / 2;
+            const radiusY = newW / 2 * NOTEBOOK_CONFIG.brushEllipse;
+            
+            // Несколько слоёв для эффекта "влажной" кисти
+            for (let i = 0; i < 3; i++) {
+                const alpha = 0.4 - i * 0.1;
+                const rX = radiusX * (1 + i * 0.15);
+                const rY = radiusY * (1 + i * 0.15);
+                drawEllipse(ctx, p.x, p.y, rX, rY, angle, alpha);
+            }
+            
+            // Соединяем с предыдущей точкой для плавности
+            if (strokePoints.length > 0) {
+                const prev = strokePoints[strokePoints.length - 1];
+                const steps = Math.max(2, Math.floor(dist / 3));
+                for (let i = 1; i <= steps; i++) {
+                    const t = i / steps;
+                    const ix = lastX + (p.x - lastX) * t;
+                    const iy = lastY + (p.y - lastY) * t;
+                    const iw = lastWidth + (newW - lastWidth) * t;
+                    const ia = lastAngle + (angle - lastAngle) * t;
+                    drawEllipse(ctx, ix, iy, iw/2, iw/2 * NOTEBOOK_CONFIG.brushEllipse, ia, 0.6);
+                }
+            }
+            
+            strokePoints.push({ x: p.x, y: p.y, width: newW, angle: angle });
+            
+            lastX = p.x; lastY = p.y; lastTime = now; lastWidth = newW; lastAngle = angle;
         }
 
         function stop() {
             if (drawing) {
                 drawing = false;
+                
+                // Заострённый конец штриха
+                if (strokePoints.length > 0) {
+                    const last = strokePoints[strokePoints.length - 1];
+                    ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor;
+                    ctx.shadowBlur = NOTEBOOK_CONFIG.brushSoftness;
+                    ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
+                    drawEllipse(ctx, last.x, last.y, last.width * 0.35, last.width * 0.35 * NOTEBOOK_CONFIG.brushEllipse, last.angle);
+                }
+                
+                ctx.shadowBlur = 0;
                 ctx.closePath();
             }
         }
 
-        // Pointer Events (универсально для мыши, тача, стилуса + давление)
+        // Pointer Events — без зума, только рисование
         canvas.addEventListener('pointerdown', start);
         canvas.addEventListener('pointermove', draw);
         canvas.addEventListener('pointerup', stop);
         canvas.addEventListener('pointerleave', stop);
-        canvas.style.touchAction = 'none';
+        canvas.addEventListener('pointercancel', stop);
+        canvas.style.touchAction = 'none'; // ❌ Никакого зума/пана при касании
     }
 
     // ========== ТЕТРАДЬ: МОДАЛЬНОЕ ОКНО ==========
@@ -445,7 +512,7 @@ function findWordsWithRadical(radicalChar, limit = 5) {
                     </div>
                 </div>
                 <div class="draw-section">
-                    <div class="stroke-info">✍️ ${radical.strokes || '?'} черт • Динамическое перо (нажатие/скорость)</div>
+                    <div class="stroke-info">✍️ ${radical.strokes || '?'} черт • Каллиграфическая кисть</div>
                     <div class="draw-canvas-container">
                         <canvas class="draw-canvas" id="nbCanvas"></canvas>
                     </div>
@@ -479,7 +546,7 @@ function findWordsWithRadical(radicalChar, limit = 5) {
 
         const cvs = modal.querySelector('#nbCanvas');
         initNotebookCanvas(cvs);
-        setupDynamicBrush(cvs); // ✅ Новое динамическое перо
+        setupCalligraphyBrush(cvs); // ✅ Новая каллиграфическая кисть
 
         modal.querySelectorAll('.example-word').forEach(el => {
             el.onclick = () => speakChinese(el.dataset.char);
@@ -605,7 +672,7 @@ function findWordsWithRadical(radicalChar, limit = 5) {
             msgEl.innerHTML = `✅ Верно! +${10 + Math.floor(streak / 2) * 2} очков (🔥 серия ${streak})`;
             if (matchedCount === totalPairs) {
                 msgEl.innerHTML = '🏆 УРОВЕНЬ ПРОЙДЕН!'; speakChinese('恭喜你');
-                setTimeout(() => { if (confirm('🎉 Следующий уровень?')) { const n = Math.min(8, currentLevel + 1); const btn = document.querySelector(`.level-btn[data-level="${n}"]`); if (btn) btn.click(); } }, 600);
+                setTimeout(() => { if (confirm('🎉 Следующий уровень?')) { const n = Math.min(9, currentLevel + 1); const btn = document.querySelector(`.level-btn[data-level="${n}"]`); if (btn) btn.click(); } }, 600);
             }
         } else { streak = 0; updateUI(); msgEl.innerHTML = `❌ Не пара! "${sel.char}" ≠ "${clicked.char}"`; selectedId = null; renderGrid(); }
     }
@@ -633,7 +700,7 @@ function findWordsWithRadical(radicalChar, limit = 5) {
 
     function initGame(level) {
         if (!Array.isArray(RADICALS_DB) || RADICALS_DB.length === 0) { msgEl.innerHTML = '⚠️ RADICALS не загружены из WORDS.js'; return; }
-        currentLevel = level; const cfg = LEVEL_CONFIG[level]; let needed = Math.min(cfg.pairsCount, Math.floor(RADICALS_DB.length * 0.8));
+        currentLevel = level; const cfg = LEVEL_CONFIG[level]; let needed = Math.min(cfg.pairsCount, Math.floor(RADICALS_DB.length * 0.9));
         if (needed < 3) needed = 3;
         const pairs = buildPairs(needed);
         if (pairs.length === 0) { msgEl.innerHTML = '⚠️ Не удалось составить пары. Проверьте WORDS.js'; return; }
@@ -644,12 +711,12 @@ function findWordsWithRadical(radicalChar, limit = 5) {
 
     // ========== ЗАГРУЗКА ДАННЫХ ИЗ WORDS.JS ==========
     if (typeof RADICALS !== 'undefined' && Array.isArray(RADICALS) && RADICALS.length > 0) {
-        const skip = ["⺌","⺈","⺍","⺮","⺅","⺋"];
+        const skip = ["⺌","⺈","⺍","⺮","⺅","⺋", "一", "丨", "丶", "丿", "乙", "亅", "⺄", "⺀", "⺁", "⺂"];
         RADICALS.forEach(r => {
             if (!r.s || r.s.length > 2 || skip.includes(r.s)) return;
             RADICALS_DB.push({ key: r.s, keyPinyin: r.p || '?', keyName: r.m || 'радикал', keyMeaning: r.m || '', strokes: Math.min(12, Math.max(1, Math.floor(Math.random() * 8) + 1)) });
         });
-        console.log(`✅ Загружено ${RADICALS_DB.length} радикалов из WORDS.js`);
+        console.log(`✅ Загружено ${RADICALS_DB.length} полноценных радикалов`);
     } else { console.warn('⚠️ Массив RADICALS не найден в WORDS.js'); }
 
     // ========== ОБРАБОТЧИКИ ==========
@@ -661,3 +728,4 @@ function findWordsWithRadical(radicalChar, limit = 5) {
 </script>
 </body>
 </html>
+
