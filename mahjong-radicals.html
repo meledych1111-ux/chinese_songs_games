@@ -94,7 +94,7 @@
     const NOTEBOOK_CONFIG = {
         canvasSize: 420,
         gridPadding: 28,
-        defaultBrushWidth: 14, // ✅ УВЕЛИЧЕНО для толстого образца
+        defaultBrushWidth: 22, // ✅ ЖИРНАЯ КИСТЬ (было 14)
         exampleOpacity: 0.35,
         gridColor: '#b8956a',
         gridColorCenter: '#d4b896',
@@ -209,22 +209,22 @@
         return { score: pct, msg: '📝 Продолжай тренироваться', color: '#e67e22' };
     }
 
-    // ========== 🖌️ КАЛЛИГРАФИЧЕСКАЯ КИСТЬ (ТОЛСТЫЙ ОБРАЗЕЦ) ==========
+    // ========== 🖌️ ЖИРНАЯ КАЛЛИГРАФИЧЕСКАЯ КИСТЬ ==========
     function setupCalligraphyBrush(canvas) {
         const ctx = canvas.getContext('2d');
         let drawing = false, lastX, lastY, lastWidth, lastTime, strokeLen = 0;
-        const base = NOTEBOOK_CONFIG.defaultBrushWidth; // 14
+        const base = NOTEBOOK_CONFIG.defaultBrushWidth; // 22
 
         function getPos(e) {
             const rect = canvas.getBoundingClientRect();
-            return { x: (e.clientX - rect.left) * canvas.width / rect.width, y: (e.clientY - rect.top) * canvas.height / rect.height, pressure: Math.max(0.1, e.pressure || 0.5) };
+            return { x: (e.clientX - rect.left) * canvas.width / rect.width, y: (e.clientY - rect.top) * canvas.height / rect.height, pressure: Math.max(0.15, e.pressure || 0.5) };
         }
 
         function start(e) {
             e.preventDefault(); drawing = true; canvas._drawn = true; strokeLen = 0;
             const p = getPos(e); lastX = p.x; lastY = p.y; lastTime = performance.now();
-            lastWidth = base * 0.8; // ~11px толстое начало
-            ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 1.5; ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
+            lastWidth = base * 0.85; // ~18px толстое начало
+            ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 2; ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
             ctx.beginPath(); ctx.arc(p.x, p.y, lastWidth / 2, 0, Math.PI * 2); ctx.fill();
         }
 
@@ -234,16 +234,16 @@
             const dx = p.x - lastX, dy = p.y - lastY, dist = Math.hypot(dx, dy), speed = dist / dt;
             strokeLen += dist;
 
-            // Формула каллиграфии для толстой кисти
-            const pF = 0.3 + p.pressure * 0.7;
-            const sF = Math.max(0.15, 1 - (speed / 1.2));
+            // Формула для жирной кисти
+            const pF = 0.35 + p.pressure * 0.65;
+            const sF = Math.max(0.2, 1 - (speed / 1.4));
             let targetW = base * pF * sF;
-            if (strokeLen < 22) targetW *= (0.65 + 0.35 * (strokeLen / 22)); // Заострение в начале
-            targetW = Math.max(2.5, Math.min(base * 1.8, targetW)); // Диапазон: 2.5px ~ 25px
-            const newW = lastWidth * 0.7 + targetW * 0.3;
+            if (strokeLen < 28) targetW *= (0.7 + 0.3 * (strokeLen / 28)); // Заострение в начале
+            targetW = Math.max(5, Math.min(base * 1.7, targetW)); // Диапазон: 5px ~ 37px
+            const newW = lastWidth * 0.65 + targetW * 0.35;
 
-            ctx.save(); ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 0.6; ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
-            const steps = Math.max(1, Math.floor(dist / 2));
+            ctx.save(); ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 1; ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
+            const steps = Math.max(1, Math.floor(dist / 2.5));
             for (let i = 1; i <= steps; i++) {
                 const t = i / steps, ix = lastX + dx * t, iy = lastY + dy * t, iw = lastWidth + (newW - lastWidth) * t;
                 ctx.beginPath(); ctx.arc(ix, iy, iw / 2, 0, Math.PI * 2); ctx.fill();
@@ -255,11 +255,11 @@
         function stop() {
             if (!drawing) return; drawing = false;
             // ✅ Острый кончик в конце
-            const angle = Math.atan2(lastY - (lastY - 1), lastX - (lastX - 1)) || 0, taperLen = 8;
+            const angle = Math.atan2(lastY - (lastY - 1), lastX - (lastX - 1)) || 0, taperLen = 10;
             ctx.save(); ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 0;
             for (let i = 1; i <= taperLen; i++) {
-                const t = i / taperLen, tw = lastWidth * Math.pow(1 - t, 1.5);
-                ctx.beginPath(); ctx.ellipse(lastX + Math.cos(angle) * t * 4, lastY + Math.sin(angle) * t * 4, tw/2, tw/3, angle, 0, Math.PI*2); ctx.fill();
+                const t = i / taperLen, tw = lastWidth * Math.pow(1 - t, 1.6);
+                ctx.beginPath(); ctx.ellipse(lastX + Math.cos(angle) * t * 5, lastY + Math.sin(angle) * t * 5, tw/2, tw/3.5, angle, 0, Math.PI*2); ctx.fill();
             }
             ctx.restore();
         }
