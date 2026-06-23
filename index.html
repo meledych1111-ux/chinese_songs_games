@@ -17,7 +17,6 @@
     <!-- ПОДКЛЮЧАЕМ ВСЕ ВНЕШНИЕ СКРИПТЫ -->
     <script src="songs.js"></script>
     <script src="WORDS.js"></script>
-    <script src="GRAMMAR.js"></script>
     <script src="DIALOGS.js"></script>
     <script src="game.js"></script>
     
@@ -417,7 +416,7 @@
         <div class="tab" data-tab="numbers">🔢 Числа</div>
         <div class="tab" data-tab="colors">🎨 Цвета</div>
         <div class="tab" data-tab="dialogs">💬 Диалоги</div>
-        <div class="tab" data-tab="grammar">📚 Грамматика</div>
+        <div class="tab" onclick="window.location.href='grammar.html'">📚 Грамматика</div>
         <div class="tab" data-tab="songs">🎵 Песни</div>
         <div class="tab" data-tab="radicals">🔤 Радикалы</div>
         <div class="tab" data-tab="notebook">📓 Тетрадь</div>
@@ -1839,9 +1838,10 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       console.log('=== ПРОВЕРКА МОДУЛЕЙ ===');
-      console.log('GRAMMAR:', typeof GRAMMAR !== 'undefined' ? '✅ ' + GRAMMAR.length + ' правил' : '⏳ Будет загружен позже');
       console.log('WORDS:', typeof WORDS !== 'undefined' ? '✅ ' + WORDS.length + ' слов' : '❌');
       console.log('RADICALS:', typeof RADICALS !== 'undefined' ? '✅ ' + RADICALS.length + ' радикалов' : '❌');
+      console.log('DIALOGS:', typeof DIALOGS !== 'undefined' ? '✅ ' + DIALOGS.length + ' диалогов' : '❌');
+      console.log('SONGS:', typeof SONGS !== 'undefined' ? '✅ ' + SONGS.length + ' песен' : '❌');
       
       setTimeout(function() { 
         if(typeof generateToneComparisons === "function") generateToneComparisons(); 
@@ -1880,7 +1880,7 @@
       document.getElementById('rNext').onclick = function() { var idx = RADICALS.indexOf(currentRad); var nextIdx = (idx + 1) % RADICALS.length; currentRad = RADICALS[nextIdx]; document.getElementById('rChar').textContent = currentRad.s; document.getElementById('rPinyin').innerHTML = colorP(currentRad.p); document.getElementById('rMeaning').textContent = currentRad.m; };
       document.getElementById('rAll').onclick = function() { document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.panel').forEach(p => p.classList.remove('active')); document.querySelector('.tab[data-tab="radicals"]').classList.add('active'); document.getElementById('radicalsPanel').classList.add('active'); renderRads(); };
 
-      document.querySelectorAll('.tab').forEach(function(tab) {
+      document.querySelectorAll('.tab[data-tab]').forEach(function(tab) {
         tab.onclick = function() {
           var p = this.dataset.tab;
           document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
