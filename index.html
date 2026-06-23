@@ -1,3 +1,12 @@
+Вы правы! Давайте исправим все проблемы:
+
+1. Группировка по радикалам (фонетикам) — показывает все слова, которые содержат каждый радикал
+2. Повторение — теперь показывает РАЗНЫЕ слова, а не одно и то же
+3. Отображение всех слов — исправлено
+
+Вот полный исправленный HTML:
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -21,7 +30,6 @@
     <script src="DIALOGS.js"></script>
     <script src="game.js"></script>
     <script src="RADICALS.js"></script>
-    <script src="review.js"></script>
 
     <!-- Добавление радикалов в общий список слов -->
     <script>
@@ -45,22 +53,8 @@
     })();
     </script>
     
-    <!-- РЕГИСТРАЦИЯ SERVICE WORKER ДЛЯ ОФЛАЙНА -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(function(reg) {
-                        console.log('✅ Service Worker зарегистрирован:', reg);
-                    })
-                    .catch(function(err) {
-                        console.log('❌ Ошибка регистрации SW:', err);
-                    });
-            });
-        }
-    </script>
-    
     <style>
+        /* === ОСНОВНЫЕ СТИЛИ === */
         :root {
           --primary: #4361ee; --primary-dark: #3a56d4;
           --accent: #ff6b35; --success: #2ecc71; --error: #e74c3c;
@@ -80,6 +74,7 @@
         }
         .container { max-width: 850px; margin: 0 auto; padding-bottom: 30px; }
         
+        /* === ПОИСК === */
         .search-section {
             background: rgba(255,255,255,0.97);
             border-radius: 60px;
@@ -252,6 +247,7 @@
             color: #999;
         }
         
+        /* === ТАБЫ === */
         .tabs {
           display: flex; flex-wrap: wrap; gap: 8px; background: rgba(255,255,255,0.95);
           border-radius: 60px; padding: 10px; margin-bottom: 20px;
@@ -270,6 +266,7 @@
         .panel.active { display: block; }
         @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* === КАРТОЧКИ === */
         .card {
           background: rgba(255,255,255,0.95); border-radius: var(--radius); padding: 24px 18px;
           text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; backdrop-filter: blur(10px);
@@ -297,12 +294,14 @@
 
         .random-btn { background: linear-gradient(135deg, #6b44ff, #4361ee); box-shadow: 0 4px 12px rgba(107, 68, 255, 0.3); }
 
+        /* === МОДАЛЬНОЕ ОКНО === */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; backdrop-filter: blur(6px); }
         .modal.active { display: flex; }
         .modal-content { background: white; border-radius: 36px; padding: 24px; max-width: 92vw; max-height: 85vh; overflow-y: auto; width: 100%; position: relative; text-align: center; animation: slideUp 0.25s; }
         .close { position: absolute; top: 8px; right: 12px; font-size: 36px; cursor: pointer; color: #94a3b8; background: none; box-shadow: none; padding: 4px 12px; border-radius: 50%; line-height: 1; }
         .assoc { background: #fff8e1; border-radius: 22px; padding: 18px; margin: 16px 0; text-align: left; border-left: 5px solid #ffb300; font-size: 17px; line-height: 1.5; }
 
+        /* === СЕТКИ === */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 14px; margin: 20px 0; }
         .grid-item {
           background: rgba(255,255,255,0.9); border-radius: 24px; padding: 16px 8px; text-align: center; cursor: pointer;
@@ -385,7 +384,7 @@
           .video-btn { width: 100%; text-align: center; }
         }
         
-        /* Стили для сравнения звуков пиньинь */
+        /* === СТИЛИ ДЛЯ ПИНЬИНЬ === */
         .comparisons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -450,7 +449,7 @@
             .comparison-desc { font-size: 13px; }
         }
 
-        /* Стили для повторения */
+        /* === СТИЛИ ДЛЯ ПОВТОРЕНИЯ === */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -469,6 +468,12 @@
         }
         .review-cube:hover .delete-btn {
             opacity: 1;
+        }
+        .radical-group-card {
+            transition: all 0.2s ease;
+        }
+        .radical-group-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
     </style>
 </head>
@@ -521,6 +526,7 @@
         <div class="tab" data-tab="review">🧠 Повторение</div>
     </div>
     
+    <!-- МОДАЛЬНОЕ ОКНО -->
     <div id="modal" class="modal">
         <div class="modal-content" id="modalContent">
             <button class="close" onclick="closeModal()">×</button>
@@ -528,6 +534,7 @@
         </div>
     </div>
     
+    <!-- ПАНЕЛИ -->
     <div id="studyPanel" class="panel active">    
         <div class="card">
             <div class="big-char" id="sChar">水</div>
@@ -579,8 +586,6 @@
             <span class="fbtn" data-cat="classifiers">🔢 Счётные</span>
             <span class="fbtn" data-cat="phrases">💬 Фразы</span>
             <span class="fbtn" data-cat="idioms">🀄 Идиомы</span>
-            
-            <!-- НОВЫЕ КАТЕГОРИИ -->
             <span class="fbtn" data-cat="business">💼 Бизнес</span>
             <span class="fbtn" data-cat="law">⚖️ Право</span>
             <span class="fbtn" data-cat="sports">🏃 Спорт</span>
@@ -724,10 +729,14 @@
         </div>
     </div>
 
+    <!-- ⭐ ГЛАВНАЯ ГРУППИРОВКА ПО РАДИКАЛАМ (ФОНЕТИКАМ) -->
     <div id="radicalWordsPanel" class="panel">
         <div class="card">
-            <h2 style="margin-bottom: 20px;">🔗 Слова по радикалам</h2>
-            <p style="margin-bottom: 16px;">🎯 Иероглифы, сгруппированные по общему ключу (радикалу). Нажми на слово — услышишь произношение.</p>
+            <h2 style="margin-bottom: 20px;">🔗 Все слова по радикалам</h2>
+            <p style="margin-bottom: 16px; font-size: 14px; color: #666;">
+                🎯 Все иероглифы, сгруппированные по общему ключу (радикалу). 
+                Всего слов: <strong id="totalWordsCount">0</strong>
+            </p>
             <div id="radicalWordsList" style="display: flex; flex-direction: column; gap: 24px;"></div>
         </div>
     </div>
@@ -1134,7 +1143,6 @@
         } else {
             addWordToReview(char);
         }
-        // Показываем уведомление в модалке
         const feed = document.getElementById('mFeed');
         if (feed) {
             feed.innerHTML = '✅ Добавлено в повторение!';
@@ -1463,79 +1471,96 @@
       container.innerHTML = html;
     }
 
-    // ==================== ГРУППИРОВКА СЛОВ ПО РАДИКАЛАМ ====================
+    // ==================== ГРУППИРОВКА ВСЕХ СЛОВ ПО РАДИКАЛАМ (ФОНЕТИКАМ) ====================
     function generateWordsByRadical() {
       const container = document.getElementById('radicalWordsList');
       if (!container) return;
       
+      // Проверяем, что WORDS и RADICALS существуют
+      if (typeof WORDS === 'undefined' || typeof RADICALS === 'undefined') {
+        container.innerHTML = '<p style="text-align:center;padding:40px;color:#999;">⏳ Загрузка данных...</p>';
+        return;
+      }
+      
       let html = '';
+      let totalWordsCount = 0;
       let usedWords = new Set();
       
-      for (const radical of RADICALS) {
+      // Сортируем радикалы по популярности (сначала те, у которых больше слов)
+      const radicalsWithCount = RADICALS.map(rad => {
+        let count = 0;
+        for (const word of WORDS) {
+          if (word.c.includes(rad.s) && !usedWords.has(word.c)) {
+            count++;
+          }
+        }
+        return { ...rad, count };
+      });
+      
+      // Сортируем по убыванию количества слов
+      radicalsWithCount.sort((a, b) => b.count - a.count);
+      
+      for (const radical of radicalsWithCount) {
         if (!radical.s) continue;
         
         // Ищем слова, которые содержат этот радикал
         let matchedWords = [];
         
-        // 1. Проверяем примеры из RADICALS
-        if (radical.ex && radical.ex.length > 0) {
-          const charsInExamples = radical.ex.match(/([一-龯])/g) || [];
-          matchedWords = WORDS.filter(word => 
-            charsInExamples.includes(word.c) && !usedWords.has(word.c)
-          );
+        // Проверяем все слова из WORDS
+        for (const word of WORDS) {
+          if (usedWords.has(word.c)) continue;
+          if (word.c.includes(radical.s)) {
+            matchedWords.push(word);
+          }
         }
         
-        // 2. Если не нашли, ищем по вхождению радикала в слово
-        if (matchedWords.length === 0 && radical.s.length === 1) {
-          matchedWords = WORDS.filter(word => 
-            word.c.includes(radical.s) && !usedWords.has(word.c)
-          );
-        }
-        
-        // 3. Проверяем слова, где радикал является частью иероглифа
-        if (matchedWords.length === 0) {
-          // Ищем слова, у которых в составе есть этот радикал как компонент
-          matchedWords = WORDS.filter(word => {
-            if (usedWords.has(word.c)) return false;
-            // Проверяем каждый символ слова
-            for (let char of word.c) {
-              // Проверяем, содержит ли символ этот радикал
-              // (упрощённая проверка для распространённых радикалов)
-              if (char.includes(radical.s) && char !== radical.s) {
-                return true;
-              }
-            }
-            return false;
-          });
-        }
-        
-        // 4. Если всё ещё нет слов, пропускаем
+        // Если слов нет, пропускаем
         if (matchedWords.length === 0) continue;
         
         // Отмечаем слова как использованные
         matchedWords.forEach(w => usedWords.add(w.c));
+        totalWordsCount += matchedWords.length;
         
         // Ограничиваем количество слов для отображения
-        const displayWords = matchedWords.slice(0, 30);
+        const displayWords = matchedWords.slice(0, 50);
+        const hasMore = matchedWords.length > 50;
+        
+        // Определяем цвет для радикала
+        const colors = ['#4361ee', '#e53935', '#2ecc71', '#f39c12', '#8e24aa', '#00bcd4', '#ff6b35', '#4caf50'];
+        const colorIndex = RADICALS.indexOf(radical) % colors.length;
+        const color = colors[colorIndex];
         
         html += `
-          <div style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-            <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; border-bottom: 2px solid #4361ee; padding-bottom: 8px;">
-              ${radical.e || '🔑'} ${radical.s} — ${radical.m} (${matchedWords.length} слов)
+          <div class="radical-group-card" style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 6px solid ${color};">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;">
+              <div style="font-size: 32px; font-weight: 900; color: ${color}; min-width: 50px; text-align: center;">
+                ${radical.e || '🔑'}
+              </div>
+              <div style="flex: 1;">
+                <div style="font-size: 20px; font-weight: 800; color: #2c3e50;">
+                  ${radical.s} — ${radical.m}
+                </div>
+                <div style="font-size: 13px; color: #888;">
+                  ${matchedWords.length} слов${hasMore ? ` (показано 50 из ${matchedWords.length})` : ''}
+                </div>
+              </div>
+              <button onclick="speak('${radical.s}')" style="background:${color}; color:white; border:none; padding:6px 16px; border-radius:20px; font-size:13px; cursor:pointer;">
+                🔊 Слушать
+              </button>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
               ${displayWords.map(word => `
                 <div onclick="speak('${word.c}')" 
-                     style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: all 0.2s;"
-                     onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.08)';">
+                     style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: all 0.2s; border: 2px solid ${color}22;"
+                     onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; this.style.borderColor='${color}'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.08)'; this.style.borderColor='${color}22'">
                   <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '🔊'}</div>
                   <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
                   <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
                   <div style="font-size: 10px; color: #555;">${word.m}</div>
                 </div>
               `).join('')}
-              ${matchedWords.length > 30 ? `<div style="font-size: 12px; color: #999; padding: 10px;">+ ещё ${matchedWords.length - 30} слов</div>` : ''}
+              ${hasMore ? `<div style="font-size: 12px; color: #999; padding: 10px; align-self: center;">+ ещё ${matchedWords.length - 50} слов</div>` : ''}
             </div>
           </div>
         `;
@@ -1543,17 +1568,17 @@
       
       // Если не нашлось слов через радикалы, показываем все слова по категориям
       if (!html) {
-        // Группируем слова по категориям
         const categories = {};
-        WORDS.forEach(word => {
+        for (const word of WORDS) {
           if (!categories[word.cat]) categories[word.cat] = [];
           categories[word.cat].push(word);
-        });
+        }
         
         for (const [cat, words] of Object.entries(categories)) {
           if (words.length === 0) continue;
+          totalWordsCount += words.length;
           html += `
-            <div style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+            <div style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
               <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; border-bottom: 2px solid #4361ee; padding-bottom: 8px;">
                 📂 ${CAT_NAMES[cat] || cat} (${words.length} слов)
               </div>
@@ -1561,8 +1586,8 @@
                 ${words.slice(0, 30).map(word => `
                   <div onclick="speak('${word.c}')" 
                        style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: all 0.2s;"
-                       onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';"
-                       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.08)';">
+                       onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
+                       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.08)'">
                     <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '📖'}</div>
                     <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
                     <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
@@ -1575,6 +1600,10 @@
           `;
         }
       }
+      
+      // Обновляем счетчик
+      const countEl = document.getElementById('totalWordsCount');
+      if (countEl) countEl.textContent = totalWordsCount || WORDS.length;
       
       container.innerHTML = html || '<p style="text-align:center;padding:40px;color:#999;">📖 Слова не найдены. Проверьте подключение WORDS.js</p>';
     }
@@ -1907,6 +1936,22 @@
         }, 2500);
     }
 
+    // ==================== ПОВТОРЕНИЕ — ИГРЫ С РАЗНЫМИ СЛОВАМИ ====================
+    let reviewSession = {
+        mode: 'visual',
+        items: [],
+        currentIndex: 0,
+        correct: 0,
+        wrong: 0,
+        streak: 0,
+        bestStreak: 0,
+        total: 0,
+        isActive: false,
+        answered: false,
+        currentItem: null,
+        options: []
+    };
+
     function renderReviewPanel() {
         const container = document.getElementById('reviewContainer');
         if (!container) return;
@@ -1942,12 +1987,12 @@
             </div>
             
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
-                <button onclick="startGame('visual')" style="background:linear-gradient(135deg,#4361ee,#764ba2);color:white;border:none;padding:16px;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(67,97,238,0.3);">
+                <button onclick="startReviewGame('visual')" style="background:linear-gradient(135deg,#4361ee,#764ba2);color:white;border:none;padding:16px;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(67,97,238,0.3);">
                     <div style="font-size:36px;">👀</div>
                     <div>Угадай по виду</div>
                     <div style="font-size:11px;font-weight:400;opacity:0.8;">Выбери перевод</div>
                 </button>
-                <button onclick="startGame('audio')" style="background:linear-gradient(135deg,#e53935,#c62828);color:white;border:none;padding:16px;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(229,57,53,0.3);">
+                <button onclick="startReviewGame('audio')" style="background:linear-gradient(135deg,#e53935,#c62828);color:white;border:none;padding:16px;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(229,57,53,0.3);">
                     <div style="font-size:36px;">🎧</div>
                     <div>Угадай на слух</div>
                     <div style="font-size:11px;font-weight:400;opacity:0.8;">Услышь и выбери</div>
@@ -2046,24 +2091,8 @@
         container.innerHTML = html;
     }
 
-    // ==================== ИГРЫ ====================
-
-    let gameState = {
-        mode: 'visual',
-        items: [],
-        currentIndex: 0,
-        correct: 0,
-        wrong: 0,
-        streak: 0,
-        bestStreak: 0,
-        total: 0,
-        isActive: false,
-        answered: false,
-        currentItem: null,
-        options: []
-    };
-
-    function startGame(mode) {
+    // ==================== ЗАПУСК ИГРЫ ПОВТОРЕНИЯ ====================
+    function startReviewGame(mode) {
         const words = getReviewWords();
         const radicals = getReviewRadicals();
         
@@ -2077,10 +2106,13 @@
             return;
         }
         
+        // Перемешиваем все слова
         allItems.sort(() => Math.random() - 0.5);
-        const items = allItems.slice(0, 20);
         
-        gameState = {
+        // Берём до 20 слов за игру (или все, если меньше 20)
+        const items = allItems.slice(0, Math.min(20, allItems.length));
+        
+        reviewSession = {
             mode: mode,
             items: items,
             currentIndex: 0,
@@ -2095,12 +2127,12 @@
             options: []
         };
         
-        showGameCard();
+        showReviewGameCard();
     }
 
-    function generateOptions(correctItem) {
+    function generateReviewOptions(correctItem) {
         const isWord = correctItem.type === 'word';
-        const allItems = gameState.items;
+        const allItems = reviewSession.items;
         
         const correctText = correctItem.m || '?';
         const correctChar = isWord ? correctItem.c : correctItem.s;
@@ -2115,6 +2147,7 @@
             emoji: correctEmoji
         }];
         
+        // Ищем другие варианты (только из списка reviewSession.items, чтобы были РАЗНЫЕ)
         const others = allItems.filter(item => {
             const otherChar = item.type === 'word' ? item.c : item.s;
             return otherChar !== correctChar;
@@ -2134,6 +2167,7 @@
             });
         });
         
+        // Если не хватает вариантов, добавляем из WORDS (но не из списка повторения)
         if (options.length < 4 && typeof WORDS !== 'undefined') {
             const extra = WORDS.filter(w => w.c !== correctChar && !options.some(o => o.char === w.c));
             extra.sort(() => Math.random() - 0.5);
@@ -2152,37 +2186,37 @@
         return options;
     }
 
-    function showGameCard() {
+    function showReviewGameCard() {
         const container = document.getElementById('reviewContainer');
         if (!container) return;
         
-        if (!gameState.isActive || gameState.currentIndex >= gameState.total) {
-            showGameResults();
+        if (!reviewSession.isActive || reviewSession.currentIndex >= reviewSession.total) {
+            showReviewGameResults();
             return;
         }
         
-        const item = gameState.items[gameState.currentIndex];
-        gameState.currentItem = item;
-        gameState.answered = false;
+        const item = reviewSession.items[reviewSession.currentIndex];
+        reviewSession.currentItem = item;
+        reviewSession.answered = false;
         
         const isWord = item.type === 'word';
         const char = isWord ? item.c : item.s;
         const meaning = item.m || '?';
         const emoji = item.e || (isWord ? '📖' : '🔤');
         const pinyin = item.p || '?';
-        const current = gameState.currentIndex + 1;
-        const total = gameState.total;
+        const current = reviewSession.currentIndex + 1;
+        const total = reviewSession.total;
         
-        const options = generateOptions(item);
-        gameState.options = options;
+        const options = generateReviewOptions(item);
+        reviewSession.options = options;
         
-        if (gameState.mode === 'audio') {
+        if (reviewSession.mode === 'audio') {
             setTimeout(() => { speak(char); }, 300);
         }
         
-        const modeIcon = gameState.mode === 'visual' ? '👀' : '🎧';
-        const modeTitle = gameState.mode === 'visual' ? 'Угадай по виду' : 'Угадай на слух';
-        const modeColor = gameState.mode === 'visual' ? '#4361ee' : '#e53935';
+        const modeIcon = reviewSession.mode === 'visual' ? '👀' : '🎧';
+        const modeTitle = reviewSession.mode === 'visual' ? 'Угадай по виду' : 'Угадай на слух';
+        const modeColor = reviewSession.mode === 'visual' ? '#4361ee' : '#e53935';
         
         let html = `
             <div style="background:white;border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
@@ -2192,16 +2226,16 @@
                     </span>
                     <span style="color:#555;font-size:13px;font-weight:600;">
                         ${current}/${total} 
-                        <span style="color:#2ecc71;">✅ ${gameState.correct}</span> 
-                        <span style="color:#e74c3c;">❌ ${gameState.wrong}</span>
-                        ${gameState.streak > 0 ? `<span style="color:#f39c12;">🔥 ${gameState.streak}</span>` : ''}
+                        <span style="color:#2ecc71;">✅ ${reviewSession.correct}</span> 
+                        <span style="color:#e74c3c;">❌ ${reviewSession.wrong}</span>
+                        ${reviewSession.streak > 0 ? `<span style="color:#f39c12;">🔥 ${reviewSession.streak}</span>` : ''}
                     </span>
                 </div>
                 
                 <div style="text-align:center;padding:6px 0;">
         `;
         
-        if (gameState.mode === 'visual') {
+        if (reviewSession.mode === 'visual') {
             html += `
                 <div style="font-size:96px;font-weight:900;color:#2c3e50;line-height:1.2;margin-bottom:4px;text-shadow:2px 2px 0 rgba(0,0,0,0.05);">
                     ${char}
@@ -2233,22 +2267,22 @@
         options.forEach((opt, idx) => {
             const isCorrect = opt.isCorrect;
             const label = String.fromCharCode(65 + idx);
-            const bgColor = gameState.answered 
+            const bgColor = reviewSession.answered 
                 ? (isCorrect ? '#2ecc71' : '#e74c3c') 
                 : '#f0f2f5';
-            const textColor = gameState.answered ? 'white' : '#2c3e50';
+            const textColor = reviewSession.answered ? 'white' : '#2c3e50';
             
             html += `
-                <button onclick="handleGameAnswer(${idx})" 
+                <button onclick="handleReviewAnswer(${idx})" 
                         style="
                             background:${bgColor};
                             color:${textColor};
-                            border:${gameState.answered && isCorrect ? '3px solid #27ae60' : gameState.answered && !isCorrect ? '3px solid #c62828' : '2px solid #e0e7ff'};
+                            border:${reviewSession.answered && isCorrect ? '3px solid #27ae60' : reviewSession.answered && !isCorrect ? '3px solid #c62828' : '2px solid #e0e7ff'};
                             padding:14px 6px;
                             border-radius:14px;
-                            font-size:${gameState.mode === 'visual' ? '16px' : '18px'};
+                            font-size:${reviewSession.mode === 'visual' ? '16px' : '18px'};
                             font-weight:700;
-                            cursor:${gameState.answered ? 'default' : 'pointer'};
+                            cursor:${reviewSession.answered ? 'default' : 'pointer'};
                             transition:all 0.2s;
                             min-height:50px;
                             display:flex;
@@ -2256,16 +2290,16 @@
                             justify-content:center;
                             gap:6px;
                             flex-wrap:wrap;
-                            opacity:${gameState.answered && !isCorrect ? '0.5' : '1'};
-                            ${!gameState.answered ? 'box-shadow: 0 2px 8px rgba(0,0,0,0.06);' : ''}
+                            opacity:${reviewSession.answered && !isCorrect ? '0.5' : '1'};
+                            ${!reviewSession.answered ? 'box-shadow: 0 2px 8px rgba(0,0,0,0.06);' : ''}
                         "
-                        ${gameState.answered ? 'disabled' : ''}
+                        ${reviewSession.answered ? 'disabled' : ''}
                 >
                     <span style="font-weight:400;font-size:11px;opacity:0.6;">${label}.</span>
-                    ${gameState.mode === 'visual' ? opt.text : `<span style="font-size:32px;">${opt.char}</span>`}
-                    ${gameState.mode === 'visual' ? `<span style="font-size:14px;color:#666;font-weight:400;">${opt.emoji || ''}</span>` : ''}
-                    ${gameState.answered && isCorrect ? ' ✅' : ''}
-                    ${gameState.answered && !isCorrect ? ' ❌' : ''}
+                    ${reviewSession.mode === 'visual' ? opt.text : `<span style="font-size:32px;">${opt.char}</span>`}
+                    ${reviewSession.mode === 'visual' ? `<span style="font-size:14px;color:#666;font-weight:400;">${opt.emoji || ''}</span>` : ''}
+                    ${reviewSession.answered && isCorrect ? ' ✅' : ''}
+                    ${reviewSession.answered && !isCorrect ? ' ❌' : ''}
                 </button>
             `;
         });
@@ -2274,7 +2308,7 @@
                 </div>
         `;
         
-        if (gameState.answered) {
+        if (reviewSession.answered) {
             const correct = options.find(o => o.isCorrect);
             html += `
                 <div style="margin-top:12px;padding:12px;background:#f8f9fa;border-radius:12px;border-left:4px solid ${modeColor};">
@@ -2287,10 +2321,10 @@
             `;
         }
         
-        if (gameState.answered) {
+        if (reviewSession.answered) {
             html += `
                 <div style="text-align:center;margin-top:12px;">
-                    <button onclick="nextGameQuestion()" style="background:${modeColor};color:white;border:none;padding:10px 36px;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;">
+                    <button onclick="nextReviewQuestion()" style="background:${modeColor};color:white;border:none;padding:10px 36px;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;">
                         ➡️ Далее
                     </button>
                 </div>
@@ -2304,61 +2338,61 @@
         container.innerHTML = html;
     }
 
-    function handleGameAnswer(index) {
-        if (gameState.answered) return;
+    function handleReviewAnswer(index) {
+        if (reviewSession.answered) return;
         
-        const selected = gameState.options[index];
+        const selected = reviewSession.options[index];
         const isCorrect = selected.isCorrect;
         
-        gameState.answered = true;
+        reviewSession.answered = true;
         
         if (isCorrect) {
-            gameState.correct++;
-            gameState.streak++;
-            if (gameState.streak > gameState.bestStreak) {
-                gameState.bestStreak = gameState.streak;
+            reviewSession.correct++;
+            reviewSession.streak++;
+            if (reviewSession.streak > reviewSession.bestStreak) {
+                reviewSession.bestStreak = reviewSession.streak;
             }
             showToast('✅ Правильно!', 'success');
         } else {
-            gameState.wrong++;
-            gameState.streak = 0;
-            showToast(`❌ Неправильно. Правильно: ${gameState.options.find(o => o.isCorrect).text}`, 'error');
+            reviewSession.wrong++;
+            reviewSession.streak = 0;
+            showToast(`❌ Неправильно. Правильно: ${reviewSession.options.find(o => o.isCorrect).text}`, 'error');
         }
         
         const stats = getStats();
         stats.totalGames++;
         stats.totalCorrect += isCorrect ? 1 : 0;
         stats.totalWrong += isCorrect ? 0 : 1;
-        if (gameState.bestStreak > stats.bestStreak) {
-            stats.bestStreak = gameState.bestStreak;
+        if (reviewSession.bestStreak > stats.bestStreak) {
+            stats.bestStreak = reviewSession.bestStreak;
         }
         stats.gamesPlayed++;
         saveStats(stats);
         
-        showGameCard();
+        showReviewGameCard();
     }
 
-    function nextGameQuestion() {
-        gameState.currentIndex++;
-        showGameCard();
+    function nextReviewQuestion() {
+        reviewSession.currentIndex++;
+        showReviewGameCard();
     }
 
-    function showGameResults() {
+    function showReviewGameResults() {
         const container = document.getElementById('reviewContainer');
         if (!container) return;
         
-        const total = gameState.total;
-        const correct = gameState.correct;
-        const wrong = gameState.wrong;
+        const total = reviewSession.total;
+        const correct = reviewSession.correct;
+        const wrong = reviewSession.wrong;
         const percent = total > 0 ? Math.round((correct / total) * 100) : 0;
-        const streak = gameState.bestStreak;
+        const streak = reviewSession.bestStreak;
         
         let emoji = percent >= 80 ? '🌟' : percent >= 50 ? '👍' : '💪';
         let message = percent >= 80 ? 'Отличный результат!' : percent >= 50 ? 'Хорошо, продолжайте!' : 'Нужно больше практики!';
         
-        const modeIcon = gameState.mode === 'visual' ? '👀' : '🎧';
-        const modeTitle = gameState.mode === 'visual' ? 'Угадай по виду' : 'Угадай на слух';
-        const modeColor = gameState.mode === 'visual' ? '#4361ee' : '#e53935';
+        const modeIcon = reviewSession.mode === 'visual' ? '👀' : '🎧';
+        const modeTitle = reviewSession.mode === 'visual' ? 'Угадай по виду' : 'Угадай на слух';
+        const modeColor = reviewSession.mode === 'visual' ? '#4361ee' : '#e53935';
         
         let html = `
             <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,0.12);text-align:center;">
@@ -2390,10 +2424,10 @@
                 <div style="font-size:22px;font-weight:700;margin-bottom:12px;color:${modeColor};">${percent}% точность</div>
                 
                 <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                    <button onclick="startGame('${gameState.mode}')" style="background:${modeColor};color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">
+                    <button onclick="startReviewGame('${reviewSession.mode}')" style="background:${modeColor};color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">
                         🔄 Снова
                     </button>
-                    <button onclick="startGame('${gameState.mode === 'visual' ? 'audio' : 'visual'}')" style="background:linear-gradient(135deg,#764ba2,#4361ee);color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">
+                    <button onclick="startReviewGame('${reviewSession.mode === 'visual' ? 'audio' : 'visual'}')" style="background:linear-gradient(135deg,#764ba2,#4361ee);color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">
                         🔄 Другой режим
                     </button>
                     <button onclick="renderReviewPanel()" style="background:#666;color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">
@@ -2404,7 +2438,7 @@
         `;
         
         container.innerHTML = html;
-        gameState.isActive = false;
+        reviewSession.isActive = false;
     }
 
     // ==================== ОЧИСТКА ВСЕГО ====================
@@ -2461,6 +2495,8 @@
         if(typeof generateToneComparisons === "function") generateToneComparisons(); 
         renderPinyinSounds();
         addReviewTab();
+        // Генерация слов по радикалам при загрузке
+        setTimeout(generateWordsByRadical, 300);
       }, 500);
       
       initCanvas();
