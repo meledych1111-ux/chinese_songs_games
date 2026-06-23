@@ -1,10 +1,12 @@
 // ============================================================
-// 🧠 МОДУЛЬ ПОВТОРЕНИЯ
+// 🧠 МОДУЛЬ ПОВТОРЕНИЯ — 2 ИГРЫ + КУБИКИ + СОХРАНЕНИЕ
 // ============================================================
 
 const REVIEW_KEY = 'chinese_review_words';
 const REVIEW_RADICALS_KEY = 'chinese_review_radicals';
 const REVIEW_STATS_KEY = 'chinese_review_stats';
+
+// ==================== ХРАНИЛИЩЕ ====================
 
 function getReviewWords() {
     try { const data = localStorage.getItem(REVIEW_KEY); return data ? JSON.parse(data) : []; }
@@ -84,7 +86,7 @@ function removeWordFromReview(wordChar) {
     if (!confirm(`🗑️ Удалить "${wordChar}"?`)) return false;
     let list = getReviewWords().filter(w => w.c !== wordChar);
     saveReviewWords(list);
-    showToast(`🗑️ Удалено`, 'info');
+    showToast('🗑️ Удалено', 'info');
     renderReviewPanel();
     return true;
 }
@@ -93,7 +95,7 @@ function removeRadicalFromReview(radicalChar) {
     if (!confirm(`🗑️ Удалить "${radicalChar}"?`)) return false;
     let list = getReviewRadicals().filter(r => r.s !== radicalChar);
     saveReviewRadicals(list);
-    showToast(`🗑️ Удалено`, 'info');
+    showToast('🗑️ Удалено', 'info');
     renderReviewPanel();
     return true;
 }
@@ -228,7 +230,6 @@ function startReviewGame(mode) {
         return;
     }
     
-    // Перемешиваем
     allItems.sort(() => Math.random() - 0.5);
     
     gameState = {
@@ -262,7 +263,6 @@ function generateOptions(correctItem) {
         emoji: correctItem.e || ''
     }];
     
-    // Берём неправильные варианты из WORDS (всегда!)
     if (typeof WORDS !== 'undefined' && WORDS.length > 0) {
         const wrongOptions = WORDS.filter(w => 
             w.c !== correctChar && 
@@ -270,10 +270,7 @@ function generateOptions(correctItem) {
             w.m !== correctText
         );
         
-        // Перемешиваем
         wrongOptions.sort(() => Math.random() - 0.5);
-        
-        // Берём 3 случайных
         const selected = wrongOptions.slice(0, 3);
         
         selected.forEach(w => {
@@ -287,7 +284,6 @@ function generateOptions(correctItem) {
         });
     }
     
-    // Если не хватает — добавляем ещё из gameState.items
     if (options.length < 4) {
         const fromItems = gameState.items.filter(item => {
             const char = item.type === 'word' ? item.c : item.s;
@@ -309,7 +305,6 @@ function generateOptions(correctItem) {
         }
     }
     
-    // Заглушки если совсем ничего нет
     while (options.length < 4) {
         options.push({
             char: '—',
@@ -320,9 +315,7 @@ function generateOptions(correctItem) {
         });
     }
     
-    // Перемешиваем
     options.sort(() => Math.random() - 0.5);
-    
     return options;
 }
 
@@ -361,7 +354,7 @@ function showReviewGameCard() {
     let html = `
         <div style="background:white;border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
             <!-- ВЕРХ -->
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                 <span style="background:${modeColor};color:white;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:700;">${modeIcon} ${modeTitle}</span>
                 <span style="color:#555;font-size:14px;font-weight:600;">
                     ${current}/${total} ✅${gameState.correct} ❌${gameState.wrong}
@@ -369,22 +362,8 @@ function showReviewGameCard() {
                 </span>
             </div>
             
-            <!-- СТРЕЛКИ -->
-            <div style="display:flex;justify-content:center;gap:12px;margin-bottom:16px;">
-                <button onclick="previousQuestion()" 
-                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:18px;cursor:pointer;min-width:100px;${gameState.currentIndex === 0 ? 'opacity:0.3;' : ''}"
-                        ${gameState.currentIndex === 0 ? 'disabled' : ''}>
-                    ← Назад
-                </button>
-                <button onclick="nextQuestion()" 
-                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:18px;cursor:pointer;min-width:100px;${gameState.currentIndex >= gameState.total - 1 ? 'opacity:0.3;' : ''}"
-                        ${gameState.currentIndex >= gameState.total - 1 ? 'disabled' : ''}>
-                    Далее →
-                </button>
-            </div>
-            
             <!-- СОДЕРЖАНИЕ -->
-            <div style="text-align:center;padding:6px 0;">
+            <div style="text-align:center;padding:10px 0;">
     `;
     
     if (gameState.mode === 'visual') {
@@ -397,7 +376,7 @@ function showReviewGameCard() {
         html += `
             <div style="font-size:56px;margin-bottom:4px;">🎧</div>
             <div style="font-size:20px;font-weight:600;color:#2c3e50;margin-bottom:2px;">Какой иероглиф прозвучал?</div>
-            <button onclick="speak('${char}')" style="background:${modeColor};color:white;border:none;padding:8px 24px;border-radius:50px;font-size:16px;cursor:pointer;margin-bottom:10px;">🔊 Повторить</button>
+            <button onclick="speak('${char}')" style="background:${modeColor};color:white;border:none;padding:10px 24px;border-radius:50px;font-size:16px;cursor:pointer;margin-bottom:10px;">🔊 Повторить</button>
             ${pinyin ? `<div style="font-size:13px;color:#666;margin-bottom:6px;">Подсказка: ${pinyin}</div>` : ''}
         `;
     }
@@ -436,23 +415,40 @@ function showReviewGameCard() {
             <div style="margin-top:16px;padding:14px;background:#f8f9fa;border-radius:12px;border-left:4px solid ${modeColor};">
                 <div style="font-weight:600;">✅ Правильный ответ: ${correct.char} — ${correct.text}</div>
             </div>
-            <div style="text-align:center;margin-top:20px;">
-                <button onclick="nextQuestion()" style="background:${modeColor};color:white;border:none;padding:14px 48px;border-radius:50px;font-size:18px;font-weight:700;cursor:pointer;">
-                    ➡️ Далее
-                </button>
-            </div>
-        `;
-    } else {
-        html += `
-            <div style="text-align:center;margin-top:20px;">
-                <button onclick="skipQuestion()" style="background:#999;color:white;border:none;padding:10px 36px;border-radius:50px;font-size:16px;cursor:pointer;">
-                    👀 Показать ответ
-                </button>
-            </div>
         `;
     }
     
-    html += '</div></div>';
+    // СТРЕЛКИ ВСЕГДА СНИЗУ
+    html += `
+            <div style="display:flex;justify-content:center;gap:16px;margin-top:20px;">
+                <button onclick="previousQuestion()" 
+                        style="background:#4361ee;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;${gameState.currentIndex === 0 ? 'opacity:0.3;cursor:not-allowed;' : 'box-shadow:0 4px 15px rgba(67,97,238,0.3);'}"
+                        ${gameState.currentIndex === 0 ? 'disabled' : ''}>
+                    ← НАЗАД
+                </button>
+    `;
+    
+    if (gameState.answered) {
+        html += `
+                <button onclick="nextQuestion()" 
+                        style="background:#2ecc71;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;box-shadow:0 4px 15px rgba(46,204,113,0.3);">
+                    ДАЛЕЕ →
+                </button>
+        `;
+    } else {
+        html += `
+                <button onclick="skipQuestion()" 
+                        style="background:#999;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;">
+                    👀 ПОКАЗАТЬ
+                </button>
+        `;
+    }
+    
+    html += `
+            </div>
+        </div>
+    `;
+    
     container.innerHTML = html;
 }
 
@@ -514,7 +510,6 @@ function nextQuestion() {
         gameState.answered = false;
         showReviewGameCard();
     } else if (gameState.currentIndex === gameState.total - 1) {
-        // Последний вопрос — показываем результаты
         gameState.currentIndex++;
         showReviewGameCard();
     }
