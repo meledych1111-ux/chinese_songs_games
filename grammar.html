@@ -229,6 +229,7 @@
             gap: 16px;
         }
 
+        /* ============ ВАЖНО: КАРТОЧКИ ВИДНЫ ПО УМОЛЧАНИЮ ============ */
         .grammar-card {
             background: white;
             border-radius: 24px;
@@ -238,11 +239,11 @@
             transition: all 0.3s ease;
             cursor: default;
             animation: fadeIn 0.3s ease;
-            display: none;
+            display: block !important; /* ← ВАЖНО: ВСЕГДА ВИДНЫ */
         }
 
-        .grammar-card.visible {
-            display: block;
+        .grammar-card.hidden {
+            display: none !important; /* ← СКРЫВАЕМ ТОЛЬКО ПРИ ФИЛЬТРАЦИИ */
         }
 
         .grammar-card:hover {
@@ -1124,7 +1125,7 @@
                 const exHtml = item.ex.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
 
                 html += `
-                    <div class="grammar-card cat-${cat} visible" style="animation-delay: ${index * 0.03}s;">
+                    <div class="grammar-card cat-${cat}" style="animation-delay: ${index * 0.03}s;">
                         <div class="grammar-title">${item.title}</div>
                         <div class="grammar-rule">${item.rule}</div>
                         <div class="grammar-ex">${exHtml}</div>
@@ -1141,6 +1142,9 @@
         // ============================================================
 
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('📚 Загрузка грамматики...');
+            console.log('📚 Всего правил:', GRAMMAR.length);
+            
             renderGrammar();
 
             // Поиск
@@ -1170,7 +1174,7 @@
                 });
             });
 
-            console.log('📚 Грамматика загружена! Всего правил:', GRAMMAR.length);
+            console.log('✅ Грамматика загружена!');
         });
     </script>
 
