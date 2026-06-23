@@ -1278,5 +1278,46 @@
         });
     });
 </script>
+    <script>
+    // Принудительно добавляем вкладку "Звуки пиньинь"
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            // Проверяем, есть ли уже такая вкладка
+            if (document.querySelector('[data-tab="pinyin-sounds"]')) return;
+            
+            // Добавляем вкладку
+            var tabsContainer = document.querySelector('.tabs');
+            if (!tabsContainer) return;
+            
+            var newTab = document.createElement('div');
+            newTab.className = 'tab';
+            newTab.setAttribute('data-tab', 'pinyin-sounds');
+            newTab.textContent = '🎵 Звуки пиньинь';
+            tabsContainer.appendChild(newTab);
+            
+            // Добавляем панель
+            var panel = document.createElement('div');
+            panel.id = 'pinyinSoundsPanel';
+            panel.className = 'panel';
+            panel.innerHTML = '<div id="pinyinSoundsContainer"></div>';
+            document.querySelector('.container').appendChild(panel);
+            
+            // Обработчик переключения
+            newTab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                document.getElementById('pinyinSoundsPanel').classList.add('active');
+                
+                // Рендерим контент
+                if (typeof renderComparisons === 'function') {
+                    renderComparisons('pinyinSoundsContainer');
+                }
+            });
+            
+            console.log('✅ Вкладка "Звуки пиньинь" добавлена');
+        }, 500);
+    });
+</script>
 </body>
 </html>
