@@ -319,10 +319,13 @@ function generateOptions(correctItem) {
     return options;
 }
 
+// ==================== ОСНОВНАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ КАРТОЧКИ ====================
+
 function showReviewGameCard() {
     const container = document.getElementById('reviewContainer');
     if (!container) return;
     
+    // Проверяем, закончилась ли игра
     if (!gameState.isActive || gameState.currentIndex >= gameState.total) {
         showGameResults();
         return;
@@ -330,7 +333,6 @@ function showReviewGameCard() {
     
     const item = gameState.items[gameState.currentIndex];
     gameState.currentItem = item;
-    gameState.answered = false;
     
     const isWord = item.type === 'word';
     const char = isWord ? item.c : item.s;
@@ -340,10 +342,13 @@ function showReviewGameCard() {
     const current = gameState.currentIndex + 1;
     const total = gameState.total;
     
-    const options = generateOptions(item);
-    gameState.options = options;
+    // Генерируем варианты ТОЛЬКО если ещё не отвечали
+    if (!gameState.answered) {
+        const options = generateOptions(item);
+        gameState.options = options;
+    }
     
-    if (gameState.mode === 'audio') {
+    if (gameState.mode === 'audio' && !gameState.answered) {
         setTimeout(() => { speak(char); }, 300);
     }
     
@@ -353,7 +358,7 @@ function showReviewGameCard() {
     
     let html = `
         <div style="background:white;border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
-            <!-- ВЕРХ -->
+            <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                 <span style="background:${modeColor};color:white;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:700;">${modeIcon} ${modeTitle}</span>
                 <span style="color:#555;font-size:14px;font-weight:600;">
@@ -362,7 +367,7 @@ function showReviewGameCard() {
                 </span>
             </div>
             
-            <!-- СОДЕРЖАНИЕ -->
+            <!-- ОСНОВНОЙ КОНТЕНТ -->
             <div style="text-align:center;padding:10px 0;">
     `;
     
@@ -381,24 +386,39 @@ function showReviewGameCard() {
         `;
     }
     
-    // ВАРИАНТЫ
+    // ВАРИАНТЫ ОТВЕТОВ
     html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;">';
     
-    options.forEach((opt, idx) => {
+    gameState.options.forEach((opt, idx) => {
         const isCorrect = opt.isCorrect;
         const label = String.fromCharCode(65 + idx);
-        const bgColor = gameState.answered ? (isCorrect ? '#2ecc71' : '#e74c3c') : '#f0f2f5';
-        const textColor = gameState.answered ? 'white' : '#2c3e50';
+        let bgColor = '#f0f2f5';
+        let textColor = '#2c3e50';
+        let border = '2px solid #e0e7ff';
+        let disabled = '';
+        
+        if (gameState.answered) {
+            disabled = 'disabled';
+            if (isCorrect) {
+                bgColor = '#2ecc71';
+                textColor = 'white';
+                border = '3px solid #27ae60';
+            } else {
+                bgColor = '#e74c3c';
+                textColor = 'white';
+                border = '3px solid #c62828';
+            }
+        }
         
         html += `
             <button onclick="handleAnswer(${idx})" 
                     style="background:${bgColor};color:${textColor};
-                    border:${gameState.answered && isCorrect ? '3px solid #27ae60' : gameState.answered && !isCorrect ? '3px solid #c62828' : '2px solid #e0e7ff'};
+                    border:${border};
                     padding:14px;border-radius:14px;font-size:16px;font-weight:700;
                     cursor:${gameState.answered ? 'default' : 'pointer'};
                     min-height:50px;display:flex;align-items:center;justify-content:center;gap:6px;
                     opacity:${gameState.answered && !isCorrect ? '0.5' : '1'};"
-                    ${gameState.answered ? 'disabled' : ''}>
+                    ${disabled}>
                 ${label}. ${gameState.mode === 'visual' ? opt.text : opt.char}
                 ${gameState.answered && isCorrect ? ' ✅' : ''}
                 ${gameState.answered && !isCorrect ? ' ❌' : ''}
@@ -408,9 +428,9 @@ function showReviewGameCard() {
     
     html += '</div>';
     
-    // ПОСЛЕ ОТВЕТА
+    // ПОСЛЕ ОТВЕТА - показываем правильный вариант
     if (gameState.answered) {
-        const correct = options.find(o => o.isCorrect);
+        const correct = gameState.options.find(o => o.isCorrect);
         html += `
             <div style="margin-top:16px;padding:14px;background:#f8f9fa;border-radius:12px;border-left:4px solid ${modeColor};">
                 <div style="font-weight:600;">✅ Правильный ответ: ${correct.char} — ${correct.text}</div>
@@ -418,39 +438,45 @@ function showReviewGameCard() {
         `;
     }
     
-    // СТРЕЛКИ ВСЕГДА СНИЗУ
+    // ============ НАВИГАЦИОННЫЕ КНОПКИ ============
     html += `
-            <div style="display:flex;justify-content:center;gap:16px;margin-top:20px;">
-                <button onclick="previousQuestion()" 
-                        style="background:#4361ee;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;${gameState.currentIndex === 0 ? 'opacity:0.3;cursor:not-allowed;' : 'box-shadow:0 4px 15px rgba(67,97,238,0.3);'}"
-                        ${gameState.currentIndex === 0 ? 'disabled' : ''}>
-                    ← НАЗАД
-                </button>
+        <div style="display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap;">
+            <!-- КНОПКА НАЗАД -->
+            <button onclick="previousQuestion()" 
+                    style="background:#4361ee;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;${gameState.currentIndex === 0 ? 'opacity:0.3;cursor:not-allowed;' : 'box-shadow:0 4px 15px rgba(67,97,238,0.3);'}"
+                    ${gameState.currentIndex === 0 ? 'disabled' : ''}>
+                ← НАЗАД
+            </button>
     `;
     
+    // ГЛАВНАЯ КНОПКА - меняется в зависимости от состояния
     if (gameState.answered) {
+        // ЕСЛИ ОТВЕТИЛИ - показываем ДАЛЕЕ или РЕЗУЛЬТАТЫ
+        const isLast = gameState.currentIndex >= gameState.total - 1;
         html += `
-                <button onclick="nextQuestion()" 
-                        style="background:#2ecc71;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;box-shadow:0 4px 15px rgba(46,204,113,0.3);">
-                    ДАЛЕЕ →
-                </button>
+            <button onclick="nextQuestion()" 
+                    style="background:#2ecc71;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;box-shadow:0 4px 15px rgba(46,204,113,0.3);">
+                ${isLast ? '📊 РЕЗУЛЬТАТЫ' : 'ДАЛЕЕ →'}
+            </button>
         `;
     } else {
+        // ЕСЛИ НЕ ОТВЕТИЛИ - показываем ПОКАЗАТЬ
         html += `
-                <button onclick="skipQuestion()" 
-                        style="background:#999;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;">
-                    👀 ПОКАЗАТЬ
-                </button>
+            <button onclick="skipQuestion()" 
+                    style="background:#999;color:white;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;min-width:120px;">
+                👀 ПОКАЗАТЬ
+            </button>
         `;
     }
     
     html += `
-            </div>
         </div>
-    `;
+    </div>`;
     
     container.innerHTML = html;
 }
+
+// ==================== ОБРАБОТКА ОТВЕТОВ ====================
 
 function handleAnswer(index) {
     if (gameState.answered) return;
@@ -511,9 +537,12 @@ function nextQuestion() {
         showReviewGameCard();
     } else if (gameState.currentIndex === gameState.total - 1) {
         gameState.currentIndex++;
+        gameState.answered = false;
         showReviewGameCard();
     }
 }
+
+// ==================== РЕЗУЛЬТАТЫ ====================
 
 function showGameResults() {
     const container = document.getElementById('reviewContainer');
@@ -525,10 +554,15 @@ function showGameResults() {
     const percent = total > 0 ? Math.round((correct / total) * 100) : 0;
     const modeColor = gameState.mode === 'visual' ? '#4361ee' : '#e53935';
     
+    let emoji = '💪';
+    let text = 'Практикуйтесь!';
+    if (percent >= 80) { emoji = '🌟'; text = 'Отлично!'; }
+    else if (percent >= 50) { emoji = '👍'; text = 'Хорошо!'; }
+    
     container.innerHTML = `
         <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,0.12);text-align:center;">
-            <div style="font-size:56px;">${percent >= 80 ? '🌟' : percent >= 50 ? '👍' : '💪'}</div>
-            <div style="font-size:24px;font-weight:800;margin:10px 0;">${percent >= 80 ? 'Отлично!' : percent >= 50 ? 'Хорошо!' : 'Практикуйтесь!'}</div>
+            <div style="font-size:56px;">${emoji}</div>
+            <div style="font-size:24px;font-weight:800;margin:10px 0;">${text}</div>
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0;">
                 <div style="background:#4361ee;color:white;padding:10px;border-radius:10px;"><div style="font-size:22px;">${total}</div><div style="font-size:10px;">Всего</div></div>
                 <div style="background:#2ecc71;color:white;padding:10px;border-radius:10px;"><div style="font-size:22px;">${correct}</div><div style="font-size:10px;">✅</div></div>
