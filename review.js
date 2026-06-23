@@ -421,10 +421,7 @@ function startGame(mode) {
         return;
     }
     
-    // Перемешиваем все слова
     allItems.sort(() => Math.random() - 0.5);
-    
-    // Берём все слова, чтобы пройти все
     const items = allItems;
     
     gameState = {
@@ -449,7 +446,6 @@ function showGameCard() {
     const container = document.getElementById('reviewContainer');
     if (!container) return;
     
-    // Проверяем, закончились ли все слова
     if (!gameState.isActive || gameState.currentIndex >= gameState.total) {
         showGameResults();
         return;
@@ -481,31 +477,32 @@ function showGameCard() {
     let html = `
         <div style="background:white;border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
             <!-- ВЕРХНЯЯ ПАНЕЛЬ С НАВИГАЦИЕЙ -->
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <span style="background:${modeColor};color:white;padding:3px 14px;border-radius:16px;font-size:13px;font-weight:700;">
+                    <span style="background:${modeColor};color:white;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:700;">
                         ${modeIcon} ${modeTitle}
                     </span>
-                    <!-- СТРЕЛКИ НАВИГАЦИИ -->
-                    <div style="display:flex;gap:4px;">
-                        <button onclick="previousGameQuestion()" 
-                                style="background:#666;color:white;border:none;padding:6px 12px;border-radius:12px;font-size:18px;cursor:pointer;${gameState.currentIndex === 0 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
-                                ${gameState.currentIndex === 0 ? 'disabled' : ''}>
-                            ←
-                        </button>
-                        <button onclick="nextGameQuestion()" 
-                                style="background:#666;color:white;border:none;padding:6px 12px;border-radius:12px;font-size:18px;cursor:pointer;${gameState.currentIndex >= gameState.total - 1 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
-                                ${gameState.currentIndex >= gameState.total - 1 ? 'disabled' : ''}>
-                            →
-                        </button>
-                    </div>
                 </div>
-                <span style="color:#555;font-size:13px;font-weight:600;">
+                <span style="color:#555;font-size:14px;font-weight:600;">
                     ${current}/${total} 
-                    <span style="color:#2ecc71;">✅ ${gameState.correct}</span> 
-                    <span style="color:#e74c3c;">❌ ${gameState.wrong}</span>
-                    ${gameState.streak > 0 ? `<span style="color:#f39c12;">🔥 ${gameState.streak}</span>` : ''}
+                    <span style="color:#2ecc71;margin-left:8px;">✅ ${gameState.correct}</span> 
+                    <span style="color:#e74c3c;margin-left:8px;">❌ ${gameState.wrong}</span>
+                    ${gameState.streak > 0 ? `<span style="color:#f39c12;margin-left:8px;">🔥 ${gameState.streak}</span>` : ''}
                 </span>
+            </div>
+            
+            <!-- СТРЕЛКИ НАВИГАЦИИ -->
+            <div style="display:flex;justify-content:center;gap:12px;margin-bottom:16px;">
+                <button onclick="previousGameQuestion()" 
+                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:20px;cursor:pointer;${gameState.currentIndex === 0 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
+                        ${gameState.currentIndex === 0 ? 'disabled' : ''}>
+                    ← Назад
+                </button>
+                <button onclick="nextGameQuestion()" 
+                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:20px;cursor:pointer;${gameState.currentIndex >= gameState.total - 1 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
+                        ${gameState.currentIndex >= gameState.total - 1 ? 'disabled' : ''}>
+                    Далее →
+                </button>
             </div>
             
             <div style="text-align:center;padding:6px 0;">
@@ -587,7 +584,7 @@ function showGameCard() {
     if (gameState.answered) {
         const correct = options.find(o => o.isCorrect);
         html += `
-            <div style="margin-top:12px;padding:12px;background:#f8f9fa;border-radius:12px;border-left:4px solid ${modeColor};">
+            <div style="margin-top:16px;padding:14px;background:#f8f9fa;border-radius:12px;border-left:4px solid ${modeColor};">
                 <div style="font-weight:600;font-size:15px;">✅ Правильный ответ:</div>
                 <div style="font-size:18px;font-weight:700;">${correct.char} — ${correct.text}</div>
                 ${correct.pinyin ? `<div style="font-size:13px;color:#666;">📖 ${correct.pinyin}</div>` : ''}
@@ -597,11 +594,11 @@ function showGameCard() {
         `;
     }
     
-    // === КНОПКА "ДАЛЕЕ" ===
+    // === БОЛЬШАЯ КНОПКА "ДАЛЕЕ" ===
     html += `
-        <div style="text-align:center;margin-top:12px;">
+        <div style="text-align:center;margin-top:20px;">
             <button onclick="${gameState.answered ? 'nextGameQuestion()' : 'showAnswerAndNext()'}" 
-                    style="background:${modeColor};color:white;border:none;padding:10px 36px;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;">
+                    style="background:${modeColor};color:white;border:none;padding:14px 48px;border-radius:50px;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2);">
                 ${gameState.answered ? '➡️ Далее' : '👀 Показать ответ'}
             </button>
         </div>
@@ -614,11 +611,9 @@ function showGameCard() {
     container.innerHTML = html;
 }
 
-// === ПОКАЗЫВАЕТ ОТВЕТ И ПЕРЕХОДИТ К СЛЕДУЮЩЕМУ ===
 function showAnswerAndNext() {
     if (gameState.answered) return;
     
-    // Отмечаем как неправильный, если пользователь не ответил
     gameState.answered = true;
     gameState.wrong++;
     gameState.streak = 0;
@@ -629,15 +624,7 @@ function showAnswerAndNext() {
     stats.gamesPlayed++;
     saveStats(stats);
     
-    // Показываем карточку с ответом
     showGameCard();
-    
-    // Автоматически переходим к следующему через 1.5 секунды
-    setTimeout(function() {
-        if (gameState.isActive && gameState.answered) {
-            nextGameQuestion();
-        }
-    }, 1500);
 }
 
 function generateOptions(correctItem) {
@@ -657,7 +644,6 @@ function generateOptions(correctItem) {
         emoji: correctEmoji
     }];
     
-    // Ищем другие варианты (только из списка, чтобы были РАЗНЫЕ)
     const others = allItems.filter(item => {
         const otherChar = item.type === 'word' ? item.c : item.s;
         return otherChar !== correctChar;
@@ -677,7 +663,6 @@ function generateOptions(correctItem) {
         });
     });
     
-    // Если не хватает вариантов, добавляем из WORDS
     if (options.length < 4 && typeof WORDS !== 'undefined') {
         const extra = WORDS.filter(w => w.c !== correctChar && !options.some(o => o.char === w.c));
         extra.sort(() => Math.random() - 0.5);
@@ -729,16 +714,8 @@ function handleGameAnswer(index) {
     saveStats(stats);
     
     showGameCard();
-    
-    // Автоматически переходим к следующему через 1.5 секунды
-    setTimeout(function() {
-        if (gameState.isActive && gameState.answered) {
-            nextGameQuestion();
-        }
-    }, 1500);
 }
 
-// === ФУНКЦИЯ ДЛЯ ПЕРЕХОДА К ПРЕДЫДУЩЕМУ ВОПРОСУ ===
 function previousGameQuestion() {
     if (!gameState.isActive || gameState.currentIndex <= 0) return;
     
@@ -746,11 +723,9 @@ function previousGameQuestion() {
     showGameCard();
 }
 
-// === ОБНОВЛЕННАЯ ФУНКЦИЯ ДЛЯ ПЕРЕХОДА К СЛЕДУЮЩЕМУ ВОПРОСУ ===
 function nextGameQuestion() {
     if (!gameState.isActive) return;
     
-    // Переходим к следующему слову
     gameState.currentIndex++;
     showGameCard();
 }
