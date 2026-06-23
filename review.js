@@ -192,8 +192,6 @@ function getReviewStats() {
         totalWords: words.length,
         totalRadicals: radicals.length,
         total: words.length + radicals.length,
-        wordsToReview: words.filter(w => !w.lastReviewed || Date.now() - new Date(w.lastReviewed).getTime() > 86400000).length,
-        radicalsToReview: radicals.filter(r => !r.lastReviewed || Date.now() - new Date(r.lastReviewed).getTime() > 86400000).length,
         totalGames: stats.totalGames || 0,
         totalCorrect: stats.totalCorrect || 0,
         totalWrong: stats.totalWrong || 0,
@@ -262,7 +260,6 @@ function renderReviewPanel() {
     const colors = ['#4361ee', '#e53935', '#2ecc71', '#f39c12', '#8e24aa', '#00bcd4', '#ff6b35', '#4caf50'];
     
     let html = `
-        <!-- СТАТИСТИКА -->
         <div class="review-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:20px;">
             <div style="background:linear-gradient(135deg,#4361ee,#764ba2);color:white;padding:14px;border-radius:14px;text-align:center;">
                 <div style="font-size:28px;font-weight:900;">${stats.total}</div>
@@ -282,7 +279,6 @@ function renderReviewPanel() {
             </div>
         </div>
         
-        <!-- КНОПКИ ИГР -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
             <button onclick="startGame('visual')" style="background:linear-gradient(135deg,#4361ee,#764ba2);color:white;border:none;padding:16px;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(67,97,238,0.3);">
                 <div style="font-size:36px;">👀</div>
@@ -296,13 +292,11 @@ function renderReviewPanel() {
             </button>
         </div>
         
-        <!-- ЗАГОЛОВОК КУБИКОВ -->
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
             <h3 style="font-size:18px;">🧊 Мои карточки (${allItems.length})</h3>
             ${allItems.length > 0 ? `<button onclick="clearAllReview()" style="background:#e74c3c;color:white;border:none;padding:6px 16px;border-radius:20px;font-size:12px;cursor:pointer;">🗑️ Всё</button>` : ''}
         </div>
         
-        <!-- КУБИКИ -->
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin-bottom:16px;">
     `;
     
@@ -421,18 +415,18 @@ function startGame(mode) {
         return;
     }
     
+    // Перемешиваем слова
     allItems.sort(() => Math.random() - 0.5);
-    const items = allItems;
     
     gameState = {
         mode: mode,
-        items: items,
+        items: allItems,
         currentIndex: 0,
         correct: 0,
         wrong: 0,
         streak: 0,
         bestStreak: 0,
-        total: items.length,
+        total: allItems.length,
         isActive: true,
         answered: false,
         currentItem: null,
@@ -476,13 +470,11 @@ function showGameCard() {
     
     let html = `
         <div style="background:white;border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
-            <!-- ВЕРХНЯЯ ПАНЕЛЬ С НАВИГАЦИЕЙ -->
+            <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <span style="background:${modeColor};color:white;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:700;">
-                        ${modeIcon} ${modeTitle}
-                    </span>
-                </div>
+                <span style="background:${modeColor};color:white;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:700;">
+                    ${modeIcon} ${modeTitle}
+                </span>
                 <span style="color:#555;font-size:14px;font-weight:600;">
                     ${current}/${total} 
                     <span style="color:#2ecc71;margin-left:8px;">✅ ${gameState.correct}</span> 
@@ -494,12 +486,12 @@ function showGameCard() {
             <!-- СТРЕЛКИ НАВИГАЦИИ -->
             <div style="display:flex;justify-content:center;gap:12px;margin-bottom:16px;">
                 <button onclick="previousGameQuestion()" 
-                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:20px;cursor:pointer;${gameState.currentIndex === 0 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
+                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:18px;cursor:pointer;min-width:100px;${gameState.currentIndex === 0 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
                         ${gameState.currentIndex === 0 ? 'disabled' : ''}>
                     ← Назад
                 </button>
                 <button onclick="nextGameQuestion()" 
-                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:20px;cursor:pointer;${gameState.currentIndex >= gameState.total - 1 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
+                        style="background:#666;color:white;border:none;padding:10px 20px;border-radius:12px;font-size:18px;cursor:pointer;min-width:100px;${gameState.currentIndex >= gameState.total - 1 ? 'opacity:0.3;cursor:not-allowed;' : ''}"
                         ${gameState.currentIndex >= gameState.total - 1 ? 'disabled' : ''}>
                     Далее →
                 </button>
@@ -591,24 +583,116 @@ function showGameCard() {
                 ${correct.emoji ? `<div style="font-size:13px;color:#666;">${correct.emoji}</div>` : ''}
                 ${item.a ? `<div style="font-size:12px;color:#888;margin-top:4px;">💡 ${item.a}</div>` : ''}
             </div>
+            
+            <!-- КНОПКА ДАЛЕЕ ПОСЛЕ ОТВЕТА -->
+            <div style="text-align:center;margin-top:20px;">
+                <button onclick="nextGameQuestion()" 
+                        style="background:${modeColor};color:white;border:none;padding:14px 48px;border-radius:50px;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+                    ➡️ Далее
+                </button>
+            </div>
+        `;
+    } else {
+        // КНОПКА ПОКАЗАТЬ ОТВЕТ
+        html += `
+            <div style="text-align:center;margin-top:20px;">
+                <button onclick="showAnswerAndNext()" 
+                        style="background:#999;color:white;border:none;padding:10px 36px;border-radius:50px;font-size:16px;font-weight:600;cursor:pointer;">
+                    👀 Показать ответ
+                </button>
+            </div>
         `;
     }
-    
-    // === БОЛЬШАЯ КНОПКА "ДАЛЕЕ" ===
-    html += `
-        <div style="text-align:center;margin-top:20px;">
-            <button onclick="${gameState.answered ? 'nextGameQuestion()' : 'showAnswerAndNext()'}" 
-                    style="background:${modeColor};color:white;border:none;padding:14px 48px;border-radius:50px;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2);">
-                ${gameState.answered ? '➡️ Далее' : '👀 Показать ответ'}
-            </button>
-        </div>
-    `;
     
     html += `
         </div>
     `;
     
     container.innerHTML = html;
+}
+
+function generateOptions(correctItem) {
+    const isWord = correctItem.type === 'word';
+    
+    const correctText = correctItem.m || '?';
+    const correctChar = isWord ? correctItem.c : correctItem.s;
+    const correctPinyin = correctItem.p || '';
+    const correctEmoji = correctItem.e || '';
+    
+    let options = [{
+        char: correctChar,
+        text: correctText,
+        isCorrect: true,
+        pinyin: correctPinyin,
+        emoji: correctEmoji
+    }];
+    
+    // Собираем все возможные варианты
+    let allPossibleOptions = [];
+    
+    // 1. Добавляем другие слова из повторения
+    const others = gameState.items.filter(item => {
+        const otherChar = item.type === 'word' ? item.c : item.s;
+        return otherChar !== correctChar;
+    });
+    
+    others.forEach(item => {
+        const char = item.type === 'word' ? item.c : item.s;
+        allPossibleOptions.push({
+            char: char,
+            text: item.m || '?',
+            isCorrect: false,
+            pinyin: item.p || '',
+            emoji: item.e || ''
+        });
+    });
+    
+    // 2. Если мало вариантов — добавляем из WORDS
+    if (allPossibleOptions.length < 3 && typeof WORDS !== 'undefined' && WORDS.length > 0) {
+        const extraWords = WORDS.filter(w => 
+            w.c !== correctChar && 
+            !allPossibleOptions.some(o => o.char === w.c) &&
+            w.m && w.m !== correctText
+        );
+        
+        // Перемешиваем
+        extraWords.sort(() => Math.random() - 0.5);
+        
+        // Добавляем сколько нужно (до 3 неправильных вариантов)
+        const needMore = 3 - allPossibleOptions.length;
+        for (let i = 0; i < Math.min(needMore, extraWords.length); i++) {
+            allPossibleOptions.push({
+                char: extraWords[i].c,
+                text: extraWords[i].m || '?',
+                isCorrect: false,
+                pinyin: extraWords[i].p || '',
+                emoji: extraWords[i].e || ''
+            });
+        }
+    }
+    
+    // Перемешиваем и берём 3 случайных
+    allPossibleOptions.sort(() => Math.random() - 0.5);
+    const selectedOptions = allPossibleOptions.slice(0, 3);
+    
+    // Добавляем к правильному ответу
+    options.push(...selectedOptions);
+    
+    // Перемешиваем всё вместе
+    options.sort(() => Math.random() - 0.5);
+    
+    // Если всё ещё меньше 4 — добавляем заглушки
+    while (options.length < 4) {
+        options.push({
+            char: '?',
+            text: '—',
+            isCorrect: false,
+            pinyin: '',
+            emoji: '❓'
+        });
+    }
+    
+    return options;
 }
 
 function showAnswerAndNext() {
@@ -625,60 +709,6 @@ function showAnswerAndNext() {
     saveStats(stats);
     
     showGameCard();
-}
-
-function generateOptions(correctItem) {
-    const isWord = correctItem.type === 'word';
-    const allItems = gameState.items;
-    
-    const correctText = correctItem.m || '?';
-    const correctChar = isWord ? correctItem.c : correctItem.s;
-    const correctPinyin = correctItem.p || '';
-    const correctEmoji = correctItem.e || '';
-    
-    let options = [{
-        char: correctChar,
-        text: correctText,
-        isCorrect: true,
-        pinyin: correctPinyin,
-        emoji: correctEmoji
-    }];
-    
-    const others = allItems.filter(item => {
-        const otherChar = item.type === 'word' ? item.c : item.s;
-        return otherChar !== correctChar;
-    });
-    
-    others.sort(() => Math.random() - 0.5);
-    const selectedOthers = others.slice(0, 3);
-    
-    selectedOthers.forEach(item => {
-        const char = item.type === 'word' ? item.c : item.s;
-        options.push({
-            char: char,
-            text: item.m || '?',
-            isCorrect: false,
-            pinyin: item.p || '',
-            emoji: item.e || ''
-        });
-    });
-    
-    if (options.length < 4 && typeof WORDS !== 'undefined') {
-        const extra = WORDS.filter(w => w.c !== correctChar && !options.some(o => o.char === w.c));
-        extra.sort(() => Math.random() - 0.5);
-        for (let i = 0; options.length < 4 && i < extra.length; i++) {
-            options.push({
-                char: extra[i].c,
-                text: extra[i].m || '?',
-                isCorrect: false,
-                pinyin: extra[i].p || '',
-                emoji: extra[i].e || ''
-            });
-        }
-    }
-    
-    options.sort(() => Math.random() - 0.5);
-    return options;
 }
 
 function handleGameAnswer(index) {
@@ -720,6 +750,7 @@ function previousGameQuestion() {
     if (!gameState.isActive || gameState.currentIndex <= 0) return;
     
     gameState.currentIndex--;
+    gameState.answered = false;
     showGameCard();
 }
 
@@ -727,6 +758,7 @@ function nextGameQuestion() {
     if (!gameState.isActive) return;
     
     gameState.currentIndex++;
+    gameState.answered = false;
     showGameCard();
 }
 
@@ -856,41 +888,10 @@ function addReviewTab() {
     }
 }
 
-// ==================== ПАТЧ МОДАЛЬНОГО ОКНА ====================
-
-function patchModalButtons() {
-    const originalOpenModal = window.openModal;
-    if (originalOpenModal) {
-        window.openModal = function(w) {
-            originalOpenModal(w);
-            const modalBody = document.getElementById('modalBody');
-            if (modalBody) {
-                const btnGroup = modalBody.querySelector('.btn-group');
-                if (btnGroup) {
-                    const reviewBtn = document.createElement('button');
-                    reviewBtn.textContent = '🧠 В повторение';
-                    reviewBtn.style.cssText = 'background:linear-gradient(135deg,#f39c12,#e67e22);';
-                    reviewBtn.onclick = function() {
-                        const isRadical = w.cat === 'radicals' || (w.c && RADICALS && RADICALS.some(r => r.s === w.c));
-                        if (isRadical) {
-                            addRadicalToReview(w.c);
-                        } else {
-                            addWordToReview(w.c);
-                        }
-                        closeModal();
-                    };
-                    btnGroup.appendChild(reviewBtn);
-                }
-            }
-        };
-    }
-}
-
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(addReviewTab, 300);
-    setTimeout(patchModalButtons, 400);
     
     const style = document.createElement('style');
     style.textContent = `
@@ -904,4 +905,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log('🧠 Модуль повторения загружен! Кубики + 2 игры + навигация стрелками');
-
