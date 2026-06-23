@@ -12,9 +12,9 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E🇨🇳%3C/text%3E%3C/svg%3E">
     <link rel="manifest" href="/chinese_songs_games/manifest.json">
-    <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс (500+ слов)</title>
+    <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс</title>
     
-    <!-- ПОДКЛЮЧАЕМ ВСЕ СКРИПТЫ С ПРАВИЛЬНЫМИ ПУТЯМИ -->
+    <!-- ПОДКЛЮЧАЕМ ВСЕ СКРИПТЫ -->
     <script src="/chinese_songs_games/songs.js"></script>
     <script src="/chinese_songs_games/WORDS.js"></script>
     <script src="/chinese_songs_games/GRAMMAR.js"></script>
@@ -25,21 +25,29 @@
     <script src="/chinese_songs_games/writing-videos.js"></script>
     <script src="/chinese_songs_games/sounds-videos.js"></script>
 
+    <!-- ДОБАВЛЯЕМ РАДИКАЛЫ В WORDS -->
     <script>
     (function addRadicalsToWords() {
         if (typeof RADICALS !== 'undefined' && RADICALS.length > 0 && typeof WORDS !== 'undefined') {
-            const radicalWords = RADICALS.map(r => ({ c: r.s, p: r.p || '?', m: r.m, e: r.e || '🔤', cat: 'radicals', a: `Радикал: ${r.m}. Примеры: ${r.ex || '—'}` }));
+            const radicalWords = RADICALS.map(r => ({ 
+                c: r.s, 
+                p: r.p || '?', 
+                m: r.m, 
+                e: r.e || '🔤', 
+                cat: 'radicals', 
+                a: `Радикал: ${r.m}. Примеры: ${r.ex || '—'}` 
+            }));
             const existingChars = new Set(WORDS.map(w => w.c));
             const newRadicals = radicalWords.filter(r => !existingChars.has(r.c));
             if (newRadicals.length > 0) { 
                 WORDS.push(...newRadicals); 
-                console.log(`✅ Добавлено ${newRadicals.length} радикалов`); 
+                console.log(`✅ Добавлено ${newRadicals.length} радикалов в WORDS`); 
             }
         }
     })();
     </script>
     
-    <!-- РЕГИСТРАЦИЯ SERVICE WORKER С ПРАВИЛЬНЫМ ПУТЕМ -->
+    <!-- РЕГИСТРАЦИЯ SERVICE WORKER ДЛЯ ОФЛАЙНА -->
     <script>
         if ('serviceWorker' in navigator) { 
             window.addEventListener('load', () => {
@@ -50,10 +58,9 @@
         }
     </script>
 
-    <!-- ДОБАВЛЯЕМ СТАТУС ОНЛАЙН/ОФЛАЙН -->
+    <!-- СТАТУС ОНЛАЙН/ОФЛАЙН -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Создаем индикатор статуса
             const statusDiv = document.createElement('div');
             statusDiv.id = 'connectionStatus';
             statusDiv.style.cssText = `
@@ -78,30 +85,14 @@
                     statusDiv.textContent = '🟢 Онлайн';
                     statusDiv.style.background = '#2ecc71';
                 } else {
-                    statusDiv.textContent = '🔴 Офлайн (ограниченный режим)';
-                    statusDiv.style.background = '#e74c3c';
-                    // Показываем предупреждение о голосе
-                    console.warn('🔇 Голосовые функции недоступны в офлайн-режиме');
+                    statusDiv.textContent = '📴 Офлайн (все функции работают)';
+                    statusDiv.style.background = '#f39c12';
                 }
             }
 
             window.addEventListener('online', updateStatus);
             window.addEventListener('offline', updateStatus);
             updateStatus();
-
-            // Перехватываем голосовые функции для офлайна
-            const originalSpeak = window.speak;
-            if (window.speak) {
-                window.speak = function(text) {
-                    if (!navigator.onLine) {
-                        const msg = '🔇 Голос недоступен в офлайн-режиме. Подключитесь к интернету.';
-                        alert(msg);
-                        console.warn(msg);
-                        return;
-                    }
-                    originalSpeak.call(this, text);
-                };
-            }
         });
     </script>
 
@@ -188,7 +179,10 @@
         .g-rule { font-size: 17px; line-height: 1.6; color: #475569; margin-bottom: 15px; font-weight: 600; }
         .g-ex { background: rgba(255,255,255,0.8); padding: 15px; border-radius: 20px; font-family: inherit; font-size: 17px; border: 2px dashed rgba(0,0,0,0.1); color: #1e293b; line-height: 1.5; }
         .g-ex b { color: var(--primary); font-weight: 800; }
-        @media (max-width: 650px) { .big-char { font-size: 74px; } .tab { font-size: 12px; padding: 10px 12px; } .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; } button, .btn { font-size: 14px; padding: 12px 18px; min-height: 48px; } .dialog-line { font-size: 16px; } .g-title { font-size: 19px; } .g-rule { font-size: 15px; } }
+        .song-line { padding: 8px 12px; margin: 6px 0; border-radius: 12px; background: rgba(255,255,255,0.6); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+        .song-cn { font-size: 22px; font-weight: 700; min-width: 60px; }
+        .song-py { font-size: 14px; color: #4361ee; font-weight: 600; min-width: 80px; }
+        .song-ru { font-size: 14px; color: #555; flex: 1; }
         .video-card { background: linear-gradient(135deg, #fff8f0, #ffffff) !important; border-left: 6px solid #ff6b35 !important; padding: 15px !important; }
         .video-content { display: flex; align-items: center; gap: 15px; text-align: left; }
         .video-emoji { font-size: 40px; }
@@ -196,13 +190,9 @@
         .video-name { font-size: 18px; font-weight: 800; color: #2c3e50; }
         .video-desc { font-size: 13px; color: #666; margin-top: 4px; }
         .video-btn { background: linear-gradient(135deg, #ff6b35, #ff9a44); color: white !important; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 14px; white-space: nowrap; }
+        @media (max-width: 650px) { .big-char { font-size: 74px; } .tab { font-size: 12px; padding: 10px 12px; } .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; } button, .btn { font-size: 14px; padding: 12px 18px; min-height: 48px; } .dialog-line { font-size: 16px; } .g-title { font-size: 19px; } .g-rule { font-size: 15px; } }
         @media (max-width: 500px) { .video-content { flex-direction: column; text-align: center; } .video-btn { width: 100%; text-align: center; } }
-        
-        /* Стили для песен */
-        .song-line { padding: 8px 12px; margin: 6px 0; border-radius: 12px; background: rgba(255,255,255,0.6); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-        .song-cn { font-size: 22px; font-weight: 700; min-width: 60px; }
-        .song-py { font-size: 14px; color: #4361ee; font-weight: 600; min-width: 80px; }
-        .song-ru { font-size: 14px; color: #555; flex: 1; }
+        #connectionStatus { transition: all 0.3s ease; }
     </style>
 </head>
 <body>
@@ -245,65 +235,64 @@
         <div class="btn-group"><button id="sListen">🔊 Слушать</button><button id="sVoice" class="voice-btn">🎙️ Проверить</button><button id="sNext">🎲 Следующее</button><button id="sRandom" class="random-btn">✨ Случайное</button></div>
         <div id="sFeedback" style="text-align:center;margin:12px 0;font-size:17px;font-weight:600;"></div>
         <div class="filter-row" id="wFilters">
-    <span class="fbtn active" data-cat="all">Все</span>
-    <span class="fbtn" data-cat="food">🍜 Еда</span>
-    <span class="fbtn" data-cat="home">🏠 Дом</span>
-    <span class="fbtn" data-cat="nature">🌿 Природа</span>
-    <span class="fbtn" data-cat="medicine">💊 Медицина</span>
-    <span class="fbtn" data-cat="family">👨‍👩‍👧 Семья</span>
-    <span class="fbtn" data-cat="transport">🚗 Транспорт</span>
-    <span class="fbtn" data-cat="numbers">🔢 Числа</span>
-    <span class="fbtn" data-cat="colors">🎨 Цвета</span>
-    <span class="fbtn" data-cat="animals">🐕 Животные</span>
-    <span class="fbtn" data-cat="places">🏛️ Места</span>
-    <span class="fbtn" data-cat="time">⏰ Время</span>
-    <span class="fbtn" data-cat="greetings">👋 Приветствия</span>
-    <span class="fbtn" data-cat="people">👥 Люди</span>
-    <span class="fbtn" data-cat="kitchen">🍳 Посуда</span>
-    <span class="fbtn" data-cat="clothes">👕 Одежда</span>
-    <span class="fbtn" data-cat="weather">🌤️ Погода</span>
-    <span class="fbtn" data-cat="verbs">🏃 Глаголы</span>
-    <span class="fbtn" data-cat="adjectives">📏 Прилагательные</span>
-    <span class="fbtn" data-cat="adverbs">📝 Наречия</span>
-    <span class="fbtn" data-cat="pronouns">👤 Местоимения</span>
-    <span class="fbtn" data-cat="questions">❓ Вопросы</span>
-    <span class="fbtn" data-cat="basics">👋 Основы</span>
-    <span class="fbtn" data-cat="shopping">🛍️ Покупки</span>
-    <span class="fbtn" data-cat="tech">💻 Технологии</span>
-    <span class="fbtn" data-cat="entertainment">🎬 Развлечения</span>
-    <span class="fbtn" data-cat="work">💼 Работа</span>
-    <span class="fbtn" data-cat="body">🧬 Части тела</span>
-    <span class="fbtn" data-cat="particles">🔤 Частицы</span>
-    <span class="fbtn" data-cat="conjunctions">🔗 Союзы</span>
-    <span class="fbtn" data-cat="slang">😎 Сленг</span>
-    <span class="fbtn" data-cat="songs">🎵 Песни</span>
-    <span class="fbtn" data-cat="classifiers">🔢 Счётные</span>
-    <span class="fbtn" data-cat="phrases">💬 Фразы</span>
-    <span class="fbtn" data-cat="idioms">🀄 Идиомы</span>
-    
-    <!-- 🆕 НОВЫЕ КАТЕГОРИИ -->
-    <span class="fbtn" data-cat="business">💼 Бизнес</span>
-    <span class="fbtn" data-cat="law">⚖️ Право</span>
-    <span class="fbtn" data-cat="sports">🏃 Спорт</span>
-    <span class="fbtn" data-cat="abstract">💭 Абстрактное</span>
-    <span class="fbtn" data-cat="tools">🛠️ Инструменты</span>
-    <span class="fbtn" data-cat="disasters">🌪️ Катастрофы</span>
-    <span class="fbtn" data-cat="space">🚀 Космос</span>
-    <span class="fbtn" data-cat="plants">🌾 Растения</span>
-    <span class="fbtn" data-cat="bar">🍸 Бар</span>
-    <span class="fbtn" data-cat="social">📱 Соцсети</span>
-    <span class="fbtn" data-cat="cafe">☕ Кафе и чай</span>
-    <span class="fbtn" data-cat="housing">🏘️ Аренда</span>
-    <span class="fbtn" data-cat="airport">✈️ Аэропорт</span>
-    <span class="fbtn" data-cat="literature">📚 Литература</span>
-    <span class="fbtn" data-cat="phone">📞 Телефон</span>
-    <span class="fbtn" data-cat="emergency">🚨 Экстренное</span>
-    <span class="fbtn" data-cat="cooking">🍳 Кулинария</span>
-    <span class="fbtn" data-cat="beauty">💄 Косметика</span>
-    <span class="fbtn" data-cat="travel">✈️ Путешествия</span>
-    <span class="fbtn" data-cat="hotel">🏨 Отель</span>
-</div>
-
+            <span class="fbtn active" data-cat="all">Все</span>
+            <span class="fbtn" data-cat="food">🍜 Еда</span>
+            <span class="fbtn" data-cat="home">🏠 Дом</span>
+            <span class="fbtn" data-cat="nature">🌿 Природа</span>
+            <span class="fbtn" data-cat="medicine">💊 Медицина</span>
+            <span class="fbtn" data-cat="family">👨‍👩‍👧 Семья</span>
+            <span class="fbtn" data-cat="transport">🚗 Транспорт</span>
+            <span class="fbtn" data-cat="numbers">🔢 Числа</span>
+            <span class="fbtn" data-cat="colors">🎨 Цвета</span>
+            <span class="fbtn" data-cat="animals">🐕 Животные</span>
+            <span class="fbtn" data-cat="places">🏛️ Места</span>
+            <span class="fbtn" data-cat="time">⏰ Время</span>
+            <span class="fbtn" data-cat="greetings">👋 Приветствия</span>
+            <span class="fbtn" data-cat="people">👥 Люди</span>
+            <span class="fbtn" data-cat="kitchen">🍳 Посуда</span>
+            <span class="fbtn" data-cat="clothes">👕 Одежда</span>
+            <span class="fbtn" data-cat="weather">🌤️ Погода</span>
+            <span class="fbtn" data-cat="verbs">🏃 Глаголы</span>
+            <span class="fbtn" data-cat="adjectives">📏 Прилагательные</span>
+            <span class="fbtn" data-cat="adverbs">📝 Наречия</span>
+            <span class="fbtn" data-cat="pronouns">👤 Местоимения</span>
+            <span class="fbtn" data-cat="questions">❓ Вопросы</span>
+            <span class="fbtn" data-cat="basics">👋 Основы</span>
+            <span class="fbtn" data-cat="shopping">🛍️ Покупки</span>
+            <span class="fbtn" data-cat="tech">💻 Технологии</span>
+            <span class="fbtn" data-cat="entertainment">🎬 Развлечения</span>
+            <span class="fbtn" data-cat="work">💼 Работа</span>
+            <span class="fbtn" data-cat="body">🧬 Части тела</span>
+            <span class="fbtn" data-cat="particles">🔤 Частицы</span>
+            <span class="fbtn" data-cat="conjunctions">🔗 Союзы</span>
+            <span class="fbtn" data-cat="slang">😎 Сленг</span>
+            <span class="fbtn" data-cat="songs">🎵 Песни</span>
+            <span class="fbtn" data-cat="classifiers">🔢 Счётные</span>
+            <span class="fbtn" data-cat="phrases">💬 Фразы</span>
+            <span class="fbtn" data-cat="idioms">🀄 Идиомы</span>
+            
+            <!-- 🆕 НОВЫЕ КАТЕГОРИИ -->
+            <span class="fbtn" data-cat="business">💼 Бизнес</span>
+            <span class="fbtn" data-cat="law">⚖️ Право</span>
+            <span class="fbtn" data-cat="sports">🏃 Спорт</span>
+            <span class="fbtn" data-cat="abstract">💭 Абстрактное</span>
+            <span class="fbtn" data-cat="tools">🛠️ Инструменты</span>
+            <span class="fbtn" data-cat="disasters">🌪️ Катастрофы</span>
+            <span class="fbtn" data-cat="space">🚀 Космос</span>
+            <span class="fbtn" data-cat="plants">🌾 Растения</span>
+            <span class="fbtn" data-cat="bar">🍸 Бар</span>
+            <span class="fbtn" data-cat="social">📱 Соцсети</span>
+            <span class="fbtn" data-cat="cafe">☕ Кафе</span>
+            <span class="fbtn" data-cat="housing">🏘️ Аренда</span>
+            <span class="fbtn" data-cat="airport">✈️ Аэропорт</span>
+            <span class="fbtn" data-cat="literature">📚 Литература</span>
+            <span class="fbtn" data-cat="phone">📞 Телефон</span>
+            <span class="fbtn" data-cat="emergency">🚨 Экстренное</span>
+            <span class="fbtn" data-cat="cooking">🍳 Кулинария</span>
+            <span class="fbtn" data-cat="beauty">💄 Косметика</span>
+            <span class="fbtn" data-cat="travel">✈️ Путешествия</span>
+            <span class="fbtn" data-cat="hotel">🏨 Отель</span>
+        </div>
         <div class="grid" id="wordGrid"></div>
     </div>
 
@@ -431,7 +420,6 @@
     emergency:"🚨 Экстренные ситуации"
 };
 
-
     
     const TONES = {
         'ā':'t1','á':'t2','ǎ':'t3','à':'t4',
@@ -487,19 +475,6 @@
     // ==================== ГОЛОСОВЫЕ ФУНКЦИИ ====================
     
     function speak(text) {
-        if (!navigator.onLine) {
-            const msg = '🔇 Голос недоступен в офлайн-режиме. Подключитесь к интернету.';
-            console.warn(msg);
-            const feedback = document.querySelector('#sFeedback, #cFeedback, #nFeedback');
-            if (feedback) {
-                feedback.innerHTML = msg;
-                feedback.style.color = '#e74c3c';
-                setTimeout(() => { if (feedback) feedback.innerHTML = ''; }, 3000);
-            } else {
-                alert(msg);
-            }
-            return;
-        }
         if (!window.speechSynthesis) {
             console.warn('Speech Synthesis не поддерживается');
             return;
@@ -520,15 +495,6 @@
     }
     
     function startVoice(tChar, feedEl) {
-        if (!navigator.onLine) {
-            const msg = '🔇 Голосовое распознавание недоступно в офлайн-режиме';
-            if (feedEl) {
-                feedEl.innerHTML = msg;
-                feedEl.style.color = '#e74c3c';
-                setTimeout(() => { if (feedEl) feedEl.innerHTML = ''; }, 3000);
-            }
-            return;
-        }
         if(!recognition && !initVoice()) { 
             if(feedEl) feedEl.innerHTML = "❌ Голос не поддерживается"; 
             return; 
