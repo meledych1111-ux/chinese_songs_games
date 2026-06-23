@@ -1,12 +1,14 @@
 // Имя вашего репозитория
 const REPO_NAME = 'chinese_songs_games';
 const BASE_PATH = `/${REPO_NAME}/`;
-const CACHE_NAME = 'chinese-cache-v6';
+const CACHE_NAME = 'chinese-cache-v7';
 
 // Файлы для кеширования (ВСЕ пути должны быть с BASE_PATH)
 const FILES_TO_CACHE = [
   BASE_PATH,
   `${BASE_PATH}index.html`,
+  `${BASE_PATH}grammar.html`,      // 👈 НОВЫЙ ФАЙЛ
+  `${BASE_PATH}review.html`,       // 👈 НОВЫЙ ФАЙЛ
   `${BASE_PATH}songs.js`,
   `${BASE_PATH}WORDS.js`,
   `${BASE_PATH}GRAMMAR.js`,
@@ -49,7 +51,6 @@ self.addEventListener('install', event => {
         const successCount = results.filter(r => r === true).length;
         console.log(`📊 Кеширование завершено: ${successCount}/${FILES_TO_CACHE.length} файлов`);
         
-        // Если не удалось закешировать критичные файлы
         if (successCount === 0) {
           console.error('❌ Не удалось закешировать ни одного файла!');
         }
@@ -84,7 +85,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   
-  // Пропускаем запросы к другим доменам (API, внешние ресурсы)
+  // Пропускаем запросы к другим доменам
   if (url.origin !== self.location.origin) {
     return;
   }
@@ -97,20 +98,16 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
-        // Если есть в кеше - возвращаем
         if (cachedResponse) {
           return cachedResponse;
         }
         
-        // Если нет в кеше - идем в сеть
         return fetch(event.request)
           .then(networkResponse => {
-            // Проверяем, что получили валидный ответ
             if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
               return networkResponse;
             }
             
-            // Кешируем новый файл для будущих запросов
             const responseToCache = networkResponse.clone();
             caches.open(CACHE_NAME)
               .then(cache => {
@@ -125,10 +122,12 @@ self.addEventListener('fetch', event => {
             
             // Если запрос на HTML страницу - показываем офлайн страницу
             if (url.pathname.endsWith('.html') || url.pathname === BASE_PATH || url.pathname === `${BASE_PATH}`) {
-              return caches.match(`${BASE_PATH}index.html`);
+              return caches.match(event.request).then(cached => {
+                if (cached) return cached;
+                return caches.match(`${BASE_PATH}index.html`);
+              });
             }
             
-            // Для других файлов возвращаем ошибку
             return new Response('Офлайн режим: файл недоступен', {
               status: 503,
               statusText: 'Service Unavailable',
