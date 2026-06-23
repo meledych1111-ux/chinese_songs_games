@@ -15,11 +15,12 @@
     <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс</title>
     
     <!-- ПОДКЛЮЧАЕМ ВСЕ ВНЕШНИЕ СКРИПТЫ -->
-  <script src="songs.js"></script>
-<script src="WORDS.js"></script>
-<script src="GRAMMAR.js"></script>
-<script src="DIALOGS.js"></script>
-<script src="game.js"></script>
+    <script src="songs.js"></script>
+    <script src="WORDS.js"></script>
+    <script src="GRAMMAR.js"></script>
+    <script src="DIALOGS.js"></script>
+    <script src="game.js"></script>
+    
     <!-- Добавление радикалов в общий список слов -->
     <script>
     (function addRadicalsToWords() {
@@ -416,7 +417,8 @@
         <div class="tab" data-tab="numbers">🔢 Числа</div>
         <div class="tab" data-tab="colors">🎨 Цвета</div>
         <div class="tab" data-tab="dialogs">💬 Диалоги</div>
-        <div class="tab" data-tab="grammar">📚 Грамматика</div>
+        <!-- ГРАММАТИКА → отдельная страница -->
+        <div class="tab" onclick="window.location.href='grammar.html'">📚 Грамматика</div>
         <div class="tab" data-tab="songs">🎵 Песни</div>
         <div class="tab" data-tab="radicals">🔤 Радикалы</div>
         <div class="tab" data-tab="notebook">📓 Тетрадь</div>
@@ -429,7 +431,8 @@
         <div class="tab" data-tab="mahjong">🀄️ Маджонг</div>
         <div class="tab" data-tab="tones">🎯 Тоны</div>
         <div class="tab" data-tab="pinyin-sounds">🎵 Звуки пиньинь</div>
-        <div class="tab" data-tab="review">🧠 Повторение</div>
+        <!-- ПОВТОРЕНИЕ → отдельная страница -->
+        <div class="tab" onclick="window.location.href='review.html'">🧠 Повторение</div>
     </div>
     
     <div id="modal" class="modal">
@@ -546,9 +549,8 @@
         </div>
     </div>
 
-    <div id="grammarPanel" class="panel">
-        <div class="card" id="grammarBox" style="background:transparent;box-shadow:none;padding:0;"></div>
-    </div>
+    <!-- Панель грамматики — больше не используется, т.к. открывается отдельной страницей -->
+    <div id="grammarPanel" class="panel" style="display:none;"></div>
 
     <div id="songsPanel" class="panel">
         <div id="songsBox"></div>
@@ -681,12 +683,11 @@
         </div>
     </div>
 
-    <div id="reviewPanel" class="panel">
-        <div class="card" id="reviewContainer"></div>
-    </div>
+    <!-- Панель повторения — больше не используется, т.к. открывается отдельной страницей -->
+    <div id="reviewPanel" class="panel" style="display:none;"></div>
 </div>
 
-<!-- ==================== ОСНОВНОЙ СКРИПТ (без грамматики) ==================== -->
+<!-- ==================== ОСНОВНОЙ СКРИПТ ==================== -->
 <script>
     const CAT_NAMES = {
         numbers:"🔢 Числа", greetings:"👋 Приветствия", people:"👥 Люди", family:"👨‍👩‍👧 Семья",
@@ -877,14 +878,8 @@
       const modalContent = document.getElementById('modalContent');
       if(!modal || !modalContent) return;
       const isRadical = w.cat === 'radicals' || (w.c && RADICALS && RADICALS.some(r => r.s === w.c));
-      modalContent.innerHTML = `<button class="close" onclick="closeModal()">×</button><div class="big-char">${w.c}</div><div class="pinyin">${colorP(w.p)}</div><div class="meaning">${w.m}</div><div class="emoji">${w.e || '📖'}</div><div class="badge">${CAT_NAMES[w.cat] || w.cat}</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>${w.a || 'Практикуй произношение!'}</div><div class="btn-group"><button onclick="speak('${w.c}')">🔊 Слушать</button><button onclick="selectWordByIndex(${idx}, 'notebook')" style="background:var(--success)">📓 В тетрадь</button><button onclick="selectWordByIndex(${idx}, 'cards')" style="background:var(--primary)">🃏 В карточки</button><button onclick="addToReview('${w.c}', ${isRadical})" style="background:linear-gradient(135deg,#f39c12,#e67e22);">🧠 В повторение</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`;
+      modalContent.innerHTML = `<button class="close" onclick="closeModal()">×</button><div class="big-char">${w.c}</div><div class="pinyin">${colorP(w.p)}</div><div class="meaning">${w.m}</div><div class="emoji">${w.e || '📖'}</div><div class="badge">${CAT_NAMES[w.cat] || w.cat}</div><div class="assoc"><strong>🧠 Как запомнить:</strong><br>${w.a || 'Практикуй произношение!'}</div><div class="btn-group"><button onclick="speak('${w.c}')">🔊 Слушать</button><button onclick="selectWordByIndex(${idx}, 'notebook')" style="background:var(--success)">📓 В тетрадь</button><button onclick="selectWordByIndex(${idx}, 'cards')" style="background:var(--primary)">🃏 В карточки</button></div><div id="mFeed" style="margin:12px 0;font-size:17px;font-weight:600;"></div>`;
       modal.classList.add('active');
-    }
-
-    function addToReview(char, isRadical) {
-        if (isRadical) { addRadicalToReview(char); } else { addWordToReview(char); }
-        const feed = document.getElementById('mFeed');
-        if (feed) { feed.innerHTML = '✅ Добавлено в повторение!'; feed.style.color = '#2ecc71'; setTimeout(() => { if (feed) feed.innerHTML = ''; }, 2000); }
     }
 
     function closeModal() { let modal = document.getElementById('modal'); if(modal) modal.classList.remove('active'); }
@@ -930,21 +925,6 @@
       if (typeof DIALOGS === 'undefined' || !DIALOGS.length) { b.innerHTML = '<p style="text-align:center;padding:40px;color:#999;">💬 Диалоги загружаются...</p>'; return; }
       var d = DIALOGS[currentDia];
       b.innerHTML = '<div class="dialog-card"><div class="dialog-line q"><strong>❓ Китайский:</strong> '+d.q+'<br><small>📖 Пиньинь: '+d.qp+'</small><br><small>🇷🇺 Перевод: '+(d.rq || "—")+'</small></div><div class="dialog-line a"><strong>✅ Ответ:</strong> '+d.a+'<br><small>📖 Пиньинь: '+d.ap+'</small><br><small>🇷🇺 Перевод: '+(d.ra || "—")+'</small></div></div>';
-    }
-
-    // renderGram будет переопределена после загрузки GRAMMAR.js
-    function renderGram() {
-      var html = '';
-      if (typeof GRAMMAR === 'undefined' || !GRAMMAR || GRAMMAR.length === 0) {
-        html = '<div class="grammar-card"><div class="g-title">📚 Грамматика</div><div class="g-rule">⏳ Загрузка грамматики...</div><div class="g-ex">Подождите, данные загружаются</div></div>';
-      } else {
-        for(var i = 0; i < GRAMMAR.length; i++) {
-          var g = GRAMMAR[i];
-          html += '<div class="grammar-card"><div class="g-title">' + g.title + '</div><div class="g-rule">' + g.rule + '</div><div class="g-ex">' + g.ex.replace(/\n/g, '<br>').replace(/\((.*?)\)/g, '<b>($1)</b>') + '</div></div>';
-        }
-      }
-      var grammarBox = document.getElementById('grammarBox');
-      if (grammarBox) { grammarBox.innerHTML = html; }
     }
 
     function renderSongs() {
@@ -1238,232 +1218,16 @@
         } else { container.innerHTML = '<p style="text-align:center;color:#999;">📢 Видео с произношением загружаются...</p>'; }
     }
 
-    // Модуль повторения
-    const REVIEW_KEY = 'chinese_review_words', REVIEW_RADICALS_KEY = 'chinese_review_radicals', REVIEW_STATS_KEY = 'chinese_review_stats';
-    function getReviewWords() { try { const data = localStorage.getItem(REVIEW_KEY); return data ? JSON.parse(data) : []; } catch (e) { return []; } }
-    function saveReviewWords(words) { try { localStorage.setItem(REVIEW_KEY, JSON.stringify(words)); } catch (e) {} }
-    function getReviewRadicals() { try { const data = localStorage.getItem(REVIEW_RADICALS_KEY); return data ? JSON.parse(data) : []; } catch (e) { return []; } }
-    function saveReviewRadicals(radicals) { try { localStorage.setItem(REVIEW_RADICALS_KEY, JSON.stringify(radicals)); } catch (e) {} }
-    function getStats() { try { const data = localStorage.getItem(REVIEW_STATS_KEY); return data ? JSON.parse(data) : { totalGames: 0, totalCorrect: 0, totalWrong: 0, bestStreak: 0, gamesPlayed: 0 }; } catch (e) { return { totalGames: 0, totalCorrect: 0, totalWrong: 0, bestStreak: 0, gamesPlayed: 0 }; } }
-    function saveStats(stats) { try { localStorage.setItem(REVIEW_STATS_KEY, JSON.stringify(stats)); } catch (e) {} }
-
-    function addWordToReview(wordChar) {
-        const word = WORDS.find(w => w.c === wordChar);
-        if (!word) return false;
-        const reviewList = getReviewWords();
-        if (reviewList.some(w => w.c === word.c)) { showToast('⚠️ Слово уже в списке повторения', 'warning'); return false; }
-        reviewList.push({ c: word.c, p: word.p || '?', m: word.m || '?', e: word.e || '📖', cat: word.cat || 'basics', a: word.a || '', dateAdded: new Date().toISOString(), reviewCount: 0, lastReviewed: null, correctCount: 0, wrongCount: 0, streak: 0 });
-        saveReviewWords(reviewList);
-        showToast('✅ "'+word.c+'" добавлено в повторение!', 'success');
-        renderReviewPanel();
-        return true;
-    }
-
-    function addRadicalToReview(radicalChar) {
-        const radical = RADICALS.find(r => r.s === radicalChar);
-        if (!radical) return false;
-        const reviewList = getReviewRadicals();
-        if (reviewList.some(r => r.s === radical.s)) { showToast('⚠️ Радикал уже в списке повторения', 'warning'); return false; }
-        reviewList.push({ s: radical.s, p: radical.p || '?', m: radical.m || '?', e: radical.e || '🔤', ex: radical.ex || '', dateAdded: new Date().toISOString(), reviewCount: 0, lastReviewed: null, correctCount: 0, wrongCount: 0, streak: 0 });
-        saveReviewRadicals(reviewList);
-        showToast('✅ Радикал "'+radical.s+'" добавлен в повторение!', 'success');
-        renderReviewPanel();
-        return true;
-    }
-
-    function removeWordFromReview(wordChar) {
-        if (!confirm('🗑️ Удалить слово "'+wordChar+'" из повторения?')) return false;
-        let reviewList = getReviewWords();
-        reviewList = reviewList.filter(w => w.c !== wordChar);
-        saveReviewWords(reviewList);
-        showToast('🗑️ Слово "'+wordChar+'" удалено', 'info');
-        renderReviewPanel();
-        return true;
-    }
-
-    function removeRadicalFromReview(radicalChar) {
-        if (!confirm('🗑️ Удалить радикал "'+radicalChar+'" из повторения?')) return false;
-        let reviewList = getReviewRadicals();
-        reviewList = reviewList.filter(r => r.s !== radicalChar);
-        saveReviewRadicals(reviewList);
-        showToast('🗑️ Радикал "'+radicalChar+'" удалён', 'info');
-        renderReviewPanel();
-        return true;
-    }
-
-    function getReviewStats() {
-        const words = getReviewWords(), radicals = getReviewRadicals(), stats = getStats();
-        return { totalWords: words.length, totalRadicals: radicals.length, total: words.length + radicals.length, totalGames: stats.totalGames || 0, totalCorrect: stats.totalCorrect || 0, totalWrong: stats.totalWrong || 0, bestStreak: stats.bestStreak || 0, gamesPlayed: stats.gamesPlayed || 0 };
-    }
-
-    function showToast(message, type = 'info') {
-        const existingToast = document.querySelector('.review-toast');
-        if (existingToast) existingToast.remove();
-        const toast = document.createElement('div'); toast.className = 'review-toast';
-        const colors = { info: 'rgba(0,0,0,0.85)', success: '#2ecc71', error: '#e74c3c', warning: '#f39c12' };
-        toast.style.cssText = 'position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: '+(colors[type] || colors.info)+'; color: white; padding: 12px 24px; border-radius: 50px; font-size: 16px; font-weight: 600; z-index: 10000; box-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: fadeInUp 0.3s ease; max-width: 90%; text-align: center; backdrop-filter: blur(10px);';
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; toast.style.transition = 'all 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 2500);
-    }
-
-    let reviewSession = { mode: 'visual', items: [], currentIndex: 0, correct: 0, wrong: 0, streak: 0, bestStreak: 0, total: 0, isActive: false, answered: false, currentItem: null, options: [] };
-
-    function renderReviewPanel() {
-        const container = document.getElementById('reviewContainer');
-        if (!container) return;
-        const stats = getReviewStats();
-        const words = getReviewWords(), radicals = getReviewRadicals();
-        const allItems = [...words.map(w => ({ ...w, type: 'word' })), ...radicals.map(r => ({ ...r, type: 'radical' }))];
-        const colorsArr = ['#4361ee', '#e53935', '#2ecc71', '#f39c12', '#8e24aa', '#00bcd4', '#ff6b35', '#4caf50'];
-        let html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:20px;"><div style="background:linear-gradient(135deg,#4361ee,#764ba2);color:white;padding:14px;border-radius:14px;text-align:center;"><div style="font-size:28px;font-weight:900;">'+stats.total+'</div><div style="font-size:11px;opacity:0.8;">📚 Всего</div></div><div style="background:linear-gradient(135deg,#2ecc71,#27ae60);color:white;padding:14px;border-radius:14px;text-align:center;"><div style="font-size:28px;font-weight:900;">'+(stats.totalCorrect || 0)+'</div><div style="font-size:11px;opacity:0.8;">✅ Верно</div></div><div style="background:linear-gradient(135deg,#e74c3c,#c62828);color:white;padding:14px;border-radius:14px;text-align:center;"><div style="font-size:28px;font-weight:900;">'+(stats.totalWrong || 0)+'</div><div style="font-size:11px;opacity:0.8;">❌ Неверно</div></div><div style="background:linear-gradient(135deg,#f39c12,#e67e22);color:white;padding:14px;border-radius:14px;text-align:center;"><div style="font-size:28px;font-weight:900;">'+(stats.bestStreak || 0)+'</div><div style="font-size:11px;opacity:0.8;">🔥 Серия</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;"><button onclick="startReviewGame(\'visual\')" style="background:linear-gradient(135deg,#4361ee,#764ba2);color:white;border:none;padding:16px;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(67,97,238,0.3);"><div style="font-size:36px;">👀</div><div>Угадай по виду</div><div style="font-size:11px;font-weight:400;opacity:0.8;">Выбери перевод</div></button><button onclick="startReviewGame(\'audio\')" style="background:linear-gradient(135deg,#e53935,#c62828);color:white;border:none;padding:16px;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(229,57,53,0.3);"><div style="font-size:36px;">🎧</div><div>Угадай на слух</div><div style="font-size:11px;font-weight:400;opacity:0.8;">Услышь и выбери</div></button></div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><h3 style="font-size:18px;">🧊 Мои карточки ('+allItems.length+')</h3>'+(allItems.length > 0 ? '<button onclick="clearAllReview()" style="background:#e74c3c;color:white;border:none;padding:6px 16px;border-radius:20px;font-size:12px;cursor:pointer;">🗑️ Всё</button>' : '')+'</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin-bottom:16px;">';
-        if (allItems.length === 0) {
-            html += '<div style="grid-column:1/-1;text-align:center;padding:40px;background:rgba(255,255,255,0.5);border-radius:20px;"><div style="font-size:48px;margin-bottom:12px;">📭</div><div style="font-size:18px;color:#666;">Нет добавленных слов</div><div style="font-size:14px;color:#999;margin-top:8px;">Добавьте слова через модальное окно (кнопка 🧠 В повторение)</div></div>';
-        } else {
-            allItems.forEach((item, index) => {
-                const isWord = item.type === 'word';
-                const char = isWord ? item.c : item.s;
-                const meaning = item.m || '?';
-                const emoji = item.e || (isWord ? '📖' : '🔤');
-                const color = colorsArr[index % colorsArr.length];
-                const pinyin = item.p || '';
-                html += '<div class="review-cube" style="background:white;border-radius:16px;padding:12px 8px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.08);border:2px solid '+color+'33;position:relative;cursor:pointer;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;" onclick="speak(\''+char+'\')"><button onclick="event.stopPropagation();'+(isWord ? 'removeWordFromReview(\''+char+'\')' : 'removeRadicalFromReview(\''+char+'\')')+'" class="delete-btn" style="position:absolute;top:4px;right:6px;background:#e74c3c;color:white;border:none;border-radius:50%;width:22px;height:22px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=\'1\'" onmouseout="this.style.opacity=\'0.7\'">✕</button><div style="font-size:44px;font-weight:900;color:#2c3e50;line-height:1.1;margin-bottom:4px;">'+char+'</div><div style="font-size:20px;margin-bottom:2px;">'+emoji+'</div><div style="font-size:13px;font-weight:600;color:#555;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(meaning.length > 20 ? meaning.substring(0, 20) + '…' : meaning)+'</div>'+(pinyin ? '<div style="font-size:10px;color:#999;margin-top:2px;">'+pinyin+'</div>' : '')+'<div style="font-size:9px;color:#aaa;margin-top:2px;background:#f0f0f0;padding:0 10px;border-radius:10px;">'+(isWord ? (item.cat || 'слово') : 'радикал')+'</div></div>';
-            });
-        }
-        html += '</div><div style="text-align:center;padding:8px;font-size:12px;color:#999;">💡 Нажми на кубик — услышишь произношение</div>';
-        container.innerHTML = html;
-    }
-
-    function startReviewGame(mode) {
-        const words = getReviewWords(), radicals = getReviewRadicals();
-        let allItems = [...words.map(w => ({ ...w, type: 'word' })), ...radicals.map(r => ({ ...r, type: 'radical' }))];
-        if (allItems.length < 3) { showToast('📭 Добавьте минимум 3 слова в повторение!', 'warning'); return; }
-        allItems.sort(() => Math.random() - 0.5);
-        const items = allItems.slice(0, Math.min(20, allItems.length));
-        reviewSession = { mode: mode, items: items, currentIndex: 0, correct: 0, wrong: 0, streak: 0, bestStreak: 0, total: items.length, isActive: true, answered: false, currentItem: null, options: [] };
-        showReviewGameCard();
-    }
-
-    function generateReviewOptions(correctItem) {
-        const isWord = correctItem.type === 'word';
-        const allItems = reviewSession.items;
-        const correctText = correctItem.m || '?';
-        const correctChar = isWord ? correctItem.c : correctItem.s;
-        const correctPinyin = correctItem.p || '';
-        const correctEmoji = correctItem.e || '';
-        let options = [{ char: correctChar, text: correctText, isCorrect: true, pinyin: correctPinyin, emoji: correctEmoji }];
-        const others = allItems.filter(item => { const otherChar = item.type === 'word' ? item.c : item.s; return otherChar !== correctChar; });
-        others.sort(() => Math.random() - 0.5);
-        const selectedOthers = others.slice(0, 3);
-        selectedOthers.forEach(item => { const char = item.type === 'word' ? item.c : item.s; options.push({ char: char, text: item.m || '?', isCorrect: false, pinyin: item.p || '', emoji: item.e || '' }); });
-        if (options.length < 4 && typeof WORDS !== 'undefined') {
-            const extra = WORDS.filter(w => w.c !== correctChar && !options.some(o => o.char === w.c));
-            extra.sort(() => Math.random() - 0.5);
-            for (let i = 0; options.length < 4 && i < extra.length; i++) { options.push({ char: extra[i].c, text: extra[i].m || '?', isCorrect: false, pinyin: extra[i].p || '', emoji: extra[i].e || '' }); }
-        }
-        options.sort(() => Math.random() - 0.5);
-        return options;
-    }
-
-    function showReviewGameCard() {
-        const container = document.getElementById('reviewContainer');
-        if (!container) return;
-        if (!reviewSession.isActive || reviewSession.currentIndex >= reviewSession.total) { showReviewGameResults(); return; }
-        const item = reviewSession.items[reviewSession.currentIndex];
-        reviewSession.currentItem = item; reviewSession.answered = false;
-        const isWord = item.type === 'word';
-        const char = isWord ? item.c : item.s;
-        const meaning = item.m || '?';
-        const emoji = item.e || (isWord ? '📖' : '🔤');
-        const pinyin = item.p || '?';
-        const current = reviewSession.currentIndex + 1;
-        const total = reviewSession.total;
-        const options = generateReviewOptions(item);
-        reviewSession.options = options;
-        if (reviewSession.mode === 'audio') { setTimeout(() => { speak(char); }, 300); }
-        const modeIcon = reviewSession.mode === 'visual' ? '👀' : '🎧';
-        const modeTitle = reviewSession.mode === 'visual' ? 'Угадай по виду' : 'Угадай на слух';
-        const modeColor = reviewSession.mode === 'visual' ? '#4361ee' : '#e53935';
-        let html = '<div style="background:white;border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.12);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;"><span style="background:'+modeColor+';color:white;padding:3px 14px;border-radius:16px;font-size:13px;font-weight:700;">'+modeIcon+' '+modeTitle+'</span><span style="color:#555;font-size:13px;font-weight:600;">'+current+'/'+total+' <span style="color:#2ecc71;">✅ '+reviewSession.correct+'</span> <span style="color:#e74c3c;">❌ '+reviewSession.wrong+'</span>'+(reviewSession.streak > 0 ? '<span style="color:#f39c12;">🔥 '+reviewSession.streak+'</span>' : '')+'</span></div><div style="text-align:center;padding:6px 0;">';
-        if (reviewSession.mode === 'visual') {
-            html += '<div style="font-size:96px;font-weight:900;color:#2c3e50;line-height:1.2;margin-bottom:4px;text-shadow:2px 2px 0 rgba(0,0,0,0.05);">'+char+'</div><div style="font-size:14px;color:#999;margin-bottom:4px;">'+emoji+' '+(isWord ? 'Слово' : 'Радикал')+'</div><div style="font-size:18px;font-weight:600;color:'+modeColor+';margin-bottom:12px;">👆 Выберите правильный перевод</div>';
-        } else {
-            html += '<div style="font-size:56px;margin-bottom:4px;">🎧</div><div style="font-size:20px;font-weight:600;color:#2c3e50;margin-bottom:2px;">Какой иероглиф прозвучал?</div><button onclick="speak(\''+char+'\')" style="background:'+modeColor+';color:white;border:none;padding:8px 24px;border-radius:50px;font-size:16px;cursor:pointer;margin-bottom:10px;">🔊 Повторить</button>'+(pinyin ? '<div style="font-size:13px;color:#666;margin-bottom:6px;">Подсказка: '+pinyin+'</div>' : '');
-        }
-        html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;">';
-        options.forEach((opt, idx) => {
-            const isCorrect = opt.isCorrect;
-            const label = String.fromCharCode(65 + idx);
-            const bgColor = reviewSession.answered ? (isCorrect ? '#2ecc71' : '#e74c3c') : '#f0f2f5';
-            const textColor = reviewSession.answered ? 'white' : '#2c3e50';
-            html += '<button onclick="handleReviewAnswer('+idx+')" style="background:'+bgColor+';color:'+textColor+';border:'+(reviewSession.answered && isCorrect ? '3px solid #27ae60' : reviewSession.answered && !isCorrect ? '3px solid #c62828' : '2px solid #e0e7ff')+';padding:14px 6px;border-radius:14px;font-size:'+(reviewSession.mode === 'visual' ? '16px' : '18px')+';font-weight:700;cursor:'+(reviewSession.answered ? 'default' : 'pointer')+';transition:all 0.2s;min-height:50px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;opacity:'+(reviewSession.answered && !isCorrect ? '0.5' : '1')+';' + (!reviewSession.answered ? 'box-shadow: 0 2px 8px rgba(0,0,0,0.06);' : '') + '" '+(reviewSession.answered ? 'disabled' : '')+'><span style="font-weight:400;font-size:11px;opacity:0.6;">'+label+'.</span>'+(reviewSession.mode === 'visual' ? opt.text : '<span style="font-size:32px;">'+opt.char+'</span>')+(reviewSession.mode === 'visual' ? '<span style="font-size:14px;color:#666;font-weight:400;">'+(opt.emoji || '')+'</span>' : '')+(reviewSession.answered && isCorrect ? ' ✅' : '')+(reviewSession.answered && !isCorrect ? ' ❌' : '')+'</button>';
-        });
-        html += '</div>';
-        if (reviewSession.answered) {
-            const correct = options.find(o => o.isCorrect);
-            html += '<div style="margin-top:12px;padding:12px;background:#f8f9fa;border-radius:12px;border-left:4px solid '+modeColor+';"><div style="font-weight:600;font-size:15px;">✅ Правильный ответ:</div><div style="font-size:18px;font-weight:700;">'+correct.char+' — '+correct.text+'</div>'+(correct.pinyin ? '<div style="font-size:13px;color:#666;">📖 '+correct.pinyin+'</div>' : '')+(correct.emoji ? '<div style="font-size:13px;color:#666;">'+correct.emoji+'</div>' : '')+(item.a ? '<div style="font-size:12px;color:#888;margin-top:4px;">💡 '+item.a+'</div>' : '')+'</div>';
-            html += '<div style="text-align:center;margin-top:12px;"><button onclick="nextReviewQuestion()" style="background:'+modeColor+';color:white;border:none;padding:10px 36px;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;">➡️ Далее</button></div>';
-        }
-        html += '</div>';
-        container.innerHTML = html;
-    }
-
-    function handleReviewAnswer(index) {
-        if (reviewSession.answered) return;
-        const selected = reviewSession.options[index];
-        const isCorrect = selected.isCorrect;
-        reviewSession.answered = true;
-        if (isCorrect) { reviewSession.correct++; reviewSession.streak++; if (reviewSession.streak > reviewSession.bestStreak) reviewSession.bestStreak = reviewSession.streak; showToast('✅ Правильно!', 'success'); }
-        else { reviewSession.wrong++; reviewSession.streak = 0; showToast('❌ Неправильно. Правильно: '+reviewSession.options.find(o => o.isCorrect).text, 'error'); }
-        const stats = getStats();
-        stats.totalGames++; stats.totalCorrect += isCorrect ? 1 : 0; stats.totalWrong += isCorrect ? 0 : 1;
-        if (reviewSession.bestStreak > stats.bestStreak) stats.bestStreak = reviewSession.bestStreak;
-        stats.gamesPlayed++; saveStats(stats);
-        showReviewGameCard();
-    }
-
-    function nextReviewQuestion() { reviewSession.currentIndex++; showReviewGameCard(); }
-
-    function showReviewGameResults() {
-        const container = document.getElementById('reviewContainer');
-        if (!container) return;
-        const total = reviewSession.total, correct = reviewSession.correct, wrong = reviewSession.wrong;
-        const percent = total > 0 ? Math.round((correct / total) * 100) : 0;
-        const streak = reviewSession.bestStreak;
-        let emoji = percent >= 80 ? '🌟' : percent >= 50 ? '👍' : '💪';
-        let message = percent >= 80 ? 'Отличный результат!' : percent >= 50 ? 'Хорошо, продолжайте!' : 'Нужно больше практики!';
-        const modeIcon = reviewSession.mode === 'visual' ? '👀' : '🎧';
-        const modeTitle = reviewSession.mode === 'visual' ? 'Угадай по виду' : 'Угадай на слух';
-        const modeColor = reviewSession.mode === 'visual' ? '#4361ee' : '#e53935';
-        container.innerHTML = '<div style="background:white;border-radius:24px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,0.12);text-align:center;"><div style="font-size:56px;margin-bottom:6px;">'+emoji+'</div><div style="font-size:24px;font-weight:800;color:#2c3e50;">'+message+'</div><div style="font-size:14px;color:#666;margin-bottom:12px;">'+modeIcon+' '+modeTitle+' — завершено!</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0;"><div style="background:#4361ee;color:white;padding:10px;border-radius:10px;"><div style="font-size:22px;font-weight:900;">'+total+'</div><div style="font-size:10px;opacity:0.8;">Всего</div></div><div style="background:#2ecc71;color:white;padding:10px;border-radius:10px;"><div style="font-size:22px;font-weight:900;">'+correct+'</div><div style="font-size:10px;opacity:0.8;">✅ Верно</div></div><div style="background:#e74c3c;color:white;padding:10px;border-radius:10px;"><div style="font-size:22px;font-weight:900;">'+wrong+'</div><div style="font-size:10px;opacity:0.8;">❌ Неверно</div></div><div style="background:#f39c12;color:white;padding:10px;border-radius:10px;"><div style="font-size:22px;font-weight:900;">'+streak+'</div><div style="font-size:10px;opacity:0.8;">🔥 Серия</div></div></div><div style="font-size:22px;font-weight:700;margin-bottom:12px;color:'+modeColor+';">'+percent+'% точность</div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button onclick="startReviewGame(\''+reviewSession.mode+'\')" style="background:'+modeColor+';color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">🔄 Снова</button><button onclick="startReviewGame(\''+(reviewSession.mode === 'visual' ? 'audio' : 'visual')+'\')" style="background:linear-gradient(135deg,#764ba2,#4361ee);color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">🔄 Другой режим</button><button onclick="renderReviewPanel()" style="background:#666;color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">📊 К списку</button></div></div>';
-        reviewSession.isActive = false;
-    }
-
-    function clearAllReview() {
-        if (!confirm('🗑️ Удалить все слова и радикалы из списка повторения?')) return;
-        localStorage.removeItem(REVIEW_KEY); localStorage.removeItem(REVIEW_RADICALS_KEY);
-        showToast('✅ Всё очищено!', 'success'); renderReviewPanel();
-    }
-
-    function addReviewTab() {
-        const tabsContainer = document.querySelector('.tabs');
-        if (!tabsContainer || tabsContainer.querySelector('[data-tab="review"]')) return;
-        const tab = document.createElement('div'); tab.className = 'tab'; tab.setAttribute('data-tab', 'review'); tab.innerHTML = '🧠 Повторение';
-        tab.onclick = function() { document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.panel').forEach(p => p.classList.remove('active')); let panel = document.getElementById('reviewPanel'); if (!panel) { panel = document.createElement('div'); panel.id = 'reviewPanel'; panel.className = 'panel'; panel.innerHTML = '<div class="card" id="reviewContainer"></div>'; document.querySelector('.container').appendChild(panel); } panel.classList.add('active'); renderReviewPanel(); };
-        tabsContainer.appendChild(tab);
-        if (!document.getElementById('reviewPanel')) { const panel = document.createElement('div'); panel.id = 'reviewPanel'; panel.className = 'panel'; panel.innerHTML = '<div class="card" id="reviewContainer"></div>'; document.querySelector('.container').appendChild(panel); }
-    }
-
     // Инициализация
     document.addEventListener('DOMContentLoaded', function() {
       console.log('=== ПРОВЕРКА МОДУЛЕЙ ===');
-      console.log('GRAMMAR:', typeof GRAMMAR !== 'undefined' ? '✅ ' + GRAMMAR.length + ' правил' : '⏳ Будет загружен позже');
+      console.log('GRAMMAR:', typeof GRAMMAR !== 'undefined' ? '✅ ' + GRAMMAR.length + ' правил (открывается отдельно)' : '⏳');
       console.log('WORDS:', typeof WORDS !== 'undefined' ? '✅ ' + WORDS.length + ' слов' : '❌');
       console.log('RADICALS:', typeof RADICALS !== 'undefined' ? '✅ ' + RADICALS.length + ' радикалов' : '❌');
       
       setTimeout(function() { 
         if(typeof generateToneComparisons === "function") generateToneComparisons(); 
-        renderPinyinSounds(); addReviewTab();
+        renderPinyinSounds();
         setTimeout(generateWordsByRadical, 300);
       }, 500);
       
@@ -1497,7 +1261,7 @@
       document.getElementById('rNext').onclick = function() { var idx = RADICALS.indexOf(currentRad); var nextIdx = (idx + 1) % RADICALS.length; currentRad = RADICALS[nextIdx]; document.getElementById('rChar').textContent = currentRad.s; document.getElementById('rPinyin').innerHTML = colorP(currentRad.p); document.getElementById('rMeaning').textContent = currentRad.m; };
       document.getElementById('rAll').onclick = function() { document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.panel').forEach(p => p.classList.remove('active')); document.querySelector('.tab[data-tab="radicals"]').classList.add('active'); document.getElementById('radicalsPanel').classList.add('active'); renderRads(); };
 
-      document.querySelectorAll('.tab').forEach(function(tab) {
+      document.querySelectorAll('.tab[data-tab]').forEach(function(tab) {
         tab.onclick = function() {
           var p = this.dataset.tab;
           document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1509,7 +1273,6 @@
           if(p === 'numbers') renderNums();
           if(p === 'colors') renderCols();
           if(p === 'dialogs') renderDia();
-          if(p === 'grammar') renderGram();
           if(p === 'songs') renderSongs();
           if(p === 'radicals') renderRads();
           if(p === 'game') newGame();
@@ -1518,7 +1281,6 @@
           if(p === 'sounds-v') renderSoundsVideos();
           if(p === 'tones') generateToneComparisons();
           if(p === 'pinyin-sounds') renderPinyinSounds();
-          if(p === 'review') renderReviewPanel();
         };
       });
 
