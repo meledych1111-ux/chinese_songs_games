@@ -14,7 +14,7 @@
     <link rel="manifest" href="manifest.json">
     <title>🇨🇳 КИТАЙСКИЙ С НУЛЯ — Полный курс</title>
     
-    <!-- ПОДКЛЮЧАЕМ ВСЕ СКРИПТЫ -->
+    <!-- ПОДКЛЮЧАЕМ ВСЕ ВНЕШНИЕ СКРИПТЫ -->
     <script src="songs.js"></script>
     <script src="WORDS.js"></script>
     <script src="GRAMMAR.js"></script>
@@ -1190,35 +1190,50 @@
 
     function renderDia() {
       var b = document.getElementById("dialogBox");
+      if (typeof DIALOGS === 'undefined' || !DIALOGS.length) {
+        b.innerHTML = '<p style="text-align:center;padding:40px;color:#999;">💬 Диалоги загружаются...</p>';
+        return;
+      }
       var d = DIALOGS[currentDia];
       b.innerHTML = '<div class="dialog-card"><div class="dialog-line q"><strong>❓ Китайский:</strong> '+d.q+'<br><small>📖 Пиньинь: '+d.qp+'</small><br><small>🇷🇺 Перевод: '+(d.rq || "—")+'</small></div><div class="dialog-line a"><strong>✅ Ответ:</strong> '+d.a+'<br><small>📖 Пиньинь: '+d.ap+'</small><br><small>🇷🇺 Перевод: '+(d.ra || "—")+'</small></div></div>';
     }
 
     function renderGram() {
       var html = '';
-      for(var i = 0; i < GRAMMAR.length; i++) {
-        var g = GRAMMAR[i];
-        html += '<div class="grammar-card">' +
-                '<div class="g-title">' + g.title + '</div>' +
-                '<div class="g-rule">' + g.rule + '</div>' +
-                '<div class="g-ex">' + g.ex.replace(/\n/g, '<br>').replace(/\((.*?)\)/g, '<b>($1)</b>') + '</div>' +
-                '</div>';
+      if (typeof GRAMMAR === 'undefined' || !GRAMMAR || GRAMMAR.length === 0) {
+        html = '<div class="grammar-card"><div class="g-title">📚 Грамматика</div><div class="g-rule">Данные грамматики не загружены</div><div class="g-ex">Проверьте файл GRAMMAR.js</div></div>';
+      } else {
+        for(var i = 0; i < GRAMMAR.length; i++) {
+          var g = GRAMMAR[i];
+          html += '<div class="grammar-card">' +
+                  '<div class="g-title">' + g.title + '</div>' +
+                  '<div class="g-rule">' + g.rule + '</div>' +
+                  '<div class="g-ex">' + g.ex.replace(/\n/g, '<br>').replace(/\((.*?)\)/g, '<b>($1)</b>') + '</div>' +
+                  '</div>';
+        }
       }
-      document.getElementById('grammarBox').innerHTML = html;
+      var grammarBox = document.getElementById('grammarBox');
+      if (grammarBox) {
+        grammarBox.innerHTML = html;
+      }
     }
 
     function renderSongs() {
       var html = '';
-      for(var i=0; i<SONGS.length; i++) {
-        var s = SONGS[i];
-        var linesHtml = '';
-        for(var j=0; j<s.lines.length; j++) {
-          var l = s.lines[j];
-          linesHtml += '<div class="song-line"><div class="song-cn">'+l.ch+'</div><div class="song-py">'+l.py+'</div><div class="song-ru">'+l.ru+'</div></div>';
+      if (typeof SONGS === 'undefined' || !SONGS || SONGS.length === 0) {
+        html = '<p style="text-align:center;padding:40px;color:#999;">🎵 Песни загружаются...</p>';
+      } else {
+        for(var i=0; i<SONGS.length; i++) {
+          var s = SONGS[i];
+          var linesHtml = '';
+          for(var j=0; j<s.lines.length; j++) {
+            var l = s.lines[j];
+            linesHtml += '<div style="padding:8px;margin:4px 0;background:#f8f9fa;border-radius:8px;"><div style="font-size:18px;font-weight:600;">'+l.ch+'</div><div style="font-size:14px;color:#4361ee;">'+l.py+'</div><div style="font-size:13px;color:#666;">'+l.ru+'</div></div>';
+          }
+          var songText = '';
+          for(var k=0; k<s.lines.length; k++) songText += s.lines[k].ch + ' ';
+          html += '<div class="song-card"><div class="song-title">'+s.title+'</div>'+linesHtml+'<button class="btn" style="width:100%;margin-top:12px" onclick="speak(\''+songText.replace(/'/g,"\\'")+'\')">🎵 Спеть</button></div>';
         }
-        var songText = '';
-        for(var k=0; k<s.lines.length; k++) songText += s.lines[k].ch + ' ';
-        html += '<div class="song-card"><div class="song-title">'+s.title+'</div>'+linesHtml+'<button class="btn" style="width:100%;margin-top:12px" onclick="speak(\''+songText.replace(/'/g,"\\'")+'\')">🎵 Спеть</button></div>';
       }
       if (typeof VIDEO_LINKS !== 'undefined' && VIDEO_LINKS.length > 0) {
         html += `<div style="margin: 40px 0 20px 0;"><hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #ff6b35, transparent);"><h3 style="text-align: center; margin: 20px 0; color: #ff6b35;">🎬 ВИДЕОУРОКИ И СТИХИ</h3></div>`;
@@ -1232,6 +1247,10 @@
     function renderRads() {
       var grid = document.getElementById('radGrid');
       grid.innerHTML = '';
+      if (typeof RADICALS === 'undefined' || !RADICALS.length) {
+        grid.innerHTML = '<p style="text-align:center;padding:40px;color:#999;">🔤 Радикалы загружаются...</p>';
+        return;
+      }
       for(var i=0; i<RADICALS.length; i++) {
         var r = RADICALS[i];
         var div = document.createElement('div');
@@ -1301,9 +1320,20 @@
       document.getElementById('strokeInfo').innerHTML = "Нажмите \"Образец\" чтобы увидеть иероглиф для обведения";
     }
 
-    function prevDia() { currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length; renderDia(); }
-    function nextDia() { currentDia = (currentDia + 1) % DIALOGS.length; renderDia(); }
-    function speakDia() { speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); }
+    function prevDia() { 
+      if (typeof DIALOGS === 'undefined' || !DIALOGS.length) return;
+      currentDia = (currentDia - 1 + DIALOGS.length) % DIALOGS.length; 
+      renderDia(); 
+    }
+    function nextDia() { 
+      if (typeof DIALOGS === 'undefined' || !DIALOGS.length) return;
+      currentDia = (currentDia + 1) % DIALOGS.length; 
+      renderDia(); 
+    }
+    function speakDia() { 
+      if (typeof DIALOGS === 'undefined' || !DIALOGS.length) return;
+      speak(DIALOGS[currentDia].q + ' ' + DIALOGS[currentDia].a); 
+    }
 
     // ==================== ЛОГИКА ТЕТРАДИ ====================
     function initCanvas() {
@@ -1427,6 +1457,7 @@
 
     // ========== РАЗДЕЛ: СРАВНЕНИЕ ТОНОВ ==========
     function generateToneComparisons() {
+      if (typeof WORDS === 'undefined' || !WORDS.length) return;
       const groups = new Map();
       WORDS.forEach(word => {
         if (!word.p) return;
@@ -1456,7 +1487,6 @@
         const basePinyin = group[0].p.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         return `<div style="background: rgba(255,255,255,0.92); border-radius: 28px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);"><div style="font-size: 22px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center;">🎵 ${basePinyin}</div><div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">${group.map(word => `<div onclick="speak('${word.c}')" style="cursor: pointer; text-align: center; min-width: 100px; padding: 14px 10px; background: white; border-radius: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);"><div style="font-size: 52px; margin-bottom: 6px;">${word.e || '🔊'}</div><div style="font-size: 34px; font-weight: 800; margin: 6px 0;">${word.c}</div><div style="font-size: 16px; margin: 6px 0; font-weight: 600;">${colorP(word.p)}</div><div style="font-size: 14px; color: #555;">${word.m}</div></div>`).join('')}</div></div>`;
       }).join('');
-      html += `<div style="margin-top: 40px;"><hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #ff6b35, transparent);"><h3 style="text-align: center; margin: 20px 0; color: #ff6b35;">🎬 ВИДЕО: ПРОИЗНОШЕНИЕ ПИНЬИНЬ</h3></div><div style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left: 5px solid #2e7d32; border-radius: 28px; padding: 20px; margin: 16px 0;"><div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;"><div style="font-size: 48px;">🎵</div><div style="flex: 1;"><div style="font-size: 18px; font-weight: 800;">拼音韵母发音完整版</div><div style="font-size: 14px; color: #666;">#大班 #拼音 #幼小衔接 #一年级</div><div style="font-size: 13px; color: #888; margin-top: 5px;">Все финали китайского пиньинь с произношением</div></div><a href="https://www.xiaohongshu.com/explore/69de0a25000000001d01874e" target="_blank" style="background: linear-gradient(135deg, #ff6b35, #ff9a44); color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none;">🎬 Смотреть видео</a></div></div>`;
       container.innerHTML = html;
     }
 
@@ -1474,7 +1504,6 @@
       let totalWordsCount = 0;
       let usedWords = new Set();
       
-      // Сортируем радикалы по популярности
       const radicalsWithCount = RADICALS.map(rad => {
         let count = 0;
         for (const word of WORDS) {
@@ -1503,9 +1532,6 @@
         matchedWords.forEach(w => usedWords.add(w.c));
         totalWordsCount += matchedWords.length;
         
-        // ПОКАЗЫВАЕМ ВСЕ СЛОВА (без ограничения 50)
-        const displayWords = matchedWords;
-        
         const colors = ['#4361ee', '#e53935', '#2ecc71', '#f39c12', '#8e24aa', '#00bcd4', '#ff6b35', '#4caf50'];
         const colorIndex = RADICALS.indexOf(radical) % colors.length;
         const color = colors[colorIndex];
@@ -1529,7 +1555,7 @@
               </button>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-              ${displayWords.map(word => `
+              ${matchedWords.map(word => `
                 <div onclick="speak('${word.c}')" 
                      style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: all 0.2s; border: 2px solid ${color}22;"
                      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; this.style.borderColor='${color}'"
@@ -1543,40 +1569,6 @@
             </div>
           </div>
         `;
-      }
-      
-      // Если не нашлось слов через радикалы, показываем по категориям
-      if (!html) {
-        const categories = {};
-        for (const word of WORDS) {
-          if (!categories[word.cat]) categories[word.cat] = [];
-          categories[word.cat].push(word);
-        }
-        
-        for (const [cat, words] of Object.entries(categories)) {
-          if (words.length === 0) continue;
-          totalWordsCount += words.length;
-          html += `
-            <div style="background: rgba(255,255,255,0.95); border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
-              <div style="font-size: 20px; font-weight: bold; color: #4361ee; margin-bottom: 16px; text-align: center; border-bottom: 2px solid #4361ee; padding-bottom: 8px;">
-                📂 ${CAT_NAMES[cat] || cat} (${words.length} слов)
-              </div>
-              <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                ${words.map(word => `
-                  <div onclick="speak('${word.c}')" 
-                       style="cursor: pointer; text-align: center; min-width: 85px; padding: 8px 5px; background: white; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: all 0.2s;"
-                       onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
-                       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.08)'">
-                    <div style="font-size: 34px; margin-bottom: 3px;">${word.e || '📖'}</div>
-                    <div style="font-size: 24px; font-weight: 800; margin: 3px 0;">${word.c}</div>
-                    <div style="font-size: 12px; margin: 3px 0; font-weight: 600;">${colorP(word.p)}</div>
-                    <div style="font-size: 10px; color: #555;">${word.m}</div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          `;
-        }
       }
       
       const countEl = document.getElementById('totalWordsCount');
@@ -1603,6 +1595,7 @@
     }
 
     function newGame() {
+      if (typeof WORDS === 'undefined' || !WORDS.length) return;
       var w = WORDS[Math.floor(Math.random() * WORDS.length)];
       document.getElementById('gChar').textContent = w.c;
       var opts = [w.m];
@@ -2412,7 +2405,6 @@
         reviewSession.isActive = false;
     }
 
-    // ==================== ОЧИСТКА ВСЕГО ====================
     function clearAllReview() {
         if (!confirm('🗑️ Удалить все слова и радикалы из списка повторения?')) return;
         localStorage.removeItem(REVIEW_KEY);
@@ -2421,7 +2413,6 @@
         renderReviewPanel();
     }
 
-    // ==================== ДОБАВЛЕНИЕ ВКЛАДКИ ====================
     function addReviewTab() {
         const tabsContainer = document.querySelector('.tabs');
         if (!tabsContainer) return;
@@ -2458,8 +2449,20 @@
         }
     }
 
+    // ==================== ДИАГНОСТИКА ЗАГРУЗКИ МОДУЛЕЙ ====================
+    function checkModules() {
+        console.log('=== ДИАГНОСТИКА МОДУЛЕЙ ===');
+        console.log('GRAMMAR:', typeof GRAMMAR !== 'undefined' ? `✅ Загружен (${GRAMMAR.length} правил)` : '❌ НЕ ЗАГРУЖЕН');
+        console.log('WORDS:', typeof WORDS !== 'undefined' ? `✅ Загружен (${WORDS.length} слов)` : '❌ НЕ ЗАГРУЖЕН');
+        console.log('DIALOGS:', typeof DIALOGS !== 'undefined' ? `✅ Загружен (${DIALOGS.length} диалогов)` : '❌ НЕ ЗАГРУЖЕН');
+        console.log('SONGS:', typeof SONGS !== 'undefined' ? `✅ Загружен (${SONGS.length} песен)` : '❌ НЕ ЗАГРУЖЕН');
+        console.log('RADICALS:', typeof RADICALS !== 'undefined' ? `✅ Загружен (${RADICALS.length} радикалов)` : '❌ НЕ ЗАГРУЖЕН');
+    }
+
     // ==================== ИНИЦИАЛИЗАЦИЯ ====================
     document.addEventListener('DOMContentLoaded', function() {
+      checkModules();
+      
       setTimeout(function() { 
         if(typeof generateToneComparisons === "function") generateToneComparisons(); 
         renderPinyinSounds();
