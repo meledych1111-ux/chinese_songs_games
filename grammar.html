@@ -619,7 +619,6 @@
             const container = document.getElementById('consoleLogs');
             if (!container) return;
 
-            // Убираем "пустое" сообщение
             const empty = container.querySelector('.log-empty');
             if (empty) empty.remove();
 
@@ -632,13 +631,11 @@
             `;
             container.appendChild(entry);
 
-            // Прокрутка вниз
             const consoleDiv = document.getElementById('appConsole');
             if (consoleDiv) {
                 consoleDiv.scrollTop = consoleDiv.scrollHeight;
             }
 
-            // Ограничиваем количество логов (100)
             const logs = container.querySelectorAll('.log-entry');
             if (logs.length > 100) {
                 logs[0].remove();
@@ -678,7 +675,6 @@
             appLog('⚠️ ' + msg, 'warning');
         };
 
-        // Перехват ошибок
         window.addEventListener('error', function(e) {
             appLog('🔥 Ошибка: ' + e.message + ' (в ' + e.filename + ':' + e.lineno + ')', 'error');
         });
@@ -1241,7 +1237,6 @@
             const statCategories = document.getElementById('statCategories');
             const statVisible = document.getElementById('statVisible');
 
-            // Проверяем массив
             if (!GRAMMAR || GRAMMAR.length === 0) {
                 appLog('❌ GRAMMAR пустой или не определён!', 'error');
                 grid.innerHTML = `
@@ -1258,24 +1253,21 @@
 
             let filtered = GRAMMAR;
 
-            // Фильтр по категории
             if (currentFilter !== 'all') {
                 filtered = filtered.filter(item => item.cat === currentFilter);
                 appLog('🔍 Фильтр по категории: ' + currentFilter + ', найдено: ' + filtered.length, 'info');
             }
 
-            // Поиск
             if (currentSearch.trim()) {
                 const query = currentSearch.toLowerCase().trim();
                 filtered = filtered.filter(item =>
-                    item.title.toLowerCase().includes(query) ||
-                    item.rule.toLowerCase().includes(query) ||
-                    item.ex.toLowerCase().includes(query)
+                    (item.title || '').toLowerCase().includes(query) ||
+                    (item.rule || '').toLowerCase().includes(query) ||
+                    (item.ex || '').toLowerCase().includes(query)
                 );
                 appLog('🔍 Поиск: "' + query + '", найдено: ' + filtered.length, 'info');
             }
 
-            // Обновляем статистику
             const total = GRAMMAR.length;
             const categories = Object.keys(getCategoryCounts()).length;
             const visible = filtered.length;
@@ -1285,7 +1277,6 @@
             statCategories.textContent = categories;
             statVisible.textContent = visible;
 
-            // Рендерим карточки
             if (filtered.length === 0) {
                 grid.innerHTML = '';
                 noResults.style.display = 'block';
@@ -1299,12 +1290,20 @@
             filtered.forEach((item, index) => {
                 const cat = item.cat || 'Г';
                 const catName = CATEGORY_NAMES[cat] || cat;
-                const exHtml = item.ex.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+
+                // ✅ БЕЗОПАСНАЯ ОБРАБОТКА ex
+                let exHtml = item.ex || '';
+                try {
+                    exHtml = exHtml.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+                    exHtml = exHtml.replace(/\n/g, '<br>');
+                } catch (e) {
+                    appLog('⚠️ Ошибка в правиле: ' + item.title, 'warning');
+                }
 
                 html += `
                     <div class="grammar-card cat-${cat}" style="animation-delay: ${index * 0.03}s;">
-                        <div class="grammar-title">${item.title}</div>
-                        <div class="grammar-rule">${item.rule}</div>
+                        <div class="grammar-title">${item.title || 'Без названия'}</div>
+                        <div class="grammar-rule">${item.rule || ''}</div>
                         <div class="grammar-ex">${exHtml}</div>
                         <div class="grammar-cat-badge">${catName}</div>
                     </div>
@@ -1326,7 +1325,6 @@
 
             renderGrammar();
 
-            // Поиск
             const searchInput = document.getElementById('searchInput');
             const clearBtn = document.getElementById('clearSearchBtn');
 
@@ -1343,7 +1341,6 @@
                 renderGrammar();
             });
 
-            // Фильтры
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
