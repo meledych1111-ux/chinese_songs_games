@@ -38,7 +38,6 @@
             margin: 0 auto;
         }
 
-        /* ============ ШАПКА ============ */
         .header {
             background: linear-gradient(135deg, #4361ee, #764ba2);
             color: white;
@@ -93,7 +92,6 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* ============ ПОИСК ============ */
         .search-section {
             background: white;
             border-radius: 60px;
@@ -146,7 +144,6 @@
             background: #e0e7ff;
         }
 
-        /* ============ СТАТИСТИКА ============ */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
@@ -176,7 +173,6 @@
             margin-top: 2px;
         }
 
-        /* ============ ФИЛЬТРЫ ============ */
         .filters {
             display: flex;
             flex-wrap: wrap;
@@ -222,14 +218,12 @@
             background: #3a56d4;
         }
 
-        /* ============ КАРТОЧКИ ГРАММАТИКИ ============ */
         .grammar-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 16px;
         }
 
-        /* ============ ВАЖНО: КАРТОЧКИ ВИДНЫ ПО УМОЛЧАНИЮ ============ */
         .grammar-card {
             background: white;
             border-radius: 24px;
@@ -239,11 +233,11 @@
             transition: all 0.3s ease;
             cursor: default;
             animation: fadeIn 0.3s ease;
-            display: block !important; /* ← ВАЖНО: ВСЕГДА ВИДНЫ */
+            display: block !important;
         }
 
         .grammar-card.hidden {
-            display: none !important; /* ← СКРЫВАЕМ ТОЛЬКО ПРИ ФИЛЬТРАЦИИ */
+            display: none !important;
         }
 
         .grammar-card:hover {
@@ -251,7 +245,6 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
         }
 
-        /* Цвета категорий */
         .grammar-card.cat-И { border-left-color: #4361ee; background: #f0f3ff; }
         .grammar-card.cat-П { border-left-color: #e53935; background: #fff0f0; }
         .grammar-card.cat-С { border-left-color: #2ecc71; background: #f0fdf4; }
@@ -310,7 +303,6 @@
             margin-top: 8px;
         }
 
-        /* ============ НЕТ РЕЗУЛЬТАТОВ ============ */
         .no-results {
             text-align: center;
             padding: 60px 20px;
@@ -336,7 +328,79 @@
             margin-top: 4px;
         }
 
-        /* ============ АНИМАЦИИ ============ */
+        /* ============ КОНСОЛЬ В ПРИЛОЖЕНИИ ============ */
+        .app-console {
+            margin-top: 24px;
+            background: #1a1a2e;
+            color: #00ff88;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 250px;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #333;
+        }
+
+        .app-console .title {
+            color: #888;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-console .title .clear-btn {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .app-console .title .clear-btn:hover {
+            background: #333;
+            color: white;
+        }
+
+        .app-console .log-entry {
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+        }
+
+        .app-console .log-time {
+            color: #555;
+            font-size: 11px;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .app-console .log-msg {
+            word-break: break-word;
+        }
+
+        .app-console .log-msg.success { color: #2ecc71; }
+        .app-console .log-msg.error { color: #e74c3c; }
+        .app-console .log-msg.warning { color: #f39c12; }
+        .app-console .log-msg.info { color: #3498db; }
+        .app-console .log-msg.default { color: #aaa; }
+
+        .app-console .log-empty {
+            color: #555;
+            font-style: italic;
+            padding: 10px 0;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -348,7 +412,6 @@
             }
         }
 
-        /* ============ АДАПТИВ ============ */
         @media (min-width: 600px) {
             .grammar-grid {
                 grid-template-columns: 1fr 1fr;
@@ -411,6 +474,17 @@
             .stats-bar {
                 grid-template-columns: repeat(3, 1fr);
             }
+
+            .app-console {
+                font-size: 11px;
+                max-height: 180px;
+                padding: 12px;
+            }
+
+            .app-console .log-time {
+                min-width: 55px;
+                font-size: 10px;
+            }
         }
 
         @media (max-width: 380px) {
@@ -431,7 +505,6 @@
             }
         }
 
-        /* ============ ПЕЧАТЬ ============ */
         @media print {
             body {
                 background: white;
@@ -441,7 +514,8 @@
             .search-section,
             .filters,
             .stats-bar,
-            .back-btn {
+            .back-btn,
+            .app-console {
                 display: none;
             }
 
@@ -523,11 +597,94 @@
             <div class="text">Ничего не найдено</div>
             <div class="sub">Попробуйте изменить запрос или фильтр</div>
         </div>
+
+        <!-- ============ КОНСОЛЬ В ПРИЛОЖЕНИИ ============ -->
+        <div class="app-console" id="appConsole">
+            <div class="title">
+                <span>📋 ЛОГ ПРИЛОЖЕНИЯ</span>
+                <button class="clear-btn" onclick="clearAppConsole()">🧹 Очистить</button>
+            </div>
+            <div id="consoleLogs">
+                <div class="log-empty">⏳ Ожидание событий...</div>
+            </div>
+        </div>
     </div>
 
     <script>
         // ============================================================
-        // 📚 ГРАММАТИКА — ВСЕ ПРАВИЛА
+        // 📚 ВСТРОЕННАЯ КОНСОЛЬ
+        // ============================================================
+
+        function appLog(message, type = 'default') {
+            const container = document.getElementById('consoleLogs');
+            if (!container) return;
+
+            // Убираем "пустое" сообщение
+            const empty = container.querySelector('.log-empty');
+            if (empty) empty.remove();
+
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `
+                <span class="log-time">${time}</span>
+                <span class="log-msg ${type}">${message}</span>
+            `;
+            container.appendChild(entry);
+
+            // Прокрутка вниз
+            const consoleDiv = document.getElementById('appConsole');
+            if (consoleDiv) {
+                consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            }
+
+            // Ограничиваем количество логов (100)
+            const logs = container.querySelectorAll('.log-entry');
+            if (logs.length > 100) {
+                logs[0].remove();
+            }
+        }
+
+        function clearAppConsole() {
+            const container = document.getElementById('consoleLogs');
+            if (!container) return;
+            container.innerHTML = `<div class="log-empty">🗑️ Лог очищен</div>`;
+            setTimeout(() => {
+                const empty = container.querySelector('.log-empty');
+                if (empty) empty.textContent = '⏳ Ожидание событий...';
+            }, 1500);
+        }
+
+        // Подменяем console.log на свой лог
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+            appLog('📝 ' + msg, 'info');
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+            appLog('❌ ' + msg, 'error');
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+            appLog('⚠️ ' + msg, 'warning');
+        };
+
+        // Перехват ошибок
+        window.addEventListener('error', function(e) {
+            appLog('🔥 Ошибка: ' + e.message + ' (в ' + e.filename + ':' + e.lineno + ')', 'error');
+        });
+
+        // ============================================================
+        // 📚 ВАШ МАССИВ ГРАММАТИКИ — 181 ПРАВИЛО
         // ============================================================
 
         const GRAMMAR = [
@@ -1075,6 +1232,8 @@
         }
 
         function renderGrammar() {
+            appLog('🔄 Рендеринг грамматики...', 'info');
+
             const grid = document.getElementById('grammarGrid');
             const noResults = document.getElementById('noResults');
             const totalCount = document.getElementById('totalCount');
@@ -1082,11 +1241,27 @@
             const statCategories = document.getElementById('statCategories');
             const statVisible = document.getElementById('statVisible');
 
+            // Проверяем массив
+            if (!GRAMMAR || GRAMMAR.length === 0) {
+                appLog('❌ GRAMMAR пустой или не определён!', 'error');
+                grid.innerHTML = `
+                    <div style="text-align:center;padding:60px 20px;background:white;border-radius:24px;color:#999;">
+                        <div style="font-size:64px;margin-bottom:12px;">📚</div>
+                        <div style="font-size:18px;font-weight:600;">Нет правил</div>
+                        <div style="font-size:14px;color:#bbb;margin-top:8px;">Массив GRAMMAR пуст</div>
+                    </div>
+                `;
+                return;
+            }
+
+            appLog('✅ GRAMMAR загружен, правил: ' + GRAMMAR.length, 'success');
+
             let filtered = GRAMMAR;
 
             // Фильтр по категории
             if (currentFilter !== 'all') {
                 filtered = filtered.filter(item => item.cat === currentFilter);
+                appLog('🔍 Фильтр по категории: ' + currentFilter + ', найдено: ' + filtered.length, 'info');
             }
 
             // Поиск
@@ -1097,6 +1272,7 @@
                     item.rule.toLowerCase().includes(query) ||
                     item.ex.toLowerCase().includes(query)
                 );
+                appLog('🔍 Поиск: "' + query + '", найдено: ' + filtered.length, 'info');
             }
 
             // Обновляем статистику
@@ -1104,7 +1280,7 @@
             const categories = Object.keys(getCategoryCounts()).length;
             const visible = filtered.length;
 
-            totalCount.textContent = `📚 ${total} правил`;
+            totalCount.textContent = '📚 ' + total + ' правил';
             statTotal.textContent = total;
             statCategories.textContent = categories;
             statVisible.textContent = visible;
@@ -1113,6 +1289,7 @@
             if (filtered.length === 0) {
                 grid.innerHTML = '';
                 noResults.style.display = 'block';
+                appLog('📭 Нет правил для отображения', 'warning');
                 return;
             }
 
@@ -1134,7 +1311,9 @@
                 `;
             });
 
+            appLog('📝 Сгенерировано карточек: ' + filtered.length, 'success');
             grid.innerHTML = html;
+            appLog('✅ Рендеринг завершён!', 'success');
         }
 
         // ============================================================
@@ -1142,9 +1321,9 @@
         // ============================================================
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📚 Загрузка грамматики...');
-            console.log('📚 Всего правил:', GRAMMAR.length);
-            
+            appLog('📚 DOM загружен', 'info');
+            appLog('📚 Всего правил: ' + GRAMMAR.length, 'info');
+
             renderGrammar();
 
             // Поиск
@@ -1174,7 +1353,7 @@
                 });
             });
 
-            console.log('✅ Грамматика загружена!');
+            appLog('✅ Грамматика готова!', 'success');
         });
     </script>
 
