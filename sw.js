@@ -1,9 +1,9 @@
 // Имя вашего репозитория
 const REPO_NAME = 'chinese_songs_games';
 const BASE_PATH = `/${REPO_NAME}/`;
-const CACHE_NAME = 'chinese-cache-v5';
+const CACHE_NAME = 'chinese-cache-v6';
 
-// Файлы для кеширования
+// Файлы для кеширования (ВСЕ пути должны быть с BASE_PATH)
 const FILES_TO_CACHE = [
   BASE_PATH,
   `${BASE_PATH}index.html`,
@@ -11,6 +11,7 @@ const FILES_TO_CACHE = [
   `${BASE_PATH}WORDS.js`,
   `${BASE_PATH}GRAMMAR.js`,
   `${BASE_PATH}DIALOGS.js`,
+  `${BASE_PATH}RADICALS.js`,
   `${BASE_PATH}game.js`,
   `${BASE_PATH}pinyin-sounds.js`,
   `${BASE_PATH}writing-videos.js`,
@@ -26,7 +27,7 @@ self.addEventListener('install', event => {
       .then(async cache => {
         console.log('📦 Начинаем кеширование...');
         
-        // Кешируем файлы по одному, чтобы ошибка одного не ломала всё
+        // Кешируем файлы с обработкой ошибок
         const results = [];
         for (const file of FILES_TO_CACHE) {
           try {
@@ -48,6 +49,7 @@ self.addEventListener('install', event => {
         const successCount = results.filter(r => r === true).length;
         console.log(`📊 Кеширование завершено: ${successCount}/${FILES_TO_CACHE.length} файлов`);
         
+        // Если не удалось закешировать критичные файлы
         if (successCount === 0) {
           console.error('❌ Не удалось закешировать ни одного файла!');
         }
