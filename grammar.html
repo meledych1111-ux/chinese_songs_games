@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="theme-color" content="#4361ee">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Грамматика">
+    <meta name="application-name" content="Грамматика">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E📚%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234361ee'/%3E%3Ctext x='50' y='67' font-size='56' text-anchor='middle' fill='white' font-family='system-ui, sans-serif'%3E📚%3C/text%3E%3C/svg%3E">
+    
+    <title>📚 Китайская грамматика — Полный справочник</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f4ff;
+            color: #1a1a2e;
+            padding: 16px;
+            min-height: 100vh;
+            font-size: 18px;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* ============ ШАПКА ============ */
+        .header {
+            background: linear-gradient(135deg, #4361ee, #764ba2);
+            color: white;
+            border-radius: 28px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(67, 97, 238, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .header .sub {
+            font-size: 13px;
+            opacity: 0.85;
+        }
+
+        .header .count {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ============ ПОИСК ============ */
+        .search-section {
+            background: white;
+            border-radius: 60px;
+            padding: 6px 6px 6px 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .search-icon {
+            font-size: 20px;
+            opacity: 0.5;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 8px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-weight: 500;
+        }
+
+        .search-input::placeholder {
+            color: #bbb;
+            font-weight: 400;
+        }
+
+        .search-clear {
+            background: #f0f2f5;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .search-clear:hover {
+            background: #e0e7ff;
+        }
+
+        /* ============ СТАТИСТИКА ============ */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stat-item {
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-item .number {
+            font-size: 24px;
+            font-weight: 900;
+            color: #4361ee;
+        }
+
+        .stat-item .label {
+            font-size: 10px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* ============ ФИЛЬТРЫ ============ */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            background: #f0f2f5;
+            color: #666;
+            border: none;
+            transition: all 0.2s;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            background: #e0e7ff;
+            color: #4361ee;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #4361ee, #764ba2);
+            color: white;
+            box-shadow: 0 3px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .filter-btn.all {
+            background: #4361ee;
+            color: white;
+        }
+
+        .filter-btn.all:hover {
+            background: #3a56d4;
+        }
+
+        /* ============ КАРТОЧКИ ГРАММАТИКИ ============ */
+        .grammar-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .grammar-card {
+            background: white;
+            border-radius: 24px;
+            padding: 20px 22px 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border-left: 6px solid #4361ee;
+            transition: all 0.3s ease;
+            cursor: default;
+            animation: fadeIn 0.3s ease;
+            display: none;
+        }
+
+        .grammar-card.visible {
+            display: block;
+        }
+
+        .grammar-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Цвета категорий */
+        .grammar-card.cat-И { border-left-color: #4361ee; background: #f0f3ff; }
+        .grammar-card.cat-П { border-left-color: #e53935; background: #fff0f0; }
+        .grammar-card.cat-С { border-left-color: #2ecc71; background: #f0fdf4; }
+        .grammar-card.cat-З { border-left-color: #f39c12; background: #fffbf0; }
+        .grammar-card.cat-Р { border-left-color: #8e24aa; background: #f8f0ff; }
+        .grammar-card.cat-Т { border-left-color: #00bcd4; background: #f0fcff; }
+        .grammar-card.cat-Б { border-left-color: #ff6b35; background: #fff5f0; }
+        .grammar-card.cat-Г { border-left-color: #1abc9c; background: #f0fdfa; }
+        .grammar-card.cat-СЧ { border-left-color: #e67e22; background: #fff8f0; }
+        .grammar-card.cat-ВР { border-left-color: #2c3e50; background: #f8f9fa; }
+        .grammar-card.cat-НА { border-left-color: #8e44ad; background: #f8f0ff; }
+        .grammar-card.cat-Д { border-left-color: #16a085; background: #f0fdf8; }
+        .grammar-card.cat-Н { border-left-color: #c0392b; background: #fff5f3; }
+
+        .grammar-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .grammar-rule {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 8px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .grammar-ex {
+            font-size: 14px;
+            color: #444;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin-top: 8px;
+            line-height: 1.6;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .grammar-ex strong,
+        .grammar-ex b {
+            color: #4361ee;
+            font-weight: 700;
+        }
+
+        .grammar-cat-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 20px;
+            background: rgba(67, 97, 238, 0.15);
+            color: #4361ee;
+            margin-top: 8px;
+        }
+
+        /* ============ НЕТ РЕЗУЛЬТАТОВ ============ */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 24px;
+            color: #999;
+            display: none;
+        }
+
+        .no-results .emoji {
+            font-size: 64px;
+            margin-bottom: 12px;
+        }
+
+        .no-results .text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .no-results .sub {
+            font-size: 14px;
+            color: #bbb;
+            margin-top: 4px;
+        }
+
+        /* ============ АНИМАЦИИ ============ */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============ АДАПТИВ ============ */
+        @media (min-width: 600px) {
+            .grammar-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 12px;
+            }
+
+            .header {
+                padding: 16px;
+                border-radius: 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .search-section {
+                padding: 4px 4px 4px 14px;
+                border-radius: 40px;
+            }
+
+            .search-input {
+                font-size: 14px;
+                padding: 10px 6px;
+                min-width: 100px;
+            }
+
+            .grammar-card {
+                padding: 16px 18px 18px;
+                border-radius: 20px;
+            }
+
+            .grammar-title {
+                font-size: 16px;
+            }
+
+            .grammar-rule {
+                font-size: 14px;
+            }
+
+            .grammar-ex {
+                font-size: 13px;
+                padding: 10px 14px;
+            }
+
+            .filters {
+                padding: 10px 12px;
+                gap: 6px;
+            }
+
+            .filter-btn {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .grammar-title {
+                font-size: 14px;
+            }
+
+            .grammar-rule {
+                font-size: 13px;
+            }
+
+            .grammar-ex {
+                font-size: 12px;
+            }
+        }
+
+        /* ============ ПЕЧАТЬ ============ */
+        @media print {
+            body {
+                background: white;
+                padding: 10px;
+            }
+
+            .search-section,
+            .filters,
+            .stats-bar,
+            .back-btn {
+                display: none;
+            }
+
+            .grammar-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                display: block !important;
+            }
+
+            .header {
+                background: #4361ee !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ШАПКА -->
+        <div class="header">
+            <div>
+                <h1>📚 Китайская грамматика</h1>
+                <div class="sub">Полный справочник — все правила в одном месте</div>
+                <div class="count" id="totalCount">Загрузка...</div>
+            </div>
+            <a href="index.html" class="back-btn">🏠 На главную</a>
+        </div>
+
+        <!-- ПОИСК -->
+        <div class="search-section">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по правилу или примеру..." autocomplete="off">
+            <button class="search-clear" id="clearSearchBtn">✕</button>
+        </div>
+
+        <!-- СТАТИСТИКА -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-item">
+                <div class="number" id="statTotal">0</div>
+                <div class="label">Всего правил</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="statCategories">0</div>
+                <div class="label">Категорий</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="statVisible">0</div>
+                <div class="label">Показано</div>
+            </div>
+        </div>
+
+        <!-- ФИЛЬТРЫ -->
+        <div class="filters" id="filtersContainer">
+            <button class="filter-btn all active" data-cat="all">📚 Все</button>
+            <button class="filter-btn" data-cat="И">🔓 Иероглифы</button>
+            <button class="filter-btn" data-cat="П">🎵 Произношение</button>
+            <button class="filter-btn" data-cat="С">✍️ Каллиграфия</button>
+            <button class="filter-btn" data-cat="З">💡 Запоминание</button>
+            <button class="filter-btn" data-cat="Р">🔑 Радикалы</button>
+            <button class="filter-btn" data-cat="Т">🔄 Трансформация</button>
+            <button class="filter-btn" data-cat="Б">⚡ Быстрые советы</button>
+            <button class="filter-btn" data-cat="Г">🧱 Грамматика</button>
+            <button class="filter-btn" data-cat="СЧ">🧮 Счётные слова</button>
+            <button class="filter-btn" data-cat="ВР">🕐 Времена</button>
+            <button class="filter-btn" data-cat="НА">📝 Наречия</button>
+            <button class="filter-btn" data-cat="Д">📌 Доп. грамматика</button>
+            <button class="filter-btn" data-cat="Н">⚠️ Нюансы</button>
+        </div>
+
+        <!-- КАРТОЧКИ -->
+        <div class="grammar-grid" id="grammarGrid"></div>
+
+        <!-- НЕТ РЕЗУЛЬТАТОВ -->
+        <div class="no-results" id="noResults">
+            <div class="emoji">🔍</div>
+            <div class="text">Ничего не найдено</div>
+            <div class="sub">Попробуйте изменить запрос или фильтр</div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 📚 ГРАММАТИКА — ВСЕ ПРАВИЛА
+        // ============================================================
+
+        const GRAMMAR = [
+            // ============================================================
+            // 🔓 И — ИЕРОГЛИФЫ (ПАМЯТЬ И СТРУКТУРА)
+            // ============================================================
+            { title: '🔓 И1. Смысл + Звук', rule: 'Левый/верхний радикал = СМЫСЛ, правый/нижний = ЗВУК',
+                ex: '妈 mā = 女(женщина) + 马(лошадь). 码 mǎ = 石(камень) + 马. 💡 Видишь 马? Звук ma!', cat: 'И' },
+            { title: '🔓 И2. Ключ-фонетик', rule: 'Один элемент → одинаковое звучание',
+                ex: '青 qīng: 请 qǐng, 清 qīng, 晴 qíng, 情 qíng. 💡 Запомни 青 → 4 слова!', cat: 'И' },
+            { title: '🔓 И3. Ключ-смысловик', rule: 'Радикал задаёт тему',
+                ex: '💧 氵: 河(река), 海(море), 湖(озеро). 🔥 火: 烧(жечь), 炒(жарить). 💡 Видишь 氵? Вода!', cat: 'И' },
+            { title: '🔓 И4. Иероглифы-картинки', rule: 'Конкретные предметы = рисунки',
+                ex: '🐦 鸟(птица), 🐟 鱼(рыба), 🐴 马(лошадь), 🌧️ 雨(дождь). 💡 Представь картинку!', cat: 'И' },
+            { title: '🔓 И5. Абстракция', rule: 'Идеи собирают из конкретных идей',
+                ex: '想(думать) = 相 + 心. 好(хорошо) = 女 + 子. 休(отдыхать) = 亻 + 木. 💡 Ищи историю!', cat: 'И' },
+            { title: '🔓 И6. Глаголы движения', rule: 'Содержат 辶, 足, 扌',
+                ex: '跑(бежать) = 足 + 包. 打(бить) = 扌 + 丁. 过(проходить) = 辶 + 寸. 💡 足=ноги, 手=руки, 辶=движение',
+                cat: 'И' },
+            { title: '🔓 И7. Заимствования', rule: 'Иероглифы = ЗВУК иностранных слов',
+                ex: '咖啡 kāfēi (кофе), 巧克力 qiǎokèlì (шоколад), 沙发 shāfā (диван). 💡 Звук важнее смысла!', cat: 'И' },
+            { title: '🔓 И8. Повторение', rule: 'Повтор элемента УСИЛИВАЕТ значение',
+                ex: '木→林→森 (дерево→лес→чаща). 火→炎→焱 (огонь→жар→пламя). 💡 Больше повторений = сильнее!', cat: 'И' },
+            { title: '🔓 И9. Противоположности', rule: 'Изменение черты = противоположный смысл',
+                ex: '上(верх) — 下(низ). 有(иметь) — 无(не иметь). 长(длинный) — 短(короткий). 💡 Ищи пары!', cat: 'И' },
+            { title: '🔓 И10. Контекст', rule: 'Одно слово — много значений',
+                ex: '开: 开门(открыть), 开车(вести), 开水(кипяток). 打: 打球(играть), 打电话(звонить). 💡 Учи в контексте!',
+                cat: 'И' },
+            { title: '🔓 И11. ТОП-10 радикалов', rule: 'Эти 10 = 50% иероглифов',
+                ex: '1️⃣亻(человек): 你,他,们. 2️⃣口(рот): 吃,喝,叫. 3️⃣氵(вода): 河,海,湖. 4️⃣扌(рука): 打,找,拉. 5️⃣木(дерево): 树,林,桌. 6️⃣火(огонь): 烧,炒,灯. 7️⃣女(женщина): 妈,奶,姐. 8️⃣辶(движение): 过,送,进. 9️⃣艹(трава): 花,草,茶. 🔟心(сердце): 想,忘,情',
+                cat: 'И' },
+            { title: '🔓 И12. Группы слов', rule: 'Учи слова семейками',
+                ex: '💧 ВОДА: 水,河,海,湖,洗,游. 🔥 ОГОНЬ: 火,烧,炒,烤,热,灯. 💡 Запомнил тему → 7 слов!', cat: 'И' },
+            { title: '🔓 И13. Цепочки', rule: 'Один ключ → много слов',
+                ex: '包 bāo: 包(сумка), 跑(бежать), 泡(пузырь), 饱(сытый), 抱(обнимать). 💡 Все звучат похоже на bāo!',
+                cat: 'И' },
+            { title: '🔓 И14. Порядок черт', rule: 'Помогает запомнить и быстрее писать',
+                ex: '1️⃣Сверху вниз: 三. 2️⃣Слева направо: 你. 3️⃣Сначала внешнее: 日. 4️⃣Горизонталь до вертикали: 十. 💡 Как рисуешь кисточкой!',
+                cat: 'И' },
+            { title: '🔓 И15. Омографы', rule: 'Похожие иероглифы — НЕ ПУТАЙ',
+                ex: '未(ещё не) — 末(конец). 人(человек) — 入(входить). 土(земля) — 士(учёный). 💡 Рисуй рядом и сравнивай!',
+                cat: 'И' },
+            { title: '🔓 И16. 80/20', rule: '20% иероглифов = 80% текста',
+                ex: 'ТОП-20: 的,一,了,是,我,不,人,在,有,他,这,中,大,来,上,国,到,说,们,为. 💡 Выучи эти 20 → 40% текста!',
+                cat: 'И' },
+            { title: '🔓 И17. Ассоциации', rule: 'Придумывай истории',
+                ex: '家(дом) = свинья под крышей 🐷. 休(отдыхать) = человек у дерева 🌳. 灭(тушить) = крышка на огне 🧯. 💡 Чем смешнее, тем лучше!',
+                cat: 'И' },
+            { title: '🔓 И18. Словари', rule: 'Ищи по радикалу',
+                ex: '1️⃣Найди радикал. 2️⃣Посчитай черты. 3️⃣Найди в словаре. 💡 Лучшие словари: Pleco (офлайн), Yabla, MDBG.net',
+                cat: 'И' },
+            { title: '🔓 И19. Упрощённые vs Традиционные', rule: 'Учишь упрощённые (Китай)',
+                ex: '书(книга) — 書. 爱(любовь) — 愛. 马(лошадь) — 馬. 龙(дракон) — 龍. 💡 Не пугайся!', cat: 'И' },
+            { title: '🔓 И20. Практика каждый день', rule: '10 минут в день лучше 2 часов раз в неделю',
+                ex: '5 слов × 300 дней = 1500 слов → БАЗОВОЕ ОБЩЕНИЕ! 💡 Лучше МАЛО, но КАЖДЫЙ день!', cat: 'И' },
+
+            // ============================================================
+            // 🎵 П — ПРОИЗНОШЕНИЕ И ТОНЫ
+            // ============================================================
+            { title: '🎵 П1. Четыре тона', rule: 'Тон меняет значение слова!',
+                ex: '妈 mā (мама) — 麻 má (конопля) — 马 mǎ (лошадь) — 骂 mà (ругать) — 吗 ma (?)', cat: 'П' },
+            { title: '📏 П2. Первый тон (¯)', rule: 'Высокий и ровный', ex: '妈 mā, 天 tiān, 他 tā, 喝 hē', cat: 'П' },
+            { title: '📈 П3. Второй тон (´)', rule: 'Восходящий, как вопрос', ex: '什么 shénme, 学 xué, 来 lái',
+                cat: 'П' },
+            { title: '📉 П4. Третий тон (ˇ)', rule: 'Вниз и вверх', ex: '好 hǎo, 我 wǒ, 很 hěn, 五 wǔ', cat: 'П' },
+            { title: '📉 П5. Четвёртый тон (`)', rule: 'Резкий падающий', ex: '去 qù, 不 bù, 是 shì, 对 duì',
+                cat: 'П' },
+            { title: '☁️ П6. Нейтральный тон', rule: 'Короткий и лёгкий', ex: '吗 ma, 了 le, 的 de, 们 men',
+                cat: 'П' },
+            { title: '🔄 П7. Изменение 不', rule: 'Перед 4-м тоном 不 → bú', ex: '不去 bú qù, 不对 bú duì, 不要 bú yào',
+                cat: 'П' },
+            { title: '🔄 П8. Изменение 一', rule: 'Перед 4-м тоном yí, иначе yì',
+                ex: '一个 yí gè, 一天 yì tiān, 一起 yì qǐ', cat: 'П' },
+            { title: '🔄 П9. Два третьих тона', rule: 'Первый становится 2-м',
+                ex: '你好 ní hǎo, 很好 hén hǎo, 所以 suó yǐ', cat: 'П' },
+
+            // ============================================================
+            // ✍️ С — КАЛЛИГРАФИЯ (ПОРЯДОК ЧЕРТ)
+            // ============================================================
+            { title: '✍️ С1. Основные черты', rule: 'Иероглиф из базовых черт',
+                ex: '1️⃣一, 2️⃣丨, 3️⃣丶, 4️⃣丿, 5️⃣㇏, 6️⃣亅. 十=一+丨. 人=丿+㇏', cat: 'С' },
+            { title: '✍️ С2. Сверху Вниз', rule: 'С верхней части, потом нижняя',
+                ex: '三 (сначала верхняя 一, потом средняя, потом нижняя). 💡 Как строить дом!', cat: 'С' },
+            { title: '✍️ С3. Слева Направо', rule: 'Левую сторону, потом правую',
+                ex: '你 = 亻(человек) + 尔(ты). 河 = 氵(вода) + 可', cat: 'С' },
+            { title: '✍️ С4. Внешнее → Внутреннее', rule: 'Сначала рамку, потом начинку',
+                ex: '日, 月, 田, 国. 💡 Сначала забор, потом дом!', cat: 'С' },
+            { title: '✍️ С5. Горизонталь → Вертикаль', rule: 'Сначала горизонтальную черту',
+                ex: '十 (сначала 一, потом 丨). 土, 士, 千, 王', cat: 'С' },
+            { title: '✍️ С6. Левый наклон → Правый', rule: 'Сначала 丿, потом ㇏',
+                ex: '人, 入, 八, 木, 米. 💡 Сначала левая рука!', cat: 'С' },
+            { title: '✍️ С7. Метод Радикалов', rule: 'LEGO из кирпичиков', ex: '妈=女+马, 河=氵+可, 林=木+木, 休=亻+木',
+                cat: 'С' },
+            { title: '✍️ С8. Ключ-подсказка (Смысл+Звук)', rule: 'Левый = СМЫСЛ, правый = ЗВУК',
+                ex: '河 = 氵(вода→смысл) + 可(звук). 妈 = 女(женщина) + 马(звук)', cat: 'С' },
+            { title: '✍️ С9. Визуализация', rule: 'Представляй картинку',
+                ex: '休 = человек у дерева. 家 = свинья под крышей. 明 = солнце + луна', cat: 'С' },
+            { title: '✍️ С10. Мышечная память', rule: 'Пиши по 20 раз, проговаривая',
+                ex: '5 иероглифов × 20 раз = 100 движений руки в день. 💡 Тело запоминает!', cat: 'С' },
+            { title: '✍️ С11. Ошибки новичков', rule: 'НЕ ПУТАЙ похожие',
+                ex: '人(человек) — 入(входить). 未(ещё не) — 末(конец). 土(земля) — 士(учёный)', cat: 'С' },
+            { title: '✍️ С12. Омофоны', rule: 'Звук один, смысл разный',
+                ex: 'shì: 是(быть), 事(дело), 时(время), 食(еда). 💡 Контекст решает!', cat: 'С' },
+
+            // ============================================================
+            // 💡 З — ЗАПОМИНАНИЕ И МОТИВАЦИЯ
+            // ============================================================
+            { title: '💡 З1. Метод историй', rule: 'Придумывай смешные истории',
+                ex: '家 = свинья под крышей 🐷. 休 = человек у дерева 🌳. 怒 = раб с сердцем 😤', cat: 'З' },
+            { title: '💡 З2. Карточки', rule: 'Повторяй через интервалы',
+                ex: '1 час → 1 день → 3 дня → 1 неделя → 1 месяц. 📱 Используй карточки (бумажные или приложения)',
+                cat: 'З' },
+            { title: '💡 З3. Группировка', rule: 'Учи слова по темам',
+                ex: 'ЕДА: 米饭,面条,面包,鸡蛋,水,茶. СЕМЬЯ: 爸爸,妈妈,哥哥,姐姐', cat: 'З' },
+            { title: '💡 З4. Контекст', rule: 'Запоминай в предложении',
+                ex: '❌ 吃 = есть. ✅ 我吃饭 = Я ем рис. 💡 Слово в контексте!', cat: 'З' },
+            { title: '💡 З5. Пойте песни', rule: 'Мелодия закрепляет тоны',
+                ex: '两只老虎, 小星星, 生日快乐, 新年好. 🎵 Ищи китайские песни на музыкальных площадках', cat: 'З' },
+            { title: '💡 З6. Смотри дорамы', rule: 'С китайскими субтитрами',
+                ex: '以家人之名, 三十而已, 都挺好, 开端. 📱 Ищи на легальных платформах с субтитрами', cat: 'З' },
+            { title: '💡 З7. Говори вслух', rule: 'Громко и чётко, имитируй диктора',
+                ex: 'Запиши себя и сравни с оригиналом. 💡 Китайский любит громкие голоса!', cat: 'З' },
+            { title: '💡 З8. Найди партнёра', rule: 'Общайся с носителями',
+                ex: 'Ищи языковой обмен в соцсетях, на форумах или в местных сообществах. 💡 Китайцы помогут!', cat: 'З' },
+            { title: '💡 З9. Дневник', rule: 'Пиши 3-5 предложений о дне',
+                ex: '今天我很忙。早上我喝咖啡。我吃饭了。明天我去公园。💡 300 слов за месяц!', cat: 'З' },
+            { title: '💡 З10. Не бойся ошибок', rule: 'Китайцы ценят попытки',
+                ex: 'Даже за «ни хао» скажут: 你的中文真好！💡 Учиться = ошибаться!', cat: 'З' },
+
+            // ============================================================
+            // 🔑 Р — РАДИКАЛЫ (КЛЮЧИ)
+            // ============================================================
+            { title: '🔑 Р1. Что такое радикал', rule: 'Смысловой кирпичик, всего 214',
+                ex: '河 = 氵(вода) + 可. 妈 = 女(женщина) + 马. 想 = 相 + 心', cat: 'Р' },
+            { title: '🔑 Р2. Фоно-семантика', rule: 'Слева СМЫСЛ, справа ЗВУК',
+                ex: '妈 = 女(смысл) + 马(звук). 请 = 讠(речь) + 青(звук)', cat: 'Р' },
+            { title: '🔑 Р3. Стихии', rule: 'Вода, Огонь, Дерево, Земля, Металл',
+                ex: '💧氵:河,海,湖. 🔥火:烧,炒,炸. 🌳木:树,林,桌', cat: 'Р' },
+            { title: '🔑 Р4. Радикалы действия', rule: 'Рука, нога, движение',
+                ex: '扌:打,找,拉. 足:跑,跳,踢. 辶:过,送,进', cat: 'Р' },
+            { title: '🔑 Р5. Человек и тело', rule: '亻,口,心,目,耳',
+                ex: '亻:你,他,们. 口:吃,喝,叫. 心:想,忘,情', cat: 'Р' },
+            { title: '🔑 Р8. Угадать смысл', rule: 'Смотри на левую/верхнюю часть',
+                ex: '鲸(кит) = 鱼(рыба). 打(бить) = 扌(рука). 💡 Смысл слева/сверху', cat: 'Р' },
+            { title: '🔑 Р9. Угадать звук', rule: 'Смотри на правую/нижнюю часть',
+                ex: '请,晴,清,情 — все с 青(qīng). 💡 Звук справа/снизу', cat: 'Р' },
+            { title: '🔑 Р11. Трансформеры', rule: 'Меняют форму, смысл тот же',
+                ex: '人→亻, 水→氵, 火→灬, 手→扌, 心→忄. 💡 Узнаешь их везде!', cat: 'Р' },
+            { title: '🔑 Р12. Иероглифы-картинки', rule: 'Целые сцены',
+                ex: '休(отдых)=человек у дерева. 家(дом)=свинья под крышей. 灭(тушить)=крышка на огне', cat: 'Р' },
+            { title: '🔑 Р13. Редупликация', rule: 'Повтор усиливает',
+                ex: '木→林→森, 火→炎→焱, 人→从→众. 💡 Больше повторений = сильнее', cat: 'Р' },
+            { title: '🔑 Р14. Логика позиции', rule: 'Позиция подсказывает роль',
+                ex: '想(думать)=心 снизу. 您(Вы)=心 снизу(уважение). 森=лес со всех сторон', cat: 'Р' },
+
+            // ============================================================
+            // 🔄 Т — ТРАНСФОРМАЦИЯ РАДИКАЛОВ
+            // ============================================================
+            { title: '🔄 Т1. Вода 水→氵', rule: 'Три капли сбоку', ex: '海,河,湖,洗,游. 💡 氵 = вода', cat: 'Т' },
+            { title: '🔄 Т2. Огонь 火→灬', rule: '4 точки снизу', ex: '热,煮,照,煎,烈. 💡 灬 = огонь снизу',
+                cat: 'Т' },
+            { title: '🔄 Т3. Рука 手→扌', rule: 'Черта с крюком слева', ex: '打,找,拉,推,握. 💡 扌 = действие рукой',
+                cat: 'Т' },
+            { title: '🔄 Т4. Сердце 心→忄', rule: 'Вертикальное сердце слева',
+                ex: '快,慢,怕,怪,情. 💡 忄 = эмоции', cat: 'Т' },
+            { title: '🔄 Т5. Человек 人→亻', rule: 'Узкий человек слева', ex: '你,他,们,住,休. 💡 亻 = про людей',
+                cat: 'Т' },
+            { title: '🔄 Т6. Нож 刀→刂', rule: 'Две черты справа', ex: '别,到,利,刻,割. 💡 刂 = резать', cat: 'Т' },
+            { title: '🔄 Т7. Город 邑→⻏', rule: 'Ушко справа', ex: '那,都,邮,邻,邦. 💡 ⻏ = город', cat: 'Т' },
+            { title: '🔄 Т8. Холм 阜→⻖', rule: 'Ушко слева', ex: '阳,阴,陈,陆. 💡 ⻖ = холм', cat: 'Т' },
+            { title: '🔄 Т9. Мясо 肉→⺼', rule: 'Выглядит как луна', ex: '脸,腿,脑,胸,胖. 💡 Часть тела = мясо',
+                cat: 'Т' },
+            { title: '🔄 Т10. Металл 金→钅', rule: 'Упрощённый металл слева',
+                ex: '钱,银,铁,针,钟. 💡 钅 = деньги/металл', cat: 'Т' },
+            { title: '🔄 Т11. Еда 食→饣', rule: 'Упрощённая еда слева', ex: '饭,饱,饿,饼,饮. 💡 饣 = еда',
+                cat: 'Т' },
+            { title: '🔄 Т12. Лошадь 马', rule: 'Упрощённая лошадь', ex: '骑,驾,驶,骄,验. 💡 马 везде похожа',
+                cat: 'Т' },
+            { title: '🔄 Т13. Рыба 鱼', rule: 'Упрощённая рыба', ex: '鲜,鲸,鲨,渔. 💡 鱼 = рыба', cat: 'Т' },
+            { title: '📊 Т14. Таблица трансформеров', rule: '14 основных пар',
+                ex: '人→亻,水→氵,火→灬,手→扌,心→忄,刀→刂,邑→⻏,阜→⻖,肉→⺼,金→钅,食→饣', cat: 'Т' },
+
+            // ============================================================
+            // ⚡ Б — БЫСТРЫЕ СОВЕТЫ
+            // ============================================================
+            { title: '⚡ Б1. Закон 80/20', rule: '20% иероглифов = 80% текста',
+                ex: 'ТОП-20: 的,一,了,是,我,不,人,在,有,他. 💡 20 слов → 40% текста!', cat: 'Б' },
+            { title: '⚡ Б2. Интервальное повторение', rule: '1ч→1д→3д→1н→1м',
+                ex: 'Используй карточки. 💡 Повторяй, когда почти забыл!', cat: 'Б' },
+            { title: '⚡ Б3. Правило 5 минут', rule: 'Лучше каждый день по 5-10 минут',
+                ex: '5 слов × 30 дней = 150 слов → БАЗА! 💡 Регулярность важнее длительности', cat: 'Б' },
+            { title: '⚡ Б4. Ищи логику', rule: 'Пойми, из чего собрано',
+                ex: '休 = человек + дерево = отдыхает. 家 = свинья под крышей = дом. 💡 Каждый иероглиф — история!',
+                cat: 'Б' },
+            { title: '⚡ Б5. Учи тоны через эмоции',
+                rule: '1-й = спокойно, 2-й = вопрос, 3-й = сомнение, 4-й = команда',
+                ex: 'Рисуй рукой линию тона в воздухе! 🎭', cat: 'Б' },
+            { title: '⚡ Б6. Погружение', rule: 'Наклей стикеры, смени язык телефона',
+                ex: 'дверь→门, окно→窗, холодильник→冰箱. 💡 Среда 24/7!', cat: 'Б' },
+            { title: '⚡ Б7. Говори неправильно, но говори', rule: 'Китайцы ценят попытки',
+                ex: 'Скажут 你的中文真好 уже за «ни хао». 💡 Не бойся!', cat: 'Б' },
+            { title: '⚡ Б8. Используй ИИ', rule: 'AI-репетитор 24/7',
+                ex: 'Попроси нейросеть исправить текст, объяснить грамматику, составить диалог. 🤖', cat: 'Б' },
+
+            // ============================================================
+            // 🧱 Г — ГРАММАТИКА (ОСНОВНАЯ)
+            // ============================================================
+            { title: '🧱 Г1. Порядок слов SVO', rule: 'Подлежащее + Сказуемое + Дополнение',
+                ex: '我喝咖啡。Я пью кофе. ☕', cat: 'Г' },
+            { title: '🚫 Г2. Отрицание 不/没', rule: '不 = наст/буд, 没 = прошлое',
+                ex: '我不去 (не пойду). 我没看见 (не видел)', cat: 'Г' },
+            { title: '❓ Г3. Вопрос 吗', rule: 'В конце для вопроса да/нет', ex: '你好吗？(Как дела?)', cat: 'Г' },
+            { title: '🕵️ Г4. Вопросительные слова', rule: 'Ставятся на место ответа',
+                ex: '你吃什么？(Что ты ешь?)', cat: 'Г' },
+            { title: '🎯 Г5. Частица 的', rule: 'Показывает принадлежность', ex: '我的书 (моя книга). 他的车 (его машина)',
+                cat: 'Г' },
+            { title: '✅ Г6. Прошедшее время 了', rule: 'После глагола = завершение', ex: '我吃饭了。Я поел.',
+                cat: 'Г' },
+            { title: '🚀 Г7. Будущее время 要/会', rule: '要 = собираюсь. 会 = умею/будет',
+                ex: '我要去 (я пойду). 会下雨 (будет дождь)', cat: 'Г' },
+            { title: '⚖️ Г8. Сравнение 比', rule: 'A + 比 + B + качество', ex: '他比我高 (он выше меня)',
+                cat: 'Г' },
+            { title: '🔥 Г9. Усиление 很/非常', rule: '很 = очень. 非常 = чрезвычайно',
+                ex: '她很漂亮 (она красивая). 非常感谢 (огромное спасибо)', cat: 'Г' },
+            { title: '🔄 Г10. Повтор 又/再', rule: '又 = опять (уже было). 再 = снова (будет)',
+                ex: '他又来了 (опять пришёл). 明天再来 (приходи завтра)', cat: 'Г' },
+            { title: '⏰ Г11. Время и Место', rule: 'Время ПЕРЕД глаголом', ex: '我明天去北京 (завтра еду в Пекин)',
+                cat: 'Г' },
+            { title: '📢 Г12. Конструкция 是...的', rule: 'Усиление обстоятельства',
+                ex: '我是昨天来的 (приехал именно вчера)', cat: 'Г' },
+            { title: '⏳ Г13. Длительное действие 在', rule: 'Действие прямо сейчас', ex: '我在吃饭 (я сейчас ем)',
+                cat: 'Г' },
+            { title: '🎁 Г14. Двойное дополнение', rule: 'Кому + Что', ex: '给我一本书 (дай мне книгу)',
+                cat: 'Г' },
+            { title: '👉 Г15. Указательные 这/那', rule: '这 = этот. 那 = тот',
+                ex: '这个人 (этот человек). 那本书 (та книга)', cat: 'Г' },
+            { title: '💰 Г16. Глагол "Иметь" 有', rule: 'Отрицание только через 没有',
+                ex: '我有时间 (есть время). 他没有钱 (нет денег)', cat: 'Г' },
+            { title: '👔 Г17. Связка 是', rule: 'A = B, не опускается', ex: '我是学生 (я студент). 他是医生 (он врач)',
+                cat: 'Г' },
+            { title: '💪 Г18. Модальные 能/可以', rule: '能 = могу. 可以 = можно',
+                ex: '我能走 (могу идти). 可以进来吗？(можно войти?)', cat: 'Г' },
+            { title: '🤏 Г19. Повтор глагола', rule: 'Смягчает действие', ex: '看看 (посмотрю). 听听 (послушаю)',
+                cat: 'Г' },
+            { title: '🏃 Г20. 一边...一边...', rule: 'Два действия одновременно',
+                ex: '一边吃饭一边看电视 (ем и смотрю ТВ)', cat: 'Г' },
+            { title: '🌗 Г21. 虽然...但是...', rule: 'Хотя..., но...', ex: '虽然很累，但是很开心 (устал, но счастлив)',
+                cat: 'Г' },
+            { title: '💡 Г22. 因为...所以...', rule: 'Потому что..., поэтому...',
+                ex: '因为下雨，所以不去 (дождь, поэтому не пойду)', cat: 'Г' },
+            { title: '🎀 Г23. Удвоение прилагательных', rule: 'Усиление + милота',
+                ex: '大大的眼睛 (большущие глаза). 红红的苹果 (красное яблоко)', cat: 'Г' },
+
+            // ============================================================
+            // 🧮 СЧ — СЧЁТНЫЕ СЛОВА (КЛАССИФИКАТОРЫ)
+            // ============================================================
+            { title: '🧮 СЧ1. Что такое счётное слово',
+                rule: 'Число + Классификатор + Существительное',
+                ex: '一个人 (один человек). 一本书 (одна книга). 一杯茶 (чашка чая). 💡 БЕЗ НИХ НЕЛЬЗЯ СЧИТАТЬ!',
+                cat: 'СЧ' },
+            { title: '🧮 СЧ2. Универсальное 个 (gè)',
+                rule: 'Для людей, вещей, абстракций (90% случаев)',
+                ex: '一个人 (человек), 一个问题 (вопрос), 一个苹果 (яблоко). 💡 Если сомневаешься — используй 个!',
+                cat: 'СЧ' },
+            { title: '🧮 СЧ3. Для людей 位 (wèi)',
+                rule: 'Вежливое для людей (учителя, врачи)',
+                ex: '一位老师 (учитель), 一位医生 (врач), 一位客人 (гость). 💡 Уважительно!', cat: 'СЧ' },
+            { title: '🧮 СЧ4. Для животных 只 (zhī)',
+                rule: 'Для животных, одной пары (обувь, перчатки)',
+                ex: '一只猫 (кошка), 一只狗 (собака), 一只鸟 (птица), 一只鞋 (ботинок). 💡 Животные и пары!',
+                cat: 'СЧ' },
+            { title: '🧮 СЧ5. Для длинных предметов 条 (tiáo)',
+                rule: 'Для длинных, гибких, узких предметов',
+                ex: '一条鱼 (рыба), 一条路 (дорога), 一条裤子 (штаны), 一条河 (река). 💡 Всё длинное!',
+                cat: 'СЧ' },
+            { title: '🧮 СЧ6. Для плоских предметов 张 (zhāng)',
+                rule: 'Для плоских, раскрытых предметов',
+                ex: '一张纸 (бумага), 一张桌子 (стол), 一张照片 (фото). 💡 Всё плоское!', cat: 'СЧ' },
+            { title: '🧮 СЧ7. Для книг 本 (běn)',
+                rule: 'Для книг, журналов, тетрадей',
+                ex: '一本书 (книга), 一本杂志 (журнал), 一本词典 (словарь). 💡 Книги и тетради!', cat: 'СЧ' },
+            { title: '🧮 СЧ8. Для транспорта 辆 (liàng)',
+                rule: 'Для транспорта с колёсами',
+                ex: '一辆车 (машина), 一辆自行车 (велосипед), 一辆公交车 (автобус). 💡 Всё на колёсах!',
+                cat: 'СЧ' },
+            { title: '🧮 СЧ9. Для одежды 件 (jiàn)',
+                rule: 'Для одежды, дел, событий',
+                ex: '一件衣服 (одежда), 一件事 (дело), 一件行李 (багаж). 💡 Одежда и дела!', cat: 'СЧ' },
+            { title: '🧮 СЧ10. Для напитков 杯 (bēi)',
+                rule: 'Для напитков в чашке/стакане',
+                ex: '一杯茶 (чай), 一杯水 (вода), 一杯咖啡 (кофе). 💡 Всё, что пьют!', cat: 'СЧ' },
+            { title: '🧮 СЧ11. Для бутылок 瓶 (píng)',
+                rule: 'Для бутылок и жидкостей в них',
+                ex: '一瓶水 (вода), 一瓶啤酒 (пиво), 一瓶牛奶 (молоко). 💡 Всё в бутылках!', cat: 'СЧ' },
+            { title: '🧮 СЧ12. Для парных предметов 双 (shuāng)',
+                rule: 'Для пар (обувь, носки, глаза)',
+                ex: '一双鞋 (пара обуви), 一双袜子 (носки), 一双眼睛 (глаза). 💡 Всё парное!', cat: 'СЧ' },
+            { title: '🧮 СЧ13. Для раз/случаев 次 (cì)',
+                rule: 'Для количества раз/случаев',
+                ex: '一次 (один раз), 两次 (два раза), 三次 (три раза). 💡 Считаем разы!', cat: 'СЧ' },
+            { title: '🧮 СЧ14. Для возраста 岁 (suì)',
+                rule: 'Для лет возраста',
+                ex: '我二十岁 (мне 20 лет). 你几岁？(сколько тебе лет?). 💡 Только для возраста!', cat: 'СЧ' },
+            { title: '🧮 СЧ15. Для денег 块 (kuài)',
+                rule: 'Разговорное для юаней',
+                ex: '十块钱 (10 юаней), 五块钱 (5 юаней). 💡 Вместо 元 в разговоре!', cat: 'СЧ' },
+            { title: '🧮 СЧ16. Для денег (офиц.) 元 (yuán)',
+                rule: 'Официальное для юаней',
+                ex: '十元 (10 юаней), 一百元 (100 юаней). 💡 На ценниках и документах!', cat: 'СЧ' },
+            { title: '🧮 СЧ17. Для семьи 口 (kǒu)',
+                rule: 'Для членов семьи',
+                ex: '三口人 (3 человека в семье), 五口之家 (семья из 5 человек). 💡 Сколько ртов кормить!',
+                cat: 'СЧ' },
+            { title: '🧮 СЧ18. Для учреждений 所 (suǒ)',
+                rule: 'Для зданий, учреждений',
+                ex: '一所大学 (университет), 一所医院 (больница). 💡 Большие здания!', cat: 'СЧ' },
+            { title: '🧮 СЧ19. Для этажей 层 (céng)',
+                rule: 'Для этажей в здании',
+                ex: '一层 (первый этаж), 五层 (пятый этаж). 💡 Считаем этажи!', cat: 'СЧ' },
+            { title: '🧮 СЧ20. Для писем 封 (fēng)',
+                rule: 'Для писем, конвертов',
+                ex: '一封信 (письмо). 💡 Всё в конвертах!', cat: 'СЧ' },
+            { title: '🧮 СЧ21. Для песен 首 (shǒu)',
+                rule: 'Для песен, стихов',
+                ex: '一首歌 (песня), 一首诗 (стихотворение). 💡 Песни и стихи!', cat: 'СЧ' },
+            { title: '🧮 СЧ22. Для статей 篇 (piān)',
+                rule: 'Для статей, текстов',
+                ex: '一篇文章 (статья), 一篇日记 (запись в дневнике). 💡 Тексты!', cat: 'СЧ' },
+            { title: '🧮 СЧ23. Для цветов/облаков 朵 (duǒ)',
+                rule: 'Для цветов, облаков',
+                ex: '一朵花 (цветок), 一朵云 (облако). 💡 Красивые предметы!', cat: 'СЧ' },
+            { title: '🧮 СЧ24. Для деревьев 棵 (kē)',
+                rule: 'Для деревьев, растений',
+                ex: '一棵树 (дерево), 一棵草 (травинка). 💡 Всё, что растёт!', cat: 'СЧ' },
+            { title: '🧮 СЧ25. Для скота 头 (tóu)',
+                rule: 'Для крупного рогатого скота',
+                ex: '一头牛 (корова), 一头猪 (свинья). 💡 Крупные животные!', cat: 'СЧ' },
+            { title: '🧮 СЧ26. Для предметов с ручкой 把 (bǎ)',
+                rule: 'Для предметов с ручкой',
+                ex: '一把刀 (нож), 一把伞 (зонт), 一把椅子 (стул). 💡 Всё, за что держатся!', cat: 'СЧ' },
+            { title: '🧮 СЧ27. Для длинных тонких 支 (zhī)',
+                rule: 'Для длинных тонких предметов',
+                ex: '一支笔 (ручка), 一支烟 (сигарета). 💡 Всё тонкое и длинное!', cat: 'СЧ' },
+            { title: '🧮 СЧ28. Для порций 份 (fèn)',
+                rule: 'Для порций еды, документов',
+                ex: '一份饺子 (порция пельменей), 一份报纸 (газета). 💡 Порции и бумаги!', cat: 'СЧ' },
+            { title: '🧮 СЧ29. Для видов 种 (zhǒng)',
+                rule: 'Для видов, сортов, типов',
+                ex: '一种水果 (вид фруктов), 两种方法 (два способа). 💡 Типы и виды!', cat: 'СЧ' },
+            { title: '🧮 СЧ30. Где ставить счётное слово',
+                rule: 'Число + СЧ + Существительное',
+                ex: '三本书 (три книги), 两杯茶 (две чашки чая). 💡 СЧ ВСЕГДА между числом и предметом!',
+                cat: 'СЧ' },
+            { title: '🧮 СЧ31. Без счётного слова нельзя!',
+                rule: '❌ 三人 → ✅ 三个人. ❌ 一车 → ✅ 一辆车. 💡 Без СЧ — звучит как ошибка!',
+                cat: 'СЧ' },
+
+            // ============================================================
+            // 🕐 ВР — ВРЕМЕНА И ВРЕМЕННЫЕ МАРКЕРЫ
+            // ============================================================
+            { title: '🕐 ВР1. Настоящее время',
+                rule: 'Глагол без изменений (или с 在 для длительности)',
+                ex: '我吃饭 (я ем). 我在吃饭 (я сейчас ем). 💡 Время = контекст или 在', cat: 'ВР' },
+            { title: '🕐 ВР2. Прошедшее время 了',
+                rule: '了 после глагола = завершённое действие',
+                ex: '我吃饭了 (я поел). 他来了 (он пришёл). 💡 Важно: 了 НЕ ВСЕГДА прошлое!', cat: 'ВР' },
+            { title: '🕐 ВР3. Опыт в прошлом 过',
+                rule: '过 после глагола = был опыт в прошлом',
+                ex: '我去过北京 (я был в Пекине). 吃过饺子 (ел пельмени). 💡 过 = было когда-то', cat: 'ВР' },
+            { title: '🕐 ВР4. Будущее время 要/会',
+                rule: '要 = собираюсь/хочу. 会 = будет/умею',
+                ex: '明天要下雨 (завтра будет дождь). 我会来的 (я приду). 💡 要 = намерение, 会 = предсказание',
+                cat: 'ВР' },
+            { title: '🕐 ВР5. Длительное действие 正在',
+                rule: '正在 + глагол = прямо сейчас',
+                ex: '我正在学习 (я прямо сейчас учусь). 他正在吃饭 (он сейчас ест). 💡 Прямо сейчас!', cat: 'ВР' },
+            { title: '🕐 ВР6. Постоянное состояние',
+                rule: 'Без 了/过/正在 — просто констатация',
+                ex: '他是老师 (он учитель). 我住北京 (я живу в Пекине). 💡 Факты и привычки', cat: 'ВР' },
+            { title: '🕐 ВР7. Сравнение 了 vs 过',
+                rule: '了 = завершённое действие. 过 = опыт в прошлом',
+                ex: '我吃饭了 (я поел, действие завершено). 我去过中国 (я был в Китае, опыт). 💡 了 ≠ 过!',
+                cat: 'ВР' },
+            { title: '🕐 ВР8. Время + 了 в будущем',
+                rule: '了 может быть в будущем = скоро завершится',
+                ex: '我明天吃了饭就去 (завтра поем и пойду). 💡 了 в будущем тоже бывает!', cat: 'ВР' },
+
+            // ============================================================
+            // 📝 НА — НАРЕЧИЯ ВРЕМЕНИ
+            // ============================================================
+            { title: '📝 НА1. 已经 (уже)',
+                rule: 'Действие уже произошло',
+                ex: '他已经来了 (он уже пришёл). 我已经吃饭了 (я уже поел). 💡 Уже = 已经', cat: 'НА' },
+            { title: '📝 НА2. 还没 (ещё не)',
+                rule: 'Действие ещё не произошло',
+                ex: '他还没来 (он ещё не пришёл). 我还没吃饭 (я ещё не ел). 💡 Ещё не = 还没', cat: 'НА' },
+            { title: '📝 НА3. 刚刚 (только что)',
+                rule: 'Действие произошло только что',
+                ex: '他刚刚走了 (он только что ушёл). 我刚刚吃完饭 (я только что поел). 💡 Только что = 刚刚',
+                cat: 'НА' },
+            { title: '📝 НА4. 马上 (сразу)',
+                rule: 'Действие произойдёт немедленно',
+                ex: '我马上来 (я сейчас приду). 马上开始 (сразу начинаем). 💡 Сразу = 马上', cat: 'НА' },
+            { title: '📝 НА5. 正在 (прямо сейчас)',
+                rule: 'Длительное действие в момент речи',
+                ex: '他正在学习 (он сейчас учится). 💡 Прямо сейчас = 正在', cat: 'НА' },
+            { title: '📝 НА6. 一直 (всё время)',
+                rule: 'Действие продолжается без перерыва',
+                ex: '我一直很忙 (я всё время занят). 他一直在学习 (он всё время учится). 💡 Всё время = 一直',
+                cat: 'НА' },
+            { title: '📝 НА7. 经常 (часто)',
+                rule: 'Регулярное действие',
+                ex: '我经常去公园 (я часто хожу в парк). 💡 Часто = 经常', cat: 'НА' },
+            { title: '📝 НА8. 有时 (иногда)',
+                rule: 'Не всегда, иногда',
+                ex: '我有时吃早饭 (я иногда завтракаю). 💡 Иногда = 有时', cat: 'НА' },
+            { title: '📝 НА9. 常常 (часто)',
+                rule: 'Часто, регулярно',
+                ex: '他常常迟到 (он часто опаздывает). 💡 Часто = 常常', cat: 'НА' },
+            { title: '📝 НА10. 很少 (редко)',
+                rule: 'Редко, почти никогда',
+                ex: '我很少去 (я редко хожу). 💡 Редко = 很少', cat: 'НА' },
+            { title: '📝 НА11. 每天 (каждый день)',
+                rule: 'Ежедневно',
+                ex: '我每天跑步 (я бегаю каждый день). 💡 Каждый день = 每天', cat: 'НА' },
+            { title: '📝 НА12. 每周 (каждую неделю)',
+                rule: 'Еженедельно',
+                ex: '我每周去超市 (я хожу в супермаркет каждую неделю). 💡 Каждую неделю = 每周', cat: 'НА' },
+            { title: '📝 НА13. 每年 (каждый год)',
+                rule: 'Ежегодно',
+                ex: '我每年去中国 (я езжу в Китай каждый год). 💡 Каждый год = 每年', cat: 'НА' },
+            { title: '📝 НА14. 总是 (всегда)',
+                rule: 'Всегда, постоянно',
+                ex: '他总是迟到 (он всегда опаздывает). 💡 Всегда = 总是', cat: 'НА' },
+            { title: '📝 НА15. 从不 (никогда)',
+                rule: 'Никогда',
+                ex: '我从不喝酒 (я никогда не пью). 💡 Никогда = 从不', cat: 'НА' },
+
+            // ============================================================
+            // 📌 Д — ДОПОЛНИТЕЛЬНАЯ ВАЖНАЯ ГРАММАТИКА
+            // ============================================================
+            { title: '📌 Д1. Наречие 也 (тоже)',
+                rule: 'Ставится ПЕРЕД глаголом',
+                ex: '我也去 (я тоже иду). 他也是学生 (он тоже студент). 💡 Тоже = 也', cat: 'Д' },
+            { title: '📌 Д2. Наречие 都 (все/оба)',
+                rule: 'Ставится ПЕРЕД глаголом',
+                ex: '我们都去 (мы все идём). 他们两个都是学生 (они оба студенты). 💡 Все/оба = 都', cat: 'Д' },
+            { title: '📌 Д3. Конструкция 有...有...',
+                rule: 'Есть... есть... (перечисление)',
+                ex: '有咖啡，有茶 (есть кофе, есть чай). 💡 Перечисляем!', cat: 'Д' },
+            { title: '📌 Д4. Конструкция 要...了',
+                rule: 'Скоро произойдёт (близкое будущее)',
+                ex: '要下雨了 (сейчас пойдёт дождь). 要吃饭了 (скоро есть). 💡 Вот-вот случится!', cat: 'Д' },
+            { title: '📌 Д5. Конструкция 快...了',
+                rule: 'Скоро произойдёт (очень скоро)',
+                ex: '快到了 (скоро приеду). 快开始了 (скоро начнётся). 💡 Почти!', cat: 'Д' },
+            { title: '📌 Д6. Конструкция 从...到...',
+                rule: 'От... до... (время/место)',
+                ex: '从早上到晚上 (с утра до вечера). 从北京到上海 (от Пекина до Шанхая). 💡 Диапазон!',
+                cat: 'Д' },
+            { title: '📌 Д7. Конструкция 除了...以外',
+                rule: 'Кроме... (исключение)',
+                ex: '除了咖啡以外，还有茶 (кроме кофе, есть ещё чай). 💡 Исключение!', cat: 'Д' },
+            { title: '📌 Д8. Конструкция 又...又...',
+                rule: 'И... и... (два качества вместе)',
+                ex: '又大又漂亮 (большой и красивый). 又甜又好吃 (сладкий и вкусный). 💡 Два качества!',
+                cat: 'Д' },
+            { title: '📌 Д9. Конструкция 越...越...',
+                rule: 'Чем... тем...',
+                ex: '越来越快 (всё быстрее). 越来越好 (всё лучше). 💡 Постепенное изменение!', cat: 'Д' },
+            { title: '📌 Д10. Конструкция 不但...而且...',
+                rule: 'Не только... но и...',
+                ex: '不但会说，而且会写 (не только говорю, но и пишу). 💡 Усиление!', cat: 'Д' },
+            { title: '📌 Д11. Конструкция 只要...就...',
+                rule: 'Если только... то...',
+                ex: '只要努力，就能成功 (если стараться, то сможешь). 💡 Условие и результат!', cat: 'Д' },
+            { title: '📌 Д12. Конструкция 如果...就...',
+                rule: 'Если... то...',
+                ex: '如果下雨，就不去 (если дождь, то не пойду). 💡 Условие!', cat: 'Д' },
+            { title: '📌 Д13. Конструкция 虽然...但是...',
+                rule: 'Хотя... но...',
+                ex: '虽然贵，但是很好 (хотя дорого, но хорошо). 💡 Противопоставление!', cat: 'Д' },
+            { title: '📌 Д14. Конструкция 因为...所以...',
+                rule: 'Потому что... поэтому...',
+                ex: '因为累，所以休息 (устал, поэтому отдыхаю). 💡 Причина и следствие!', cat: 'Д' },
+            { title: '📌 Д15. Конструкция 为了... (ради)',
+                rule: 'Для того чтобы... (цель)',
+                ex: '为了学好中文，我每天学习 (чтобы выучить китайский, я учусь каждый день). 💡 Цель!',
+                cat: 'Д' },
+
+            // ============================================================
+            // ⚠️ Н — НЮАНСЫ И ОШИБКИ
+            // ============================================================
+            { title: '⚠️ Н1. Не все меняются',
+                rule: 'Некоторые радикалы всегда одинаковы',
+                ex: '女,子,木,口 — не меняются. 妈,孩,林,喝', cat: 'Н' },
+            { title: '⚠️ Н2. Похожие формы',
+                rule: 'Не путай ⺼(мясо), 月(луна), 冂(рама)',
+                ex: '脸(лицо) vs 有(иметь) vs 同(одинаковый)', cat: 'Н' },
+            { title: '⚠️ Н3. Тренировка зрения',
+                rule: 'Ищи знакомый радикал',
+                ex: '河 = 氵(вода) + 可. 鲸 = 鱼(рыба) + 京. 💡 Ищи знакомого в толпе!', cat: 'Н' },
+            { title: '🔍 Н4. Луна или Мясо?',
+                rule: '月 в частях тела = МЯСО 肉',
+                ex: '脸(лицо),腿(нога),脑(мозг),胸(грудь)', cat: 'Н' },
+            { title: '🔍 Н5. Ушко слева/справа',
+                rule: 'Слева(⻖)=горы. Справа(⻏)=город',
+                ex: '阳(солнце/гора) vs 都(столица)', cat: 'Н' }
+        ];
+
+        // ============================================================
+        // 📊 КАТЕГОРИИ
+        // ============================================================
+
+        const CATEGORY_NAMES = {
+            'И': '🔓 Иероглифы',
+            'П': '🎵 Произношение',
+            'С': '✍️ Каллиграфия',
+            'З': '💡 Запоминание',
+            'Р': '🔑 Радикалы',
+            'Т': '🔄 Трансформация',
+            'Б': '⚡ Быстрые советы',
+            'Г': '🧱 Грамматика',
+            'СЧ': '🧮 Счётные слова',
+            'ВР': '🕐 Времена',
+            'НА': '📝 Наречия',
+            'Д': '📌 Доп. грамматика',
+            'Н': '⚠️ Нюансы'
+        };
+
+        // ============================================================
+        // 🔍 ЛОГИКА
+        // ============================================================
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        function getCategoryCounts() {
+            const counts = {};
+            GRAMMAR.forEach(item => {
+                const cat = item.cat || 'unknown';
+                counts[cat] = (counts[cat] || 0) + 1;
+            });
+            return counts;
+        }
+
+        function renderGrammar() {
+            const grid = document.getElementById('grammarGrid');
+            const noResults = document.getElementById('noResults');
+            const totalCount = document.getElementById('totalCount');
+            const statTotal = document.getElementById('statTotal');
+            const statCategories = document.getElementById('statCategories');
+            const statVisible = document.getElementById('statVisible');
+
+            let filtered = GRAMMAR;
+
+            // Фильтр по категории
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(item => item.cat === currentFilter);
+            }
+
+            // Поиск
+            if (currentSearch.trim()) {
+                const query = currentSearch.toLowerCase().trim();
+                filtered = filtered.filter(item =>
+                    item.title.toLowerCase().includes(query) ||
+                    item.rule.toLowerCase().includes(query) ||
+                    item.ex.toLowerCase().includes(query)
+                );
+            }
+
+            // Обновляем статистику
+            const total = GRAMMAR.length;
+            const categories = Object.keys(getCategoryCounts()).length;
+            const visible = filtered.length;
+
+            totalCount.textContent = `📚 ${total} правил`;
+            statTotal.textContent = total;
+            statCategories.textContent = categories;
+            statVisible.textContent = visible;
+
+            // Рендерим карточки
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+
+            let html = '';
+            filtered.forEach((item, index) => {
+                const cat = item.cat || 'Г';
+                const catName = CATEGORY_NAMES[cat] || cat;
+                const exHtml = item.ex.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+
+                html += `
+                    <div class="grammar-card cat-${cat} visible" style="animation-delay: ${index * 0.03}s;">
+                        <div class="grammar-title">${item.title}</div>
+                        <div class="grammar-rule">${item.rule}</div>
+                        <div class="grammar-ex">${exHtml}</div>
+                        <div class="grammar-cat-badge">${catName}</div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // ============================================================
+        // 🎯 СОБЫТИЯ
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderGrammar();
+
+            // Поиск
+            const searchInput = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearSearchBtn');
+
+            searchInput.addEventListener('input', function() {
+                currentSearch = this.value;
+                clearBtn.style.display = this.value ? 'flex' : 'none';
+                renderGrammar();
+            });
+
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                currentSearch = '';
+                this.style.display = 'none';
+                renderGrammar();
+            });
+
+            // Фильтры
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.cat;
+                    renderGrammar();
+                });
+            });
+
+            console.log('📚 Грамматика загружена! Всего правил:', GRAMMAR.length);
+        });
+    </script>
+
+</body>
+</html>
