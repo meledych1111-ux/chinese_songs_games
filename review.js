@@ -404,8 +404,7 @@ let gameState = {
     isActive: false,
     answered: false,
     currentItem: null,
-    options: [],
-    alreadyUsed: new Set() // ← ДОБАВЛЕНО: отслеживаем использованные слова
+    options: []
 };
 
 function startGame(mode) {
@@ -425,7 +424,7 @@ function startGame(mode) {
     // Перемешиваем все слова
     allItems.sort(() => Math.random() - 0.5);
     
-    // БЕРЁМ ВСЕ СЛОВА (не ограничиваем 20, чтобы можно было пройти все)
+    // Берём все слова, чтобы пройти все
     const items = allItems;
     
     gameState = {
@@ -440,8 +439,7 @@ function startGame(mode) {
         isActive: true,
         answered: false,
         currentItem: null,
-        options: [],
-        alreadyUsed: new Set() // ← СБРАСЫВАЕМ для новой игры
+        options: []
     };
     
     showGameCard();
@@ -584,7 +582,7 @@ function showGameCard() {
         `;
     }
     
-    // === КНОПКА "ДАЛЕЕ" — ВСЕГДА ПОКАЗЫВАЕТСЯ ===
+    // === КНОПКА "ДАЛЕЕ" ===
     html += `
         <div style="text-align:center;margin-top:12px;">
             <button onclick="${gameState.answered ? 'nextGameQuestion()' : 'showAnswerAndNext()'}" 
@@ -601,7 +599,7 @@ function showGameCard() {
     container.innerHTML = html;
 }
 
-// === НОВАЯ ФУНКЦИЯ: ПОКАЗЫВАЕТ ОТВЕТ И ПЕРЕХОДИТ К СЛЕДУЮЩЕМУ ===
+// === ПОКАЗЫВАЕТ ОТВЕТ И ПЕРЕХОДИТ К СЛЕДУЮЩЕМУ ===
 function showAnswerAndNext() {
     if (gameState.answered) return;
     
@@ -616,7 +614,15 @@ function showAnswerAndNext() {
     stats.gamesPlayed++;
     saveStats(stats);
     
+    // Показываем карточку с ответом
     showGameCard();
+    
+    // Автоматически переходим к следующему через 1.5 секунды
+    setTimeout(function() {
+        if (gameState.isActive && gameState.answered) {
+            nextGameQuestion();
+        }
+    }, 1500);
 }
 
 function generateOptions(correctItem) {
@@ -693,7 +699,8 @@ function handleGameAnswer(index) {
     } else {
         gameState.wrong++;
         gameState.streak = 0;
-        showToast(`❌ Неправильно. Правильно: ${gameState.options.find(o => o.isCorrect).text}`, 'error');
+        const correct = gameState.options.find(o => o.isCorrect);
+        showToast(`❌ Правильно: ${correct.text}`, 'error');
     }
     
     const stats = getStats();
@@ -707,6 +714,13 @@ function handleGameAnswer(index) {
     saveStats(stats);
     
     showGameCard();
+    
+    // Автоматически переходим к следующему через 1.5 секунды
+    setTimeout(function() {
+        if (gameState.isActive && gameState.answered) {
+            nextGameQuestion();
+        }
+    }, 1500);
 }
 
 function nextGameQuestion() {
@@ -890,4 +904,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
 });
 
-console.log('🧠 Модуль повторения загружен! Кубики + 2 игры (слова не повторяются)');
+console.log('🧠 Модуль повторения загружен! Кубики + 2 игры');
