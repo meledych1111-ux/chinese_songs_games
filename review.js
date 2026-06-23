@@ -216,9 +216,50 @@ let gameState = {
     options: []
 };
 
+// ==================== ЛОГ ДЛЯ ИГРЫ ====================
+let gameLog = [];
+
+function addGameLog(message, type = 'info') {
+    const timestamp = new Date().toLocaleTimeString();
+    gameLog.push({ time: timestamp, message, type });
+    if (gameLog.length > 100) gameLog.shift();
+    updateGameLogDisplay();
+    console.log(`[${timestamp}] ${message}`);
+}
+
+function updateGameLogDisplay() {
+    const logContainer = document.getElementById('gameLogContainer');
+    if (!logContainer) return;
+    
+    if (gameLog.length === 0) {
+        logContainer.innerHTML = '<div style="color:#999;font-size:13px;text-align:center;padding:10px;">📋 Лог пуст. Начните игру!</div>';
+        return;
+    }
+    
+    let html = '';
+    const recentLogs = gameLog.slice(-20);
+    recentLogs.forEach(entry => {
+        const color = entry.type === 'success' ? '#2ecc71' : 
+                      entry.type === 'error' ? '#e74c3c' : 
+                      entry.type === 'warning' ? '#f39c12' : '#4361ee';
+        html += `<div style="display:flex;gap:10px;padding:4px 8px;border-bottom:1px solid #f0f0f0;font-size:13px;font-family:monospace;">
+            <span style="color:#999;font-size:11px;min-width:70px;">${entry.time}</span>
+            <span style="color:${color};">${entry.message}</span>
+        </div>`;
+    });
+    
+    logContainer.innerHTML = html;
+}
+
+// ==================== СТАРТ ИГРЫ ====================
+
 function startReviewGame(mode) {
+    addGameLog('🎮 Запуск игры в режиме: ' + (mode === 'visual' ? '👀 Угадай по виду' : '🎧 Угадай на слух'), 'info');
+    
     const words = getReviewWords();
     const radicals = getReviewRadicals();
+    
+    addGameLog(`📚 Загружено слов: ${words.length}, радикалов: ${radicals.length}`, 'info');
     
     let allItems = [
         ...words.map(w => ({ ...w, type: 'word' })),
@@ -226,9 +267,13 @@ function startReviewGame(mode) {
     ];
     
     if (allItems.length === 0) {
+        addGameLog('❌ Нет слов в повторении! Добавьте слова.', 'error');
         showToast('📭 Добавьте слова в повторение!', 'warning');
         return;
     }
+    
+    addGameLog(`📝 Всего элементов для игры: ${allItems.length}`, 'info');
+    addGameLog(`📝 Список: ${allItems.map(i => i.type === 'word' ? i.c : i.s).join(', ')}`, 'info');
     
     allItems.sort(() => Math.random() - 0.5);
     
@@ -247,8 +292,13 @@ function startReviewGame(mode) {
         options: []
     };
     
+    addGameLog(`✅ Игра создана. Всего вопросов: ${gameState.total}`, 'success');
+    addGameLog(`🔤 Первое слово: ${gameState.items[0].type === 'word' ? gameState.items[0].c : gameState.items[0].s}`, 'info');
+    
     showReviewGameCard();
 }
+
+// ==================== ГЕНЕРАЦИЯ ВАРИАНТОВ ====================
 
 function generateOptions(correctItem) {
     const isWord = correctItem.type === 'word';
@@ -263,6 +313,8 @@ function generateOptions(correctItem) {
         emoji: correctItem.e || ''
     }];
     
+    addGameLog(`🔍 Генерация вариантов для: ${correctChar} (${correctText})`, 'info');
+    
     if (typeof WORDS !== 'undefined' && WORDS.length > 0) {
         const wrongOptions = WORDS.filter(w => 
             w.c !== correctChar && 
@@ -272,6 +324,8 @@ function generateOptions(correctItem) {
         
         wrongOptions.sort(() => Math.random() - 0.5);
         const selected = wrongOptions.slice(0, 3);
+        
+        addGameLog(`📝 Взято ${selected.length} неправильных вариантов из WORDS`, 'info');
         
         selected.forEach(w => {
             options.push({
@@ -291,6 +345,8 @@ function generateOptions(correctItem) {
         });
         
         fromItems.sort(() => Math.random() - 0.5);
+        
+        addGameLog(`📝 Добавлено ${Math.min(4 - options.length, fromItems.length)} вариантов из списка повторения`, 'info');
         
         for (let i = 0; options.length < 4 && i < fromItems.length; i++) {
             const item = fromItems[i];
@@ -316,6 +372,9 @@ function generateOptions(correctItem) {
     }
     
     options.sort(() => Math.random() - 0.5);
+    
+    addGameLog(`✅ Сгенерировано ${options.length} вариантов (правильный: ${correctText})`, 'success');
+    
     return options;
 }
 
@@ -327,6 +386,7 @@ function showReviewGameCard() {
     
     // Проверяем, закончилась ли игра
     if (!gameState.isActive || gameState.currentIndex >= gameState.total) {
+        addGameLog('🏁 Игра завершена! Показываем результаты.', 'warning');
         showGameResults();
         return;
     }
@@ -342,10 +402,14 @@ function showReviewGameCard() {
     const current = gameState.currentIndex + 1;
     const total = gameState.total;
     
+    addGameLog(`📝 Вопрос ${current}/${total}: ${char} (${meaning})`, 'info');
+    
     // Генерируем варианты ТОЛЬКО если ещё не отвечали
     if (!gameState.answered) {
         const options = generateOptions(item);
         gameState.options = options;
+    } else {
+        addGameLog(`⏳ Уже отвечено на этот вопрос. Показываем результат.`, 'warning');
     }
     
     if (gameState.mode === 'audio' && !gameState.answered) {
@@ -359,7 +423,7 @@ function showReviewGameCard() {
     let html = `
         <div style="background:white;border-radius:24px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
             <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;">
                 <span style="background:${modeColor};color:white;padding:6px 16px;border-radius:16px;font-size:14px;font-weight:700;">${modeIcon} ${modeTitle}</span>
                 <span style="color:#555;font-size:14px;font-weight:600;">
                     ${current}/${total} ✅${gameState.correct} ❌${gameState.wrong}
@@ -434,6 +498,7 @@ function showReviewGameCard() {
         html += `
             <div style="margin-top:16px;padding:14px;background:#f8f9fa;border-radius:12px;border-left:4px solid ${modeColor};">
                 <div style="font-weight:600;">✅ Правильный ответ: ${correct.char} — ${correct.text}</div>
+                ${correct.pinyin ? `<div style="font-size:13px;color:#666;">📖 ${correct.pinyin}</div>` : ''}
             </div>
         `;
     }
@@ -471,9 +536,16 @@ function showReviewGameCard() {
     
     html += `
         </div>
+        
+        <!-- ============ ЛОГ ИГРЫ ============ -->
+        <div style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:12px;border:1px solid #e0e7ff;max-height:150px;overflow-y:auto;font-size:12px;">
+            <div style="font-weight:700;color:#4361ee;margin-bottom:6px;font-size:13px;">📋 Лог игры</div>
+            <div id="gameLogContainer"></div>
+        </div>
     </div>`;
     
     container.innerHTML = html;
+    updateGameLogDisplay();
 }
 
 // ==================== ОБРАБОТКА ОТВЕТОВ ====================
@@ -484,17 +556,21 @@ function handleAnswer(index) {
     const selected = gameState.options[index];
     const isCorrect = selected.isCorrect;
     
+    addGameLog(`🖱️ Выбран вариант ${String.fromCharCode(65 + index)}: ${selected.text} (${isCorrect ? '✅' : '❌'})`, isCorrect ? 'success' : 'error');
+    
     gameState.answered = true;
     
     if (isCorrect) {
         gameState.correct++;
         gameState.streak++;
         if (gameState.streak > gameState.bestStreak) gameState.bestStreak = gameState.streak;
+        addGameLog(`✅ Правильно! Серия: ${gameState.streak}`, 'success');
         showToast('✅ Правильно!', 'success');
     } else {
         gameState.wrong++;
         gameState.streak = 0;
         const correct = gameState.options.find(o => o.isCorrect);
+        addGameLog(`❌ Неправильно. Правильно: ${correct.text}`, 'error');
         showToast(`❌ Правильно: ${correct.text}`, 'error');
     }
     
@@ -505,11 +581,16 @@ function handleAnswer(index) {
     if (gameState.bestStreak > stats.bestStreak) stats.bestStreak = gameState.bestStreak;
     saveStats(stats);
     
+    addGameLog(`📊 Статистика: ✅${gameState.correct} ❌${gameState.wrong} 🔥${gameState.bestStreak}`, 'info');
+    
     showReviewGameCard();
 }
 
 function skipQuestion() {
     if (gameState.answered) return;
+    
+    addGameLog(`👀 Пропуск вопроса: ${gameState.currentItem.type === 'word' ? gameState.currentItem.c : gameState.currentItem.s}`, 'warning');
+    
     gameState.answered = true;
     gameState.wrong++;
     gameState.streak = 0;
@@ -524,6 +605,7 @@ function skipQuestion() {
 
 function previousQuestion() {
     if (gameState.currentIndex > 0) {
+        addGameLog(`⬅️ Возврат к вопросу ${gameState.currentIndex} (было ${gameState.currentIndex + 1})`, 'info');
         gameState.currentIndex--;
         gameState.answered = false;
         showReviewGameCard();
@@ -531,13 +613,19 @@ function previousQuestion() {
 }
 
 function nextQuestion() {
+    addGameLog(`➡️ Переход. Индекс ДО: ${gameState.currentIndex} из ${gameState.total}`, 'info');
+    
     if (gameState.currentIndex < gameState.total - 1) {
         gameState.currentIndex++;
         gameState.answered = false;
+        gameState.options = [];
+        addGameLog(`➡️ Переход на индекс ${gameState.currentIndex}. Слово: ${gameState.items[gameState.currentIndex].type === 'word' ? gameState.items[gameState.currentIndex].c : gameState.items[gameState.currentIndex].s}`, 'info');
         showReviewGameCard();
     } else if (gameState.currentIndex === gameState.total - 1) {
         gameState.currentIndex++;
         gameState.answered = false;
+        gameState.options = [];
+        addGameLog(`📊 Последний вопрос! Показываем результаты.`, 'warning');
         showReviewGameCard();
     }
 }
@@ -553,6 +641,8 @@ function showGameResults() {
     const wrong = gameState.wrong;
     const percent = total > 0 ? Math.round((correct / total) * 100) : 0;
     const modeColor = gameState.mode === 'visual' ? '#4361ee' : '#e53935';
+    
+    addGameLog(`📊 РЕЗУЛЬТАТЫ: ${correct}/${total} (${percent}%) 🔥${gameState.bestStreak}`, 'success');
     
     let emoji = '💪';
     let text = 'Практикуйтесь!';
@@ -575,9 +665,16 @@ function showGameResults() {
                 <button onclick="startReviewGame('${gameState.mode === 'visual' ? 'audio' : 'visual'}')" style="background:#764ba2;color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;cursor:pointer;">🔄 Режим</button>
                 <button onclick="renderReviewPanel()" style="background:#666;color:white;border:none;padding:10px 24px;border-radius:50px;font-size:14px;cursor:pointer;">📊 Список</button>
             </div>
+            
+            <!-- ЛОГ -->
+            <div style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:12px;border:1px solid #e0e7ff;max-height:150px;overflow-y:auto;font-size:12px;text-align:left;">
+                <div style="font-weight:700;color:#4361ee;margin-bottom:6px;font-size:13px;">📋 Лог игры</div>
+                <div id="gameLogContainer"></div>
+            </div>
         </div>
     `;
     gameState.isActive = false;
+    updateGameLogDisplay();
 }
 
 // ==================== ОЗВУЧКА ====================
