@@ -3,12 +3,12 @@ const REPO_NAME = 'chinese_songs_games';
 const BASE_PATH = `/${REPO_NAME}/`;
 const CACHE_NAME = 'chinese-cache-v7';
 
-// Файлы для кеширования (ВСЕ пути должны быть с BASE_PATH)
+// Файлы для кеширования
 const FILES_TO_CACHE = [
-  BASE_PATH,
+  `${BASE_PATH}`,
   `${BASE_PATH}index.html`,
-  `${BASE_PATH}grammar.html`,      // 👈 НОВЫЙ ФАЙЛ
-  `${BASE_PATH}review.html`,       // 👈 НОВЫЙ ФАЙЛ
+  `${BASE_PATH}grammar.html`,
+  `${BASE_PATH}review.html`,
   `${BASE_PATH}songs.js`,
   `${BASE_PATH}WORDS.js`,
   `${BASE_PATH}GRAMMAR.js`,
@@ -22,47 +22,39 @@ const FILES_TO_CACHE = [
   `${BASE_PATH}mahjong-radicals.html`
 ];
 
-// Установка Service Worker - кеширование файлов
+// Установка Service Worker
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(async cache => {
         console.log('📦 Начинаем кеширование...');
         
-        // Кешируем файлы с обработкой ошибок
-        const results = [];
-        for (const file of FILES_TO_CACHE) {
-          try {
-            const response = await fetch(file);
-            if (response && response.ok) {
-              await cache.put(file, response);
-              console.log(`✅ Закеширован: ${file}`);
-              results.push(true);
-            } else {
-              console.warn(`⚠️ Не найден (${response?.status}): ${file}`);
-              results.push(false);
+        try {
+          // Кешируем все файлы сразу
+          await cache.addAll(FILES_TO_CACHE);
+          console.log('✅ Все файлы успешно закешированы');
+        } catch (err) {
+          console.error('❌ Ошибка кеширования:', err);
+          
+          // Пробуем кешировать по отдельности
+          for (const file of FILES_TO_CACHE) {
+            try {
+              const response = await fetch(file);
+              if (response && response.ok) {
+                await cache.put(file, response);
+                console.log(`✅ Закеширован: ${file}`);
+              }
+            } catch (e) {
+              console.warn(`⚠️ Не удалось закешировать: ${file}`);
             }
-          } catch (err) {
-            console.warn(`❌ Ошибка кеширования ${file}:`, err.message);
-            results.push(false);
           }
         }
-        
-        const successCount = results.filter(r => r === true).length;
-        console.log(`📊 Кеширование завершено: ${successCount}/${FILES_TO_CACHE.length} файлов`);
-        
-        if (successCount === 0) {
-          console.error('❌ Не удалось закешировать ни одного файла!');
-        }
-      })
-      .catch(err => {
-        console.error('❌ Критическая ошибка кеширования:', err);
       })
   );
   self.skipWaiting();
 });
 
-// Активация - очистка старых кешей
+// Активация
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -75,13 +67,13 @@ self.addEventListener('activate', event => {
         })
       );
     }).then(() => {
-      console.log('✅ Service Worker активирован, кеш готов к работе');
+      console.log('✅ Service Worker активирован');
       return self.clients.claim();
     })
   );
 });
 
-// Перехват запросов - стратегия "сначала кеш, потом сеть"
+// Перехват запросов
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   
@@ -104,37 +96,29 @@ self.addEventListener('fetch', event => {
         
         return fetch(event.request)
           .then(networkResponse => {
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-              return networkResponse;
+            // Кешируем успешные ответы
+            if (networkResponse && networkResponse.status === 200) {
+              const responseToCache = networkResponse.clone();
+              caches.open(CACHE_NAME)
+                .then(cache => {
+                  cache.put(event.request, responseToCache);
+                });
             }
-            
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              })
-              .catch(err => console.warn('Не удалось закешировать:', err));
-            
             return networkResponse;
           })
-          .catch(error => {
-            console.warn('Ошибка загрузки:', url.pathname, error);
-            
-            // Если запрос на HTML страницу - показываем офлайн страницу
-            if (url.pathname.endsWith('.html') || url.pathname === BASE_PATH || url.pathname === `${BASE_PATH}`) {
-              return caches.match(event.request).then(cached => {
+          .catch(() => {
+            // Возвращаем офлайн страницу
+            return caches.match(`${BASE_PATH}index.html`)
+              .then(cached => {
                 if (cached) return cached;
-                return caches.match(`${BASE_PATH}index.html`);
+                return new Response('Офлайн режим', {
+                  status: 503,
+                  statusText: 'Service Unavailable',
+                  headers: new Headers({
+                    'Content-Type': 'text/html'
+                  })
+                });
               });
-            }
-            
-            return new Response('Офлайн режим: файл недоступен', {
-              status: 503,
-              statusText: 'Service Unavailable',
-              headers: new Headers({
-                'Content-Type': 'text/plain'
-              })
-            });
           });
       })
   );
