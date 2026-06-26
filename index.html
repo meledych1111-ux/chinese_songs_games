@@ -1923,5 +1923,20 @@
 <script src="pinyin-sounds.js"></script>
 <script src="writing-videos.js"></script>
 <script src="sounds-videos.js"></script>
+    <!-- ==================== РЕГИСТРАЦИЯ SERVICE WORKER ==================== -->
+<script>
+// Регистрация Service Worker для офлайн работы
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/chinese_songs_games/sw.js')
+        .then(reg => {
+            console.log('✅ Service Worker зарегистрирован');
+            console.log('📦 Область действия:', reg.scope);
+            reg.update();
+        })
+        .catch(err => {
+            console.error('❌ Ошибка регистрации Service Worker:', err);
+        });
+}
+</script>
 </body>
 </html>
