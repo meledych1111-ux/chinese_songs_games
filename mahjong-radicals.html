@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>🀄️ МАДЖОНГ | ВСЕ РАДИКАЛЫ | ТЕТРАДЬ</title>
+    
+    <!-- ✅ ПОДКЛЮЧЕНИЕ ШРИФТА "КИСТЬ" (Ma Shan Zheng) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
     <script src="WORDS.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -94,8 +100,8 @@
     const NOTEBOOK_CONFIG = {
         canvasSize: 420,
         gridPadding: 28,
-        defaultBrushWidth: 14, // ✅ УВЕЛИЧЕНО для толстого образца
-        exampleOpacity: 0.35,
+        defaultBrushWidth: 14, 
+        exampleOpacity: 0.40, // ✅ Чуть увеличил для лучшего вида кистевого шрифта
         gridColor: '#b8956a',
         gridColorCenter: '#d4b896',
         strokeColor: '#1a0f0a',
@@ -174,21 +180,30 @@
 
     function initNotebookCanvas(canvas) {
         const s = NOTEBOOK_CONFIG.canvasSize; canvas.width = canvas.height = s;
-        canvas.style.cssText = `width:100%;max-width:${s}px;aspect-ratio:1/1;display:block;touch-action:none`;
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        ctx.fillStyle = '#fffef9'; ctx.fillRect(0, 0, s, s); drawMiziGeGrid(ctx, s, NOTEBOOK_CONFIG.gridPadding);
-        return ctx;
-    }
+        canvas.style.cssText = `width:100%;max-width:<LaTex>id_13</LaTex>{Math.floor(inner * 0.95)}px "Ma Shan Zheng", "STKaiti", serif`;
+            ctx.textAlign = 'center'; 
+            ctx.textBaseline = 'middle'; 
+            
+            // Небольшая коррекция Y для визуального центрирования кистевого стиля
+            ctx.fillText(char, s / 2, s / 2 + (inner * 0.03)); 
+            
+            ctx.restore();
+            
+            ctx.lineWidth = NOTEBOOK_CONFIG.defaultBrushWidth; 
+            ctx.lineCap = 'round'; 
+            ctx.lineJoin = 'round'; 
+            ctx.globalAlpha = 1;
+            canvas._refData = ctx.getImageData(0, 0, s, s);
+        };
 
-    function showExampleOnCanvas(canvas, char) {
-        const ctx = canvas.getContext('2d'), s = NOTEBOOK_CONFIG.canvasSize, inner = s - NOTEBOOK_CONFIG.gridPadding * 2;
-        ctx.fillStyle = '#fffef9'; ctx.fillRect(0, 0, s, s); drawMiziGeGrid(ctx, s, NOTEBOOK_CONFIG.gridPadding);
-        ctx.save(); ctx.globalAlpha = NOTEBOOK_CONFIG.exampleOpacity; ctx.fillStyle = NOTEBOOK_CONFIG.exampleColor;
-        // ✅ Размер образца адаптирован под толстую кисть
-        ctx.font = `900 ${Math.floor(inner * 0.85)}px "Noto Sans CJK SC", "KaiTi", "STKaiti", serif`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(char, s / 2, s / 2); ctx.restore();
-        ctx.lineWidth = NOTEBOOK_CONFIG.defaultBrushWidth; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.globalAlpha = 1;
-        canvas._refData = ctx.getImageData(0, 0, s, s);
+        // Ждем загрузки веб-шрифта перед отрисовкой
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.fonts.load(`400 48px "Ma Shan Zheng"`).then(drawText).catch(drawText);
+            });
+        } else {
+            setTimeout(drawText, 300);
+        }
     }
 
     function clearNotebookCanvas(canvas) {
@@ -209,11 +224,11 @@
         return { score: pct, msg: '📝 Продолжай тренироваться', color: '#e67e22' };
     }
 
-    // ========== 🖌️ КАЛЛИГРАФИЧЕСКАЯ КИСТЬ (ТОЛСТЫЙ ОБРАЗЕЦ) ==========
+    // ========== 🖌️ КАЛЛИГРАФИЧЕСКАЯ КИСТЬ ==========
     function setupCalligraphyBrush(canvas) {
         const ctx = canvas.getContext('2d');
         let drawing = false, lastX, lastY, lastWidth, lastTime, strokeLen = 0;
-        const base = NOTEBOOK_CONFIG.defaultBrushWidth; // 14
+        const base = NOTEBOOK_CONFIG.defaultBrushWidth; 
 
         function getPos(e) {
             const rect = canvas.getBoundingClientRect();
@@ -223,7 +238,7 @@
         function start(e) {
             e.preventDefault(); drawing = true; canvas._drawn = true; strokeLen = 0;
             const p = getPos(e); lastX = p.x; lastY = p.y; lastTime = performance.now();
-            lastWidth = base * 0.8; // ~11px толстое начало
+            lastWidth = base * 0.8; 
             ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 1.5; ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
             ctx.beginPath(); ctx.arc(p.x, p.y, lastWidth / 2, 0, Math.PI * 2); ctx.fill();
         }
@@ -234,12 +249,11 @@
             const dx = p.x - lastX, dy = p.y - lastY, dist = Math.hypot(dx, dy), speed = dist / dt;
             strokeLen += dist;
 
-            // Формула каллиграфии для толстой кисти
             const pF = 0.3 + p.pressure * 0.7;
             const sF = Math.max(0.15, 1 - (speed / 1.2));
             let targetW = base * pF * sF;
-            if (strokeLen < 22) targetW *= (0.65 + 0.35 * (strokeLen / 22)); // Заострение в начале
-            targetW = Math.max(2.5, Math.min(base * 1.8, targetW)); // Диапазон: 2.5px ~ 25px
+            if (strokeLen < 22) targetW *= (0.65 + 0.35 * (strokeLen / 22)); 
+            targetW = Math.max(2.5, Math.min(base * 1.8, targetW)); 
             const newW = lastWidth * 0.7 + targetW * 0.3;
 
             ctx.save(); ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 0.6; ctx.shadowColor = NOTEBOOK_CONFIG.strokeColor;
@@ -254,7 +268,6 @@
 
         function stop() {
             if (!drawing) return; drawing = false;
-            // ✅ Острый кончик в конце
             const angle = Math.atan2(lastY - (lastY - 1), lastX - (lastX - 1)) || 0, taperLen = 8;
             ctx.save(); ctx.fillStyle = NOTEBOOK_CONFIG.strokeColor; ctx.shadowBlur = 0;
             for (let i = 1; i <= taperLen; i++) {
@@ -276,7 +289,7 @@
         if (currentModal) { currentModal.remove(); currentModal = null; } if (!radical) return;
         const wordsWithRadical = findWordsWithRadical(radical.key, 3);
         const modal = document.createElement('div'); modal.className = 'learn-modal';
-        modal.innerHTML = `<div class="learn-card"><div class="radical-header"><div class="radical-big pulse">${radical.key}</div><div style="text-align:left;min-width:160px"><div class="radical-name">${radical.keyName}</div><div class="radical-pinyin">${radical.keyPinyin || '?'}</div><div class="radical-mean">${radical.keyMeaning || 'радикал (ключ)'}</div></div></div><div class="draw-section"><div class="stroke-info">✍️ ${radical.strokes || '?'} черт • Толстая каллиграфическая кисть</div><div class="draw-canvas-container"><canvas class="draw-canvas" id="nbCanvas"></canvas></div><div class="quality-bar"><div class="quality-fill" id="qFill"></div></div><div class="quality-text" id="qText">Нарисуй что-нибудь</div><div class="draw-tools"><button class="clear-draw" id="nbClear">🧽 Очистить</button><button class="trace-btn" id="nbShow">👁️ Показать образец</button><button class="trace-btn" id="nbHide" style="display:none">🙈 Скрыть</button><button class="trace-btn" id="nbCheck" style="background:linear-gradient(135deg,#27ae60,#2ecc71)">✅ Проверить</button></div></div><div style="font-size:14px;font-weight:600;color:#3c2a1f;margin:10px 0 6px">📖 Слова с радикалом <span style="color:#c0392b">${radical.key}</span>:</div><div class="examples-list" id="exList">${wordsWithRadical.length > 0 ? wordsWithRadical.map(w => `<div class="example-word" data-char="${w.char}"><div class="ex-char">${w.char}</div><div class="ex-pinyin">${w.pinyin}</div><div class="ex-mean">${w.meaning}</div></div>`).join('') : `<div style="color:#888;font-size:13px;padding:8px">Нет слов в словаре</div>`}</div><div class="notebook-actions"><button class="close-learn" id="nbClose">✖ Закрыть</button><button class="notebook-btn" id="nbAdd">📓 В мою тетрадь</button></div></div>`;
+        modal.innerHTML = `<div class="learn-card"><div class="radical-header"><div class="radical-big pulse"><LaTex>id_12</LaTex>{radical.keyName}</div><div class="radical-pinyin"><LaTex>id_11</LaTex>{radical.keyMeaning || 'радикал (ключ)'}</div></div></div><div class="draw-section"><div class="stroke-info">✍️ <LaTex>id_10</LaTex>{radical.key}</span>:</div><div class="examples-list" id="exList"><LaTex>id_9</LaTex>{w.char}"><div class="ex-char">${w.char}</div><div class="ex-pinyin">${w.pinyin}</div><div class="ex-mean">${w.meaning}</div></div>`).join('') : `<div style="color:#888;font-size:13px;padding:8px">Нет слов в словаре</div>`}</div><div class="notebook-actions"><button class="close-learn" id="nbClose">✖ Закрыть</button><button class="notebook-btn" id="nbAdd">📓 В мою тетрадь</button></div></div>`;
         document.body.appendChild(modal); currentModal = modal;
         const cvs = modal.querySelector('#nbCanvas'); initNotebookCanvas(cvs); setupCalligraphyBrush(cvs);
         modal.querySelectorAll('.example-word').forEach(el => { el.onclick = () => speakChinese(el.dataset.char); });
@@ -287,7 +300,7 @@
         modal.querySelector('#nbCheck').onclick = () => { const r = checkQuality(cvs); modal.querySelector('#qFill').style.width = r.score + '%'; modal.querySelector('#qFill').style.background = r.color; modal.querySelector('#qText').textContent = r.msg; msgEl.innerHTML = `📊 Качество: ${r.score}%`; };
         modal.querySelector('.radical-big').onclick = () => speakChinese(radical.key);
         modal.querySelector('#nbClose').onclick = () => { modal.remove(); currentModal = null; };
-        modal.querySelector('#nbAdd').onclick = () => { let nb = JSON.parse(localStorage.getItem('chinese_notebook') || '[]'); if (!nb.find(i => i.char === radical.key)) { nb.push({ char: radical.key, name: radical.keyName, added: new Date().toISOString() }); localStorage.setItem('chinese_notebook', JSON.stringify(nb)); showToast(`✅ "${radical.key}" добавлен в тетрадь!`); } else { showToast(`⚠️ "${radical.key}" уже есть`); } };
+        modal.querySelector('#nbAdd').onclick = () => { let nb = JSON.parse(localStorage.getItem('chinese_notebook') || '[]'); if (!nb.find(i => i.char === radical.key)) { nb.push({ char: radical.key, name: radical.keyName, added: new Date().toISOString() }); localStorage.setItem('chinese_notebook', JSON.stringify(nb)); showToast(`✅ "<LaTex>id_8</LaTex>{radical.key}" уже есть`); } };
         modal.onclick = e => { if (e.target === modal) { modal.remove(); currentModal = null; } }; speakChinese(radical.key);
     }
     function showToast(m) { const t = document.createElement('div'); t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2ecc71;color:#fff;padding:10px 20px;border-radius:50px;z-index:3000;font-size:15px;box-shadow:0 5px 20px rgba(0,0,0,0.3);'; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
@@ -295,17 +308,7 @@
     // ========== ИГРОВАЯ ЛОГИКА ==========
     function buildPairs(count) { if (!Array.isArray(RADICALS_DB) || RADICALS_DB.length === 0) return []; if (typeof WORDS === 'undefined' || !Array.isArray(WORDS)) return []; const pairs = [], usedRadicals = new Set(), usedWords = new Set(); let attempts = 0; while (pairs.length < count && attempts < count * 5) { attempts++; const rad = RADICALS_DB[Math.floor(Math.random() * RADICALS_DB.length)]; if (!rad || !rad.key || usedRadicals.has(rad.key)) continue; const words = findWordsWithRadical(rad.key, 3); if (words.length === 0) continue; const word = words[Math.floor(Math.random() * words.length)]; if (usedWords.has(word.char)) continue; usedRadicals.add(rad.key); usedWords.add(word.char); pairs.push({ radical: rad.key, radicalPinyin: rad.keyPinyin || '?', radicalName: rad.keyName || rad.key, word: word.char, wordPinyin: word.pinyin, wordMeaning: word.meaning, strokes: rad.strokes || '?' }); } return pairs; }
     function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
-    function renderGrid() { if (!gridEl) return; const cfg = LEVEL_CONFIG[currentLevel]; if (cfg) gridEl.style.gridTemplateColumns = `repeat(auto-fill, minmax(100px, 1fr))`; gridEl.innerHTML = ''; for (let i = 0; i < tiles.length; i++) { const t = tiles[i]; if (t.removed) continue; const d = document.createElement('div'); d.className = 'tile' + (selectedId === t.id ? ' selected' : ''); d.innerHTML = `<div class="main-char">${t.char}</div><div class="pinyin">${t.pinyin || ''}</div><div class="info">${t.name || ''}</div>`; d.onclick = () => { speakChinese(t.char); onTileClick(t); }; gridEl.appendChild(d); } }
-    function onTileClick(clicked) { if (clicked.removed) return; if (selectedId === null) { selectedId = clicked.id; renderGrid(); msgEl.innerHTML = `✅ Выбрано: ${clicked.char}`; return; } const sel = tiles.find(t => t.id === selectedId); if (!sel) { selectedId = null; return; } if (sel.id === clicked.id) { selectedId = null; renderGrid(); msgEl.innerHTML = '🔍 Снято'; return; } if (sel.pairId === clicked.pairId && sel.type !== clicked.type) { sel.removed = true; clicked.removed = true; matchedCount++; streak++; score += 10 + Math.floor(streak / 2) * 2; if (streak > record) record = streak; updateUI(); let keyTile = sel.type === 'key' ? sel : clicked; let rad = RADICALS_DB.find(r => r.key === keyTile.char); if (rad) showLearnModal(rad); selectedId = null; renderGrid(); msgEl.innerHTML = `✅ Верно! +${10 + Math.floor(streak / 2) * 2} очков (🔥 серия ${streak})`; if (matchedCount === totalPairs) { msgEl.innerHTML = '🏆 УРОВЕНЬ ПРОЙДЕН!'; speakChinese('恭喜你'); setTimeout(() => { if (confirm('🎉 Следующий уровень?')) { const n = Math.min(9, currentLevel + 1); const btn = document.querySelector(`.level-btn[data-level="${n}"]`); if (btn) btn.click(); } }, 600); } } else { streak = 0; updateUI(); msgEl.innerHTML = `❌ Не пара! "${sel.char}" ≠ "${clicked.char}"`; selectedId = null; renderGrid(); } }
-    function updateUI() { if (scoreSpan) scoreSpan.textContent = score; if (remainSpan) remainSpan.textContent = totalPairs - matchedCount; if (streakSpan) streakSpan.textContent = streak; if (recordSpan) recordSpan.textContent = record; if (progressFill && totalPairs > 0) progressFill.style.width = ((matchedCount / totalPairs) * 100) + '%'; }
-    function shuffleTiles() { if (tiles.length === 0) { initGame(currentLevel); return; } const rem = tiles.filter(t => !t.removed), rm = tiles.filter(t => t.removed); shuffle(rem); tiles = [...rem, ...rm]; selectedId = null; renderGrid(); msgEl.innerHTML = '🃏 Плитки перемешаны!'; }
-    function showHint() { for (let i = 0; i < tiles.length; i++) { if (tiles[i].removed) continue; for (let j = i + 1; j < tiles.length; j++) { if (tiles[j].removed) continue; if (tiles[i].pairId === tiles[j].pairId && tiles[i].type !== tiles[j].type) { msgEl.innerHTML = `💡 Пара: "${tiles[i].char}" ↔ "${tiles[j].char}"`; const allTiles = gridEl.querySelectorAll('.tile'); let idx = 0; for (let k = 0; k < tiles.length; k++) { if (tiles[k].removed) continue; if (tiles[k].id === tiles[i].id || tiles[k].id === tiles[j].id) { if (allTiles[idx]) { allTiles[idx].style.borderColor = '#f7b42c'; allTiles[idx].style.boxShadow = '0 0 0 4px rgba(247,180,44,0.5), 0 5px 0 #8b6946'; } } idx++; } setTimeout(() => renderGrid(), 2000); return; } } } msgEl.innerHTML = '💡 Все пары найдены!'; }
-    function initGame(level) { if (!Array.isArray(RADICALS_DB) || RADICALS_DB.length === 0) { msgEl.innerHTML = '⚠️ RADICALS не загружены из WORDS.js'; return; } currentLevel = level; const cfg = LEVEL_CONFIG[level]; let needed = Math.min(cfg.pairsCount, Math.floor(RADICALS_DB.length * 0.9)); if (needed < 3) needed = 3; const pairs = buildPairs(needed); if (pairs.length === 0) { msgEl.innerHTML = '⚠️ Не удалось составить пары. Проверьте WORDS.js'; return; } totalPairs = pairs.length; matchedCount = 0; score = 0; streak = 0; selectedId = null; tiles = []; let id = 0; pairs.forEach((p, i) => { tiles.push({ id: id++, pairId: i, type: 'key', char: p.radical, pinyin: p.radicalPinyin, name: p.radicalName, removed: false }); tiles.push({ id: id++, pairId: i, type: 'word', char: p.word, pinyin: p.wordPinyin, name: p.wordMeaning, removed: false }); }); shuffle(tiles); updateUI(); renderGrid(); msgEl.innerHTML = `🎮 Уровень ${level}: ${totalPairs} пар. Радикал ↔ Слово с ним!`; }
-
-    if (typeof RADICALS !== 'undefined' && Array.isArray(RADICALS) && RADICALS.length > 0) {
-        const skip = ["⺌","⺈","⺍","⺮","⺅","⺋","一","丨","丶","丿","乙","亅","⺄","⺀","⺁","⺂"];
-        RADICALS.forEach(r => { if (!r.s || r.s.length > 2 || skip.includes(r.s)) return; RADICALS_DB.push({ key: r.s, keyPinyin: r.p || '?', keyName: r.m || 'радикал', keyMeaning: r.m || '', strokes: Math.min(12, Math.max(1, Math.floor(Math.random() * 8) + 1)) }); });
-        console.log(`✅ Загружено ${RADICALS_DB.length} радикалов`);
+    function renderGrid() { if (!gridEl) return; const cfg = LEVEL_CONFIG[currentLevel]; if (cfg) gridEl.style.gridTemplateColumns = `repeat(auto-fill, minmax(100px, 1fr))`; gridEl.innerHTML = ''; for (let i = 0; i < tiles.length; i++) { const t = tiles[i]; if (t.removed) continue; const d = document.createElement('div'); d.className = 'tile' + (selectedId === t.id ? ' selected' : ''); d.innerHTML = `<div class="main-char"><LaTex>id_7</LaTex>{t.pinyin || ''}</div><div class="info"><LaTex>id_6</LaTex>{clicked.char}`; return; } const sel = tiles.find(t => t.id === selectedId); if (!sel) { selectedId = null; return; } if (sel.id === clicked.id) { selectedId = null; renderGrid(); msgEl.innerHTML = '🔍 Снято'; return; } if (sel.pairId === clicked.pairId && sel.type !== clicked.type) { sel.removed = true; clicked.removed = true; matchedCount++; streak++; score += 10 + Math.floor(streak / 2) * 2; if (streak > record) record = streak; updateUI(); let keyTile = sel.type === 'key' ? sel : clicked; let rad = RADICALS_DB.find(r => r.key === keyTile.char); if (rad) showLearnModal(rad); selectedId = null; renderGrid(); msgEl.innerHTML = `✅ Верно! +<LaTex>id_5</LaTex>{streak})`; if (matchedCount === totalPairs) { msgEl.innerHTML = '🏆 УРОВЕНЬ ПРОЙДЕН!'; speakChinese('恭喜你'); setTimeout(() => { if (confirm('🎉 Следующий уровень?')) { const n = Math.min(9, currentLevel + 1); const btn = document.querySelector(`.level-btn[data-level="<LaTex>id_4</LaTex>{sel.char}" ≠ "<LaTex>id_3</LaTex>{tiles[i].char}" ↔ "<LaTex>id_2</LaTex>{level}: <LaTex>id_1</LaTex>{RADICALS_DB.length} радикалов`);
     } else { console.warn('⚠️ RADICALS не найден'); }
 
     document.querySelectorAll('.level-btn').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); initGame(parseInt(btn.dataset.level)); }; });
@@ -313,4 +316,3 @@
     window.addEventListener('load', () => initGame(3));
 </script>
 </body>
-</html>
