@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>🀄️ МАДЖОНГ | ВСЕ РАДИКАЛЫ | ТЕТРАДЬ</title>
     
-    <!-- ✅ ШРИФТ КИСТИ (Ma Shan Zheng) -->
+    <!-- ✅ ШРИФТ КИСТИ Ma Shan Zheng (как в вашем примере) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
@@ -45,7 +45,17 @@
         .learn-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 10px; }
         .learn-card { background: linear-gradient(145deg, #fffaf0, #f8f0e0); border-radius: 32px; padding: 18px; max-width: 680px; width: 100%; text-align: center; border: 3px solid #f7b42c; max-height: 96vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
         .radical-header { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 14px; flex-wrap: wrap; }
-        .radical-big { font-size: clamp(70px, 15vw, 95px); font-weight: 900; color: #c0392b; background: linear-gradient(135deg, #fff0d0, #ffe8c0); display: inline-flex; align-items: center; justify-content: center; padding: 10px 28px; border-radius: 20px; cursor: pointer; border: 2px dashed #f7b42c; min-width: 110px; min-height: 110px; }
+        .radical-big { 
+            /* ✅ И тут тоже применяем кистевой шрифт для большого заголовка */
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: clamp(70px, 15vw, 95px); 
+            font-weight: 400; 
+            color: #c0392b; 
+            background: linear-gradient(135deg, #fff0d0, #ffe8c0); 
+            display: inline-flex; align-items: center; justify-content: center; 
+            padding: 10px 28px; border-radius: 20px; cursor: pointer; 
+            border: 2px dashed #f7b42c; min-width: 110px; min-height: 110px; 
+        }
         .radical-name { font-size: 22px; font-weight: bold; color: #2c1a0c; }
         .radical-pinyin { font-size: 18px; color: #8e44ad; margin: 2px 0; font-weight: 500; }
         .radical-mean { font-size: 14px; color: #6b5a4a; }
@@ -101,7 +111,7 @@
         canvasSize: 420,
         gridPadding: 28,
         defaultBrushWidth: 14,
-        exampleOpacity: 0.40, // ✅ Увеличено для лучшей видимости кистевого шрифта
+        exampleOpacity: 0.45, // ✅ Увеличил прозрачность для лучшей видимости кисти
         gridColor: '#b8956a',
         gridColorCenter: '#d4b896',
         strokeColor: '#1a0f0a',
@@ -186,7 +196,7 @@
         return ctx;
     }
 
-    // ✅ ОБНОВЛЕННАЯ ФУНКЦИЯ: Использует кистевой шрифт Ma Shan Zheng
+    // ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ: Ждет загрузки Ma Shan Zheng перед отрисовкой
     function showExampleOnCanvas(canvas, char) {
         const ctx = canvas.getContext('2d'), s = NOTEBOOK_CONFIG.canvasSize, inner = s - NOTEBOOK_CONFIG.gridPadding * 2;
         
@@ -199,7 +209,7 @@
             ctx.globalAlpha = NOTEBOOK_CONFIG.exampleOpacity; 
             ctx.fillStyle = NOTEBOOK_CONFIG.exampleColor;
             
-            // 🖌️ КИСТЕВОЙ ШРИФТ вместо печатного KaiTi
+            // 🖌️ Ma Shan Zheng — тот самый кистевой шрифт из вашего примера
             ctx.font = `400 ${Math.floor(inner * 0.95)}px "Ma Shan Zheng", "STKaiti", serif`;
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle'; 
@@ -216,13 +226,14 @@
             canvas._refData = ctx.getImageData(0, 0, s, s);
         };
 
-        // Ждем загрузки веб-шрифта перед отрисовкой
+        // ⏳ Гарантированно ждем загрузки веб-шрифта
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(() => {
                 document.fonts.load(`400 48px "Ma Shan Zheng"`).then(drawText).catch(drawText);
             });
         } else {
-            setTimeout(drawText, 300);
+            // Fallback для старых браузеров
+            setTimeout(drawText, 500);
         }
     }
 
