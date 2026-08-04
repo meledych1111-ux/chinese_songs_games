@@ -11,80 +11,70 @@
     <script src="WORDS.js"></script>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent}
-        body{background:linear-gradient(145deg,#1a3a2a,#0a1a0f);min-height:100vh;font-family:system-ui,'PingFang SC','Noto Sans CJK SC',sans-serif;padding:8px}
-        .game-container{max-width:1200px;margin:0 auto;background:rgba(30,25,20,.65);border-radius:28px;padding:12px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
-        h1{text-align:center;font-size:clamp(1rem,3.5vw,1.4rem);color:#f7e05e;margin-bottom:2px}
-        .sub{text-align:center;color:#d4c9a6;margin-bottom:8px;font-size:.7rem}
-        .level-bar-wrapper{overflow-x:auto;white-space:nowrap;margin-bottom:8px;padding-bottom:4px;scrollbar-width:none}
+        body{background:linear-gradient(145deg,#1a3a2a,#0a1a0f);min-height:100vh;font-family:system-ui,'PingFang SC','Noto Sans CJK SC',sans-serif;padding:12px}
+        .game-container{max-width:1200px;margin:0 auto;background:rgba(30,25,20,.65);border-radius:36px;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+        h1{text-align:center;font-size:clamp(1.2rem,4vw,1.6rem);color:#f7e05e;margin-bottom:4px}
+        .sub{text-align:center;color:#d4c9a6;margin-bottom:12px;font-size:.75rem}
+        .level-bar-wrapper{overflow-x:auto;white-space:nowrap;margin-bottom:12px;padding-bottom:8px;scrollbar-width:none}
         .level-bar-wrapper::-webkit-scrollbar{display:none}
-        .level-bar{display:inline-flex;gap:6px;padding:0 4px}
-        .level-btn{background:#4a3729;color:#d4c9a6;padding:4px 12px;border-radius:40px;cursor:pointer;font-weight:bold;font-size:.7rem;white-space:nowrap;transition:.15s}
-        .level-btn.active{background:linear-gradient(135deg,#f7b42c,#fc8e2c);color:#2c1a0c;box-shadow:0 3px 0 #b36b0f}
-        .stats-bar{display:flex;justify-content:space-between;background:#2c2118;padding:6px 10px;border-radius:60px;margin-bottom:8px;color:#ffecb3;font-weight:bold;font-size:.75rem;flex-wrap:wrap;gap:6px}
-        .stats-bar span{background:#00000044;padding:3px 10px;border-radius:40px}
-        .game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;background:#3c2a1f;padding:12px;border-radius:20px;margin:8px 0;min-height:200px;max-height:70vh;overflow-y:auto}
-        .game-grid::-webkit-scrollbar{width:6px}.game-grid::-webkit-scrollbar-thumb{background:#8b6946;border-radius:3px}
-        .tile{background:#fff8e7;border-radius:14px;text-align:center;cursor:pointer;transition:all .12s;border:2px solid #c8aa6e;box-shadow:0 4px 0 #8b6946;padding:10px 6px;aspect-ratio:1/1;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:80px}
+        .level-bar{display:inline-flex;gap:8px;padding:0 4px}
+        .level-btn{background:#4a3729;color:#d4c9a6;padding:6px 14px;border-radius:40px;cursor:pointer;font-weight:bold;font-size:.75rem;white-space:nowrap;transition:.15s}
+        .level-btn.active{background:linear-gradient(135deg,#f7b42c,#fc8e2c);color:#2c1a0c;box-shadow:0 4px 0 #b36b0f}
+        .stats-bar{display:flex;justify-content:space-between;background:#2c2118;padding:8px 12px;border-radius:60px;margin-bottom:12px;color:#ffecb3;font-weight:bold;font-size:.8rem;flex-wrap:wrap;gap:8px}
+        .stats-bar span{background:#00000044;padding:4px 12px;border-radius:40px}
+        
+        /* ===== КРУПНЫЕ ПЛИТКИ ===== */
+        .game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px;background:#3c2a1f;padding:20px;border-radius:28px;margin:12px 0;min-height:300px;max-height:75vh;overflow-y:auto}
+        .game-grid::-webkit-scrollbar{width:8px}
+        .game-grid::-webkit-scrollbar-thumb{background:#8b6946;border-radius:4px}
+        .tile{background:#fff8e7;background-image:radial-gradient(circle at 25% 35%,rgba(255,245,200,.6) 2%,transparent 2.5%);background-size:22px 22px;border-radius:20px;text-align:center;cursor:pointer;transition:all .12s;border:3px solid #c8aa6e;box-shadow:0 6px 0 #8b6946;padding:16px 10px;aspect-ratio:1/1;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:120px}
         .tile:active{transform:scale(.97)}
-        .tile.selected{background:#ffe6b3;border-color:#f5b042;box-shadow:0 2px 0 #8b6946,0 0 0 3px rgba(245,176,66,.4);transform:scale(.98)}
+        .tile.selected{background:#ffe6b3;border-color:#f5b042;box-shadow:0 3px 0 #8b6946,0 0 0 4px rgba(245,176,66,.4);transform:scale(.98)}
         .tile.removed{display:none}
-        .tile .main-char{font-size:clamp(28px,7vw,42px);font-weight:800;color:#3c2a1f;line-height:1}
-        .tile .pinyin{font-size:10px;color:#b34e1a;margin-top:3px;font-weight:500}
-        .tile .info{font-size:9px;margin-top:2px;color:#6a5a4a;background:#f3e5c9;display:inline-block;padding:2px 8px;border-radius:20px;max-width:95%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .message-area{background:#261d14e6;border-radius:60px;padding:8px 14px;text-align:center;font-weight:bold;font-size:.8rem;margin:8px 0;color:#f7e6c4;min-height:36px;display:flex;align-items:center;justify-content:center}
-        .ctrl-buttons{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:8px}
-        button{background:linear-gradient(135deg,#f7b42c,#fc8e2c);border:none;padding:7px 14px;font-size:.75rem;font-weight:bold;border-radius:50px;color:#2c1a0c;cursor:pointer;box-shadow:0 3px 0 #9b5e1c;transition:.08s}
+        .tile .main-char{font-size:clamp(42px,10vw,60px);font-weight:800;color:#3c2a1f;line-height:1}
+        .tile .pinyin{font-size:13px;color:#b34e1a;margin-top:8px;font-weight:500}
+        .tile .info{font-size:12px;margin-top:5px;color:#6a5a4a;background:#f3e5c9;display:inline-block;padding:3px 12px;border-radius:20px;max-width:95%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        
+        .message-area{background:#261d14e6;border-radius:60px;padding:10px 16px;text-align:center;font-weight:bold;font-size:.85rem;margin:10px 0;color:#f7e6c4;min-height:40px;display:flex;align-items:center;justify-content:center}
+        .ctrl-buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+        button{background:linear-gradient(135deg,#f7b42c,#fc8e2c);border:none;padding:9px 18px;font-size:.8rem;font-weight:bold;border-radius:50px;color:#2c1a0c;cursor:pointer;box-shadow:0 3px 0 #9b5e1c;transition:.08s}
         button:active{transform:translateY(2px);box-shadow:0 1px 0 #9b5e1c}
         .reset-btn{background:linear-gradient(135deg,#4b6a3b,#2d5a2a);color:#f9e7b3}
         .hint-btn{background:linear-gradient(135deg,#3a6b8a,#2a4a6a);color:#fff}
         .shuffle-btn{background:linear-gradient(135deg,#8e44ad,#6c3483);color:#fff}
-        .progress-bar{background:#4a3729;border-radius:30px;height:5px;margin:6px 0;overflow:hidden}
+        .progress-bar{background:#4a3729;border-radius:30px;height:6px;margin:8px 0;overflow:hidden}
         .progress-fill{background:linear-gradient(90deg,#f7b42c,#f5a623);width:0%;height:100%;transition:width .4s cubic-bezier(.4,0,.2,1)}
 
-        /* ===== КОМПАКТНАЯ МОДАЛКА + БОЛЬШОЙ КАНВАС ===== */
+        /* ===== КОМПАКТНАЯ МОДАЛКА ===== */
         .learn-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:2000;padding:6px}
         .learn-card{background:linear-gradient(145deg,#fffaf0,#f8f0e0);border-radius:24px;padding:10px 12px;max-width:440px;width:100%;text-align:center;border:2px solid #f7b42c;max-height:98vh;display:flex;flex-direction:column;gap:6px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
-
-        /* Шапка — одна строка */
         .radical-header{display:flex;align-items:center;gap:10px;justify-content:center}
         .radical-big{font-family:'Ma Shan Zheng',cursive;font-size:clamp(44px,10vw,56px);font-weight:400;color:#c0392b;background:linear-gradient(135deg,#fff0d0,#ffe8c0);display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:14px;cursor:pointer;border:2px dashed #f7b42c;flex-shrink:0;line-height:1}
         .radical-info{text-align:left;min-width:0}
         .radical-name{font-size:15px;font-weight:bold;color:#2c1a0c;line-height:1.2}
         .radical-pinyin{font-size:13px;color:#8e44ad;font-weight:500}
         .radical-mean{font-size:10px;color:#6b5a4a}
-
-        /* Hanzi Writer + управление в одну строку */
         .writer-section{background:linear-gradient(135deg,#fdf6ee,#f5ead8);border-radius:14px;padding:8px;border:2px solid #d4b896;display:flex;align-items:center;gap:8px}
         .hw-box{width:120px;height:120px;background:#fffef9;border-radius:10px;border:2px solid #c8aa6e;box-shadow:inset 0 2px 6px rgba(0,0,0,.08);flex-shrink:0;position:relative;overflow:hidden}
         .hw-box svg{width:100%!important;height:100%!important;display:block}
         .writer-controls{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
         .writer-controls button{font-size:.65rem;padding:5px 8px;width:100%}
         .stroke-label{font-size:.7rem;color:#6b5a4a;font-weight:600;text-align:center}
-
-        /* Канвас — БОЛЬШОЙ, не уменьшен */
         .draw-section{background:linear-gradient(135deg,#f5e6d3,#e8d5c0);border-radius:14px;padding:8px;border:2px solid #d4b896;display:flex;flex-direction:column;align-items:center;gap:4px}
         .draw-canvas-container{position:relative;background:#fffef9;border-radius:14px;padding:4px;border:2px solid #c8aa6e;display:inline-block;box-shadow:inset 0 2px 8px rgba(0,0,0,.08)}
         .draw-canvas{display:block;margin:0 auto;cursor:crosshair;background:transparent;touch-action:none}
-
-        /* Ползунок кисти — компактный */
         .brush-controls{display:flex;align-items:center;gap:6px;width:100%}
         .brush-slider-wrapper{display:flex;align-items:center;gap:6px;background:#2c2118;padding:4px 10px;border-radius:40px;flex:1}
         .brush-slider-wrapper label{font-size:.7rem;color:#f7e05e;font-weight:bold;white-space:nowrap}
         .brush-slider-wrapper input[type="range"]{flex:1;accent-color:#f7b42c;cursor:pointer;height:16px}
         .brush-preview{width:20px;height:20px;border-radius:50%;background:#1a0f0a;transition:all .15s;flex-shrink:0}
-
-        /* Кнопки рисования — мелкие, в ряд */
         .draw-tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
         .draw-tools button{padding:5px 12px;font-size:.7rem}
         .draw-tools .clear-draw{background:linear-gradient(135deg,#c0392b,#e74c3c)}
         .draw-tools .trace-btn{background:linear-gradient(135deg,#2980b9,#3498db)}
-
-        /* Качество — тонкая полоска */
         .quality-bar{background:#2c2118;height:6px;border-radius:6px;width:100%;max-width:260px;overflow:hidden}
         .quality-fill{height:100%;background:linear-gradient(90deg,#e74c3c,#f39c12,#2ecc71);width:0%;transition:width .5s ease;border-radius:6px}
         .quality-text{font-size:.7rem;color:#d4c9a6;font-weight:500}
-
-        /* Примеры слов — горизонтальная лента без скролла */
         .examples-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0;width:100%}
         .examples-row::-webkit-scrollbar{display:none}
         .example-word{background:linear-gradient(135deg,#3c2a1f,#2a1a0f);border-radius:12px;padding:6px 10px;text-align:center;cursor:pointer;transition:.1s;min-width:70px;flex-shrink:0;border:1px solid #5a4a3a}
@@ -92,20 +82,21 @@
         .example-word .ex-char{font-size:22px;font-weight:bold;color:#f7e05e;line-height:1}
         .example-word .ex-pinyin{font-size:9px;color:#ffd966;margin-top:1px}
         .example-word .ex-mean{font-size:8px;color:#d4c9a6}
-
-        /* Нижние кнопки */
         .notebook-actions{display:flex;gap:8px;justify-content:center}
         .close-learn{background:linear-gradient(135deg,#f7b42c,#fc8e2c);border:none;padding:8px 22px;font-size:.8rem;font-weight:bold;border-radius:50px;cursor:pointer}
         .notebook-btn{background:linear-gradient(135deg,#2ecc71,#27ae60);border:none;padding:8px 18px;font-size:.75rem;font-weight:bold;border-radius:50px;cursor:pointer;color:#fff}
-
-        .nav-buttons{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
-        .back-btn{background:linear-gradient(135deg,#5a4a3a,#3a2a1a);color:#f7e05e;padding:6px 14px;font-size:.75rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;border-radius:40px}
-
-        .speed-bonus{position:fixed;pointer-events:none;z-index:3000;font-size:1.2rem;font-weight:900;color:#f7b42c;text-shadow:0 2px 8px rgba(0,0,0,.5);animation:floatUpBonus 1.2s ease-out forwards}
-        @keyframes floatUpBonus{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-50px) scale(1.3)}}
+        .nav-buttons{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}
+        .back-btn{background:linear-gradient(135deg,#5a4a3a,#3a2a1a);color:#f7e05e;padding:8px 16px;font-size:.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;border-radius:40px}
+        .speed-bonus{position:fixed;pointer-events:none;z-index:3000;font-size:1.4rem;font-weight:900;color:#f7b42c;text-shadow:0 2px 8px rgba(0,0,0,.5);animation:floatUpBonus 1.2s ease-out forwards}
+        @keyframes floatUpBonus{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-60px) scale(1.3)}}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
         .pulse{animation:pulse 2s infinite ease-in-out}
-        @media(max-width:768px){.game-grid{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px;padding:10px}.tile .main-char{font-size:28px}.learn-card{padding:8px 10px}}
+        @media(max-width:768px){
+            .game-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;padding:14px}
+            .tile{min-height:100px;padding:12px 8px}
+            .tile .main-char{font-size:clamp(36px,9vw,48px)}
+            .learn-card{padding:8px 10px}
+        }
     </style>
 </head>
 <body>
@@ -114,7 +105,7 @@
     <h1>🀄️ МАДЖОНГ | ВСЕ РАДИКАЛЫ</h1>
     <div class="sub">🔗 Соедини радикал со словом, в котором он есть</div>
     <div class="level-bar-wrapper"><div class="level-bar" id="levelBar">
-        <div class="level-btn" data-level="1">🌱 6</div><div class="level-btn" data-level="2">⭐ 10</div><div class="level-btn active" data-level="3">🏆 15</div><div class="level-btn" data-level="4">🔥 20</div><div class="level-btn" data-level="5">💪 25</div><div class="level-btn" data-level="6">🎯 30</div><div class="level-btn" data-level="7">👑 40</div><div class="level-btn" data-level="8">🏅 50</div><div class="level-btn" data-level="9">🏆 60</div>
+        <div class="level-btn" data-level="1">🌱 6 пар</div><div class="level-btn" data-level="2">⭐ 10 пар</div><div class="level-btn active" data-level="3">🏆 15 пар</div><div class="level-btn" data-level="4">🔥 20 пар</div><div class="level-btn" data-level="5">💪 25 пар</div><div class="level-btn" data-level="6">🎯 30 пар</div><div class="level-btn" data-level="7">👑 40 пар</div><div class="level-btn" data-level="8">🏅 50 пар</div><div class="level-btn" data-level="9">🏆 60 пар</div>
     </div></div>
     <div class="stats-bar">
         <span>🎯 <span id="scoreValue">0</span></span>
@@ -134,25 +125,8 @@
 </div>
 
 <script>
-    const NOTEBOOK_CONFIG = {
-        canvasSize: 420,
-        gridPadding: 28,
-        defaultBrushWidth: 14,
-        minBrushWidth: 4,
-        maxBrushWidth: 30,
-        exampleOpacity: 0.45,
-        gridColor: '#b8956a',
-        gridColorCenter: '#d4b896',
-        strokeColor: '#1a0f0a',
-        exampleColor: '#9b59b6',
-        checkThreshold: 0.40,
-        checkGoodThreshold: 0.25
-    };
-
-    const LEVEL_CONFIG = {
-        1:{pairsCount:6},2:{pairsCount:10},3:{pairsCount:15},4:{pairsCount:20},5:{pairsCount:25},
-        6:{pairsCount:30},7:{pairsCount:40},8:{pairsCount:50},9:{pairsCount:60}
-    };
+    const NOTEBOOK_CONFIG={canvasSize:420,gridPadding:28,defaultBrushWidth:14,minBrushWidth:4,maxBrushWidth:30,exampleOpacity:0.45,gridColor:'#b8956a',gridColorCenter:'#d4b896',strokeColor:'#1a0f0a',exampleColor:'#9b59b6',checkThreshold:0.40,checkGoodThreshold:0.25};
+    const LEVEL_CONFIG={1:{pairsCount:6},2:{pairsCount:10},3:{pairsCount:15},4:{pairsCount:20},5:{pairsCount:25},6:{pairsCount:30},7:{pairsCount:40},8:{pairsCount:50},9:{pairsCount:60}};
 
     let RADICALS_DB=[],currentLevel=3,tiles=[],selectedId=null;
     let matchedCount=0,totalPairs=0,score=0,streak=0,record=0;
@@ -173,9 +147,7 @@
 
     function startTimer(){gameStartTime=Date.now();lastMatchTime=Date.now();if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(()=>{const e=Math.floor((Date.now()-gameStartTime)/1000);const m=Math.floor(e/60),s=e%60;if(timerSpan)timerSpan.textContent=`${m}:${s.toString().padStart(2,'0')}`},1000)}
     function stopTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null}}
-
     function calcSpeedBonus(){const now=Date.now(),diff=(now-lastMatchTime)/1000;lastMatchTime=now;let bonus=0,label='';if(diff<2){bonus=15;label='⚡+15'}else if(diff<4){bonus=10;label='🔥+10'}else if(diff<7){bonus=5;label='👍+5'}return{bonus,label}}
-
     function showFloatingBonus(text,x,y){if(!text)return;const el=document.createElement('div');el.className='speed-bonus';el.textContent=text;el.style.left=x+'px';el.style.top=y+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),1300)}
 
     function findWordsWithRadical(radicalChar,limit=5){
@@ -214,8 +186,7 @@
             ctx.save();ctx.globalAlpha=NOTEBOOK_CONFIG.exampleOpacity;ctx.fillStyle=NOTEBOOK_CONFIG.exampleColor;
             ctx.font=`400 ${Math.floor(inner*0.95)}px "Ma Shan Zheng","STKaiti",serif`;
             ctx.textAlign='center';ctx.textBaseline='middle';
-            ctx.fillText(char,s/2,s/2+(inner*0.03));
-            ctx.restore();
+            ctx.fillText(char,s/2,s/2+(inner*0.03));ctx.restore();
             ctx.lineWidth=currentBrushWidth;ctx.lineCap='round';ctx.lineJoin='round';ctx.globalAlpha=1;
             canvas._refData=ctx.getImageData(0,0,s,s);
         };
@@ -251,19 +222,13 @@
     }
 
     function initHanziWriter(container,char){
-        container.innerHTML='';
-        if(hwWriterInstance)hwWriterInstance=null;
+        container.innerHTML='';if(hwWriterInstance)hwWriterInstance=null;
         try{
-            hwWriterInstance=HanziWriter.create(container,char,{
-                width:container.clientWidth||120,height:container.clientHeight||120,
-                padding:10,showOutline:true,strokeAnimationSpeed:1,delayBetweenStrokes:400,
-                showCharacter:false,highlightColor:'#c0392b',outlineColor:'#d4b896',drawingColor:'#1a0f0a'
-            });
+            hwWriterInstance=HanziWriter.create(container,char,{width:container.clientWidth||120,height:container.clientHeight||120,padding:10,showOutline:true,strokeAnimationSpeed:1,delayBetweenStrokes:400,showCharacter:false,highlightColor:'#c0392b',outlineColor:'#d4b896',drawingColor:'#1a0f0a'});
             setTimeout(()=>{if(hwWriterInstance)hwWriterInstance.animateCharacter()},300);
         }catch(e){container.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:'Ma Shan Zheng';font-size:60px;color:#c0392b">${char}</div>`}
     }
 
-    // ========== КОМПАКТНАЯ МОДАЛКА ==========
     function showLearnModal(radical){
         if(currentModal){currentModal.remove();currentModal=null}if(!radical)return;
         const words=findWordsWithRadical(radical.key,3);
@@ -271,11 +236,7 @@
         modal.innerHTML=`<div class="learn-card">
             <div class="radical-header">
                 <div class="radical-big pulse">${radical.key}</div>
-                <div class="radical-info">
-                    <div class="radical-name">${radical.keyName}</div>
-                    <div class="radical-pinyin">${radical.keyPinyin||'?'}</div>
-                    <div class="radical-mean">${radical.keyMeaning||'радикал'} · ${radical.strokes||'?'} черт</div>
-                </div>
+                <div class="radical-info"><div class="radical-name">${radical.keyName}</div><div class="radical-pinyin">${radical.keyPinyin||'?'}</div><div class="radical-mean">${radical.keyMeaning||'радикал'} · ${radical.strokes||'?'} черт</div></div>
             </div>
             <div class="writer-section">
                 <div class="hw-box" id="hwContainer"></div>
@@ -287,40 +248,21 @@
                 </div>
             </div>
             <div class="draw-section">
-                <div class="brush-controls">
-                    <div class="brush-slider-wrapper">
-                        <label>🖌️</label>
-                        <input type="range" id="brushSlider" min="${NOTEBOOK_CONFIG.minBrushWidth}" max="${NOTEBOOK_CONFIG.maxBrushWidth}" value="${currentBrushWidth}" step="1">
-                        <div class="brush-preview" id="brushPreview" style="width:${currentBrushWidth}px;height:${currentBrushWidth}px"></div>
-                    </div>
-                </div>
+                <div class="brush-controls"><div class="brush-slider-wrapper"><label>🖌️</label><input type="range" id="brushSlider" min="${NOTEBOOK_CONFIG.minBrushWidth}" max="${NOTEBOOK_CONFIG.maxBrushWidth}" value="${currentBrushWidth}" step="1"><div class="brush-preview" id="brushPreview" style="width:${currentBrushWidth}px;height:${currentBrushWidth}px"></div></div></div>
                 <div class="draw-canvas-container"><canvas class="draw-canvas" id="nbCanvas"></canvas></div>
                 <div class="quality-bar"><div class="quality-fill" id="qFill"></div></div>
                 <div class="quality-text" id="qText">Нарисуй что-нибудь</div>
-                <div class="draw-tools">
-                    <button class="clear-draw" id="nbClear">🧽 Очистить</button>
-                    <button class="trace-btn" id="nbCheck" style="background:linear-gradient(135deg,#27ae60,#2ecc71)">✅ Проверить</button>
-                </div>
+                <div class="draw-tools"><button class="clear-draw" id="nbClear">🧽 Очистить</button><button class="trace-btn" id="nbCheck" style="background:linear-gradient(135deg,#27ae60,#2ecc71)">✅ Проверить</button></div>
             </div>
             ${words.length>0?`<div class="examples-row">${words.map(w=>`<div class="example-word" data-char="${w.char}"><div class="ex-char">${w.char}</div><div class="ex-pinyin">${w.pinyin}</div><div class="ex-mean">${w.meaning}</div></div>`).join('')}</div>`:''}
-            <div class="notebook-actions">
-                <button class="close-learn" id="nbClose">✖ Закрыть</button>
-                <button class="notebook-btn" id="nbAdd">📓 В тетрадь</button>
-            </div>
+            <div class="notebook-actions"><button class="close-learn" id="nbClose">✖ Закрыть</button><button class="notebook-btn" id="nbAdd">📓 В тетрадь</button></div>
         </div>`;
-
         document.body.appendChild(modal);currentModal=modal;
-
-        const hwContainer=modal.querySelector('#hwContainer');
-        initHanziWriter(hwContainer,radical.key);
-
+        const hwContainer=modal.querySelector('#hwContainer');initHanziWriter(hwContainer,radical.key);
         modal.querySelector('#replayAnimBtn').onclick=()=>{if(hwWriterInstance)hwWriterInstance.animateCharacter()};
-
         const cvs=modal.querySelector('#nbCanvas');initNotebookCanvas(cvs);setupCalligraphyBrush(cvs);
-
         const slider=modal.querySelector('#brushSlider'),preview=modal.querySelector('#brushPreview');
         slider.oninput=()=>{currentBrushWidth=parseInt(slider.value);preview.style.width=currentBrushWidth+'px';preview.style.height=currentBrushWidth+'px'};
-
         let exVisible=false;
         modal.querySelector('#nbShow').onclick=()=>{showExampleOnCanvas(cvs,radical.key);exVisible=true;modal.querySelector('#nbShow').style.display='none';modal.querySelector('#nbHide').style.display='inline-block'};
         modal.querySelector('#nbHide').onclick=()=>{clearNotebookCanvas(cvs);exVisible=false;modal.querySelector('#nbShow').style.display='inline-block';modal.querySelector('#nbHide').style.display='none'};
@@ -343,18 +285,15 @@
     function onTileClick(clicked,event){
         if(clicked.removed)return;
         if(selectedId===null){selectedId=clicked.id;renderGrid();msgEl.innerHTML=`✅ Выбрано: ${clicked.char}`;return}
-        const sel=tiles.find(t=>t.id===selectedId);
-        if(!sel){selectedId=null;return}
+        const sel=tiles.find(t=>t.id===selectedId);if(!sel){selectedId=null;return}
         if(sel.id===clicked.id){selectedId=null;renderGrid();msgEl.innerHTML='🔍 Снято';return}
         if(sel.pairId===clicked.pairId&&sel.type!==clicked.type){
             sel.removed=true;clicked.removed=true;matchedCount++;streak++;
-            let points=10+Math.floor(streak/2)*2;
-            const sp=calcSpeedBonus();points+=sp.bonus;
+            let points=10+Math.floor(streak/2)*2;const sp=calcSpeedBonus();points+=sp.bonus;
             if(sp.label&&event){const rect=event.target.getBoundingClientRect();showFloatingBonus(sp.label,rect.left+rect.width/2-30,rect.top-20)}
             score+=points;if(streak>record)record=streak;updateUI();
             let keyTile=sel.type==='key'?sel:clicked;let rad=RADICALS_DB.find(r=>r.key===keyTile.char);
-            if(rad)showLearnModal(rad);
-            selectedId=null;renderGrid();
+            if(rad)showLearnModal(rad);selectedId=null;renderGrid();
             msgEl.innerHTML=`✅ +${points}${sp.bonus>0?' ⚡':''} (🔥${streak})`;
             if(matchedCount===totalPairs){stopTimer();msgEl.innerHTML='🏆 УРОВЕНЬ ПРОЙДЕН!';speakChinese('恭喜你');setTimeout(()=>{if(confirm('🎉 Следующий уровень?')){const n=Math.min(9,currentLevel+1);const btn=document.querySelector(`.level-btn[data-level="${n}"]`);if(btn)btn.click()}},600)}
         }else{streak=0;updateUI();msgEl.innerHTML=`❌ Не пара!`;selectedId=null;renderGrid()}
@@ -362,18 +301,16 @@
 
     function updateUI(){if(scoreSpan)scoreSpan.textContent=score;if(remainSpan)remainSpan.textContent=totalPairs-matchedCount;if(streakSpan)streakSpan.textContent=streak;if(recordSpan)recordSpan.textContent=record;if(progressFill&&totalPairs>0)progressFill.style.width=((matchedCount/totalPairs)*100)+'%'}
     function shuffleTiles(){if(tiles.length===0){initGame(currentLevel);return}const rem=tiles.filter(t=>!t.removed),rm=tiles.filter(t=>t.removed);shuffle(rem);tiles=[...rem,...rm];selectedId=null;renderGrid();msgEl.innerHTML='🃏 Перемешано!'}
-    function showHint(){for(let i=0;i<tiles.length;i++){if(tiles[i].removed)continue;for(let j=i+1;j<tiles.length;j++){if(tiles[j].removed)continue;if(tiles[i].pairId===tiles[j].pairId&&tiles[i].type!==tiles[j].type){msgEl.innerHTML=`💡 "${tiles[i].char}" ↔ "${tiles[j].char}"`;const all=gridEl.querySelectorAll('.tile');let idx=0;for(let k=0;k<tiles.length;k++){if(tiles[k].removed)continue;if(tiles[k].id===tiles[i].id||tiles[k].id===tiles[j].id){if(all[idx]){all[idx].style.borderColor='#f7b42c';all[idx].style.boxShadow='0 0 0 4px rgba(247,180,44,.5),0 5px 0 #8b6946'}}idx++}setTimeout(()=>renderGrid(),2000);return}}}msgEl.innerHTML='💡 Все пары найдены!'}
+    function showHint(){for(let i=0;i<tiles.length;i++){if(tiles[i].removed)continue;for(let j=i+1;j<tiles.length;j++){if(tiles[j].removed)continue;if(tiles[i].pairId===tiles[j].pairId&&tiles[i].type!==tiles[j].type){msgEl.innerHTML=`💡 "${tiles[i].char}" ↔ "${tiles[j].char}"`;const all=gridEl.querySelectorAll('.tile');let idx=0;for(let k=0;k<tiles.length;k++){if(tiles[k].removed)continue;if(tiles[k].id===tiles[i].id||tiles[k].id===tiles[j].id){if(all[idx]){all[idx].style.borderColor='#f7b42c';all[idx].style.boxShadow='0 0 0 4px rgba(247,180,44,.5),0 6px 0 #8b6946'}}idx++}setTimeout(()=>renderGrid(),2000);return}}}msgEl.innerHTML='💡 Все пары найдены!'}
 
     function initGame(level){
         if(!Array.isArray(RADICALS_DB)||RADICALS_DB.length===0){msgEl.innerHTML='⚠️ RADICALS не загружены';return}
         currentLevel=level;const cfg=LEVEL_CONFIG[level];
         let needed=Math.min(cfg.pairsCount,Math.floor(RADICALS_DB.length*0.9));if(needed<3)needed=3;
-        const pairs=buildPairs(needed);
-        if(pairs.length===0){msgEl.innerHTML='⚠️ Нет пар. Проверьте WORDS.js';return}
+        const pairs=buildPairs(needed);if(pairs.length===0){msgEl.innerHTML='⚠️ Нет пар. Проверьте WORDS.js';return}
         totalPairs=pairs.length;matchedCount=0;score=0;streak=0;selectedId=null;tiles=[];
         let id=0;pairs.forEach((p,i)=>{tiles.push({id:id++,pairId:i,type:'key',char:p.radical,pinyin:p.radicalPinyin,name:p.radicalName,removed:false});tiles.push({id:id++,pairId:i,type:'word',char:p.word,pinyin:p.wordPinyin,name:p.wordMeaning,removed:false})});
-        shuffle(tiles);updateUI();renderGrid();startTimer();
-        msgEl.innerHTML=`🎮 Уровень ${level}: ${totalPairs} пар`;
+        shuffle(tiles);updateUI();renderGrid();startTimer();msgEl.innerHTML=`🎮 Уровень ${level}: ${totalPairs} пар`;
     }
 
     if(typeof RADICALS!=='undefined'&&Array.isArray(RADICALS)&&RADICALS.length>0){
